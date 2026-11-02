@@ -78,8 +78,8 @@ describe('Characterization: pure helpers', () => {
     expect(utils.compareStringByLength('a', null)).toBe(1);
     expect(utils.compareStringByLength(null, 'a')).toBe(-1);
     expect(utils.compareStringByLength(null, null)).toBe(0);
-    // empty string is falsy, so it falls to the null-check branch
-    expect(utils.compareStringByLength('', 'a')).toBe(-1);
+    // empty string is falsy but not null, so it is treated as present and sorts after
+    expect(utils.compareStringByLength('', 'a')).toBe(1);
   });
 
   test('containsAllAscii / containsAllAsciiNP', () => {
