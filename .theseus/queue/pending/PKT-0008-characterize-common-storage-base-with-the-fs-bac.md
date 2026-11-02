@@ -31,7 +31,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -45,6 +45,7 @@ Common/sources/storage/storage-base.js and storage-fs.js.
 ## Suggested plan
 
 ## Executor log
+- return: factory stopped by Rafael to redo the diagnosis against the real goals
 
 ## Spawned packets
 
