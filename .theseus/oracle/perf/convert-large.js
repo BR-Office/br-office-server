@@ -6,6 +6,9 @@
 // The token secret is read from /etc/euro-office/documentserver/local.json; jsonwebtoken from DocService/node_modules.
 // Per conversion: POST /ConvertService.ashx (async, re-posted every 50 ms) -> DocService -> RabbitMQ -> x2t -> result.
 // Raw x2t (no DocService) is timed once per file for OOXML -> Editor.bin (the open conversion) and -> pdf.
+// Run it on an idle server, or before load-coedit.js (PKT-0021): FileConverter maxprocesscount = 1 and conversions
+// share one RabbitMQ queue with save assembly, so a conversion waits behind every save a load test left queued
+// (that is what produced PKT-0018's 124 s pptx -> pdf). main() first waits until a small probe conversion is fast.
 const http = require('http'), fs = require('fs'), path = require('path'), os = require('os');
 const { execFileSync } = require('child_process');
 const jwt = require(path.resolve(__dirname, '../../../DocService/node_modules/jsonwebtoken'));
@@ -50,7 +53,15 @@ async function main() {
   const srv = http.createServer((q, s) => fs.createReadStream(path.join(DIR, path.basename(decodeURIComponent(q.url)))).on('error', () => { s.statusCode = 404; s.end(); }).pipe(s));
   await new Promise(r => srv.listen(0, '0.0.0.0', r));
   const port = srv.address().port, out = {};
-  for (const f of fs.readdirSync(DIR).filter(f => /\.(docx|xlsx|pptx)$/.test(f)).sort()) {
+  const files = fs.readdirSync(DIR).filter(f => /\.(docx|xlsx|pptx)$/.test(f)).sort();
+  // Drain: repeat a cheap conversion (smallest file -> own format, ~0.1-0.2 s idle) until it takes < 3 s (max 15 min).
+  const probe = [...files].sort((a, b) => fs.statSync(path.join(DIR, a)).size - fs.statSync(path.join(DIR, b)).size)[0];
+  for (const t0 = Date.now(); probe && Date.now() - t0 < 900000;) {
+    const r = await one(probe, path.extname(probe).slice(1), port);
+    console.error('drain probe', probe, JSON.stringify(r));
+    if (!r.err && r.ms < 3000) break;
+  }
+  for (const f of files) {
     const ext = path.extname(f).slice(1), abs = path.join(DIR, f);
     const row = out[f] = { kB: Math.round(fs.statSync(abs).size / 1024) };
     // Open conversion: OOXML -> Editor.bin (internal format; 8192 = AVS_OFFICESTUDIO_FILE_CANVAS).

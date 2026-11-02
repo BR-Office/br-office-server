@@ -50,9 +50,17 @@ Copy into baseline.md (PKT-0018 section, once merged) and perf/ the findings in 
 
 ## Executor log
 - return: factory restarted on Theseus 0.14.1
+- claude-opus-5-5, 2026-11-02. Changed only the 3 target files; no source change, no service run.
+- Decision: PKT-0021's patched scratchpad copies were gone, so I re-implemented the two fixes from its log: `unLockDocument` from client 0 after each doc's clients are all ready; `saveLock` wait raced against 10 s, counted as `errors.noLockReply`. Did not add the stderr open/change timestamps (diagnostic only).
+- Decision: convert-large.js drains with a probe (smallest file -> own format, repeated until < 3 s, max 15 min) instead of only a comment, so a run after a load test is not polluted; header comment says to run on an idle server or before load tests.
+- baseline.md: added 200x5 / 200x10 rows (postgres 0.25 in the text, the table has no postgres column), replaced "not diagnosed" and the 124 s outlier note with the explanations, updated the Gaps row to point at PKT-0023.
+- Not done: scripts not re-run against the server (measurement-only recording packet, acceptance empty); `node --check` passes on both.
+- Surprise: acceptance is empty and contract.preserve is still the template placeholder.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- Load harnesses for DocsCoServer must mimic the editor's `unLockDocument` after join and time out every server reply wait.
+- Conversion timings must be taken on a drained converter queue (maxprocesscount 1, shared with save assembly).
