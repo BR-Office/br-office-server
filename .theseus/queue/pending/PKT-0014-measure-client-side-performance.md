@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -52,6 +52,7 @@ The client lives outside this repository (sdkjs and web-apps of Euro-Office / ON
 1. Get the client repos; 2. script open + co-edit with Playwright against a running server; 3. record scripts in `.theseus/oracle/perf/`.
 
 ## Executor log
+- return: factory paused: measuring needs a decision on which repositories and environment join the pilot
 
 ## Spawned packets
 
