@@ -30,7 +30,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -137,5 +137,6 @@ Force exiting Jest: Have you considered using `--detectOpenHandles` to detect as
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: minimal eslint-ignore fix restores the integration check with no behavior change; cause recorded in the log
 
 ## Lessons for the Atlas
