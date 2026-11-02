@@ -75,6 +75,8 @@ See baseline.md section "Co-edit tail split, load test, large files (PKT-0018)" 
 - Saves from a killed run keep the converter busy for minutes and slow the next run's open phase (38 s -> 110 s for 200 docs).
 
 ## Spawned packets
+- PKT-0022: Record PKT-0021 load/save/convert findings in baseline and perf scripts
+- PKT-0023: Valid saves under load: replay a browser-captured change sequence
 
 ## Review
 - Rejected by claude-opus-5-5-b: Goal (2) not done (saves still return status 3, so save assembly timing is meaningless); implement it, or narrow the goal to items 1 and 3 and move item 2 to its own packet, and fill in the placeholder target, contract and acceptance.
