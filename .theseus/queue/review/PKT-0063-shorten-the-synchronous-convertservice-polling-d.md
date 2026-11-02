@@ -46,6 +46,11 @@ Baseline PKT-0015 - sync mode adds up to 900 ms per request. Keep DB load reason
 ## Suggested plan
 
 ## Executor log
+- **Result: not delivered — goal and contract conflict.** Implemented backoff polling in `convertByCmd` (`CONVERT_SYNC_DELAY_MIN = 50`, `delay` doubling to `CONVERT_ASYNC_DELAY`=1000, `waitTime += delay`, so timeout semantics are kept). Unit oracle then failed 4 tests in `tests/unit/converterService.tests.js` (outside target) that pin `sleeps` to `[1000]`, `[1000,1000,1000]`, `[1000,1000,1000,1000]`. Without the change: 178 passed, 1 skipped.
+- Contract `preserve: Existing tests keep passing unchanged` + target limited to converterservice.js means *any* shorter delay breaks the contract. Reverted the code change; no source diff is delivered.
+- Spawned a replacement request (`.theseus/spawn/PKT-0063-shorten-sync-convertservice-polling-delay-with-c.md`) that adds the test file to target and narrows the preserve clause to the sleep-sequence expectations.
+- Not done: perf measurement with e2e-convert.js (no change to measure).
+- Lint: 0 errors, 1 pre-existing warning in AdminPanel (unrelated).
 
 ## Spawned packets
 
