@@ -56,6 +56,7 @@ Audit the method over scoreboard records 1 to 28, following `.theseus/prompts/au
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: sed -n '/^## 4/,/^## 5/p;/^## 6/,$p' .theseus/spec/method-measurement.md | head -150; cat .theseus/METHOD-CHANGELOG.md |…; Bash: python3 -I - <<'E'; Bash: cd .theseus/proposals && cat > TEP-0001.md <<'E'
 
 ## Spawned packets
 
