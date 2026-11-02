@@ -99,6 +99,7 @@ Aborted
 - attempt 1: acceptance failed: `npm run lint:check`
 - attempt 2: acceptance failed: `npm run lint:check`
 - attempt 3: the executor's permissions refused: Bash: f=$(ls .theseus/queue/in-progress/PKT-0027-*.md)
+- attempt 3: acceptance failed: `npm run lint:check`
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
