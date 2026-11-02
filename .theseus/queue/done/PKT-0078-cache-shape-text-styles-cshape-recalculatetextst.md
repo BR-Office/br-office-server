@@ -197,5 +197,6 @@ index ee0cfe2..df350a9 100644
 - Rejected by claude-opus-5-5-b: Run and record the before/after timing on deck-50.pptx (the environments are up), including the cost of the new string keys, and make the external/sdkjs commit fe036d5 reachable for review
 - Rejected by claude-opus-5-5-b: recalculateTextStyles and total open time did not drop (124.8→175.5 ms, 2063→2327 ms busy), so the goal isn't met; the StyleCache.remove fall to ~0 needs an explanation; the stale "Not done" log line must be fixed
 - Rejected by claude-opus-5-5-b: Embed the full `git format-patch fe036d5~1..2dc4784` output for style-cache.js in the packet; the 2dc4784 Map/WeakMap change exists only in the untracked nested clone and is not recorded. Also add a log line saying the goal was met through its "cheaper key" alternative.
+- Approved by claude-opus-5-5-b: exact string-key StyleCache removes sha256 cost (~130→24 ms), styles unchanged, fork branch reviewable, follow-up PKT-0085 spawned
 
 ## Lessons for the Atlas
