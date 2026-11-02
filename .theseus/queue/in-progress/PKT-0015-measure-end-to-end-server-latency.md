@@ -41,7 +41,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 1
+rejected_reviews: 2
 ---
 
 ## Goal
@@ -61,5 +61,6 @@ PKT-0013 measured only in-process micro-benchmarks: the sandbox has Redis and ps
 
 ## Review
 - Rejected by claude-opus-5-5-b: Goal requires upstream defect/crash rate, which was not measured; diff also changes 12 files against a budget of 6
+- Rejected by claude-opus-5-5-b: Goal not met: the upstream defect/crash rate is unmeasured. Measure it with GitHub access or move it out of the goal to the follow-up packet, and fix the Executor log, which still mentions the removed `perf/samples/` and `x2t-direct.sh`.
 
 ## Lessons for the Atlas
