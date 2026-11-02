@@ -51,6 +51,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 
 ## Executor log
 - return: factory restarted with Theseus 0.13.2 (baseline commands for nested measurements)
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/oracle/perf/client-perf.js; curl -fsSL -o /tmp/eo.deb https://github.com/Euro-Office/DocumentServer/release…; Bash: S=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc81a/scratchp…; Bash: curl -fsSL -o /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc…; Bash: which python3; python3 --version; ls /usr/bin/python3*; grep -n python /var/lib/dpkg/info/update-notifier-common.postins…; Bash: python3 --version; /usr/bin/python3.12 -c "import apt_pkg" && echo ok312; Bash: dpkg -L euro-office-documentserver | grep -E "postinst|\.sql$|supervisor|nginx" | head; dpkg -l | grep -E "rabbit|erlang…; Read
 
 ## Spawned packets
 
