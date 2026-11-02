@@ -44,7 +44,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
-resume: true
+resume: false
 ---
 
 ## Goal
