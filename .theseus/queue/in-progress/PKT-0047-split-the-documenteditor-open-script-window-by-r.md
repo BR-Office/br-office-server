@@ -63,6 +63,11 @@ baseline.md PKT-0016 shows ~1.5 s and ~500 KB of scripts before the document loa
   files under perf/). The "worth refactoring" estimate (≈ 0.3–0.4 s from deferring hidden toolbar tabs and Comments) is
   an estimate, not measured. Only docx; xlsx/pptx not in scope. Wire/compressed sizes not measured.
 
+- Attempt 2 (after review): diff was 4,875 lines vs 800 budget. Dropped the per-run `raw`/`rawNoProfiler` arrays
+  from the JSON (medians kept, values unchanged) and wrote it one key per line; the script now writes medians only
+  unless `--raw`. Fixed the header: `bodyKb` = decoded size (the figure used), `kb` = encodedDataLength (≈0 here).
+  Lesson: commit summaries, not per-run dumps, under perf/; keep raw output out of the repo or behind a flag.
+
 ## Spawned packets
 
 ## Review

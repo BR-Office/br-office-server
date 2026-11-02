@@ -1,10 +1,12 @@
 // Document editor open window split by resource and by CPU (PKT-0047).
-// Usage: node .theseus/oracle/perf/open-window.js <out.json> <file.docx>... [--runs N] [--base URL] [--keep DIR]
+// Usage: node .theseus/oracle/perf/open-window.js <out.json> <file.docx>... [--runs N] [--base URL] [--keep DIR] [--raw]
 //   Per file and run (new browser context = cold HTTP cache): CDP Network events (all frames, same process) and a
 //   CDP CPU profile (--interval µs, default 1000; each profiled open is paired with an unprofiled one for the marks) from page.goto until isDocumentLoadComplete. Two marks, ms after goto:
 //   - LoadDoc: first call of asc_docs_api.prototype.asc_LoadDocument (wrapped by an init script in the editor frame);
 //   - Bin: Network.requestWillBeSent of Editor.bin.
-//   Resources: per category, count, KB on the wire (encodedDataLength), first request start, last finish.
+//   Resources: per category, count, bodyKb = decoded size (sum of Network.dataReceived dataLength; this is the figure
+//   to read), kb = encodedDataLength (unusable on this stack: CDP reports -1/0, so it is ~0), first start, last finish.
+//   Only medians are written; pass --raw to also keep the per-run arrays (raw, rawNoProfiler).
 //   CPU: main-thread samples in [goto, mark], self time by the leaf frame's script, idle split out. app.js (webpack)
 //   is split per module: a module defining `Common.*` objects counts as apps/common, `DE.*` as the documenteditor
 //   app, anything else as vendor (Backbone, jQuery plugins, ...). Controller launch = inclusive samples under
@@ -16,6 +18,7 @@ const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 const argv = process.argv.slice(2), opt = (k, d) => { const i = argv.indexOf(k); return i < 0 ? d : argv.splice(i, 2)[1]; };
 const RUNS = +opt('--runs', 5), INTERVAL = +opt('--interval', 1000), BASE = opt('--base', 'http://localhost/example/'), KEEP = opt('--keep', null);
+const RAW = argv.includes('--raw'); if (RAW) argv.splice(argv.indexOf('--raw'), 1);
 const [OUT, ...FILES] = argv;
 const APPJS = '/var/www/euro-office/documentserver/web-apps/apps/documenteditor/main/app.js';
 
@@ -190,10 +193,10 @@ async function main() {
       cpu: Object.fromEntries(Object.keys(runs[0].cpu).map(k => [k, medObj(runs.map(r => r.cpu[k]))])),
       launch: Object.fromEntries(Object.keys(runs[0].launch).map(k => [k, medObj(runs.map(r => r.launch[k]))])),
       ctlCode: Object.fromEntries(Object.keys(runs[0].ctlCode).map(k => [k, medObj(runs.map(r => r.ctlCode[k]))])),
-      raw: runs, rawNoProfiler: plain.map(r => ({ marks: r.marks, resources: r.resources })),
+      ...(RAW ? { raw: runs, rawNoProfiler: plain.map(r => ({ marks: r.marks, resources: r.resources })) } : {}),
     };
   }
   await browser.close();
-  fs.writeFileSync(OUT, JSON.stringify(result, null, 1));
+  fs.writeFileSync(OUT, JSON.stringify(result) + "\n");
 }
 main().catch(e => { console.error(e); process.exit(1); });

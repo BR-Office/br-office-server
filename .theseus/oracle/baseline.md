@@ -455,7 +455,7 @@ or say which level was on.
 
 ### Document editor open window split by resource and CPU (PKT-0047)
 
-Script: `node .theseus/oracle/perf/open-window.js <out.json> <file.docx>... [--runs 5] [--interval 1000]`; raw output in
+Script: `node .theseus/oracle/perf/open-window.js <out.json> <file.docx>... [--runs 5] [--interval 1000] [--raw]`; median summary in
 `perf/open-window-2026-11-02.json`. **Native package** 9.3.7-1, same VM (2 CPUs), PKT-0016 samples (docx 10 p / 100 p),
 1 warm-up + 5 runs each, new browser context per open (cold HTTP cache). Marks, ms after `goto`:
 **LoadDoc** = first call of `asc_docs_api.prototype.asc_LoadDocument` (wrapped by an init script);
