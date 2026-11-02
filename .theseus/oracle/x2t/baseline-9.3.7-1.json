@@ -1,0 +1,167 @@
+{
+ "results": {
+  "corpus/rows-500.xlsx": {
+   "inputSize": 22074,
+   "odf": {
+    "exit": 0,
+    "size": 19074
+   },
+   "open": {
+    "exit": 0,
+    "size": 162727
+   },
+   "own": {
+    "exit": 0,
+    "size": 23247
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 11,
+    "size": 80569,
+    "textChars": 12526,
+    "textHead": "id id id 1 tau 2 beta 3 omicron 4 zeta 5 xi 6 epsilon 7 iota 8 iota 9 zeta 10 kappa 11 theta 12 delta 13 gamma 14 rho 15",
+    "textSha1": "a9a04b9303578433e0b49db210a6cf1e7e5d69b0"
+   },
+   "save": {
+    "exit": 0,
+    "size": 26974
+   }
+  },
+  "corpus/slides-12.pptx": {
+   "inputSize": 41888,
+   "odf": {
+    "exit": 0,
+    "size": 10615
+   },
+   "open": {
+    "exit": 0,
+    "size": 97834
+   },
+   "own": {
+    "exit": 0,
+    "size": 46424
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 12,
+    "size": 67676,
+    "textChars": 2678,
+    "textHead": "Slide 1 \u2022 Omicron nu nu alpha pi zeta sigma theta. \u2022 Epsilon nu sigma kappa epsilon kappa mu alpha. \u2022 Sigma sigma epsilo",
+    "textSha1": "1b207749d355c3b2ff1390fbfe3dd80d4fc92fff"
+   },
+   "save": {
+    "exit": 0,
+    "size": 47377
+   }
+  },
+  "corpus/text-10p.docx": {
+   "inputSize": 40377,
+   "odf": {
+    "exit": 0,
+    "size": 11003
+   },
+   "open": {
+    "exit": 0,
+    "size": 254211
+   },
+   "own": {
+    "exit": 0,
+    "size": 42404
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 11,
+    "size": 46057,
+    "textChars": 16418,
+    "textHead": "Chapter 1 Delta alpha iota theta theta epsilon delta sigma gamma tau xi beta alpha gamma eta theta rho alpha sigma eta s",
+    "textSha1": "4922c0195dc7826090f6db2bb7ea372508275ede"
+   },
+   "save": {
+    "exit": 0,
+    "size": 26209
+   }
+  },
+  "en-US/new.docx": {
+   "inputSize": 7726,
+   "odf": {
+    "exit": 0,
+    "size": 3188
+   },
+   "open": {
+    "exit": 0,
+    "size": 6117
+   },
+   "own": {
+    "exit": 0,
+    "size": 8204
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 1,
+    "size": 1934,
+    "textChars": 0,
+    "textHead": "",
+    "textSha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+   },
+   "save": {
+    "exit": 0,
+    "size": 8373
+   }
+  },
+  "en-US/new.pptx": {
+   "inputSize": 34699,
+   "odf": {
+    "exit": 0,
+    "size": 6402
+   },
+   "open": {
+    "exit": 0,
+    "size": 80886
+   },
+   "own": {
+    "exit": 0,
+    "size": 34892
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 1,
+    "size": 2053,
+    "textChars": 0,
+    "textHead": "",
+    "textSha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+   },
+   "save": {
+    "exit": 0,
+    "size": 36991
+   }
+  },
+  "en-US/new.xlsx": {
+   "inputSize": 5731,
+   "odf": {
+    "exit": 0,
+    "size": 3599
+   },
+   "open": {
+    "exit": 0,
+    "size": 8697
+   },
+   "own": {
+    "exit": 0,
+    "size": 6593
+   },
+   "pdf": {
+    "exit": 0,
+    "pages": 1,
+    "size": 1948,
+    "textChars": 0,
+    "textHead": "",
+    "textSha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+   },
+   "save": {
+    "exit": 0,
+    "size": 8292
+   }
+  }
+ },
+ "x2t": "/var/www/euro-office/documentserver/server/FileConverter/bin"
+}

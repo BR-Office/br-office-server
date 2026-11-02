@@ -46,9 +46,16 @@ Card x2t "Available oracle" - none automated. Invariants - exit code mapping and
 
 ## Executor log
 - return: factory restarted on Theseus 0.16.1 (every privilege for executors)
+- Delivered `.theseus/oracle/x2t/corpus.py` (`run` writes JSON; `diff base new` exits 1 on differences), `make-corpus.py` (deterministic text-bearing docx 10 p / xlsx 500 rows / pptx 12 slides) and `baseline-9.3.7-1.json` (native package 9.3.7-1; en-US templates + make-corpus output; 30 conversions, all exit 0).
+- Decisions: raw x2t through a params.xml like FileConverter (same as perf/convert-large.js) rather than ConvertService, so no DocService needed. Directions: open (->Editor.bin 8192), save (that Editor.bin -> own OOXML), own (OOXML->OOXML), pdf, odf. PDF compared by page count and SHA-1 of whitespace-normalized `pdftotext` text, never bytes; other outputs by exit code and size within 10 % (`--size-tol`). Python because poppler and python-docx are on the machine and nothing here is server code.
+- Surprises: (1) the empty templates produce PDFs with no text at all, so they cannot check text; hence make-corpus.py. (2) I first used 258/130 for ods/odp and x2t returned exit 88 with no output: the codes are 0x0103=259 and 0x0083=131. Exit 88 is what x2t gives for an unsupported target format - worth knowing for the exit-code invariant. (3) Two consecutive runs were identical (sizes included), so outputs of this build are deterministic at size level.
+- Not done: the PKT-0016/0018 large samples are not in the baseline (they are not committed and are slow); pass them with an extra `--corpus`. The save direction does not apply changes (no Changes.bin); it covers Editor.bin -> OOXML assembly only. No timing recorded (P1's job).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t format codes: docx 65, odt 67, xlsx 257, ods 259, pptx 129, odp 131, pdf 513, Editor.bin 8192. A wrong `m_nFormatTo` gives exit 88 and no output.
+- Empty templates export text-less PDFs; a PDF text oracle needs content-bearing samples (`.theseus/oracle/x2t/make-corpus.py`).
+- Corpus oracle for x2t: `python3 .theseus/oracle/x2t/corpus.py run --corpus <templates> --corpus <make-corpus out> > new.json; corpus.py diff .theseus/oracle/x2t/baseline-9.3.7-1.json new.json`.
