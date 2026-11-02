@@ -44,6 +44,7 @@ Diagnose the module `common` following `.theseus/prompts/diagnostician.md` and w
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd Common/sources; wc -l *.js storage/*.js | sort -n | tail -15; git log --since=90.days --oneline -- . | wc -l; git log…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0004-*.md); python3 - "$f" <<'EOF'
 
 ## Spawned packets
 
