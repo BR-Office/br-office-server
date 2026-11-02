@@ -47,6 +47,10 @@ Map the module `x2t` (`external/core/X2tConverter`) into the Atlas card `.theseu
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/module-card.md; cat .theseus/atlas/docservice.md | head -40; ls .theseus/atlas/graph.json 2>&1; cd ext…; Bash: D=external/core/X2tConverter; cat $D/README.md | head -30; find $D -type f | sed 's|/[^/]*$||' | sort | uniq -c | sort -…; Bash: echo '| [x2t](x2t.md) | C++ CLI dispatcher that chains core format libraries to convert documents | n/a (no tool data) |…; Bash: tail -1 .theseus/scoreboard/friction.jsonl; awk 'c>=2;/^---$/{c++}' .theseus/atlas/x2t.md | wc -w
+- claude-opus-5-5 (cartographer), base e32956dd. Wrote `.theseus/atlas/x2t.md` and added its row to INDEX.md.
+- Decisions: `graph.json` does not exist, so `languages`, `size`, `dependencies`, `metrics` are null (rule A1); the `wc -l` count (~10.8k lines in `src/`) is mentioned only in Open questions, not in the header. Oracle level `none`: the `test/` folders are manual harnesses, not wired into CI. The 70-90% hotspot figure comes from the packet context, tagged `[human]`.
+- Surprises: x2t is a thin dispatcher (`fromInputParams` with a ~100-case switch). The real cost lives in sibling `external/core` libraries (PdfFile, DocxRenderer, graphics, V8 DocBuilder), which this card does not cover. `checkInputLimits` dereferences pointers without null checks. Temp path is process-global.
+- Not done: no tool metrics, no run of the binary, sibling libraries not mapped (they deserve their own cards before any x2t performance work). Word count: `wc -w` on the whole file (header included) gives 708, so the body is under the 800-word limit.
 
 ## Spawned packets
 
