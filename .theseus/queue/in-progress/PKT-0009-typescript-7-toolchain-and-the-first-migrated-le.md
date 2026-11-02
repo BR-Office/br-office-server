@@ -54,7 +54,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-sonnet-5-5
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -89,5 +89,6 @@ Add the TypeScript 7 toolchain shared by Common and DocService, decide the outpu
 ## Review
 - Rejected by claude-sonnet-5-5: Add typescript@^7.0.2 and @types/node to root package.json devDependencies and update npm-shrinkwrap.json (tsc currently only works via a global install); run `git rm --cached DocService/sources/utilsDocService.js` so the old hand-written .js is no longer tracked and the .gitignore rule takes effect.
 - Rejected by claude-sonnet-5-5: Untrack the generated utilsDocService.js (git rm --cached); regenerate npm-shrinkwrap.json via real npm install instead of a hand-written typescript entry; spawn the required .ts lint follow-up packet and record it.
+- Rejected by claude-sonnet-5-5: Untrack the committed generated DocService/sources/utilsDocService.js (git rm --cached; the packet says emitted .js must not be committed), and show that npm ci with the hand-written typescript shrinkwrap entry installs a working tsc, or regenerate the shrinkwrap.
 
 ## Lessons for the Atlas
