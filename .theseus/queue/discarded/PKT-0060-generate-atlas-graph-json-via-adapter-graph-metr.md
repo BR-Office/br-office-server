@@ -57,6 +57,7 @@ Generate atlas/graph.json via adapter graph/metrics scripts and fill card tool f
 ## Suggested plan
 
 ## Executor log
+- discard: unfinished spawn request (template placeholders) queued before Theseus 0.16.2
 
 ## Spawned packets
 
