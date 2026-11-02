@@ -77,6 +77,8 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 
 ## Spawned packets
 - PKT-0051: Measure x2t PDF export/save phase split on the installed binary
+- PKT-0054: Investigate xlsx to pdf layout cost in x2t (50k rows 44 s)
+- PKT-0055: Record PKT-0041 x2t phase split in oracle baseline.md
 
 ## Review
 
