@@ -53,6 +53,12 @@ PKT-0043 (baseline.md "where the word editor's CPU goes"): on the 100-page docx 
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-02. **No code change made; follow-up requested.**
+- Traced the per-remote-change caller: Apply_Changes -> OnStart_Load_Objects -> asc_docs_api.pre_Save (word/api.js) -> DrawingDocument.CheckFontNeeds -> CDocument.Document_Get_AllFontNames -> Paragraph -> ParaRun.Get_AllFontNames (Run.js, loop over every run item).
+- Surprise: neither the call site (api.js / DrawingDocument.js) nor the run loop (Run.js) nor the list of changed objects (CollaborativeEditing; m_aChanges is cleared before pre_Save) is in target.files. From Document.js/Paragraph.js alone there is no reliable signal of which paragraphs/runs a remote change touched (run-level TextPr changes do not notify the paragraph), so any cache there risks missing fonts after a remote change, which breaks contract.preserve #1.
+- Decision: do not ship an unsafe cache; record a spawn request (.theseus/spawn/PKT-0057-incremental-font-name-collection-for-remote-chan.md) with the right target and the traced call chain.
+- Not done: profile before/after (no change to measure; documentserver/browser not used).
+- Acceptance: bash .theseus/oracle/unit.sh -> 178 passed, 1 skipped.
 
 ## Spawned packets
 
