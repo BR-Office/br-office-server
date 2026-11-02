@@ -40,7 +40,8 @@ budget:
 
 roles:
   executor: claude-sonnet-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -64,5 +65,6 @@ Pin the behavior of `Common/sources/formatchecker.js` and `Common/sources/docume
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5: Fill the empty Executor log with the surprising behaviors these tests pin (xlsx-only zip detection with its 8KB window, the null TypeError, no %PDF detection, pdfa→pdf, the getAllFormats no-context throw, the stray "word" key); the test file itself is acceptable as is.
 
 ## Lessons for the Atlas
