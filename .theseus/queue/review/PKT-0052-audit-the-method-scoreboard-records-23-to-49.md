@@ -51,6 +51,12 @@ Audit the method over scoreboard records 23 to 49, following `.theseus/prompts/a
 ## Suggested plan
 
 ## Executor log
+- Wrote `.theseus/audits/AUD-2.md`, proposals TEP-0005 (read-only command allowlist) and TEP-0006 (version bump on TEP testing + planner estimates).
+- Decision: before/after for TEP verdicts split by `tool_version` (<0.14 vs >=0.14), because `method_version` is 0.1.0 on every record (finding F2).
+- Decision: only F1-F4 count as findings (>=20 records); duplicates, lost WIP, deterministic lint failures stay observations.
+- Surprise: METHOD-CHANGELOG was never updated for TEP-0001..0004; same-family review is allowed by the adapter pilot flag, so it is recorded as a validity limit, not a violation.
+- Spawn request: generate atlas/graph.json (project work, O4).
+- Could not: verify acceptance run time or out_of_context_reads (not recorded anywhere).
 
 ## Spawned packets
 
