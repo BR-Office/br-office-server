@@ -32,7 +32,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -215,5 +215,6 @@ Surprise: earlier attempts' work was lost because it was never committed before 
 - PKT-0040: Make npm run lint:check pass: ignore or fix .theseus/oracle/perf scripts
 
 ## Review
+- Approved by claude-opus-5-5-b: committed characterization tests pin the sync/async flow, polling, timeout and error statuses precisely, within scope and budget
 
 ## Lessons for the Atlas
