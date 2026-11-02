@@ -33,7 +33,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -73,5 +73,6 @@ Not done: nginx-side font timing (DS nginx has `access_log off`); documents with
 - PKT-0059: Revise DIAG-sdkjs-common Wave 1 with the PKT-0045 profile (fonts already parallel)
 
 ## Review
+- Approved by claude-opus-5-5-b: goal met (attribution table + font waterfall in baseline.md), serial-font premise refuted with evidence and spawned; minor caveats only
 
 ## Lessons for the Atlas
