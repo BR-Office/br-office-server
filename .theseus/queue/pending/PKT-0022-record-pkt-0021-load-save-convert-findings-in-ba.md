@@ -37,7 +37,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -49,6 +49,7 @@ Copy into baseline.md (PKT-0018 section, once merged) and perf/ the findings in 
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.14.1
 
 ## Spawned packets
 
