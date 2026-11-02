@@ -69,6 +69,7 @@ Surprises:
 - Run-to-run spread up to 2x (docx 10 p window 2.8-5.5 s): the VM is shared with other packets' measurements.
 Not done: nginx-side font timing (DS nginx has `access_log off`); documents with images/charts (samples have none).
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
+- integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 
 ## Spawned packets
 - PKT-0059: Revise DIAG-sdkjs-common Wave 1 with the PKT-0045 profile (fonts already parallel)
