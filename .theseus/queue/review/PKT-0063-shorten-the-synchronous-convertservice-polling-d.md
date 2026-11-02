@@ -53,6 +53,7 @@ Baseline PKT-0015 - sync mode adds up to 900 ms per request. Keep DB load reason
 - Lint: 0 errors, 1 pre-existing warning in AdminPanel (unrelated).
 
 ## Spawned packets
+- PKT-0068: Shorten sync ConvertService polling delay (with characterization test update)
 
 ## Review
 
