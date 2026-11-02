@@ -38,7 +38,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Make npm run lint:check pass: ignore or fix .theseus/oracle/perf scripts.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: goal already satisfied by PKT-0049's eslint ignore, contract kept, log and friction recorded
 
 ## Lessons for the Atlas
