@@ -53,6 +53,7 @@ Measure, where users feel it, what the adapter's `goals.measure` asks, and write
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat > .theseus/oracle/perf/bench-hotpaths.js <<'EOF'; Bash: chmod +x .theseus/oracle/perf/quality.sh; (cd DocService && NODE_CONFIG_DIR=../Common/config node ../.theseus/oracle/per…; Bash: cd DocService && NODE_CONFIG_DIR=../Common/config node ../.theseus/oracle/perf/bench-hotpaths.js 2>&1 | tail -8; Bash: NODE_CONFIG_DIR=Common/config node .theseus/oracle/perf/bench-hotpaths.js; Bash: sh .theseus/oracle/perf/quality.sh; Bash: .theseus/oracle/unit.sh
 
 ## Spawned packets
 
