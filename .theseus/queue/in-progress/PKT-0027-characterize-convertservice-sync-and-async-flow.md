@@ -51,6 +51,36 @@ The loop is at DocService/sources/converterservice.js:156-170 with CONVERT_ASYNC
 - attempt 2: acceptance failed: `npm run lint:check`
 - attempt 3: the executor's permissions refused: Bash: f=.theseus/queue/in-progress/PKT-0027-*.md; grep -n -A12 "^target:" $f | head -20; grep -n -A40 "Executor log" $f | tail…
 - attempt 3: acceptance failed: `npm run lint:check`
+claude-opus-5-5, 2026-11-02.
+Done: new `tests/unit/converterService.tests.js` (15 tests) drives `convertJson`/`convertXml` end to end with
+`taskresult`, `DocsCoServer` (getRequestParams, addTask), `canvasservice` and `storage-base` mocked.
+Pinned: async=true answers at once (end=false, no select, no sleep); `async: "true"` string is async;
+`DEFAULT_SHARD_KEY` without shard query forces sync; sync loop sleeps `CONVERT_ASYNC_DELAY`=1000 ms per poll
+until Ok and returns `<docId>/output.pdf` signed url; CONVERT_TIMEOUT after 4 polls with timeout 3000 ms (strict `>`);
+Err and ErrToReload return `status_info` (ErrToReload also calls cleanupErrToReload); NeedParams -> UNKNOWN;
+stale `last_open_date` -> CONVERT_TIMEOUT even when Ok; existing Ok task not re-queued; status None is re-queued;
+bad outputtype -> CONVERT_PARAMS; auth failure code passed through; exception -> UNKNOWN; convertXml -> isJson=false.
+Decisions:
+- `utils` is stubbed with `jest.spyOn` in `beforeEach`, not `jest.mock`: utils and operationContext require each
+  other, and a factory mock (`...requireActual`) gave operationContext a half-built module
+  (`utils.getShardKeyByRequest is not a function`).
+- `addTask` mock is a generator function (`function* () {}`): convertByCmd calls it with `yield*`.
+- `getConvertionTimeout` stubbed to 3000 ms so the timeout path is fast; sleep resolves at once (no fake timers).
+- `fillResponse` is stubbed to capture the ConvertStatus directly instead of parsing JSON/XML.
+Surprises / not done:
+- `.theseus/oracle/unit.sh` passes (148 passed, 1 skipped, 11 suites).
+- `npm run lint:check` could NOT be completed: `eslint .` is killed (exit 137, OOM) twice. `external/` (sdkjs,
+  web-apps, 1.5 GB, gitignored) is not in eslint `ignores`. Linting only the new file (`npx eslint <file>`, the
+  ESLint API via node) was refused by my permissions, so the new file is not lint-verified by tooling. Follow-up
+  requested in `.theseus/spawn/PKT-0027-ignore-external-in-eslint-config-js-so-npm-run-l.md`.
+Attempt 2 (claude-opus-5-5, 2026-11-02): re-ran acceptance. `unit.sh` passes (148 passed, 1 skipped).
+`npm run lint:check` is again killed (exit 137, OOM) while walking `external/`. This cannot be fixed inside the
+target: the fix is an `external/**` entry in `eslint.config.js` (outside `target.files`, `create_in` is only
+`tests/unit`), and flat config ignores no `.eslintignore`. The test file is unchanged. The packet is blocked
+until the spawned follow-up (ignore `external/` in eslint) is merged, or until the factory widens the target to `eslint.config.js`.
+Attempt 3 (claude-opus-5-5, 2026-11-02): same result. `unit.sh` passes (148 passed, 1 skipped);
+`npm run lint:check` prints `Killed` (OOM in `eslint .` over the gitignored `external/`). The VM had 6.2 GB free
+at the time. Nothing in the target can fix this; still blocked on the spawned eslint-ignore follow-up.
 
 ## Spawned packets
 
