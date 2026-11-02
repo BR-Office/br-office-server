@@ -49,6 +49,7 @@ Record PKT-0051 x2t phase split in oracle/baseline.md.
 ## Suggested plan
 
 ## Executor log
+- discard: unfinished spawn request (template placeholders) queued before Theseus 0.16.2
 
 ## Spawned packets
 
