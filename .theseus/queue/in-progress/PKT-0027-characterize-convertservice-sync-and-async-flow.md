@@ -50,6 +50,7 @@ The loop is at DocService/sources/converterservice.js:156-170 with CONVERT_ASYNC
 - attempt 2: the executor's permissions refused: Bash: .theseus/oracle/unit.sh 2>&1 | tail -5; npm run lint:check > ../lint.log 2>&1; echo exit=$?; tail -3 ../lint.log; Bash: sed -i '38s/.*/{"packet":"PKT-0027","role":"executor","model":"claude-opus-5-5","date":"2026-11-02","hindered":{"ref":"w…
 - attempt 2: acceptance failed: `npm run lint:check`
 - attempt 3: the executor's permissions refused: Bash: f=.theseus/queue/in-progress/PKT-0027-*.md; grep -n -A12 "^target:" $f | head -20; grep -n -A40 "Executor log" $f | tail…
+- attempt 3: acceptance failed: `npm run lint:check`
 
 ## Spawned packets
 
