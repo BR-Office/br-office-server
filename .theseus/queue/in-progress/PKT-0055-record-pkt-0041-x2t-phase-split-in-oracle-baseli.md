@@ -50,6 +50,7 @@ Add a section "x2t phase split (PKT-0041)" to `.theseus/oracle/baseline.md` with
 
 ## Executor log
 - attempt 1: acceptance failed: `[ORACLE COMMAND]`
+- attempt 2: acceptance failed: `[ORACLE COMMAND]`
 
 ## Spawned packets
 
