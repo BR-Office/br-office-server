@@ -46,6 +46,13 @@ baseline.md PKT-0016 shows 1.9–2.4 s after Editor.bin and apply p90 105–143 
 ## Suggested plan
 
 ## Executor log
+- Recorded with CDP Profiler (100 µs) in headless Chromium via Playwright (`/opt/node-tools/node_modules`, browsers in `/opt/pw-browsers`); 3 runs × {open, type, apply} × {10 p, 100 p}. Scripts `perf/profile-word.js` (record) and `perf/attribute-word.js` (attribute); aggregated JSON `perf/word-profile-2026-11-02.json`; table in baseline.md.
+- Decision: no source maps / develop bundle needed. Surprise: the package's `sdkjs/word/sdk-all.js` is whitespace-minified and keeps function names; only `sdk-all-min.js` (the "min" list of configs/word.json: docscoapi, CollaborativeEditingBase, SerializeCommonWordExcel, libfont loader) is mangled. Frames are mapped to source files via definition anchors in the bundle (names from the files word.json bundles, looked up in external/sdkjs; 154 ambiguous names skipped; ≤ 1 % of samples unmapped).
+- Decision: open window = CDP Network.loadingFinished of Editor.bin → isDocumentLoadComplete, same monotonic clock as the profile.
+- Surprise: the harness's own `GetText` polling showed up as Paragraph/Run time (up to 690 ms/run); samples under Playwright `evaluate`/`predicate` frames are now excluded and reported apart.
+- Surprise: profiling inflates the open window (2.5–6.9 s vs 1.9–2.4 s in PKT-0016) and run-to-run spread is large on 2 CPUs (10 p apply busy 5.4 s vs 100 p 2.9 s): shares are the result, not ms.
+- Finding: open is word layout + fonts (Serialize2 only 13–23 % inclusive); typing/apply are repaint-dominated (canvas drawImage 17–27 % self, *Draw* on stack 33–57 %); collab apply code itself < 1 %. No single JS kernel > 4 % → no migration candidate; refactor candidates listed in baseline.md.
+- Spawned one follow-up (font-name walk per remote change). Not done: GPU rendering, image-heavy docs, internals of the mangled base bundle. Acceptance list is empty; `theseus validate` run.
 
 ## Spawned packets
 
