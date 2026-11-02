@@ -56,6 +56,7 @@ Make npm run lint:check pass: ignore or fix .theseus/oracle/perf scripts.
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: python3 - <<'E'
 
 ## Spawned packets
 
