@@ -53,7 +53,8 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 - Surprises: `package.json` pkg.scripts lists `sources/editorDataRedis.js`, which does not exist; `DocsCoServer.js:155` builds `editorStat` from `editorDataStorage` in its fallback branch; no tests for DocsCoServer/canvasservice/converterservice/wopiClient.
 - Not done: friction line in `.theseus/scoreboard/friction.jsonl` (outside target and would exceed max_files_changed 3); no spawn requests created — the Open questions in the card are candidates for follow-up investigate packets.
 - integration: merge conflict in
-- integration: merge conflict in 
+- integration: merge conflict in
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
