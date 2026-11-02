@@ -40,7 +40,7 @@ budget:
 roles:
   executor: claude-sonnet-5-5
   reviewer: claude-opus-5-5
-rejected_reviews: 1
+rejected_reviews: 2
 ---
 
 ## Goal
@@ -57,5 +57,6 @@ PKT-0002 covered 18 pure helpers but left out empty-string and null inputs. One 
 
 ## Review
 - Rejected by claude-opus-5-5: reviewer is the same model family as the executor (claude-sonnet-5-5); reassign PKT-0004 to a reviewer from another family
+- Rejected by claude-opus-5-5: reassign the review to a non-Claude reviewer (same-family rule); also cover `encryptPassword`/`decryptPassword` and `isEmptyObject(null/undefined)`
 
 ## Lessons for the Atlas
