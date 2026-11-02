@@ -58,6 +58,7 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 - Acceptance: the packet has no acceptance commands.
 
 ## Spawned packets
+- PKT-0051: Measure x2t PDF export/save phase split on the installed binary
 
 ## Review
 
