@@ -65,6 +65,7 @@ Crash fixes upstream are almost all such guards in DocsCoServer.js, canvasservic
 - Upstream fixes 81132/81576 (PKT-0029) live mostly outside this target (static.js, aiProxyHandler.js, canvasservice.js): not touched.
 - Spawned: request to flip the pinned characterizations with real guards (target includes the P2 test file).
 - Acceptance: `.theseus/oracle/unit.sh` 183 passed / 1 skipped; `npm run lint:check` exit 0 (1 pre-existing AdminPanel warning).
+- block: the reviewer found an external blocker: P4 guards need tests/unit/docsCoServerCrashPaths.tests.js in the target and a narrower "tests unchanged" rule (planner or human must re-scope, as the spawn request proposes); the editorStat fix itself is sound.
 
 ## Spawned packets
 - PKT-0070: Flip the pinned DocsCoServer crash-path characterizations behind real guards
