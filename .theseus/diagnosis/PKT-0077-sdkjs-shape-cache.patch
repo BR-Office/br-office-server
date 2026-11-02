@@ -1,0 +1,64 @@
+diff --git a/cell/view/StringRender.js b/cell/view/StringRender.js
+index c105a49..39e7ead 100644
+--- a/cell/view/StringRender.js
++++ b/cell/view/StringRender.js
+@@ -141,6 +141,8 @@
+ 			
+ 			this.font           = null;
+ 			this.stringRenderer = null;
++			this.shapeRecord     = null;
++			this.shapeBeginIndex = 0;
+ 		}
+ 		FragmentShaper.prototype = Object.create(AscFonts.CTextShaper.prototype);
+ 		FragmentShaper.prototype.constructor = FragmentShaper;
+@@ -155,10 +157,40 @@
+ 
+ 			return AscFonts.hb_get_script_by_unicode(nUnicode);
+ 		};
++		// Shaping results depend only on (font, size, style, PPI, code points): memoize them so repeated
++		// cell texts (labels, codes, small numbers) skip HarfBuzz. Bounded to keep memory in check.
++		var c_nShapeCacheMax = 200000;
++		var g_oShapeCache = new Map();
+ 		FragmentShaper.prototype.shapeFragment = function(chars, font, stringRenderer, beginIndex) {
+ 			this.font           = font;
+ 			this.stringRenderer = stringRenderer;
+ 
++			let key = font.getName() + "\u0001" + font.getSize() + "\u0001"
++				+ ((font.getBold() ? 1 : 0) | (font.getItalic() ? 2 : 0)) + "\u0001"
++				+ stringRenderer.drawingCtx.getPPIY() + "\u0001" + chars.join(",");
++			let cached = g_oShapeCache.get(key);
++			if (cached) {
++				for (let i = 0; i < cached.length; i += 3) {
++					let idx = beginIndex + cached[i];
++					let pr  = stringRenderer._getCharPropAt(idx);
++					pr.grapheme = cached[i + 1];
++					pr.idx      = idx;
++					stringRenderer.charWidths[idx] = cached[i + 2];
++					stringRenderer.chars[idx]      = chars[cached[i]];
++				}
++				return;
++			}
++			this.shapeRecord     = [];
++			this.shapeBeginIndex = beginIndex;
++			try {
++				this.private_shapeFragment(chars, stringRenderer, beginIndex);
++				if (g_oShapeCache.size < c_nShapeCacheMax)
++					g_oShapeCache.set(key, this.shapeRecord);
++			} finally {
++				this.shapeRecord = null;
++			}
++		};
++		FragmentShaper.prototype.private_shapeFragment = function(chars, stringRenderer, beginIndex) {
+ 			this.StartString();
+ 			for (let i = 0; i < chars.length; ++i) {
+ 				let char = chars[i];
+@@ -251,7 +283,8 @@
+ 			pr.idx = oItem.idx;
+ 			st.charWidths[oItem.idx] = w;
+ 			st.chars[oItem.idx] = oItem.char;
+-
++			if (this.shapeRecord)
++				this.shapeRecord.push(oItem.idx - this.shapeBeginIndex, grapheme, w);
+ 		};
+ 
+ 		/**
