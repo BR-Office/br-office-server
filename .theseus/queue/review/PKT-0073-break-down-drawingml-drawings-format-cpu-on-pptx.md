@@ -63,6 +63,7 @@ PKT-0045 put drawings at 296 ms (35 % of common) on pptx open and 55-88 ms on do
 - Acceptance: the packet lists no commands.
 
 ## Spawned packets
+- PKT-0078: Cache shape text styles (CShape.recalculateTextStyles + style-cache sha256) on pptx open
 
 ## Review
 
