@@ -47,6 +47,20 @@ PKT-0045 put drawings at 296 ms (35 % of common) on pptx open and 55-88 ms on do
 ## Suggested plan
 
 ## Executor log
+- Wrote `.theseus/oracle/perf/drawings-functions.js` instead of editing `profile-client.js` (not in target.files): it loads
+  profile-client's helpers (source before `main()`) and adds per-function self/inclusive and caller attribution for the
+  drawings group. Ran 3 cold opens of the PKT-0045 samples (deck-50.pptx, medium-10p/large-100p.docx, large-10k.xlsx) on the
+  native Document Server; raw output `perf/drawings-functions-2026-11-02.json`; results in baseline.md, new section.
+- Result: drawings self 282-290 ms on pptx (reproduces PKT-0045). Flat profile: no function above 31 ms self. One candidate
+  above 50 ms inclusive: `CShape.recalculateTextStyles`/`Get_Styles` 143 ms incl., 91 ms of it `CMemory.sha256` from
+  word style-cache. Spawned a refactor request for it (targets under external/sdkjs: needs the fork).
+- Surprise: ~30 ms of "drawings" is font loading in `common/Drawings/Externals.js` (xhr.onload, LoadFontArrayBuffer);
+  in docx/xlsx it is most of the group. PKT-0045's grouping should move Externals.js to fonts.
+- Surprise: file attribution by nearest anchor is off for some methods (getIsSingleBody under CnxShape.js); function
+  names are exact, so the table is by function. Anonymous closures were resolved by reading the bundle at the offset.
+- Not done: the summary keeps only the top 40 functions per field (the tail is not itemized); no change to sdkjs
+  (read-only); sdkjs-slide diagnosis coordination is limited to naming the slide callers in baseline and the spawn.
+- Acceptance: the packet lists no commands.
 
 ## Spawned packets
 
