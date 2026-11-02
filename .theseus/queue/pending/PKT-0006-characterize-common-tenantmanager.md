@@ -31,7 +31,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
 ---
@@ -47,6 +47,7 @@ Common/sources/tenantManager.js; see the common card pitfalls. Run with .theseus
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: .theseus/oracle/unit.sh tenantManager 2>&1 | grep -v "^\s*$" | head -40; Bash: cd DocService && npx jest ../tests/unit/tenantManager --inject-globals=false --config=../tests/jest.config.js 2>&1 | hea…; Bash: .theseus/oracle/unit.sh > /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0006/0204548c-a824-57b7-be…; Bash: npx prettier --check tests/unit/tenantManager.tests.js; tail -2 .theseus/scoreboard/friction.jsonl
+- return: factory stopped by Rafael to redo the diagnosis against the real goals
 
 ## Spawned packets
 
