@@ -3,20 +3,24 @@
 What is installed and running for this project in the factory's machine (a cloud VM: 2 CPUs, 7 GB RAM).
 Absolute numbers are lower than in production; proportions (where the time goes) are what matter.
 
-## Euro-Office Document Server (full stack)
+## Euro-Office Document Server (full stack, native)
 
-- The Docker daemon is running, and the **Euro-Office** image is already pulled:
-  `ghcr.io/euro-office/documentserver:latest` (Euro-Office's own build: DocService, FileConverter with x2t,
-  the compiled `sdkjs`/`web-apps` clients, PostgreSQL, Redis and RabbitMQ inside the container).
-- Start it (about one minute until healthy):
-  ```sh
-  docker run -d --name eo -p 8080:80 -e JWT_ENABLED=false ghcr.io/euro-office/documentserver:latest
-  until curl -sf http://127.0.0.1:8080/healthcheck; do sleep 5; done
-  ```
-- Stop it when done: `docker rm -f eo`. Only one instance at a time (memory).
-- Inside the container: `docker exec eo ...` (x2t is under `/var/www/*/documentserver/server/FileConverter/bin`).
-- The ConvertService, CommandService and the editors' test example are served on port 8080
-  (`EXAMPLE_ENABLED=true` adds the example integration page for opening documents in a browser).
+Install Euro-Office's own package directly on the machine (Rafael: no Docker, it only adds overhead):
+
+```sh
+curl -fL -o /tmp/eo.deb https://github.com/Euro-Office/DocumentServer/releases/download/v9.3.7-1/euro-office-documentserver_9.3.7-1_amd64.deb
+apt-get install -y /tmp/eo.deb    # pulls PostgreSQL, RabbitMQ, nginx and the rest as dependencies
+```
+
+- It brings DocService, FileConverter with x2t, and the compiled `sdkjs`/`web-apps` clients.
+- There is no systemd here: start services with `service <name> start` (postgresql, rabbitmq-server,
+  redis-server, nginx) and the Document Server processes with `supervisorctl` if the package uses it;
+  check `/healthcheck` on the nginx port.
+- Once installed it stays installed for later packets: check before installing again.
+- For the example documents to load, private addresses must be allowed (`ALLOW_PRIVATE_IP_ADDRESS`
+  in the Document Server configuration), as PKT-0014 found.
+- PKT-0014 and PKT-0015 measured with the Docker image `ghcr.io/euro-office/documentserver:latest`
+  (same Euro-Office build). Later measurements use the native package; say so next to the numbers.
 
 ## Browser
 

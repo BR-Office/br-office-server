@@ -21,7 +21,7 @@ goals:
     - "Speed: latency and throughput of what users do (open, co-edit, save, convert), on the server or in the client"
     - "Quality: defects, crashes and regressions, and what in the code makes them likely"
   preferred_languages: [rust, go, typescript]
-  baseline_commands: ["node", "npm", "npx", "docker", "curl", "apt-get"]   # Rafael authorized installing and running the stack
+  baseline_commands: ["node", "npm", "npx", "curl", "apt-get", "dpkg", "service", "supervisorctl"]   # Rafael authorized installing and running the stack
 
 modules:
   - id: common
