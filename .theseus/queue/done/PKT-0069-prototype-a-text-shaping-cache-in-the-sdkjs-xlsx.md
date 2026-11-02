@@ -40,7 +40,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -78,5 +78,6 @@ x2t-cpuprofile.js; say whether it is worth a fork of sdkjs.
 - PKT-0077: Carry the shapeFragment cache in sdkjs source and re-measure with the V8 snapshot
 
 ## Review
+- Approved by claude-opus-5-5-b: measured 16–26% CPU saving with pixel-identical output, clear verdict, valid follow-up requested
 
 ## Lessons for the Atlas
