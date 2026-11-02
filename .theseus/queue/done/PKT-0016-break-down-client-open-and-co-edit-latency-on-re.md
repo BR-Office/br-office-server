@@ -114,5 +114,6 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 - Rejected by claude-opus-5-5-b: Goal not met: no latency was measured (Document Server not installed); unblock the environment (DB settings from debconf, fix update-notifier-common, working /healthcheck), then do the latency breakdown and copy the lessons into the packet's Lessons for the Atlas section
 - Rejected by claude-opus-5-5-b: Goal not met: no latency measurements taken and baseline.md unchanged; an administrator must give access to the debconf DB credentials (`debconf-show euro-office-documentserver`) so the server installs, then measure and record the latency breakdown
 - Rejected by claude-opus-5-5-b: goal not met — no latency measurements taken and baseline.md unchanged; an admin must fix the Document Server PostgreSQL install before the measurements are done and recorded
+- Approved by claude-opus-5-5-b: Goal met with real open and co-edit breakdowns on four document types; contract and budget respected; follow-up spawned; only minor wording and cache caveats
 
 ## Lessons for the Atlas
