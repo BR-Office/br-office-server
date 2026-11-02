@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5-b
+  executor: null
   reviewer: null
 ---
 
@@ -53,6 +53,7 @@ Run with `.theseus/oracle/perf/x2t-split.sh`; samples from `make-samples.py`.
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16.2
 
 ## Spawned packets
 
