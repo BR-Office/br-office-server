@@ -45,6 +45,7 @@ DocService/sources/canvasservice.js (2,106 lines) and taskresult.js have no dire
 ## Suggested plan
 
 ## Executor log
+- discard: superseded: its plan answered other goals
 
 ## Spawned packets
 
