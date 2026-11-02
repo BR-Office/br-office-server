@@ -69,6 +69,49 @@ Reading:
 - These are a lower bound on content cost: an empty document. Large documents, xlsx/pptx and a real
   network are not covered.
 
+## Client: open and co-edit breakdown on realistic documents (PKT-0016)
+
+Script: `node .theseus/oracle/perf/client-breakdown.js <dir> [runs]`; raw output (one JSON line per file) in
+`perf/client-breakdown-2026-11-02.json`. **Native package** `euro-office-documentserver` 9.3.7-1 (not Docker),
+example on port 80, JWT on, `allowPrivateIPAddress` on, same VM (2 CPUs) for server and Chromium.
+Samples generated with python-docx/openpyxl/python-pptx (text, headings, tables; no images):
+docx 10 pages (41 KB) and 100 pages (79 KB), xlsx 10 000 rows × 5 columns with formulas (432 KB), pptx 50 slides (76 KB).
+3 opens per file, each in a new browser context (cold HTTP cache).
+
+Open, p50 (max) in ms from `goto`, from the editor frame's Performance API resource timings:
+
+| File | Total | Last sdkjs/web-apps script in | Editor.bin requested | Editor.bin received | After Editor.bin → load complete |
+|---|---|---|---|---|---|
+| docx 10 p | 3 392 (3 727) | 1 526 | 1 493 | 1 563 | 1 860 |
+| docx 100 p | 4 168 (4 287) | 1 515 | 1 676 | 1 893 | 2 394 |
+| xlsx 10 k rows | 4 383 (4 665) | 2 304 | 2 452 | 2 930 | 1 453 |
+| pptx 50 slides | 3 945 (4 545) | 1 860 | 1 601 | 1 648 | 2 271 |
+
+Each open loads 12–13 scripts (~500 KB transferred), 14–25 font files and ~25 other resources.
+
+Co-edit (docx, 2 users, 30 sequential markers of 4–5 characters typed by A; A's WebSocket send and B's
+WebSocket message of `saveChanges` timestamped in the page with the host clock):
+
+| File | Total p50 / p90 / max | A: last key → change sent | Wire: A sent → B received (Socket.IO + DocsCoServer) | B: received → marker in model |
+|---|---|---|---|---|
+| docx 10 p | 116 / 182 / 195 | 6 / 38 / 42 | 6 / 9 / 15 | 42 / 143 / 155 |
+| docx 100 p | 137 / 223 / 280 | 31 / 42 / 50 | 8 / 15 / 20 | 73 / 105 / 187 |
+
+Total also includes typing the marker (~20 ms per run of `keyboard.type`). Typing (key → char in model →
+next frame): p50 75 ms / p90 119 ms (10 p), p50 80 / p90 156 ms (100 p).
+
+Reading:
+- **Open ≈ 3.4–4.4 s and grows mostly in the client.** ~1.5 s goes to the editor scripts (2.3 s for the
+  spreadsheet editor); the server's open (auth, x2t conversion, Editor.bin) overlaps with the script
+  load and Editor.bin itself arrives in 0.05–0.5 s (largest for xlsx). The biggest single part is
+  **after Editor.bin: 1.5–2.4 s** of parse, font loading and layout/first render, and it grows with
+  document size (docx 10 → 100 pages: +0.5 s).
+- **The remote-apply tail is client-side, not the server.** The wire share (A send → B receive, including
+  DocsCoServer) is 6–8 ms p50 and ≤ 20 ms max; A's change batching is ≤ 50 ms; the tail is B applying
+  the change and recalculating (p90 105–143 ms, max 187 ms), larger on the big document. The 1–2.4 s
+  p99 seen in PKT-0015 with 4 clients is therefore most likely CPU contention among Chromium instances.
+- Not isolated: x2t time inside the open (it overlaps with script loading); images, real networks.
+
 ## End-to-end server (full stack, PKT-0015)
 
 Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
@@ -167,7 +210,7 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 | Gap | Why | Follow-up |
 |---|---|---|
 | End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | measured in PKT-0015 (section above), small documents only; not measured: large documents, a load test (many documents × many clients), server-side split of the co-edit tail | requested: spawn "Split co-edit round-trip tail and load-test the server" |
-| Client latency (open/render, apply remote changes, typing) | measured on an empty docx (PKT-0014, section above); not measured: large documents, xlsx/pptx, breakdown of open time (download / parse / x2t / render), breakdown of remote-apply tail | requested: spawn "Break down client open and co-edit latency on realistic documents" |
+| Client latency: x2t share of open, real network, low-end clients | PKT-0016 split open and remote apply (section above), but the server's open + x2t is not isolated from the client's lazy script loads, all timings are on localhost, and 2 CPUs host server and browsers | server-side timestamps per open (DocService log: open request → Editor.bin ready) |
 | x2t conversion time per format | measured in PKT-0015 for empty docx/xlsx/pptx/pdf → pdf/ODF; not for realistic files | part of the spawn above |
 | Crash and defect rate | history too short here; upstream query (`gh api` on Euro-Office/server) refused by the executor's permissions in PKT-0015; no production telemetry | requested: spawn "Defect and crash rate from upstream history" |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |
