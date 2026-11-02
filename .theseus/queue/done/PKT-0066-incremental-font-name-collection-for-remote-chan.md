@@ -44,7 +44,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -86,5 +86,6 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
 
 ## Review
+- Approved by claude-opus-5-5-b: Scope fixed (only the 4 target files); remote applies touching only text use the incremental path, anything else gets the full walk; profiling handed to PKT-0071
 
 ## Lessons for the Atlas
