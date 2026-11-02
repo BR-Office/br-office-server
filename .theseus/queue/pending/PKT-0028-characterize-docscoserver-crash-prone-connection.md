@@ -31,7 +31,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -45,6 +45,7 @@ These are the paths of the upstream crash fixes listed in .theseus/oracle/baseli
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.15.3
 
 ## Spawned packets
 
