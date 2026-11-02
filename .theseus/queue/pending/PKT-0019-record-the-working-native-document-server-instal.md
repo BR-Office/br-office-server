@@ -36,7 +36,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -59,6 +59,7 @@ PKT-0016 got the native package running. Recipe that worked (not yet in environm
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted (Theseus 0.13.5: blocked measurements hold the diagnoses; longer timeout)
 
 ## Spawned packets
 
