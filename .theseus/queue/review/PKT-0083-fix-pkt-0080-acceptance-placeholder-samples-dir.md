@@ -57,6 +57,14 @@ Make PKT-0080's acceptance runnable: merge `.theseus/oracle/perf/profile-fonts.j
 ## Executor log
 - attempt 1: changed .theseus/queue/blocked/PKT-0080-libfont-table-lookup-for-hb-get-script-horizonta.md, outside the target (rule R2)
 - attempt 2: the spawn request PKT-0083-fix-pkt-0080-acceptance-placeholder-in-blocked-p.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- Restored `.theseus/oracle/perf/profile-fonts.js` byte-for-byte from commit 75204fd (pkt/PKT-0072); no other oracle script touched.
+- PKT-0080 acceptance line now: `python3 .theseus/oracle/perf/make-samples.py /tmp/eo-samples && node .theseus/oracle/perf/profile-fonts.js /tmp/eo-samples external/sdkjs 3`. Decision: generate samples in the command itself so it does not depend on a pre-existing /tmp dir (/tmp/eo-samples is the path every earlier packet used; make-samples.py is deterministic, seed 18, and writes large-100p.docx).
+- Surprise: PKT-0080 is in `queue/blocked/`, not `in-progress/` as target.files says; I edited the same-named file in blocked/. Consequently the second acceptance command passes trivially (glob matches nothing, grep exits 2).
+- Conflict not resolved: `<samples-dir>` still appears 5 times in PKT-0080's Executor log (lines quoting the old failures). The contract says the log stays as written, so I left it; when PKT-0080 is moved back to in-progress, this packet's grep would fail on that history. Reviewer/factory should decide whether the grep should target only the acceptance block.
+- Not run: the profiler itself (needs PKT-0080's build + sdkjs-mirror.sh); out of scope here.
+- Attempt 2 (after R2 rejection): reverted my edit to `queue/blocked/PKT-0080-*.md` (outside target.files, which names `in-progress/`). Kept profile-fonts.js. The PKT-0080 acceptance fix is now requested as a spawned packet (`.theseus/spawn/`) targeting the blocked/ path. Lesson: a packet that edits another packet must target its current queue state, or use a glob.
+- Acceptance: both commands pass; the grep one passes only because no PKT-0080 file is in in-progress/ (vacuous).
+- Attempt 3: confirmed blocked/PKT-0080 is byte-identical to base (diff vs claim commit touches only profile-fonts.js, this packet, friction.jsonl, spawn request). Filled the spawn request's contract and acceptance (awk-scoped to PKT-0080's acceptance block, glob over queue states so it survives moves) and removed the duplicate empty section.
 
 ## Spawned packets
 
