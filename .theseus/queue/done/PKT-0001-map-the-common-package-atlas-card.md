@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Write the Atlas card `.theseus/atlas/common.md` for the `Common` package (about 
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Card is complete, in scope, within budget and honest about missing tool metrics; spot-checked claims are accurate. `theseus validate` could not be rerun here because it needed approval.
 
 ## Lessons for the Atlas
