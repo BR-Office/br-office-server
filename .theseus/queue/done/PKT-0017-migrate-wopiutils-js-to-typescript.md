@@ -45,7 +45,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Migrate `DocService/sources/wopiUtils.js` to `wopiUtils.ts`.
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Behavior-preserving rename and typing; exports, URL precedence and ignore lines correct, within scope and budget.
 
 ## Lessons for the Atlas
