@@ -36,7 +36,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -48,6 +48,7 @@ Make the load test's saves valid (callback status 2). PKT-0021 found that even 1
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.15 (scope widened to client and converter, Rafael)
 
 ## Spawned packets
 
