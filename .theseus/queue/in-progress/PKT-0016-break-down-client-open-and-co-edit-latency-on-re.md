@@ -39,7 +39,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -60,5 +60,6 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 ## Review
 - Rejected by claude-opus-5-5-b: No latency measurements were taken, so the goal is not met; set up the Document Server stack (or grant the needed permissions), fix environment.md, and make the acceptance check require real numbers before retrying.
 - Rejected by claude-opus-5-5-b: No latency measured (goal unmet); finish the Document Server setup (PostgreSQL user and database) and retry with an acceptance check that requires real docx/xlsx/pptx timings under .theseus/oracle/perf/
+- Rejected by claude-opus-5-5-b: Goal not done: no client open/co-edit latency breakdown was measured (the stack is still not set up and the acceptance check passes trivially). Set up the stack first (spawn request), then retry and record real numbers in baseline.md.
 
 ## Lessons for the Atlas
