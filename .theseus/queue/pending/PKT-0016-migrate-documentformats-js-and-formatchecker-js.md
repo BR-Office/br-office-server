@@ -1,0 +1,75 @@
+---
+id: PKT-0016
+title: "Migrate documentFormats.js and formatchecker.js to TypeScript"
+type: migrate
+priority: medium
+module: common
+
+origin:
+  type: diagnosis
+  ref: DIAG-common
+
+depends_on: [PKT-0011, PKT-0015]
+
+target:
+  files:
+    - "Common/sources/documentFormats.js"
+    - "Common/sources/formatchecker.js"
+    - ".gitignore"
+    - ".prettierignore"
+  create_in: ["Common/sources"]
+
+context:
+  cards: [common]
+  references: [.theseus/adapter/interop-javascript-typescript.md]
+
+contract:
+  preserve:
+    - "The module.exports shape is identical: same names, same values, same behavior"
+    - "Every existing unit test passes without changes to what it asserts"
+    - "Every require of the module keeps resolving with no edit to its callers"
+    - "The Makefile and the DocService pkg/bin entries are untouched and keep resolving to JavaScript"
+  forbidden: ["Common/sources/commondefines.js", "Common/sources/license.js"]
+
+acceptance:
+  commands:
+    - "npx tsc -p tsconfig.json --noEmit"
+    - ".theseus/oracle/unit.sh"
+    - "npm run lint:check"
+
+budget:
+  max_files_changed: 8
+  max_diff_lines: 1800
+  max_cost_usd: 6.00
+  max_attempts: 3
+
+roles:
+  executor: null
+  reviewer: null
+---
+
+## Goal
+Migrate `Common/sources/documentFormats.js` and `formatchecker.js` to TypeScript: typed format ids and signature detection.
+
+## Essential context
+- Wave 1 of DIAG-common (#7). Characterized by PKT-0011 (`tests/unit/formatchecker.tests.js`).
+- Follow `.theseus/adapter/interop-javascript-typescript.md`, section "Decisions (PKT-0009)", and use `DocService/sources/utilsDocService.ts` as the house style (first migrated leaf).
+- `git mv` the `.js` to `.ts`; the `.js` becomes a build output of `ts-strip.js` (it finds every `.ts` under `Common/sources` and `DocService/sources` by itself). Add **one explicit line** for the emitted `.js` to `.gitignore` and to `.prettierignore`, next to the `utilsDocService.js` line, and make sure the old `.js` is no longer tracked.
+- `tsconfig.json` has `strict` and `erasableSyntaxOnly`: no `enum`, no `namespace`, no constructor parameter properties, no `import x = require()` (Node strips types, it does not transform). Use `as const` objects and type aliases instead.
+- Keep CommonJS (`require`/`module.exports`). Types strict inside, `unknown` at external input.
+- Record anything surprising in the executor log of this packet.
+- `formatchecker.js` uses `exports.x = function` assignments: keep every exported name; a typed `const` plus `module.exports.x = x`, or one `module.exports = {...}` with the same names, are both fine.
+- Buffers: type them as `Buffer`; keep the existing handling of empty and truncated input exactly.
+
+## Suggested plan
+1. Migrate `documentFormats` first, then `formatchecker`.
+2. Run the acceptance commands after each.
+3. Log surprises.
+
+## Executor log
+
+## Spawned packets
+
+## Review
+
+## Lessons for the Atlas
