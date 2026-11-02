@@ -52,9 +52,15 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 ## Suggested plan
 
 ## Executor log
+- Decision: verdict **refactor** (JavaScript, no target language). Baseline shows DocService is a few % of open, 4 ms p50 of a ~100 ms co-edit round trip and ~0.1 s of conversions; no language change gains user-felt speed. The user-felt costs this module owns: the fixed 1 s sync-convert poll (`converterservice.js:49,163`) and crash-prone, untested co-edit code (PKT-0017 fix/crash concentration). Plan: 2 characterize + 2 refactor + 1 investigate (upstream fixes 81132/81576).
+- Decision: replaced the old DIAG-docservice.md without reading it (independence); DIAG-docservice-b.md did not exist, so nothing to `git rm`.
+- Decision: save's 5 s `savetimeoutdelay` is configuration in Common, noted in the diagnosis but not planned.
+- Surprise: `DocsCoServer.js:155` builds `editorStat` with `new editorDataStorage()`; folded into P4.
+- Not done: no new measurement (baseline covers the module, except the server share of open, listed as what would change the verdict). A heredoc-based shell edit was refused by permissions; used file edits instead.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- docservice: its share of user time is small (server segment of co-edit 4 ms p50); its measured user costs are the 1 s sync ConvertService poll and crash-prone, untested DocsCoServer/canvasservice.
