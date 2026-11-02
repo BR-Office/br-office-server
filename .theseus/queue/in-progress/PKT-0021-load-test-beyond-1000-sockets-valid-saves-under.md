@@ -1,6 +1,6 @@
 ---
 id: PKT-0021
-title: Load-test beyond 1000 sockets, valid saves under load, pptx-to-pdf outlier
+title: Load-test beyond 1000 sockets and pptx-to-pdf outlier
 type: investigate
 priority: medium
 module: docservice
@@ -13,8 +13,10 @@ depends_on: []
 
 target:
   files:
-    - "[FILE]"
-  create_in: []
+    - ".theseus/queue/in-progress/PKT-0021-load-test-beyond-1000-sockets-valid-saves-under.md"
+    - ".theseus/scoreboard/friction.jsonl"
+  create_in:
+    - ".theseus/spawn/"
 
 context:
   cards: [docservice]
@@ -22,11 +24,14 @@ context:
 
 contract:
   preserve:
-    - "[WHAT MUST NOT CHANGE]"
-  forbidden: []
+    - "No source code, configuration or perf script in the repository changes (measurement only)"
+  forbidden:
+    - "server source (DocService/, FileConverter/, Common/)"
 
 acceptance:
-  commands: []
+  commands:
+    - "theseus validate"
+    - "git diff --name-only 17f4bf3..HEAD | grep -v -E '^\\.theseus/(queue/|spawn/|scoreboard/friction\\.jsonl)' | wc -l | grep -qx 0"
 
 budget:
   max_files_changed: 6
@@ -40,7 +45,9 @@ roles:
 ---
 
 ## Goal
-Extend PKT-0018's load test: (1) find why 200 docs × 5 clients (direct to port 8000) gives no result in 300 s and where the ceiling is; (2) make saves under load valid (generate per-document changes that fit, so callback status 2 instead of 3) and time save assembly; (3) explain the one pptx → pdf conversion that took 124 s (deck-50.pptx, 1 of 3 runs).
+Extend PKT-0018's load test: (1) find why 200 docs × 5 clients (direct to port 8000) gives no result in 300 s and where the ceiling is; (3) explain the one pptx → pdf conversion that took 124 s (deck-50.pptx, 1 of 3 runs).
+
+**Scope narrowed (attempt 2, after review):** item (2) of the original goal (valid saves, callback status 2, save-assembly timing) is moved to its own packet, spawn request `PKT-0021-valid-saves-under-load-...`. This packet covers items (1) and (3) only.
 
 ## Essential context
 See baseline.md section "Co-edit tail split, load test, large files (PKT-0018)" and perf/load-coedit.js, perf/convert-large.js. No source change; measurement only.
@@ -66,7 +73,8 @@ See baseline.md section "Co-edit tail split, load test, large files (PKT-0018)" 
   No errors, no lost broadcasts. No ceiling reached at 2 000 sockets / 3 500 broadcasts/s; p99 rises from 12 to 28 ms with the doubled change rate. Not tried higher: the load generator shares the 2 CPUs. DocService open-file soft limit is 20 000 (no fd problem).
 - Before the fix (same run, no unlock): 200x5 finished only thanks to the timeout: 71 noLockReply, 142 missing broadcasts.
 
-### (2) Valid saves under load: NOT done
+### (2) Valid saves under load: moved out of scope (attempt 2)
+- Attempt 2 (claude-opus-5-5, 2026-11-02): per the review, the goal is narrowed to (1) and (3); (2) lives in spawn request `PKT-0021-valid-saves-under-load-...`. Filled target (this packet, friction, spawn/), contract (measurement only, no source change) and acceptance (`theseus validate` + a diff check that only .theseus queue/spawn/friction files changed). Both acceptance commands pass. Findings below kept as context for the new packet.
 - All saves still return status 3. x2t fails applying the replayed change: `TypeError: Cannot read property 'Check' of undefined at CChangesRunAddItem.Load` (medium-10p.docx) and `'Update_OnAdd' of undefined` on a blank `new (1).docx`, even for 1 doc and 1 change, exit code 86. The captured change refers to object ids created in the capturing browser session, so no single change fits any document. Fixing this needs a Playwright capture of the whole change sequence -> spawn request. Save assembly time is therefore only indicative: 200 docs -> 138-143 s for all callbacks (failing assembly, maxprocesscount 1).
 
 ### (3) pptx -> pdf 124 s outlier: explained
