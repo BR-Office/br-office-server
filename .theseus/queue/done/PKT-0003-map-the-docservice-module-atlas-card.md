@@ -52,6 +52,7 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 - Decision: module kept as one card (wc of sources ≈14.7k lines, under the 20k split threshold), but `DocsCoServer.js` (~4.7k lines) is flagged as a split candidate.
 - Surprises: `package.json` pkg.scripts lists `sources/editorDataRedis.js`, which does not exist; `DocsCoServer.js:155` builds `editorStat` from `editorDataStorage` in its fallback branch; no tests for DocsCoServer/canvasservice/converterservice/wopiClient.
 - Not done: friction line in `.theseus/scoreboard/friction.jsonl` (outside target and would exceed max_files_changed 3); no spawn requests created — the Open questions in the card are candidates for follow-up investigate packets.
+- integration: merge conflict in 
 
 ## Spawned packets
 
