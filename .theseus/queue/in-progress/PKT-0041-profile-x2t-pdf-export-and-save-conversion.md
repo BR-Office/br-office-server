@@ -44,6 +44,7 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0041; ls .theseus/oracle/perf; ls /var/www/euro-office/document…; Bash: ls /var/www/euro-office/documentserver/server/FileConverter/bin; Bash: /var/www/euro-office/documentserver/server/FileConverter/bin/x2t 2>&1 | head -5; Bash: f=.theseus/spawn/PKT-0041-measure-x2t-pdf-export-save-phase-split-on-the-i.md; python3 - "$f" <<'EOF'
 
 ## Spawned packets
 
