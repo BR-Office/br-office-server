@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -64,5 +64,6 @@ Write the Atlas card `.theseus/atlas/docservice.md` for the `DocService` package
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Atlas card is complete, within budget, and the claims I spot-checked hold; I could not rerun `theseus validate`.
 
 ## Lessons for the Atlas
