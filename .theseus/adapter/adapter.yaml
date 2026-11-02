@@ -1,0 +1,120 @@
+# Theseus adapter for the Euro-Office server fork, pilot v2 (restarted from upstream). See .theseus/spec/adapter.md.
+# Pilot: Claude models only, so review.allow_same_family is on (rule R4 exception).
+
+project:
+  name: euro-office-server
+  description: Euro-Office Document Server backend (Node.js) — fork used as the first Theseus pilot
+  repository: github.com/RafaelPetinati/euro-office-server
+  upstream:
+    repository: github.com/Euro-Office/server
+    branch: main
+    sync_every: 7d
+
+goals:
+  weights:
+    performance_gain: 0.10
+    security_risk: 0.20
+    maintenance_cost: 0.25
+    coupling: 0.10
+    oracle_strength: 0.15
+    interop_cost: 0.10
+    target_ecosystem: 0.05
+    goal_alignment: 0.05
+  statement: >
+    Make the server easier to maintain and safer to change: map it, raise test
+    coverage where it is thin, and assess a gradual JavaScript to TypeScript
+    migration of the shared code (Common) and the coordination server (DocService).
+
+modules:
+  - id: common
+    path: Common
+    description: Shared library used by every service (utilities, configuration, storage, queues, tenants).
+  - id: docservice
+    path: DocService
+    description: Document coordination server (co-editing, conversion requests, WOPI).
+
+languages:
+  present: [javascript]
+  allowed_targets:
+    javascript: [typescript]
+
+tools:
+  hotspot:
+    high: "cpu_pct >= 5 or (churn_90d >= 30 and coverage < 0.5)"
+    medium: "cpu_pct >= 1 or churn_90d >= 10"
+
+build:
+  install: npm ci && npm ci --prefix ./Common && npm ci --prefix ./DocService && npm ci --prefix ./FileConverter
+  test: .theseus/oracle/unit.sh
+  lint: npm run lint:check
+
+factory:
+  # Fresh worktrees have no node_modules: install before the executor starts (about 70 s).
+  setup: npm ci --no-audit --no-fund && npm ci --prefix ./Common --no-audit --no-fund && npm ci --prefix ./DocService --no-audit --no-fund && npm ci --prefix ./FileConverter --no-audit --no-fund
+  read_only_commands: ["node --version", "theseus status", "theseus validate"]
+  integrate: true                 # merge each approved branch into theseus-v2
+  union_merge: [.gitignore, .prettierignore]
+  integrate_check: .theseus/oracle/unit.sh
+
+oracle:
+  type: tests
+  description: .theseus/adapter/oracle.md
+  commands:
+    unit: .theseus/oracle/unit.sh
+    lint: npm run lint:check
+  tolerances:
+    max_benchmark_regression_pct: 0
+
+models:
+  # Rafael, 2026-11-02: Opus with low effort for every role, with the Fable advisor; no Sonnet or Haiku.
+  - id: claude-opus-5-5
+    family: anthropic
+    tool: claude-code
+    args: ["--settings", '{"advisorModel": "fable"}']
+    context_window: 200000
+    roles: [cartographer, diagnostician, executor, reviewer, auditor]
+  # A second, independent Opus session, so a packet is never reviewed by the session that executed it.
+  - id: claude-opus-5-5-b
+    family: anthropic
+    tool: claude-code
+    model_name: claude-opus-5-5
+    args: ["--settings", '{"advisorModel": "fable"}']
+    context_window: 200000
+    roles: [diagnostician, executor, reviewer]
+
+review:
+  allow_same_family: true         # pilot: only Claude models; turn off when Codex joins
+
+routing:
+  mode: auto
+  min_samples: 5
+  explore: 0.15
+
+effort:
+  levels: [low]                   # Rafael, 2026-11-02: low for everything
+  default: low
+  planning: low
+  by_type: {}
+
+initial_routing:
+  investigate: [claude-opus-5-5]
+  characterize: [claude-opus-5-5]
+  refactor: [claude-opus-5-5]
+  migrate: [claude-opus-5-5]
+  interop: [claude-opus-5-5]
+
+limits:
+  max_context_ratio: 0.40
+  abandon_after_hours: 2
+  max_cost_per_packet_usd: 5.00
+  stale_card_ratio: 0.10
+  max_parallel_agents: 2
+  agent_timeout_min: 30
+
+audit:
+  every_n_packets: 20
+  alarms:
+    - "high_severity_escapes_7d > 2"
+    - "first_review_approval_30d < 0.5"
+
+shared_telemetry: false
