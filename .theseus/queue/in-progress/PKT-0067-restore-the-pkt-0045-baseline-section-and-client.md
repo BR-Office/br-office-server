@@ -52,9 +52,17 @@ Bring back to main the PKT-0045 deliverables that are missing after its integrat
 ## Suggested plan
 
 ## Executor log
+- Restored the PKT-0045 section verbatim from `git show 2fc5c20:.theseus/oracle/baseline.md` (its lines 115-168) and placed it
+  after the PKT-0043 section "Client: where the word editor's CPU goes", just before "End-to-end server (PKT-0015)",
+  keeping the client sections together and in packet order. No existing line was removed (diff: 54 insertions, 0 deletions).
+- Restored `.theseus/oracle/perf/client-profile-2026-11-02.json` and `profile-client.js` byte-for-byte from 2fc5c20.
+- Surprise: main already holds PKT-0043's client section at the spot where PKT-0045 had its own; that is the merge
+  conflict the integration commits resolved by dropping PKT-0045's side.
+- Not done: did not re-run profile-client.js (no acceptance commands; restoring, not re-measuring). Numbers are as of 2fc5c20.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- When two packets append a section at the same place in baseline.md, the integration merge can silently drop one; check section headers after merging.

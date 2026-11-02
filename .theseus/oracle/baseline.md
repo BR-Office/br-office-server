@@ -170,6 +170,60 @@ Reading:
   remote changes, styles construction at open.
 - Not measured: GPU-backed rendering, images/drawings-heavy documents, the mangled base bundle's internals.
 
+## Client: sdkjs/common share of open and remote apply, font waterfall (PKT-0045)
+
+Script: `node .theseus/oracle/perf/profile-client.js <dir> external/sdkjs [runs]`; raw output in
+`perf/client-profile-2026-11-02.json` (per open: attribution, font waterfall, client log). **Native package** 9.3.7-1,
+PKT-0016 samples, 3 cold opens per file, Chromium CPU profile over CDP at 200 µs, same 2-CPU VM for server and
+browsers (another packet may have been measuring at the same time: run-to-run spread is up to 2×; medians below).
+Window = Editor.bin received → `isDocumentLoadComplete`. The profiler adds load: windows are 10–25 % longer than PKT-0016.
+Attribution: the installed `sdk-all.js`/`sdk-all-min.js` are uglified with names kept and no source map; the script maps
+each frame back to its source file by unique `function Name(` anchors from `configs/<editor>.json` (393/357/345 + 42/38/37
+files, 85–95 % anchored). **Self** time, ms, median of 3; "common" = every `common/*` file plus the fonts WASM.
+
+| Phase | Window | Busy | common (all) | fonts (libfont, GlobalLoaders) + WASM | drawings | charts | serialize | coauth (History, TableId, CoApi) | common other | editor (word/cell/slide) | web-apps | browser (program, GC, native) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| open docx 10 p | 4 525 | 3 141 | **720 (23 %)** | 200 + 102 | 88 | 4 | 44 | 7 | 278 | 1 141 | 463 | 695 |
+| open docx 100 p | 3 319 | 2 723 | **586 (22 %)** | 206 + 79 | 86 | 3 | 60 | 17 | 120 | 1 095 | 339 | 665 |
+| open xlsx 10 k | 2 659 | 2 285 | **503 (22 %)** | 180 + 78 | 55 | 8 | 68 | 3 | 106 | 919 | 352 | 414 |
+| open pptx 50 | 2 531 | 2 278 | **794 (35 %)** | 170 + 79 | 296 | 4 | 110 | 12 | 137 | 690 | 229 | 524 |
+| apply docx 10 p (24 changes) | 24 × 300 | 2 162 | **109 (5 %)** | 35 + 7 | 27 | 0 | 4 | 22 | 14 | 863 | 134 | 1 055 |
+| apply docx 100 p (24 changes) | 24 × 300 | 1 424 | **79 (6 %)** | 20 + 6 | 27 | 0 | 0 | 13 | 13 | 625 | 77 | 644 |
+| apply xlsx 10 k (20 changes) | 20 × 300 | 2 024 | **442 (22 %)** | 226 + 110 | 19 | 10 | 0 | 6 | 71 | 491 | 326 | 744 |
+
+Apply = receiver B's samples in the 300 ms after each incoming `saveChanges` WebSocket frame (CDP timestamps, same clock as
+the profile); every edit arrived (24 frames for 20 docx markers, 20 for xlsx). Busy per change: 59–101 ms, half of it browser
+(paint, GC) and the editor's recalculation (`Run.js`, `Paragraph.js`, `highlight-draw-state.js`; `WorksheetView.js`, `StringRender.js`).
+
+**Font waterfall** (ms after Editor.bin received, per run; `fonts` in the JSON has every file):
+
+| File | Font files | Max in flight | First font requested → last received | TTFB first / last font | Last font → fonts done (poll tail) | 50 ms polls | onLoadFonts (client log) |
+|---|---|---|---|---|---|---|---|
+| docx 10 p | 25 | 25 | 709 / 1 591 / 1 403 | 48–79 / 515–1 387 | 30 / 71 / 48 | 13 / 30 / 27 | 736 / 1 649 / 1 447 |
+| docx 100 p | 25 | 25 | 720 / 701 / 761 | 38–65 / 622–706 | 12 / 42 / 29 | 11 / 12 / 14 | 721 / 719 / 777 |
+| xlsx 10 k | 14 | 14 | 455 / 468 / 305 | 44–103 / 264–422 | 33 / 49 / 50 | 9 / 4 / 6 | 471 / 493 / 347 |
+| pptx 50 | 23 | 23 | 697 / 469 / 486 | 38–76 / 444–624 | 44 / 9 / 49 | 11 / 8 / 9 | 676 / 462 / 513 |
+
+Reading:
+- **The fonts are not fetched serially.** `CheckFontsNeedLoadingLoad` requests every font of the document at once (max in
+  flight = all of them), and all are served through the editor's service worker (`fromServiceWorker`; cold context, so the
+  worker fetches from nginx and fills its cache; byte counts are hidden, hence `kb: 0`). The 50 ms `check_loaded_list` poll
+  only adds the tail between the last font and "fonts done": **6–71 ms**, ~40 ms median. The spread is the response time
+  of the last font (0.3–1.4 s TTFB), i.e. queuing below sdkjs (service worker, connections, a CPU shared with the server).
+  The DIAG-sdkjs-common Wave 1 candidate "parallel font fetching" has no target; replacing the poll with an event saves
+  at most ~50 ms per open.
+- **While fonts download the main thread is not idle**: of the LoadDocumentFonts → onLoadFonts window (0.5–1.5 s) it is
+  busy 35–80 %, mostly browser work and web-apps UI init, with 50–125 ms in common and nothing in the editor (the document
+  waits for the fonts). Faster fonts would shorten the open only if that work moves too.
+- **common is 22–35 % of open CPU** (0.5–0.8 s); the largest parts are fonts (CPU, not I/O: 250–300 ms of
+  libfont `file.js`/`map.js`/`textshaper.js` + WASM, i.e. measuring and shaping glyphs) and, for pptx, drawings (~300 ms,
+  `Drawings/Format/*`). Charts and coauth are negligible on these samples (no charts in them); serialize is 44–110 ms.
+  The editor itself (`Styles.js`, `Paragraph.js`, `Run.js`, `Serialize2.js`) is the larger share (0.7–1.1 s).
+- **Remote apply barely touches common in Word (5–6 %)**; History/TableId/CoApi cost 13–22 ms for 24 changes. In the
+  spreadsheet common is 22 %, almost all text measurement (libfont + WASM, 336 ms for 20 changes) during re-render.
+- Not covered: documents with images or charts (samples have none), the visio/pdf editors, inclusive time as a headline
+  (it is in the JSON, but callbacks inflate it: the font loader's end callback runs the rest of the open).
+
 ## End-to-end server (full stack, PKT-0015)
 
 Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
