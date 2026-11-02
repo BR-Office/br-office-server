@@ -41,7 +41,8 @@ budget:
 
 roles:
   executor: claude-sonnet-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -64,5 +65,6 @@ Pin the exported module-level helpers of `DocService/sources/DocsCoServer.js` (t
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5: Fill the packet's Executor log (mocked modules and why, the operationContext/tenantManager circular require, surprising behaviours such as the string '1' giving the Word format and a missing secret only logging a warning) plus Lessons for the Atlas and friction; ideally also assert the 'empty secret' warn message and the exact error code in the missing-secret test.
 
 ## Lessons for the Atlas
