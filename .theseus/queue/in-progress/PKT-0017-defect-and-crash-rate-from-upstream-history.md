@@ -41,7 +41,7 @@ roles:
   executor: claude-opus-5-5-b
   reviewer: claude-opus-5-5
 rejected_reviews: 3
-resume: true
+resume: false
 ---
 
 ## Goal
