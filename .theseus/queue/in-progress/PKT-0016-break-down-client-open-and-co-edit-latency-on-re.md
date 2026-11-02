@@ -38,7 +38,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -56,5 +57,6 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: No latency measurements were taken, so the goal is not met; set up the Document Server stack (or grant the needed permissions), fix environment.md, and make the acceptance check require real numbers before retrying.
 
 ## Lessons for the Atlas
