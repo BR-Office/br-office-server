@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -63,5 +63,6 @@ The client lives outside this repository (sdkjs and web-apps of Euro-Office / ON
 - PKT-0016: Break down client open and co-edit latency on realistic documents
 
 ## Review
+- Approved by claude-opus-5-5-b: goal met with clearly stated limits; remote-change timing and NaN handling should be fixed in the spawned follow-up
 
 ## Lessons for the Atlas
