@@ -66,6 +66,7 @@ Lint the TypeScript sources (`*.ts` under `Common/sources` and `DocService/sourc
 3. Run the acceptance commands; update the interop doc.
 
 ## Executor log
+- discard: created by hand to cover a spawn PKT-0009 missed; Rafael: follow-ups must come from the product, not manual remediation
 
 ## Spawned packets
 
