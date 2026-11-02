@@ -53,6 +53,10 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 - Acceptance: no commands declared; nothing to run.
 - block: the reviewer found an external blocker: Upstream ONLYOFFICE commits for 81132/81576 can't be found without network access to github.com (`git clone`/`gh api`) or a full-history upstream mirror; the operator or factory admin must grant one, then the spawned follow-up can finish the goal.
 - release: executors now run with every privilege (Rafael); git clone, x2t, strace, perf and system paths are allowed
+- attempt 2 (network allowed): cloned ONLYOFFICE/server; 81132 = `12ba395e` (release/v9.4.0), 81576 = `8585bcf4` (master only). Wrote `.theseus/diagnosis/PKT-0029-upstream-fixes-81132-81576.md` plus both patches.
+- Decision: verified applicability with `git apply --check -C1` on EO main: only cosmetic/import-context hunks fail; logic hunks apply. Recommend port 81132 (low risk); 81576 needs a test plan (medium risk, changes save-state semantics).
+- Surprise: the diagnosis file mentioned in attempt 1 was never committed; rewritten from scratch. Attempt-1 guess on 81132 (static.js headersSent) was correct; aiProxyHandler.js was also affected.
+- Not done: no port (investigate packet, no target files); PKT-0050 is now superseded. Acceptance: no commands declared.
 
 ## Spawned packets
 - PKT-0050: Fetch upstream diffs for bugs 81132 and 81576 with network access
