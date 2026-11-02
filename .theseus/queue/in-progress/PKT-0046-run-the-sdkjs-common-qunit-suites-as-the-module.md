@@ -55,6 +55,10 @@ The card says oracle none; tests/common has api, charts and color-mods suites ru
 - Card: oracle level `unit`, source the script; table of results; uncovered areas listed (fonts, co-edit apply, history, serialization, charts, clipboard).
 - Not done: did not try a longer timeout for chartEx, did not run `libfont/test/` pages or the compiled variants.
 - Acceptance: `unit.sh` 178 passed / 1 skipped; `lint:check` 0 errors, 1 pre-existing warning.
+- Attempt 2 (after rejection): removed the local skips and `ORACLE_ALL`. color-mods and chartEx-serialize now run by default as known-broken: color-mods passes only if the count is exactly 9766/10023 and the failing test names equal the 11 recorded ones; chartEx-serialize passes only if it still hits the 120 s timeout. Any other result (fixed or worse) fails the oracle with the expected record printed.
+- Decision: kept the full 120 s timeout for chartEx (a shorter one would prove less); it runs in parallel, so the oracle takes ~130 s total. Limitation: a timeout cannot distinguish a hang from a slow run; noted on the card.
+- Runner now exits 1 with `FAIL no suite matched` when nothing runs (checked with filter `nope`). Fixed the sdkjs-common.sh header to describe the real list.
+- Acceptance: `sdkjs-common.sh` 6/6 suites; `unit.sh` and `lint:check` rerun (see commit).
 
 ## Spawned packets
 - Request: Diagnose failing sdkjs color-mods and chartEx-serialize QUnit suites (investigate, requires browser).

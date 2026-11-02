@@ -56,10 +56,10 @@ Nothing measured yet. Largest files by `wc`: `Charts/ChartsDrawer.js` (21k), `Dr
 |---|---|---|
 | common/api/api.html (word), api-cell, api-slide, api-visio | PASS 75/75 each | 4-6 s each |
 | common/api/*-compiled.html (4) | skipped: load `deploy/` bundles, need a full `npm run build` | — |
-| common/color-mods/color-mods.html | FAIL 9766/10023, 11 tests (lum/sat/hue/alpha mods); not in upstream `runAll.js`; skipped unless `ORACLE_ALL=1` | 7.6 s |
-| common/charts/chartEx-serialize.html | does not finish in 120 s; not in upstream `runAll.js`; skipped unless `ORACLE_ALL=1` | >120 s |
+| common/color-mods/color-mods.html | known-broken, checked: passes only if exactly 9766/10023 and the 11 recorded failing tests (lum/sat/hue/alpha mods, listed in `known` in `sdkjs-common-run.cjs`); not in upstream `runAll.js` | 6-9 s |
+| common/charts/chartEx-serialize.html | known-broken, checked: passes only if it still times out at 120 s (a timeout cannot tell a hang from a slow run; if it starts to finish, the oracle goes red and `known` must be updated); not in upstream `runAll.js` | ~121 s |
 
-Green oracle: 4/4 suites, 300/300 assertions. **Coverage is narrow**: the api suites check the Builder API surface (`common/apiBase*`, `api/`) only. Not covered: font loading (`GlobalLoaders.js`, `libfont/`), co-editing send/apply (`docscoapi.js`, `CollaborativeEditingBase.js`), history/undo, DrawingML serialization, charts and SmartArt layout, clipboard. A refactor in those areas must bring its own check (e.g. the word suites via `.theseus/oracle/sdkjs-word.sh`, which exercise common code indirectly, or a new characterization test). `libfont/test/` pages were not tried. A follow-up asks why color-mods and chartEx fail.
+Green oracle: 6/6 suites (4 api green, 2 known-broken as recorded), 10066/10323 assertions, ~130 s; the runner fails if no suite runs (e.g. a filter that matches nothing). **Coverage is narrow**: the api suites check the Builder API surface (`common/apiBase*`, `api/`) only. Not covered: font loading (`GlobalLoaders.js`, `libfont/`), co-editing send/apply (`docscoapi.js`, `CollaborativeEditingBase.js`), history/undo, DrawingML serialization, charts and SmartArt layout, clipboard. A refactor in those areas must bring its own check (e.g. the word suites via `.theseus/oracle/sdkjs-word.sh`, which exercise common code indirectly, or a new characterization test). `libfont/test/` pages were not tried. A follow-up asks why color-mods and chartEx fail.
 
 ## Open questions
 - Exact sizes, languages, fan-in/out: need `graph.json`.
