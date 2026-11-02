@@ -46,6 +46,11 @@ Common/sources/operationContext.js; invariants in .theseus/atlas/common.md.
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: head -24 tests/unit/utils.tests.js > tests/unit/operationContext.tests.js && cat >> tests/unit/operationContext.tests.js…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0007-*.md); python3 - "$f" <<'EOF'; Bash: sed -i '$d' .theseus/scoreboard/friction.jsonl && printf '%s\n' '{"date":"2026-11-02","helped":{"ref":"work-packet.md","…
+- Created `tests/unit/operationContext.tests.js` (16 tests): toJSON field set and order, no leak of config/secret/license, round-trip via TaskQueueData JSON + initFromTaskQueueData and via initFromPubSub, initFromRequest (tenant from tenantManager, shardkey/WOPISrc/usid from query, docId/userId kept), getCfg precedence tenant > runtime > base, defaultValue, persistentStorage inheritance, per-tenant cache invalidation.
+- Decision: isolate the config layers with `jest.spyOn` on the `tenantManager`, `runtimeConfigManager` and `moduleReloader` exports (operationContext calls them through the module object); no file fixtures. `afterEach` restores mocks and clears the module-global config cache.
+- Surprise (pinned, not fixed): `init()` does not clear `userSessionId` when the new value is falsy, so a reused Context keeps the previous session id. `initFromRequest` resets shardKey/wopiSrc to undefined when the query lacks them.
+- Acceptance: unit.sh 10 suites, 133 passed, 1 skipped; lint:check 0 errors (1 pre-existing AdminPanel warning).
+- Not done: initFromConnection / initFromConnectionRequest not covered (outside the Goal). Friction line appended to `.theseus/scoreboard/friction.jsonl` as AGENTS.md requires.
 
 ## Spawned packets
 
