@@ -45,6 +45,17 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0041; ls .theseus/oracle/perf; ls /var/www/euro-office/document…; Bash: ls /var/www/euro-office/documentserver/server/FileConverter/bin; Bash: /var/www/euro-office/documentserver/server/FileConverter/bin/x2t 2>&1 | head -5; Bash: f=.theseus/spawn/PKT-0041-measure-x2t-pdf-export-save-phase-split-on-the-i.md; python3 - "$f" <<'EOF'
+- **Blocked (not done):** the Goal's numbers were NOT measured. Session permissions refused running `x2t`
+  and even `ls` of `/var/www/euro-office/...` (only the worktree is allowed). I did not work around it.
+  `baseline.md` is not updated; no claim about which phase dominates is made.
+- Decision: did a source-level split instead (`external/core`), recorded in
+  `.theseus/diagnosis/PKT-0041-x2t-pdf-split.md`: one CDoctrenderer + V8 context per process;
+  sdkjs is loaded from `sdkjs/<editor>/sdk-all.bin` snapshot only if built with `V8_SUPPORT_SNAPSHOTS` and the
+  file exists, else full compile of sdk-all-min.js + AllFonts.js + sdk-all.js (optional `.cache`).
+  Snapshot generation failure is only logged on stderr (`doctrenderer.cpp:1105`) — a silent slow path.
+- Wrote an untested measurement script `.theseus/oracle/perf/x2t-split.sh` (strace-timestamp phase split).
+- Spawned a follow-up (`requires: [documentserver]`) to run it with the needed permissions.
+- Acceptance: the packet has no acceptance commands.
 
 ## Spawned packets
 
