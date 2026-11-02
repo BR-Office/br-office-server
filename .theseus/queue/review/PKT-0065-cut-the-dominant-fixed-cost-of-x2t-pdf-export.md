@@ -51,6 +51,12 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 - attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
 - return: factory restarted on Theseus 0.16.3
 - return: factory restarted on Theseus 0.16.4
+- attempt 3 (claude-opus-5-5): no core fork exists, so no core patch. Found that x2t 9.3.7-1 already supports V8 startup snapshots (`createJSSnapshots`, loads `sdkjs/<editor>/sdk-all.bin`); the .bin files on the VM were left by an earlier attempt. Decision: the in-place change is a deployment step, not a code change; previous patch approach dropped (its hunk was malformed and it is not needed).
+- Proof of speed: convert-large.js (5 runs, new.{docx,xlsx,pptx}) with vs without sdk-all.bin: service→pdf p50 −88/−101/−106 ms (−10…14 %); raw JSON in .theseus/diagnosis/PKT-0065-convert-large-*.json. Snapshots restored afterwards.
+- Proof of equality: corpus.py (templates + make-corpus) diff vs baseline-9.3.7-1.json = equal.
+- Surprise: gain ≈ 0.1 s, below the plan's 0.3–0.6 s; the rest is first-Execute JS warm-up, only removable by a persistent renderer (deferred, needs core fork).
+- Surprise: unit.sh failed once in docsCoServerCrashPaths (io.use handshake auth), then passed 3/3 full runs: flaky, likely what failed attempt 2. Not in target, not touched.
+- Not done: packaging change (postinst/Docker) — requested as spawn `.theseus/spawn/PKT-0065-ship-v8-js-startup-snapshots-*.md`. Persistent doctrenderer not requested yet (needs core fork first).
 
 ## Spawned packets
 
