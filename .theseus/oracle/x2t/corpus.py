@@ -8,16 +8,19 @@
 #   python3 .theseus/oracle/x2t/corpus.py diff baseline.json result.json       # exit 1 on any difference
 # Default corpus: the en-US new.* templates of the installed package. Add the PKT-0016/PKT-0018 samples with
 # --corpus <dir> (regenerate them with .theseus/oracle/perf/make-samples.py).
-# Baseline: baseline-9.3.7-1.json = en-US templates + make-corpus.py output (dir "corpus"), native package
+# Baseline: baseline-9.3.7-1.json = en-US templates + make-corpus.py output. The make-corpus output dir MUST be
+# named `corpus` (keys are <dir name>/<file>, so another name shows up as 'only in' differences), native package
 # euro-office-documentserver 9.3.7-1; two runs gave identical results.
 # Directions: open (-> Editor.bin, 8192), save (Editor.bin -> own OOXML, as the server assembles a save),
-# own (OOXML -> own OOXML), pdf, odf. Needs pdfinfo and pdftotext (poppler-utils).
+# own (OOXML -> own OOXML), pdf, odf, and unsupported (m_nFormatTo 258, a code x2t cannot write from OOXML:
+# exit 88 and no output; keeps the exit-code contract for a wrong target format). Needs pdfinfo and pdftotext (poppler-utils).
 import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile
 
 X2T = '/var/www/euro-office/documentserver/server/FileConverter/bin'
 TEMPLATES = '/var/www/euro-office/documentserver/document-templates/new/en-US'
 # AVS_OFFICESTUDIO_FILE_* codes (core/Common/OfficeFileFormats.h).
 FMT = {'docx': 65, 'xlsx': 257, 'pptx': 129, 'odt': 67, 'ods': 259, 'odp': 131, 'pdf': 513, 'bin': 8192}
+UNSUPPORTED = 258  # 0x0102: no OOXML -> it conversion in x2t 9.3.7-1 (exit 88, no output)
 ODF = {'docx': 'odt', 'xlsx': 'ods', 'pptx': 'odp'}
 
 def x2t(bindir, src, dst, fmt, tmp):
@@ -66,6 +69,7 @@ def run(args):
             conv('own', src, ext, FMT[ext])
             conv('pdf', src, 'pdf', FMT['pdf'])
             conv('odf', src, ODF[ext], FMT[ODF[ext]])
+            conv('unsupported', src, 'out', UNSUPPORTED)
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
     json.dump(out, sys.stdout, indent=1, sort_keys=True)

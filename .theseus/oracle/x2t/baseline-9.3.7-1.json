@@ -25,6 +25,10 @@
    "save": {
     "exit": 0,
     "size": 26974
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   },
   "corpus/slides-12.pptx": {
@@ -52,6 +56,10 @@
    "save": {
     "exit": 0,
     "size": 47377
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   },
   "corpus/text-10p.docx": {
@@ -79,6 +87,10 @@
    "save": {
     "exit": 0,
     "size": 26209
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   },
   "en-US/new.docx": {
@@ -106,6 +118,10 @@
    "save": {
     "exit": 0,
     "size": 8373
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   },
   "en-US/new.pptx": {
@@ -133,6 +149,10 @@
    "save": {
     "exit": 0,
     "size": 36991
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   },
   "en-US/new.xlsx": {
@@ -160,6 +180,10 @@
    "save": {
     "exit": 0,
     "size": 8292
+   },
+   "unsupported": {
+    "exit": 88,
+    "size": 0
    }
   }
  },

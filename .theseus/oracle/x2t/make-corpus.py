@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Small text-bearing corpus for corpus.py (PKT-0042): the empty templates have no text, so PDF text checks need these.
-# Deterministic (fixed seed). Usage: python3 .theseus/oracle/x2t/make-corpus.py <out-dir>
+# Deterministic (fixed seed). Usage: python3 .theseus/oracle/x2t/make-corpus.py <parent>/corpus
+# (the out dir must be named `corpus`: corpus.py keys results by dir name and the baseline uses corpus/<file>)
 import os, random, sys
 from docx import Document
 from openpyxl import Workbook
