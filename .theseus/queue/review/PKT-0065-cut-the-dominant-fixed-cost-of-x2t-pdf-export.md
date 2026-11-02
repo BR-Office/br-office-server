@@ -59,6 +59,7 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 - Not done: packaging change (postinst/Docker) — requested as spawn `.theseus/spawn/PKT-0065-ship-v8-js-startup-snapshots-*.md`. Persistent doctrenderer not requested yet (needs core fork first).
 
 ## Spawned packets
+- PKT-0075: Ship V8 JS startup snapshots (sdk-all.bin) with the Document Server install
 
 ## Review
 - Rejected by claude-opus-5-5-b: patch hunk header is wrong (`@@ -53,6 +53,12 @@` should be `@@ -53,7 +53,13 @@`), so the patch is malformed; fix it, dry-run it against the installed script and log the result
