@@ -128,6 +128,7 @@ The packet stays blocked until that follow-up merges or the target includes `esl
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
+- PKT-0040: Make npm run lint:check pass: ignore or fix .theseus/oracle/perf scripts
 
 ## Review
 
