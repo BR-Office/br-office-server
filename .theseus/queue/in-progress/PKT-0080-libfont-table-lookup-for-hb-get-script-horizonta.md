@@ -137,6 +137,8 @@ index 07399b9..4195902 100644
   This is the last attempt (max_attempts 3): the packet should be blocked on that spawn request.
 
 ## Spawned packets
+- PKT-0083: Fix PKT-0080 acceptance: placeholder samples-dir and missing profile-fonts.js
+- PKT-0084: sdkjs fork: land hb_get_script_horizontal_direction table (PKT-0080 patch), unit test and in-browser measurement
 
 ## Review
 
