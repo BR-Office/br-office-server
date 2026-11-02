@@ -25,16 +25,60 @@
 
 'use strict';
 
-const os = require('os');
-const util = require('util');
-const config = require('config');
-const locale = require('windows-locale');
-const ms = require('ms');
-const decodeHeic = require('heic-decode');
-const operationContext = require('./../../Common/sources/operationContext');
+// TypeScript source. Only erasable syntax is allowed (tsconfig.json: erasableSyntaxOnly):
+// `node ts-strip.js` erases the types and writes utilsDocService.js next to this file.
+// CommonJS stays as it was (require / module.exports) so the exports shape is unchanged.
 
-function initializeSharp() {
-  let originalValues = {};
+type SharpModule = typeof import('sharp');
+type SharpPipeline = import('sharp').Sharp;
+
+interface Logger {
+  debug(format: string, ...args: unknown[]): void;
+  warn(format: string, ...args: unknown[]): void;
+  error(format: string, ...args: unknown[]): void;
+}
+
+interface NotificationTemplate {
+  title: string;
+  body: string;
+}
+
+/** The subset of operationContext used here. */
+interface OperationContext {
+  logger: Logger;
+  getCfg<T>(property: string, defaultValue: T): T;
+}
+
+/** The image metadata fields read by determineOptimalFormat (a subset of sharp's Metadata). */
+interface FormatHints {
+  hasAlpha?: boolean;
+  width?: number;
+  height?: number;
+}
+
+type ImageFormat = 'png' | 'jpeg';
+
+interface DecodedHeic {
+  width: number;
+  height: number;
+  data: Uint8ClampedArray;
+}
+
+interface NotificationServiceModule {
+  notificationTypes: {LICENSE_EXPIRATION_WARNING: string; LICENSE_EXPIRATION_ERROR: string};
+  notify(ctx: OperationContext, notificationType: string, title: string, message: string): Promise<unknown>;
+}
+
+const os: typeof import('os') = require('os');
+const util: typeof import('util') = require('util');
+const config: {get<T>(setting: string): T} = require('config');
+const locale: Record<string, {id: number} | undefined> = require('windows-locale');
+const ms: (value: string) => number = require('ms');
+const decodeHeic: (options: {buffer: Buffer}) => Promise<DecodedHeic> = require('heic-decode');
+const operationContext: {global: OperationContext} = require('./../../Common/sources/operationContext');
+
+function initializeSharp(): void {
+  let originalValues: Record<string, string | undefined> = {};
   try {
     const tmp = os.tmpdir();
     // Save original values
@@ -49,7 +93,7 @@ function initializeSharp() {
     sharp = require('sharp');
   } catch (error) {
     operationContext.global.logger.warn('Sharp module failed to load. Image processing functionality will be limited.');
-    operationContext.global.logger.warn('Sharp load error:', error.message);
+    operationContext.global.logger.warn('Sharp load error:', (error as Error).message);
   } finally {
     // Restore original values
     Object.keys(originalValues).forEach(key => {
@@ -71,22 +115,22 @@ function initializeSharp() {
 }
 
 // Load Sharp with graceful fallback for pkg-builds and missing dependencies
-let sharp = null;
+let sharp: SharpModule | null = null;
 initializeSharp();
 
-const {notificationTypes, ...notificationService} = require('../../Common/sources/notificationService');
+const {notificationTypes, ...notificationService}: NotificationServiceModule = require('../../Common/sources/notificationService');
 
-const cfgStartNotifyFrom = ms(config.get('license.warning_license_expiration'));
-const cfgNotificationRuleLicenseExpirationWarning = config.get('notification.rules.licenseExpirationWarning.template');
-const cfgNotificationRuleLicenseExpirationError = config.get('notification.rules.licenseExpirationError.template');
+const cfgStartNotifyFrom = ms(config.get<string>('license.warning_license_expiration'));
+const cfgNotificationRuleLicenseExpirationWarning = config.get<NotificationTemplate>('notification.rules.licenseExpirationWarning.template');
+const cfgNotificationRuleLicenseExpirationError = config.get<NotificationTemplate>('notification.rules.licenseExpirationError.template');
 
 /**
  * Determine optimal format (PNG vs JPEG) for image conversion based on image characteristics.
- * @param {operationContext} ctx Operation context for logging
- * @param {Object} metadata Image metadata from sharp
- * @returns {('png'|'jpeg')} Optimal format for conversion
+ * @param ctx Operation context for logging
+ * @param metadata Image metadata from sharp
+ * @returns Optimal format for conversion
  */
-function determineOptimalFormat(ctx, metadata) {
+function determineOptimalFormat(ctx: OperationContext, metadata: FormatHints): ImageFormat {
   // If image has alpha channel, only PNG can preserve transparency
   if (metadata.hasAlpha) {
     return 'png';
@@ -113,11 +157,11 @@ function determineOptimalFormat(ctx, metadata) {
 
 /**
  * Convert Sharp pipeline to buffer in optimal format (PNG or JPEG).
- * @param {Object} pipeline Sharp pipeline instance
- * @param {string} format Target format ('png' or 'jpeg')
- * @returns {Promise<Buffer>} Converted image buffer
+ * @param pipeline Sharp pipeline instance
+ * @param format Target format ('png' or 'jpeg')
+ * @returns Converted image buffer
  */
-async function convertToFormat(pipeline, format) {
+async function convertToFormat(pipeline: SharpPipeline, format: ImageFormat): Promise<Buffer> {
   if (format === 'png') {
     return await pipeline.png({compressionLevel: 7}).toBuffer();
   }
@@ -126,12 +170,13 @@ async function convertToFormat(pipeline, format) {
 
 /**
  * Decode HEIC/HEIF buffer using heic-decode library and create Sharp instance.
- * @param {Buffer} buffer HEIC/HEIF image buffer
- * @returns {Promise<Object>} Sharp instance with decoded raw image data
+ * @param sharpLib The loaded sharp module
+ * @param buffer HEIC/HEIF image buffer
+ * @returns Sharp instance with decoded raw image data
  */
-async function decodeHeicToSharp(buffer) {
+async function decodeHeicToSharp(sharpLib: SharpModule, buffer: Buffer): Promise<SharpPipeline> {
   const decodedImage = await decodeHeic({buffer});
-  return sharp(decodedImage.data, {
+  return sharpLib(decodedImage.data, {
     failOn: 'none',
     raw: {
       width: decodedImage.width,
@@ -146,11 +191,11 @@ async function decodeHeicToSharp(buffer) {
  * 1. Fixes EXIF rotation and strips metadata for all images
  * 2. Converts modern/unsupported formats to optimal formats:
  *    - WebP/HEIC/HEIF/AVIF/TIFF: Convert to optimal format (PNG or JPEG) based on image characteristics
- * @param {operationContext} ctx Operation context for logging
- * @param {Buffer} buffer Source image bytes
- * @returns {Promise<Buffer>} Processed and optimally converted buffer or original buffer
+ * @param ctx Operation context for logging
+ * @param buffer Source image bytes
+ * @returns Processed and optimally converted buffer or original buffer
  */
-async function processImageOptimal(ctx, buffer) {
+async function processImageOptimal(ctx: OperationContext, buffer: Buffer | null | undefined): Promise<Buffer | null | undefined> {
   if (!buffer) return buffer;
 
   // Check if Sharp is available
@@ -158,10 +203,11 @@ async function processImageOptimal(ctx, buffer) {
     ctx.logger.warn('processImageOptimal: Sharp module not available, returning original buffer. Image processing disabled.');
     return buffer;
   }
+  const sharpLib = sharp;
 
   try {
-    const meta = await sharp(buffer, {failOn: 'none'}).metadata();
-    const fmt = (meta.format || '').toLowerCase();
+    const meta = await sharpLib(buffer, {failOn: 'none'}).metadata();
+    const fmt: string = (meta.format || '').toLowerCase();
     const needsRotation = meta.orientation && meta.orientation > 1;
 
     // Handle modern formats requiring conversion
@@ -170,13 +216,13 @@ async function processImageOptimal(ctx, buffer) {
       ctx.logger.debug('processImageOptimal: converting %s to %s%s', fmt, optimalFormat, needsRotation ? ' with rotation' : '');
 
       try {
-        const pipeline = sharp(buffer, {failOn: 'none'}).rotate();
+        const pipeline = sharpLib(buffer, {failOn: 'none'}).rotate();
         return await convertToFormat(pipeline, optimalFormat);
       } catch (sharpError) {
         // Fallback to heic-decode for HEIC/HEIF when Sharp fails
         if (fmt === 'heic' || fmt === 'heif') {
           ctx.logger.debug('processImageOptimal: Sharp failed for %s, using heic-decode fallback', fmt);
-          const heicPipeline = await decodeHeicToSharp(buffer);
+          const heicPipeline = await decodeHeicToSharp(sharpLib, buffer);
           return await convertToFormat(heicPipeline, optimalFormat);
         }
         throw sharpError;
@@ -186,7 +232,7 @@ async function processImageOptimal(ctx, buffer) {
     // For standard formats, only apply EXIF rotation if needed
     if (needsRotation) {
       ctx.logger.debug('processImageOptimal: applying EXIF rotation to %s', fmt);
-      const pipeline = sharp(buffer, {failOn: 'none'}).rotate();
+      const pipeline = sharpLib(buffer, {failOn: 'none'}).rotate();
 
       if (fmt === 'jpeg' || fmt === 'jpg') {
         return await pipeline.jpeg({quality: 90, chromaSubsampling: '4:4:4'}).toBuffer();
@@ -197,23 +243,23 @@ async function processImageOptimal(ctx, buffer) {
       return await pipeline.toBuffer();
     }
   } catch (e) {
-    ctx.logger.debug('processImageOptimal error: %s', e.stack);
+    ctx.logger.debug('processImageOptimal error: %s', (e as Error).stack);
   }
 
   return buffer;
 }
 
 /**
- *
- * @param {string} lang
- * @returns {number | undefined}
+ * Map a language tag (e.g. 'en-US') to its Windows LCID.
+ * @param lang Language tag
+ * @returns The LCID, or undefined when the tag is unknown
  */
-function localeToLCID(lang) {
-  const elem = locale[lang && lang.toLowerCase()];
+function localeToLCID(lang: string | null | undefined): number | undefined {
+  const elem = lang ? locale[lang.toLowerCase()] : undefined;
   return elem && elem.id;
 }
 
-function humanFriendlyExpirationTime(endTime) {
+function humanFriendlyExpirationTime(endTime: Date): string {
   const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   return `${month[endTime.getUTCMonth()]} ${endTime.getUTCDate()}, ${endTime.getUTCFullYear()}`;
@@ -221,11 +267,10 @@ function humanFriendlyExpirationTime(endTime) {
 
 /**
  * Notify server user about license expiration via configured notification transports.
- * @param {Context} ctx Context.
- * @param {Date} endDate Date of expiration.
- * @returns {undefined}
+ * @param ctx Context.
+ * @param endDate Date of expiration.
  */
-async function notifyLicenseExpiration(ctx, endDate) {
+async function notifyLicenseExpiration(ctx: OperationContext, endDate: Date | null | undefined): Promise<void> {
   if (!endDate) {
     ctx.logger.warn('notifyLicenseExpiration(): expiration date is not defined');
     return;
