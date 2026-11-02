@@ -58,6 +58,7 @@ The card says oracle none, but 21 word suites exist and tests/runAll.js runs the
 - Not done: did not wire sdkjs-word.sh into the acceptance `unit.sh` (not in target; it is the server oracle).
 
 ## Spawned packets
+- PKT-0056: Check out sdkjs-forms so the word js-api-forms suite runs in the oracle
 
 ## Review
 
