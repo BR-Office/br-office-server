@@ -1,0 +1,333 @@
+PASS ../tests/unit/request.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-02T19:39:29.791] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:29.851] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:29.853] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:29.854] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:29.855] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.037] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.045] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.052] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.078] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.343] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.358] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.362] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.368] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.376] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.399] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.436] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.439] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.450] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.473] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.476] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.486] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.489] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.492] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.495] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:30.568] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/utilsDocService.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-02T19:39:31.830] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to jpeg with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.883] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to png with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.921] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting tiff to jpeg with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.952] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: applying EXIF rotation to jpeg
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.981] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to png
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.990] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input buffer contains unsupported image format
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:31.992] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input buffer contains unsupported image format
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:32.009] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input Buffer is empty
+          at Sharp._createInputDescriptor (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/DocService/node_modules/sharp/lib/input.js:51:13)
+          at new Sharp (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/DocService/node_modules/sharp/lib/constructor.js:351:29)
+          at Sharp (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/DocService/node_modules/sharp/lib/constructor.js:173:12)
+          at Object.sharp [as processImageOptimal] (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/DocService/sources/utilsDocService.js:163:24)
+          at Object.processImageOptimal (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/tests/unit/utilsDocService.tests.js:236:44)
+          at Promise.then.completed (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:121:9)
+          at run (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0049/node_modules/jest-runner/build/runTest.js:444:34)
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:32.047] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to jpeg
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:32.080] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting tiff to png
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/pdfSigning.tests.js
+PASS ../tests/unit/utils.tests.js
+PASS ../tests/unit/requestSSRF.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-02T19:39:32.882] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:32.887] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-02T19:39:32.956] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-02T19:39:32.958] [INFO] [null] [null] [null] nodeJS -[39m Received request for: /
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/watchWithFallback.tests.js
+PASS ../tests/unit/operationContext.tests.js
+PASS ../tests/unit/runtimeConfigManager.tests.js
+  ● Console
+
+    console.log
+      [32m[2026-11-02T19:39:33.473] [INFO] [localhost] [docId] [userId] nodeJS -[39m handleConfigFileChange reloading config: runtime.json
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/sentryReporter.tests.js
+PASS ../tests/unit/sample.tests.js
+
+Test Suites: 10 passed, 10 total
+Tests:       1 skipped, 133 passed, 134 total
+Snapshots:   0 total
+Time:        4.064 s, estimated 5 s
+Ran all test suites matching /unit/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+
+> builder@1.0.1 lint:check
+> eslint .
+
+
+/home/claude/euro-office-server.theseus-worktrees/PKT-0049/AdminPanel/client/src/pages/AiIntegration/hooks/useAiPlugin.js
+  185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 1 problem (0 errors, 1 warning)
+
