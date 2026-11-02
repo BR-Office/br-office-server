@@ -78,6 +78,7 @@ Add the TypeScript 7 toolchain shared by Common and DocService, decide the outpu
 
 ## Executor log
 - attempt 1: changed tsconfig.build.json, outside the target (rule R2)
+- attempt 2: changed tsconfig.json, outside the target (rule R2)
 
 ## Spawned packets
 
