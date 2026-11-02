@@ -49,6 +49,7 @@ Diagnose the module `web-apps-documenteditor` following `.theseus/prompts/diagno
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/atlas/web-apps-documenteditor.md; head -60 .theseus/diagnosis/DIAG-sdkjs-word.md; sed -n '/```yaml/,/```/p'…
 
 ## Spawned packets
 
