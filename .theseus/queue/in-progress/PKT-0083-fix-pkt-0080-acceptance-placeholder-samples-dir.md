@@ -55,6 +55,7 @@ Make PKT-0080's acceptance runnable: merge `.theseus/oracle/perf/profile-fonts.j
 - Replace `<samples-dir>` in PKT-0080's acceptance with the real samples directory produced by make-samples.py.
 
 ## Executor log
+- attempt 1: changed .theseus/queue/blocked/PKT-0080-libfont-table-lookup-for-hb-get-script-horizonta.md, outside the target (rule R2)
 
 ## Spawned packets
 
