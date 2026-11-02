@@ -60,6 +60,10 @@ PKT-0016 got the native package running. Recipe that worked (not yet in environm
 
 ## Executor log
 - return: factory restarted (Theseus 0.13.5: blocked measurements hold the diagnoses; longer timeout)
+- Added section "Working install recipe" to environment.md from the packet context (PKT-0016 findings); did not re-run the install (investigate/doc packet, recipe taken as given).
+- Replaced the `supervisorctl` guess in the intro with a pointer to the recipe: the processes are started by hand from the systemd unit files.
+- Added note: after a VM restart only services + manual process start are needed (inferred, not verified).
+- Packet file itself is not in target.files; only the Executor log was edited, as allowed.
 
 ## Spawned packets
 
