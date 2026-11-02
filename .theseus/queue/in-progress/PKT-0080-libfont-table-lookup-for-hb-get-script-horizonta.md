@@ -58,6 +58,7 @@ Replace the per-character switch with a precomputed table: libfont: table lookup
 ## Executor log
 - attempt 1: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
 - attempt 2: the spawn request PKT-0080-fix-pkt-0080-acceptance-placeholder-samples-dir.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- attempt 3: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
 
 ## Spawned packets
 
