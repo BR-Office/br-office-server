@@ -67,6 +67,7 @@ Make PKT-0080's acceptance runnable: merge `.theseus/oracle/perf/profile-fonts.j
 - Attempt 3: confirmed blocked/PKT-0080 is byte-identical to base (diff vs claim commit touches only profile-fonts.js, this packet, friction.jsonl, spawn request). Filled the spawn request's contract and acceptance (awk-scoped to PKT-0080's acceptance block, glob over queue states so it survives moves) and removed the duplicate empty section.
 
 ## Spawned packets
+- PKT-0086: Fix PKT-0080 acceptance placeholder in blocked/ packet file
 
 ## Review
 
