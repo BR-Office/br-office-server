@@ -187,6 +187,7 @@ index ee0cfe2..df350a9 100644
 - Goal status: met through the Goal's own alternative, "make the style-cache key cheaper than a sha256 of the serialized
   styles": style-cache work drops from ~129.6 to ~24.1 ms per open (attempt 4 measurement, same code). The per-hierarchy
   cache of recalculateTextStyles is the separate follow-up PKT-0085.
+- Attempt 5 acceptance: `bash .theseus/oracle/sdkjs-common.sh` on 71f92b0 -> 6/6 suites passed, exit 0 (color-mods and chartEx-serialize known-broken, as recorded).
 
 ## Spawned packets
 - PKT-0085: Cache CShape.recalculateTextStyles results per (master, layout, placeholder, lstStyle, autofit) on pptx open
