@@ -46,6 +46,7 @@ Map the module `sdkjs-common` (`external/sdkjs/common`) into the Atlas card `.th
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/atlas/sdkjs-word.md .theseus/atlas/INDEX.md; ls external/sdkjs/common; wc -l external/sdkjs/common/*.js | t…; Bash: cd external/sdkjs/common && wc -l $(find . -name '*.js') | sort -n | tail -25; ls libfont Drawings collaboration Charts; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0032 && cat > .theseus/atlas/sdkjs-common.md <<'EOF'; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0032 && echo '{"packet":"PKT-0032","role":"cartographer","model…
 
 ## Spawned packets
 
