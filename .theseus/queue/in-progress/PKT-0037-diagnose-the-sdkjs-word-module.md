@@ -49,6 +49,7 @@ Diagnose the module `sdkjs-word` following `.theseus/prompts/diagnostician.md` a
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd external/sdkjs; ls tests/word | head -30; ls tests/word | wc -l; cat tests/runAll.js | head -30; git log --oneline -1…; Bash: S=external/sdkjs; ls $S/tests/word | head -30; ls $S/tests/word | wc -l; head -30 $S/tests/runAll.js; find $S/word -name…; Bash: find external/sdkjs/word -name '*.js' -exec cat {} + | wc -l; Bash: sed -i 's/requires: \[documentserver\]/requires: [documentserver, browser]/' .theseus/diagnosis/DIAG-sdkjs-word.md
 
 ## Spawned packets
 
