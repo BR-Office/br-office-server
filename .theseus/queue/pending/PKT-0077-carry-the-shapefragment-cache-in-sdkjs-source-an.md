@@ -43,7 +43,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -62,6 +62,7 @@ x2t loads sdkjs/cell/sdk-all.js (not sdk-all-min.js). Mirror the install (FileCo
 
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.17.0
+- return: disk filled up; factory restarted on Theseus 0.17.1
 
 ## Spawned packets
 
