@@ -49,6 +49,7 @@ Diagnose the module `sdkjs-common` following `.theseus/prompts/diagnostician.md`
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: sed -n 184,265p external/sdkjs/common/GlobalLoaders.js; ls external/sdkjs/tests/common/*/ | head -20; git -C external/sd…
 
 ## Spawned packets
 
