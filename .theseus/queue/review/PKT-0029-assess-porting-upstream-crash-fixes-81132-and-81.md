@@ -52,6 +52,7 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 - Acceptance: no commands declared; nothing to run.
 
 ## Spawned packets
+- PKT-0050: Fetch upstream diffs for bugs 81132 and 81576 with network access
 
 ## Review
 
