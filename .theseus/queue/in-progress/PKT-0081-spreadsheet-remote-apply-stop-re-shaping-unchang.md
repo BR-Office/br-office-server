@@ -60,6 +60,7 @@ On a spreadsheet remote change, do not re-shape the text of cells that did not c
 ## Executor log
 - attempt 1: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
 - attempt 2: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
+- attempt 3: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
 
 ## Spawned packets
 
