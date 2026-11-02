@@ -81,6 +81,18 @@ until the spawned follow-up (ignore `external/` in eslint) is merged, or until t
 Attempt 3 (claude-opus-5-5, 2026-11-02): same result. `unit.sh` passes (148 passed, 1 skipped);
 `npm run lint:check` prints `Killed` (OOM in `eslint .` over the gitignored `external/`). The VM had 6.2 GB free
 at the time. Nothing in the target can fix this; still blocked on the spawned eslint-ignore follow-up.
+- block: 3 attempts failed; last: acceptance failed: `npm run lint:check`. Output:
+```
+ 1: 0xe48bbe node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+ 2: 0x1248d00 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 3: 0x1248fd7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 4: 0x1477ee5  [node]
+ 5: 0x1477f13  [node]
+ 6: 0x1490fea  [node]
+ 7: 0x14941b8  [node]
+ 8: 0x1cfcc61  [node]
+Aborted
+```
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
