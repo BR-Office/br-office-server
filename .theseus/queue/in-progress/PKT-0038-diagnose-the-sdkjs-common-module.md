@@ -49,6 +49,10 @@ Diagnose the module `sdkjs-common` following `.theseus/prompts/diagnostician.md`
 ## Suggested plan
 
 ## Executor log
+- Verdict **refactor**, conditional on profiling (P1), confidence low. The baseline puts open and apply time in the client, but it doesn't split common from the editors. A language change is not supported: the oracle is `none` and there is wide global coupling.
+- Surprise: `GlobalLoaders.js:184-263` loads fonts one at a time and re-checks every 50 ms (`check_loaded_list`). With 14–25 fonts per open, this is a concrete candidate for the open time. P1 records a font waterfall to measure it.
+- The oracle is `none` on the card, but `external/sdkjs/tests/common` has api, charts and color-mods suites. P2 runs them.
+- Not done: no profiling or test run, since that is outside this packet's scope. Line counts are from the card (wc), not from tool data. I did not read other diagnoses of sdkjs-common; I read DIAG-sdkjs-word only for its format.
 
 ## Spawned packets
 
