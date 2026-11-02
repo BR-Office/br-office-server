@@ -71,6 +71,7 @@ patch + decision note under .theseus/diagnosis until a writable fork of Euro-Off
 - Side effect: the VM's .bin files are now regenerated ones (old copies in the session scratchpad).
 
 ## Spawned packets
+- PKT-0079: Stabilize flaky tests/unit/docsCoServerCrashPaths.tests.js
 
 ## Review
 
