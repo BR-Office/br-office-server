@@ -33,7 +33,7 @@ contract:
 
 acceptance:
   commands:
-    - "npm run \"unit tests\""
+    - ".theseus/oracle/unit.sh"
     - "npx eslint tests/unit/utils.tests.js"
 
 budget:

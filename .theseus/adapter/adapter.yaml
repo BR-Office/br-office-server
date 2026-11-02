@@ -37,14 +37,18 @@ tools:
 
 build:
   install: npm ci && npm ci --prefix ./Common && npm ci --prefix ./DocService && npm ci --prefix ./FileConverter
-  test: npm run "unit tests"
+  test: .theseus/oracle/unit.sh
   lint: npm run lint:check
+
+factory:
+  # Fresh worktrees have no node_modules: install before the executor starts (about 70 s).
+  setup: npm ci --no-audit --no-fund && npm ci --prefix ./Common --no-audit --no-fund && npm ci --prefix ./DocService --no-audit --no-fund && npm ci --prefix ./FileConverter --no-audit --no-fund
 
 oracle:
   type: tests
   description: .theseus/adapter/oracle.md
   commands:
-    unit: npm run "unit tests"
+    unit: .theseus/oracle/unit.sh
     lint: npm run lint:check
   tolerances:
     max_benchmark_regression_pct: 0
