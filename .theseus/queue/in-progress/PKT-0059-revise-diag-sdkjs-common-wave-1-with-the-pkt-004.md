@@ -56,9 +56,21 @@ for pptx, text measurement in cell remote apply).
 ## Suggested plan
 
 ## Executor log
+claude-opus-5-5, 2026-11-02. Revised `.theseus/diagnosis/DIAG-sdkjs-common.md` only. Acceptance has no commands; `theseus validate` passes (0 errors).
+Decisions:
+- Verdict stays **refactor**: common is 22–35 % of open CPU, above the DIAG's 15 % downgrade threshold. Confidence low → medium; `conditional_on` now asks each Wave 1 refactor for a before/after gain with `profile-client.js` plus P2.
+- Wave 1 "parallel font fetching" **dropped**; replacing the 50 ms poll with an event **not planned** (≤ 50 ms per open, touches event order before first render), kept as an optional later follow-up.
+- Hotspots re-ranked: (1) font CPU (libfont + WASM, 250–300 ms per open and 336 ms of xlsx apply, every editor), (2) drawings on pptx open (~300 ms), (3) xlsx apply text measurement (folded into W1a). Word remote apply (common 5–6 %) left to DIAG-sdkjs-word.
+- Added two Wave 1 investigate packets (W1a fonts CPU breakdown, W1b drawings breakdown) to the yaml plan rather than refactor packets: P1 attributes to files, not functions, so a refactor target cannot be named yet.
+- Kept `wave: 0` and `base_commit` in the front matter (P2 is not done; the factory owns those fields).
+Surprises:
+- The packet's reference `.theseus/oracle/perf/client-profile-2026-11-02.json` and the PKT-0045 baseline section do **not exist** on this branch: PKT-0045's integration merges reported conflicts in baseline.md and the content was lost. I read them from commit 2fc5c20 and cited that commit in the DIAG. Requested a follow-up to restore them (spawn file `.theseus/spawn/PKT-0059-restore-the-pkt-0045-baseline-section-and-client.md`).
+Not done: nothing from the goal; the restore of PKT-0045's files is outside target.files.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- sdkjs-common card: fonts are fetched in parallel (`CheckFontsNeedLoadingLoad`, service worker); the cost left in fonts is CPU (libfont + WASM glyph measuring), 250–300 ms per open.
+- Integration merges with a conflict can drop a delivered section silently; check that a packet's references exist on main before building on them.
