@@ -21,3 +21,5 @@ Environments that are up right now (the factory just ran these checks and they p
 - `documentserver`: `curl -sf http://127.0.0.1/healthcheck`
 - `browser`: `node -e "require('playwright')"`
 Do not report one of these as missing: use it, and if a script points elsewhere (another port, a container), point it here. If you still cannot reach it, say exactly what you ran and what came back.
+
+`external/sdkjs` is a writable checkout of another repository (git-excluded here), on its branch pkt/PKT-0078. Change the files of your target under it there; commit in it with `git -C external/sdkjs commit` (the factory commits what you leave and pushes the branch to the fork after every attempt). Its changes count for the scope (rule R2) like any other file. Do not push and do not change its other branches.
