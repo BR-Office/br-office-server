@@ -45,6 +45,7 @@ roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
 rejected_reviews: 3
+resume: true
 ---
 
 ## Goal
@@ -177,6 +178,7 @@ index ee0cfe2..df350a9 100644
   Pushing to a fork is not possible yet (no sdkjs fork exists).
 - Acceptance: `bash .theseus/oracle/sdkjs-common.sh` -> 6/6 suites passed (color-mods and chartEx-serialize fail as recorded).
 - block: 3 attempts failed; last: Embed the full `git format-patch fe036d5~1..2dc4784` output for style-cache.js in the packet; the 2dc4784 Map/WeakMap change exists only in the untracked nested clone and is not recorded. Also add a log line saying the goal was met through its "cheaper key" alternative.
+- release: Theseus 0.18.0: sdkjs changes now go to branch pkt/PKT-0078 of BR-Office/br-office-sdkjs and are reviewed and merged there
 
 ## Spawned packets
 - PKT-0085: Cache CShape.recalculateTextStyles results per (master, layout, placeholder, lstStyle, autofit) on pptx open
