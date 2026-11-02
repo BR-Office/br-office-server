@@ -14,7 +14,7 @@ apt-get install -y /tmp/eo.deb    # pulls PostgreSQL, RabbitMQ, nginx and the re
 
 - It brings DocService, FileConverter with x2t, and the compiled `sdkjs`/`web-apps` clients.
 - There is no systemd here: start services with `service <name> start` (postgresql, rabbitmq-server,
-  redis-server, nginx) and the Document Server processes with `supervisorctl` if the package uses it;
+  redis-server, nginx) and the Document Server processes by hand (see the recipe below);
   check `/healthcheck` on the nginx port.
 - Once installed it stays installed for later packets: check before installing again.
 - For the example documents to load, private addresses must be allowed (`ALLOW_PRIVATE_IP_ADDRESS`
@@ -36,6 +36,28 @@ apt-get install -y /tmp/eo.deb    # pulls PostgreSQL, RabbitMQ, nginx and the re
 - `debconf-show euro-office-documentserver` lists the package's settings (`ds/db-*`, `ds/rabbitmq-*`):
   create the PostgreSQL role and database it expects, then `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a`.
 - `update-notifier-common` was removed by PKT-0016 (it broke `dpkg --configure -a`).
+
+### Working install recipe (PKT-0016, recorded by PKT-0019)
+
+After `apt-get install` of the package (see above), this got the native stack running:
+
+1. `debconf-show euro-office-documentserver` shows db user/name `ds`/`ds`; the password is unknown, so set it:
+   `echo "euro-office-documentserver ds/db-pwd password ds" | debconf-set-selections`
+2. `sudo -u postgres psql -c "CREATE USER ds WITH PASSWORD 'ds';" -c "CREATE DATABASE ds OWNER ds;"`
+3. `service postgresql start; service redis-server start; service rabbitmq-server start`, then
+   `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a`.
+   The postinst still exits 1 at the end because it calls `systemctl` (no systemd here);
+   the database and configuration are done anyway.
+4. Start the Document Server processes by hand as user `ds`, copying `Environment=` and
+   `WorkingDirectory=` from `/usr/lib/systemd/system/ds-{docservice,converter,example}.service`
+   (e.g. `cd <WorkingDirectory> && sudo -u ds -b env <Environment...> ./docservice`; same for converter
+   and example). There is no supervisor config: these units are the source of truth.
+5. In `/etc/euro-office/documentserver/local.json` set
+   `services.CoAuthoring.request-filtering-agent.allowPrivateIPAddress: true`, then `service nginx restart`.
+6. Check: `curl localhost/healthcheck` returns `true`; the example is at http://localhost/example/
+   (upload: `POST /example/upload`, form field `uploadedFile`).
+
+After a VM restart only steps 3 (services, not dpkg), 4 and the nginx start are needed.
 
 ## Upstream history (defect rate)
 
