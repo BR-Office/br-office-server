@@ -59,6 +59,21 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 - Acceptance: the packet has no acceptance commands.
 - block: the reviewer found an external blocker: The measurements need permission to run x2t, strace and perf and to read /var/www/euro-office/documentserver; the operator or factory must grant that access to this packet or the spawned documentserver follow-up.
 - release: executors now run with every privilege (Rafael); git clone, x2t, strace, perf and system paths are allowed
+- attempt 2 (claude-opus-5-5, full privileges): measured. Results in `.theseus/diagnosis/PKT-0041-x2t-pdf-split.md`,
+  script `.theseus/oracle/perf/x2t-split.sh` (strace openat timestamps; attempt 1's script and note were not in
+  this worktree, rewritten from scratch).
+  - Dominant part: small docs — fixed JS cost (script load ≈ 330 ms constant + first-Execute layout 270–680 ms);
+    process start + V8 init only ≈ 60 ms; PDF write ≈ 20 ms. Large docs — JS layout/Execute 63–88 %, writer 9–24 %.
+    big-50k.xlsx → pdf ≈ 50 s (44 s layout): worst case.
+  - Package ships `sdk-all.cache` (V8 code cache), no snapshot. Removing it costs ≈ +400 ms and x2t silently
+    regenerates it (as the running user); original restored.
+  - Decision: save conversion measured with an empty change set (`changes0.json` = `[]`, `m_bFromChanges=true`):
+    `doc_changes` is empty, so no real edits were available. It measures the fixed save cost, not change application.
+  - Decision: `baseline.md` is outside target (target.files empty, create_in perf/ + diagnosis/), so numbers went
+    into the diagnosis file and a spawn request asks to copy them into baseline.md.
+  - Surprise: strace overhead ≈ 10–20 %; phases are relative, totals without strace are in the note.
+  - Spawned requests: record split in baseline.md; investigate xlsx→pdf layout (requires documentserver).
+  - Acceptance: no commands in the packet.
 
 ## Spawned packets
 - PKT-0051: Measure x2t PDF export/save phase split on the installed binary
