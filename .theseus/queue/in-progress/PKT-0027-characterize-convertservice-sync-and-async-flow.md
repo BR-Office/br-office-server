@@ -98,6 +98,7 @@ Aborted
 - attempt 1: the executor's permissions refused: Bash: cat > tests/unit/converterService.tests.js <<'EOF'; Bash: npm run lint:check > ../lint27.log 2>&1; echo exit=$?; tail -15 ../lint27.log; Bash: cd .theseus/spawn && f=PKT-0027-make-npm-run-lint-check-pass-ignore-or-fix-these.md && sed -i 's#    - "\[FILE\]"#    - …
 - attempt 1: acceptance failed: `npm run lint:check`
 - attempt 2: acceptance failed: `npm run lint:check`
+- attempt 3: the executor's permissions refused: Bash: f=$(ls .theseus/queue/in-progress/PKT-0027-*.md)
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
