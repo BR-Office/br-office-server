@@ -56,6 +56,7 @@ Make PKT-0080's acceptance runnable: merge `.theseus/oracle/perf/profile-fonts.j
 
 ## Executor log
 - attempt 1: changed .theseus/queue/blocked/PKT-0080-libfont-table-lookup-for-hb-get-script-horizonta.md, outside the target (rule R2)
+- attempt 2: the spawn request PKT-0083-fix-pkt-0080-acceptance-placeholder-in-blocked-p.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
