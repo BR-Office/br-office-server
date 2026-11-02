@@ -60,9 +60,20 @@ could be replayed after the real font arrives.
 ## Suggested plan
 
 ## Executor log
+- Decision: gate the cache on `window["NATIVE_EDITOR_ENJINE"] === true` (browser path unchanged) AND add
+  `AscCommonExcel.clearShapeCache()` called from `asyncFontsDocumentEndLoaded`/`asyncFontEndLoaded` in cell/api.js,
+  so a later PR can enable it in the browser. Patch updated in place (2 files, +47/−1).
+- Surprise: sdkjs `9cea536` is gone from the shallow mirror; patch rebased on `d9e810c`, applies cleanly.
+  `external/` was not checked out in this worktree; cloned `.external/sdkjs.git` into the scratchpad.
+- Surprise: webpack cell build OOM-killed (137) twice at 2500 MB heap with other agents running; 3000 MB worked.
+- Re-measure (x2t-cpu-ab.py, 2 runs): savings 13 % / 16 % / 23 % (25k / numbers / 50k); 2605/2605 pages
+  pixel-identical; installed sdk-all.js mtime unchanged. Details and PR text: PKT-0082-sdkjs-shape-cache-pr.md.
+- Not done: opening the PR (human); sdkjs QUnit not run; browser behaviour not exercised (unchanged by gate).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t runs sdkjs with `NATIVE_EDITOR_ENJINE === true`; it is the right switch for native-only optimizations.
+- sdkjs cell webpack build needs ~3000 MB heap when the VM is shared.
