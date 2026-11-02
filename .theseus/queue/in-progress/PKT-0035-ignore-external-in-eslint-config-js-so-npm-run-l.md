@@ -53,6 +53,7 @@ to `ignores` (one line, easy to keep in sync with upstream). Found by PKT-0027.
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: git status --short; git log --oneline -3 -- eslint.config.js; timeout 900 npm run lint:check 2>&1 | tail -5; echo EXIT $…; Bash: git status --short; git log --oneline -3 -- eslint.config.js; npm run lint:check > ../lint35.log 2>&1; echo LINT $?; tai…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0035-*.md)
 
 ## Spawned packets
 
