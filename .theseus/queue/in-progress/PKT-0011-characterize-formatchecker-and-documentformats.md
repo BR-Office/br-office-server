@@ -41,7 +41,7 @@ budget:
 roles:
   executor: claude-sonnet-5-5
   reviewer: claude-opus-5-5
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -71,5 +71,6 @@ Pin the behavior of `Common/sources/formatchecker.js` and `Common/sources/docume
 ## Review
 - Rejected by claude-opus-5-5: Fill the empty Executor log with the surprising behaviors these tests pin (xlsx-only zip detection with its 8KB window, the null TypeError, no %PDF detection, pdfa→pdf, the getAllFormats no-context throw, the stray "word" key); the test file itself is acceptable as is.
 - Rejected by claude-opus-5-5: Record the surprising behaviours in the packet's Executor log (xlsx-only ZIP detection in the last 8KB, the TypeError on null in getOfficeZipFormatBySignature, no %PDF detection, pdfa written back as pdf, getAllFormats('') without a context throwing a TypeError); the test file is acceptable as is.
+- Rejected by claude-opus-5-5: Record in the packet's Executor log the surprising behaviors the tests pin (xlsx-only zip detection with its last-8KB window, the TypeError on null in getOfficeZipFormatBySignature, no %PDF detection, pdfa written back as pdf, the getAllFormats throw without a context, the leading-dot/whitespace, vsdt one-way and the other one-way mappings); the test file can stay as it is
 
 ## Lessons for the Atlas
