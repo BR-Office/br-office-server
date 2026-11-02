@@ -69,6 +69,7 @@ Raise the unit test coverage of `Common/sources/utils.js` with characterization 
 - release: oracle fixed: dependencies installed by factory.setup, network-dependent test excluded
 - attempt 1: acceptance failed: `.theseus/oracle/unit.sh`
 - attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
+- attempt 3: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
