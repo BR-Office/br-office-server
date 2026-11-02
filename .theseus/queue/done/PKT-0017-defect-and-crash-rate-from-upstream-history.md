@@ -100,5 +100,6 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
 - Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release, which were not produced (gh/WebFetch refused); allow gh for the executor or narrow the goal and spawn an issues packet, and align the documented crash/fix rules with the script
 - Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release from GitHub; not produced (gh api refused). Allow `gh api` for the executor and add the counts, or have a human narrow the goal and accept the spawned follow-up.
 - Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release, not delivered (gh api refused); a human must allow gh api or formally narrow the goal to fix commits, and the counts must then be recomputed from the current script.
+- Approved by claude-opus-5-5: Goal fully met (fix-commit, crash and bug-issue rates plus hotspots, reproducible script), contract and budget respected
 
 ## Lessons for the Atlas
