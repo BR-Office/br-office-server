@@ -35,7 +35,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 1
+rejected_reviews: 2
 ---
 
 ## Goal
@@ -55,5 +55,6 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 
 ## Review
 - Rejected by claude-opus-5-5-b: patch hunk header is wrong (`@@ -53,6 +53,12 @@` should be `@@ -53,7 +53,13 @@`), so the patch is malformed; fix it, dry-run it against the installed script and log the result
+- Rejected by claude-opus-5-5-b: Goal requires proof of speedup via convert-large.js; not run (start DS services and record before/after numbers, or spawn a tracked follow-up with a documented reason)
 
 ## Lessons for the Atlas
