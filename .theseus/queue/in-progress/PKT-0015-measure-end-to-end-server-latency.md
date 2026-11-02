@@ -55,6 +55,7 @@ PKT-0013 measured only in-process micro-benchmarks: the sandbox has Redis and ps
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: docker run -d --name eo -p 8080:80 -e JWT_ENABLED=false -e EXAMPLE_ENABLED=true ghcr.io/euro-office/documentserver:lates…; Bash: mkdir -p .theseus/oracle/perf/samples; for e in docx xlsx pptx pdf; do docker cp eo:/var/www/euro-office/documentserver/…; Bash: mkdir -p .theseus/oracle/perf/samples && docker cp eo:/var/www/euro-office/documentserver/document-templates/new/en-US/.…; Bash: docker exec eo python3 -c 'import json;f="/etc/euro-office/documentserver/local.json";j=json.load(open(f));v=j.pop("requ…; Bash: node .theseus/oracle/perf/e2e-convert.js 20 1 > /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0015…; Bash: gh api repos/Euro-Office/server --jq '{created_at,default_branch,open_issues_count,parent:.parent.full_name,source:.sour…; Bash: sh .theseus/oracle/perf/x2t-direct.sh; Bash: cd .theseus/spawn && python3 - <<'EOF'
+- attempt 2: the executor's permissions refused: WebFetch; Bash: set -e; Bash: git rm -q -r .theseus/oracle/perf/samples .theseus/oracle/perf/x2t-direct.sh .theseus/spawn/PKT-0015-shorten-convertserv…
 
 ## Spawned packets
 
