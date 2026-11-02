@@ -224,6 +224,47 @@ Reading:
 - Not covered: documents with images or charts (samples have none), the visio/pdf editors, inclusive time as a headline
   (it is in the JSON, but callbacks inflate it: the font loader's end callback runs the rest of the open).
 
+## Client: drawings group by function on open (PKT-0073)
+
+Script: `node .theseus/oracle/perf/drawings-functions.js <dir> external/sdkjs [runs]` (reuses the helpers of
+`profile-client.js`, same window, sampling and file mapping); raw output in `perf/drawings-functions-2026-11-02.json`.
+**Native package** 9.3.7-1, PKT-0045 samples, 3 cold opens each, same 2-CPU VM. Medians, ms.
+File names come from nearest-anchor mapping and can be off by one file (e.g. `CShape.getIsSingleBody` shows under
+`CnxShape.js`); **function names are exact** (the bundle keeps them).
+
+Drawings self time per open: pptx 50 **282-290**, docx 10 p 51-70, docx 100 p 66-96, xlsx 10 k 31-51 (matches PKT-0045).
+
+pptx 50, largest **self** time by function (no function exceeds 31 ms; the top 40 sum to 152 ms, the other ~130 ms is a
+long tail of functions under 2 ms each):
+
+| Function | Self | Note |
+|---|---|---|
+| `CShape.recalculateTextStyles` inner closure (Shape.js) | 15 | builds a `CStyles` per shape |
+| `xhr.onload`, `CFontFileLoader.LoadFontArrayBuffer`, `LoadFont` (Drawings/Externals.js) | 29 | **font loading, mis-grouped as drawings**; in docx/xlsx it is most of "drawings" |
+| `ExecuteNoHistory` (Format.js) | 13 | wrapper; its callees are the recalculation |
+| `CShape.getPlaceholderType`, `isPlaceholder`, `getUniNvProps`, `getHierarchy`, `getIsSingleBody` | 24 | placeholder hierarchy walks, repeated per shape |
+| DrawingsChanges.js module init | 8 | one-off |
+| `CMemory.sha256` (Metafile.js) | 6 | called from `word/Editor/Styles/style-cache.js` |
+| `CUniColor.createDuplicate`, `CUniColor`, `CSolidFill`, `CUniColor.check` | 10 | colour copies |
+| `Geometry.Recalculate`, `CShape.recalculateTransform*`, `recalculateBounds`, `draw` | 12 | geometry and draw |
+
+**Inclusive** (any group below; this is where a refactor would pay): `CShape.recalculate` 601 →
+`CShape.recalculateDocContent` 504 (word text layout inside shapes: editor work, not Format code) ;
+`CShape.Get_Styles` / `recalculateTextStyles` **143**, of which `CMemory.sha256` **91** (style-cache key hashing);
+`CShape.draw` / `drawTxBody` 106 (thumbnails and first paint); `CShape.getHierarchy` 34; `CTextBody.checkContentFit` 35.
+Callers into drawings (self ms): `CDocumentContent.GetStyles` 48, `SlideLayout.recalculate` 27, `Slide.recalculateSpTree` 26,
+`MasterSlide.recalculate` 14, font loader 15+9.
+
+Reading:
+- **No single Drawings/Format function exceeds 50 ms of self time.** The ~290 ms is a flat profile: ~30 ms is font
+  loading (Externals.js; PKT-0045's grouping counts it as drawings), the rest is spread over hundreds of small functions.
+- **One refactor candidate exceeds 50 ms inclusive:** per-shape text-style construction (`recalculateTextStyles`,
+  143 ms) and its sha256 style-cache key (91 ms). Expected gain 50-100 ms per 50-slide open (requested as a refactor
+  packet; needs the sdkjs fork). Placeholder hierarchy walks (~24 ms self, 34 ms inclusive `getHierarchy`) are below the bar.
+- Text layout inside shapes (`recalculateDocContent`, ~500 ms inclusive) is the word engine on behalf of slide:
+  it belongs to the sdkjs-slide / sdkjs-word diagnoses, not to common.
+- Grouping fix for later reports: `common/Drawings/Externals.js` should count as fonts.
+
 ## End-to-end server (full stack, PKT-0015)
 
 Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
