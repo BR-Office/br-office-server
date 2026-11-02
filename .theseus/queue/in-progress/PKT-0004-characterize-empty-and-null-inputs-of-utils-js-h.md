@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: null
+  executor: claude-sonnet-5-5
   reviewer: null
 ---
 
