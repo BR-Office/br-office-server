@@ -56,6 +56,7 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 - Wrote an untested measurement script `.theseus/oracle/perf/x2t-split.sh` (strace-timestamp phase split).
 - Spawned a follow-up (`requires: [documentserver]`) to run it with the needed permissions.
 - Acceptance: the packet has no acceptance commands.
+- block: the reviewer found an external blocker: The measurements need permission to run x2t, strace and perf and to read /var/www/euro-office/documentserver; the operator or factory must grant that access to this packet or the spawned documentserver follow-up.
 
 ## Spawned packets
 - PKT-0051: Measure x2t PDF export/save phase split on the installed binary
