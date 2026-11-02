@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -66,5 +66,6 @@ Have the factory check out github.com/Euro-Office/sdkjs-forms next to external/s
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: oracle clones and builds sdkjs-forms inside git-excluded external/sdkjs, the skip is removed, 42/42 suites pass, nothing under external/ is committed, the change stays within target and budget
 
 ## Lessons for the Atlas
