@@ -54,9 +54,25 @@ Run with `.theseus/oracle/perf/x2t-split.sh`; samples from `make-samples.py`.
 
 ## Executor log
 - return: factory restarted on Theseus 0.16.2
+- Result in `.theseus/diagnosis/PKT-0054-xlsx-pdf-layout.md`: the cost is per-cell text measurement (HarfBuzz
+  shaping + number formatting, 79 % of asc_nativeGetPDF) then drawing (~33 %); page setup ~3 %, fit-to-page no effect.
+- Decision: compared CPU time, not wall: the VM is shared and wall time swung 50 -> 85 s for the same file.
+- Decision: profiled through doctrenderer's own V8 inspector (V8_USE_INSPECTOR=1) instead of perf (not installed)
+  or --prof (no flag hook in doctrenderer). New tool x2t-cpuprofile.js; trick: inspector only handles messages
+  while paused, so pause before each script and wrap asc_nativeGetPDF with `debugger`.
+- Surprise: `js_speed=1` env makes doctrenderer print per-call laps (NativeOpenFileData/Calculate/PagesCount/GetPDF).
+- Surprise: only the active sheet is printed; big-50k has 3 sheets but 1 042 pages.
+- Surprise: ~13-15 s of big-50k's time is formula recalculation because openpyxl writes no cached values (sample artifact).
+- Cost is linear (~0.7 ms CPU/row); no quadratic per-page work.
+- Not done: no change to sdkjs (read-only); measurements are single runs (CPU time stable to ~5 %);
+  formula recalc cost was not profiled separately. Follow-up requested in .theseus/spawn/.
 
 ## Spawned packets
+- (requested) Prototype a text-shaping cache in the sdkjs xlsx print path
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t xlsx->pdf cost is in asc_nativeGetPDF -> drawForPrint -> _prepareCellTextMetricsCache (text shaping per cell), linear in rows.
+- doctrenderer debug hooks: V8_USE_INSPECTOR=1 (CDP websocket :8080, blocks until a client connects), js_speed=1 (lap times).
+- On the shared factory VM compare CPU time, not wall time.
