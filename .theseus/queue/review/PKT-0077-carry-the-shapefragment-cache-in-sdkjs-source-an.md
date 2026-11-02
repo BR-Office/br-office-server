@@ -79,6 +79,7 @@ x2t loads sdkjs/cell/sdk-all.js (not sdk-all-min.js). Mirror the install (FileCo
 - Not done: sdkjs QUnit tests not run against the build; PR not opened (outward action, left to the follow-up/humans).
 
 ## Spawned packets
+- PKT-0082: Upstream the sdkjs shapeFragment cache (font-load invalidation + PR)
 
 ## Review
 
