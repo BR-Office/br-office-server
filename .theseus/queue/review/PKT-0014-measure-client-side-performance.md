@@ -60,6 +60,7 @@ The client lives outside this repository (sdkjs and web-apps of Euro-Office / ON
   - Not done: a breakdown of open time and of the remote-apply tail, large/realistic documents, xlsx/pptx. Requested in the spawn below. The friction line is not appended, because `.theseus/scoreboard/friction.jsonl` is outside target.files. Its content: environment.md (adapter) is missing the ALLOW_PRIVATE_IP_ADDRESS flag, and it helped a lot that it named Playwright and the image.
 
 ## Spawned packets
+- PKT-0016: Break down client open and co-edit latency on realistic documents
 
 ## Review
 
