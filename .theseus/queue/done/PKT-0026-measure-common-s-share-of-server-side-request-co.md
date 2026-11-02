@@ -33,7 +33,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -69,5 +69,6 @@ The baseline has measured the server as a whole (receive → broadcast 4 ms p50,
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Common's share measured and recorded in baseline.md with sound method, documented deviations, and a clear keep finding.
 
 ## Lessons for the Atlas
