@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Stabilize flaky tests/unit/docsCoServerCrashPaths.tests.js.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Test-only fix that waits for next() instead of fixed ticks; assertions, production code and jest config unchanged; log complete.
 
 ## Lessons for the Atlas
