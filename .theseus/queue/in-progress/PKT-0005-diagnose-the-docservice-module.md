@@ -44,6 +44,7 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/diagnosis-verdict.md .theseus/atlas/docservice.md .theseus/diagnosis/SUMMARY.md; cat .theseus/adapter/…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0005-*.md); python3 - "$f" <<'EOF'
 
 ## Spawned packets
 
