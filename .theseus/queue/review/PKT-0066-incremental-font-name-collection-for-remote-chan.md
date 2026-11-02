@@ -71,6 +71,16 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - release: Theseus 0.18.0: sdkjs changes now go to branch pkt/PKT-0066 of BR-Office/br-office-sdkjs and are reviewed and merged there
 - attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 - fork: pkt/PKT-0066 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (f970c71)
+- claude-opus-5-5, 2026-11-02 (attempt 2, after release 0.18.0).
+- Surprise: the first attempt's commit d46dde8 no longer exists; branch pkt/PKT-0066 of external/sdkjs started at upstream 9cea536. Re-implemented the same design, committed as 14e4a88 on pkt/PKT-0066 (4 files, +101/-1).
+- Same design as attempt 1 (CollaborativeEditing.js captures classes from CoHistory[m_nRecalcIndexStart..End], deduplicated; api.js pre_Save uses CheckFontNeedsIncremental when classes are pending; Document.js GetFontNamesFromClasses whitelists CDocumentContentElementBase and ParaRun, anything else -> null -> full walk).
+- Extra guards: incremental path only when isDocumentLoadComplete and logicDocument.Fonts is already non-empty (so apply-on-open keeps the full walk); fonts already in the list are not duplicated.
+- Acceptance: unit.sh 178 passed, 1 skipped. sdkjs-word.sh 42/42 suites, 6195/6195 assertions.
+- Not done here: before/after profile and browser check of a remote change; that is PKT-0071 (already spawned).
+- claude-opus-5-5, 2026-11-02 (attempt 3, rejected for R2: external/sdkjs/.theseus-addons/sdkjs-forms changed).
+- Cause: an untracked `.theseus-addons/sdkjs-forms` checkout (a nested git repo, not created by my code change) sat in external/sdkjs; the factory's "commit what you leave" step added it as a gitlink (bf9b2ea).
+- Fix: `git rm --cached .theseus-addons/sdkjs-forms` committed in external/sdkjs, and `.theseus-addons/` added to external/sdkjs's .git/info/exclude so it is not re-added. Diff vs upstream 9cea536 is now only the 4 target files (+101/-1). Directory left on disk (other tooling may use it).
+- Acceptance: unit.sh re-run, passes.
 
 ## Spawned packets
 - PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
