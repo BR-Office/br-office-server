@@ -54,6 +54,13 @@ Write the first submodule cards of `sdkjs-word` (start with word/model-core, wor
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034/external/sdkjs/word/Editor; sed -n 2844,2870p Document.js;…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034/external/sdkjs/word/Editor; grep -n "setTimeout" Document.…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034; sed -n 7954,7975p external/sdkjs/word/Editor/Serialize2.j…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034 && python3 - <<'EOF'; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034 && python3 /tmp/claude-0/-home-claude-euro-office-server-t…; Bash: python3 /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0034/0204548c-a824-57b7-bea3-1783011bc81a/sc…; Bash: sed -i 's#^id: sdkjs-word/model-core#id: sdkjs-word-model-core#' .theseus/atlas/sdkjs-word-model-core.md && sed -i 's#^i…
+- Decision: the model-core group in the index card is ~48k lines (`wc`). Card `sdkjs-word-model-core.md` covers only `Document.js` (~29k), which the packet allows. The rest is listed as new submodule `word/content` in the index card.
+- Decision: the paragraph group is ~79k lines. Card `sdkjs-word-paragraph.md` covers `Paragraph.js` + `Paragraph_Recalculate.js` (~26k), kept together because they are one concern. The rest is listed as `word/run`.
+- `Serialize2.js` (~17.8k) fits in one card.
+- Decision: card ids are flat (`sdkjs-word-model-core`, not `sdkjs-word/model-core`). `theseus validate` requires the path to match the id, and the acceptance command fixes a flat file name. `parent: sdkjs-word` records the hierarchy.
+- Surprise: recalculation runs in timer slices (`ContinueRecalculationLoopTimer`, setTimeout 10 ms). So "document open" and "all pages laid out" are different end points, which matters for timing.
+- Surprise: sdkjs ships QUnit suites in `external/sdkjs/tests/word/`, so oracle is set to partial. They were not run (no build).
+- Not done: the remaining submodule cards. No follow-up request was filed, because the index card already lists those submodules as needing packets. All claims are [model]. Line anchors were checked with grep at the base commit.
 
 ## Spawned packets
 
