@@ -96,6 +96,13 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
   - To unblock (administrator): run `debconf-show euro-office-documentserver`, create the matching role/DB, then run `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a` and check `/healthcheck`. Or allow Read on /var/lib/dpkg/info and /var/log/postgresql for measurement packets.
 - block: 3 attempts failed; last: goal not met — no latency measurements taken and baseline.md unchanged; an admin must fix the Document Server PostgreSQL install before the measurements are done and recorded
 - release: measurement packets now run with every privilege; debconf-show lists the DB settings (see environment.md)
+- 2026-11-02 claude-opus-5-5 (attempt 8): **Measured. Stack running, breakdown recorded in baseline.md.**
+  - Setup: `debconf-show` gave DB user/name `ds`/`ds`, password hidden, so I set `ds/db-pwd` with debconf-set-selections and created role/DB `ds`. The postinst then got through the DB, but it still exits 1 because it calls `systemctl` (no systemd). I started docservice, converter and example by hand as user `ds` with the env from the systemd unit files. I set `allowPrivateIPAddress` in /etc/euro-office/documentserver/local.json and got `/healthcheck` → true. These system changes are outside the repo; the recipe is in a spawn request for environment.md.
+  - New script `.theseus/oracle/perf/client-breakdown.js` (client-perf.js left as is). It uploads samples through the example, splits open time using the editor frame's resource timings (scripts, Editor.bin request/receive, then load complete), and splits each remote apply using in-page WebSocket send/message timestamps (A batching / wire / B apply). Raw results: `perf/client-breakdown-2026-11-02.json`.
+  - Samples generated with python-docx/openpyxl/python-pptx, kept in the scratchpad and not committed (regenerable, no images): docx 10 p and 100 p, xlsx 10 k rows, pptx 50 slides.
+  - Findings: open takes 3.4–4.4 s. About 1.5–2.3 s is scripts, and 1.5–2.4 s comes after Editor.bin (parse, fonts, render), which grows with size. The server/x2t part overlaps with script loading and isn't isolated. The remote-apply tail is on the receiving client (B apply p90 105–143 ms). The wire including DocsCoServer is 6–8 ms p50, ≤20 ms max.
+  - Surprises: Editor.bin is sometimes requested before the last script arrives (scripts load lazily). transferSize is 0 for fonts/bin (reported as counts and durations only). The marker total includes ~20 ms of key typing.
+  - Not done: x2t time isolated from the client open; documents with images; a real network.
 
 ## Spawned packets
 
