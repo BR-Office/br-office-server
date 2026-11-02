@@ -46,6 +46,7 @@ Map the module `sdkjs-word` (`external/sdkjs/word`) into the Atlas card `.theseu
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd external/sdkjs/word; for d in *; do echo "$d $(find $d -name '*.js' | xargs cat | wc -l)"; done; ls Editor Editor/* |…; Bash: find external/sdkjs/word -name '*.js' -exec wc -l {} + | sort -n | tail -40; Bash: python3 - <<'EOF'
 
 ## Spawned packets
 
