@@ -307,7 +307,35 @@ more than one batch.
   broadcasts; PostgreSQL 0.25 core. No ceiling at 2 000 sockets / 3 500 broadcasts/s; p99 rises 12 → 28 ms with the
   doubled change rate. Not pushed higher: the load generator shares the 2 CPUs.
 - Save after all clients leave: every save returned callback status 3 (the replayed change does not fit the
-  document, so assembly fails); the time `saveAllMs` (6 s for 1 doc, 67 s for 100) is therefore indicative only.
+  document, so assembly fails); the time `saveAllMs` (6 s for 1 doc, 67 s for 100) is therefore indicative only. Superseded by the valid-save measurement below (PKT-0023).
+
+**Valid saves under load** (PKT-0023, `load-coedit.js replay <docs>`, native 9.3.7-1, 2-CPU VM). Per document: a fresh key
+on a pristine copy of the en-US blank template, 1 client, the full change sequence captured from a browser typing
+"hello world" (`load-coedit.js capture`; 17 changes in one `saveChanges`), then all sockets close at once.
+Assembly = socket close → callback (includes `savetimeoutdelay` 5 s). All docs opened concurrently. ms:
+
+| Docs | callback status | assembly p50 / p90 / max | ack p50 / max | open p50 / p99 |
+|---|---|---|---|---|
+| 1 | 2 ×1 | 5 719 | 4 / 4 | 126 |
+| 10 | 2 ×10 | 7 837 / 9 581 / 9 581 | 10 / 11 | 449 / 608 |
+| 50 | 2 ×50 | 16 590 / 25 612 / 27 526 | 38 / 56 | 1 531 / 2 608 |
+| 100 | 2 ×100 | 27 998 / 45 544 / 49 282 | 63 / 77 | 2 727 / 5 226 |
+| 200 | 2 ×200 | 51 806 / 87 489 / 95 035 | 122 / 165 | 6 283 / 11 538 |
+
+- **Every save is valid** (status 2, 0 lost, 0 lock errors). Why PKT-0021's single change failed: the browser's
+  first batch starts with a `64;` change (document/application info) before the first `35;` (add text into run
+  `672`); replaying the `35;` alone is what x2t rejected. A second cause, found on the way: the base must be the
+  untouched template. The capture's own file is overwritten by the browser's save when it closes, and replaying onto it
+  fails again with status 3 (first 1–200 sweep, all status 3, before switching the base).
+- **Save assembly is serial**: the last save lands ≈ 5 s + 0.45 s × docs (95 s for 200). That is what
+  FileConverter `maxprocesscount` = 1 predicts (one x2t at a time, one RabbitMQ queue shared with conversions). So the
+  save backlog after a mass disconnect, not DocService, is the bottleneck: 200 editors leaving together wait up to
+  1.5 min for their file. Raising `maxprocesscount` (or more converters) is the lever; not measured here.
+- `coresUsed` stays ≈ 0 for all processes: the sampler reads only live processes' own CPU, and the short-lived x2t
+  children are not counted. CPU of save assembly is therefore not in these numbers.
+- Opens here are concurrent (the co-edit mode opens sequentially), hence open p99 of 11.5 s at 200: the x2t open
+  conversions queue on the same single converter.
+- Small documents only (blank docx + 11 characters); per-save x2t time grows with document size (see Large files).
 
 **Large files** (`convert-large.js`, PKT-0016 samples, 3 runs, concurrency 1, ms p50):
 
@@ -344,7 +372,7 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 
 | Gap | Why | Follow-up |
 |---|---|---|
-| Valid saves under load; load beyond 2 000 sockets | PKT-0021 reached 200×10 and explained the 124 s outlier (above); replayed single changes make every save fail (status 3, x2t `CChangesRunAddItem.Load`), so save time under load is indicative only | PKT-0023 (replay a browser-captured change sequence) |
+| Load beyond 2 000 sockets; save assembly with more converters or larger documents | valid saves measured to 200 docs (PKT-0023, above): serial at ≈ 0.45 s/doc with `maxprocesscount` 1; not measured with more converter processes, on large documents, or with x2t CPU counted | new packet if the save backlog matters |
 | Client latency: x2t share of open, real network, low-end clients | PKT-0016 split open and remote apply (section above), but the server's open + x2t is not isolated from the client's lazy script loads, all timings are on localhost, and 2 CPUs host server and browsers | server-side timestamps per open (DocService log: open request → Editor.bin ready) |
 | x2t conversion time per format | measured on realistic files in PKT-0018 (above) | — |
 | Crash rate seen by users | upstream fix and issue rates measured (PKT-0017, above); no production crash telemetry; issue counts for ONLYOFFICE cover the whole product, not only the server | production telemetry, if a deployment exists |
