@@ -45,7 +45,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -71,5 +71,6 @@ Migrate `Common/sources/documentFormats.js` and `formatchecker.js` to TypeScript
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Type-only migration with identical runtime behavior and exports, scope and budget respected, old .js untracked and emitted .js ignored.
 
 ## Lessons for the Atlas
