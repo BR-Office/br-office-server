@@ -66,5 +66,6 @@ Pin the exported module-level helpers of `DocService/sources/DocsCoServer.js` (t
 
 ## Review
 - Rejected by claude-opus-5-5: Fill the packet's Executor log (mocked modules and why, the operationContext/tenantManager circular require, surprising behaviours such as the string '1' giving the Word format and a missing secret only logging a warning) plus Lessons for the Atlas and friction; ideally also assert the 'empty secret' warn message and the exact error code in the missing-secret test.
+- Approved by claude-opus-5-5: accurate characterization of all five helpers, production code unchanged; executor log and the req.query side effect should still be recorded in the packet
 
 ## Lessons for the Atlas
