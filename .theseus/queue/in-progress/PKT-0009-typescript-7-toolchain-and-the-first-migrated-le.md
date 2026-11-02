@@ -77,6 +77,7 @@ Add the TypeScript 7 toolchain shared by Common and DocService, decide the outpu
 5. Spawn the `.ts` lint packet and any `Makefile` packet you needed.
 
 ## Executor log
+- attempt 1: changed tsconfig.build.json, outside the target (rule R2)
 
 ## Spawned packets
 
