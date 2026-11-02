@@ -77,6 +77,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 - release: measurement packets now have administrator commands (Rafael); see environment.md for the install notes
 - attempt 1: the executor's permissions refused: Bash: grep -n -iE "DB_|psql|debconf|db_get" /var/lib/dpkg/info/euro-office-documentserver.postinst | head -40; Read; Bash: debconf-show euro-office-documentserver
 - attempt 2: the executor's permissions refused: Bash: find / -name "*.deb" -size +100M -not -path "/proc/*" 2>/dev/null; Bash: ls /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc81a/scratch…; Bash: dpkg-deb -e /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc81…; Bash: debconf-get-selections; Bash: debconf-set-selections /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-…
+- attempt 3: the executor's permissions refused: Bash: tail -n 30 /var/log/postgresql/postgresql-16-main.log
 
 ## Spawned packets
 
