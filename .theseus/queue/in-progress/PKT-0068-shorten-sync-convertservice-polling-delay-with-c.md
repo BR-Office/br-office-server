@@ -66,8 +66,15 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - block: the reviewer found an external blocker: The before/after latency measurement with .theseus/oracle/perf/e2e-convert.js needs a running DocService stack (:8080 or a docker daemon); the operator or factory must provide one, or drop the measurement from the goal. The code change itself is approvable.
 - release: Theseus 0.16.4 tells agents the DocService is up (native .deb on 127.0.0.1:80); the block was a wrong port, not a missing stack
 
+- attempt 2 (claude-opus-5-5): previous diff was not on the branch, re-applied it: `CONVERT_SYNC_DELAY_MIN = 50`, `delay` doubling to `CONVERT_ASYNC_DELAY` (1000), `waitTime += delay` (actual waited time; strict `> getConvertionTimeout` unchanged). Tests: only `sleeps` expectations + matching title/comment changed (`[50]` x2, `[50,100,200]`, timeout `[50,100,200,400,800,1000,1000]`).
+- Measurement (native .deb stack, 127.0.0.1:80, JWT on, sync docx->odt, 10 sequential runs, new.docx template): `e2e-convert.js` returns errors -8 here because it sends no JWT and targets :8080/docker bridge, so I used a scratch copy that signs the body with the inbox secret (not committed; the oracle script is outside target). Installed binary: p50 1013 ms. Worktree DocService run from source on :8099 against the same DB/RabbitMQ/converters: before (HEAD code) p50 1018 ms / mean 1018; after p50 166 ms / mean 169. About 850 ms saved per sync request.
+- Surprise: e2e-convert.js is stale for the native stack (port, docker bridge host, no JWT). Requested a follow-up packet to fix it.
+- Acceptance: unit 178 passed / 1 skipped; lint 0 errors (1 pre-existing warning).
+
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- Sync ConvertService latency was dominated by the fixed 1 s poll: backoff from 50 ms cuts sync docx->odt from ~1018 ms to ~166 ms on the native stack.
+- To measure a DocService change against the native stack, run `DocService/sources/server.js` with NODE_CONFIG_DIR=/etc/euro-office/documentserver and a NODE_CONFIG port override; requests need a JWT signed with the inbox secret.
