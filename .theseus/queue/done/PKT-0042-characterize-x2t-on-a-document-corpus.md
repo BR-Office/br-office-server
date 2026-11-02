@@ -57,5 +57,6 @@ Card x2t "Available oracle" - none automated. Invariants - exit code mapping and
 
 ## Review
 - Rejected by claude-opus-5-5-b: surprise "wrong m_nFormatTo gives exit 88 with no output" is in the log but not kept in a test/baseline; add an unsupported-format case to corpus.py and baseline-9.3.7-1.json (and document that the make-corpus output dir must be named `corpus`)
+- Approved by claude-opus-5-5-b: oracle covers all required directions, exit-88 surprise now pinned in the baseline, within contract and budget
 
 ## Lessons for the Atlas
