@@ -61,6 +61,7 @@ PKT-0041 could not run or list /var/www/euro-office/documentserver/server/FileCo
 - No real change set was available, so the save measures the fixed cost only. `acceptance.commands` is empty: nothing to run.
 
 ## Spawned packets
+- PKT-0061: Record PKT-0051 x2t phase split in oracle/baseline.md
 
 ## Review
 
