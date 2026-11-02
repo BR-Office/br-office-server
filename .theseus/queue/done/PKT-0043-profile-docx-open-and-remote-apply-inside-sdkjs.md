@@ -33,7 +33,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -58,5 +58,6 @@ baseline.md PKT-0016 shows 1.9–2.4 s after Editor.bin and apply p90 105–143 
 - PKT-0057: Avoid whole-document font-name walk on every remote change in sdkjs word
 
 ## Review
+- Approved by claude-opus-5-5-b: goal met (profiles, attribution table, migration answer, follow-up requested); diff lines 3× over budget only from the pretty-printed data JSON, noted
 
 ## Lessons for the Atlas
