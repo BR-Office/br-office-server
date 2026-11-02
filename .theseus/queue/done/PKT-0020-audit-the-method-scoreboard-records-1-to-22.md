@@ -35,7 +35,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -62,5 +62,6 @@ Audit the method over scoreboard records 1 to 22, following `.theseus/prompts/au
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Audit complete, numbers check out, within scope and budget; O4 should note that pilot mode is on (`allow_same_family: true`).
 
 ## Lessons for the Atlas
