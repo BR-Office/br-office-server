@@ -180,6 +180,15 @@ index ee0cfe2..df350a9 100644
 - block: 3 attempts failed; last: Embed the full `git format-patch fe036d5~1..2dc4784` output for style-cache.js in the packet; the 2dc4784 Map/WeakMap change exists only in the untracked nested clone and is not recorded. Also add a log line saying the goal was met through its "cheaper key" alternative.
 - release: Theseus 0.18.0: sdkjs changes now go to branch pkt/PKT-0078 of BR-Office/br-office-sdkjs and are reviewed and merged there
 - fork: pkt/PKT-0078 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (3d51031)
+- Attempt 5 (Theseus 0.18.0): the nested clone was fresh (fe036d5 and 2dc4784 were gone), so I re-applied both as one
+  commit 71f92b0 on branch pkt/PKT-0078 of external/sdkjs, which the factory now pushes to BR-Office/br-office-sdkjs for
+  review there: getKey returns the exact serialized bytes as a string (no sha256), entries live in a `Map`, and a `WeakMap`
+  remembers each cached object's key so `remove(data)` does not serialize again (falls back to getKey for unknown objects).
+  Same equality semantics, so resolved styles do not change. Shape.js unchanged. The reviewable diff is that branch commit.
+- Goal status: met through the Goal's own alternative, "make the style-cache key cheaper than a sha256 of the serialized
+  styles": style-cache work drops from ~129.6 to ~24.1 ms per open (attempt 4 measurement, same code). The per-hierarchy
+  cache of recalculateTextStyles is the separate follow-up PKT-0085.
+- Attempt 5 acceptance: `bash .theseus/oracle/sdkjs-common.sh` on 71f92b0 -> 6/6 suites passed, exit 0 (color-mods and chartEx-serialize known-broken, as recorded).
 
 ## Spawned packets
 - PKT-0085: Cache CShape.recalculateTextStyles results per (master, layout, placeholder, lstStyle, autofit) on pptx open
