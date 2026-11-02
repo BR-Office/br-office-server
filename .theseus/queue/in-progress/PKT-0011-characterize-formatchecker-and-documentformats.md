@@ -61,6 +61,7 @@ Pin the behavior of `Common/sources/formatchecker.js` and `Common/sources/docume
 3. Record surprising results in the executor log.
 
 ## Executor log
+- attempt 2: changed .theseus/queue/in-progress/PKT-0011-characterize-formatchecker-and-documentformats.md, outside the target (rule R2)
 
 ## Spawned packets
 
