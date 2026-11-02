@@ -43,7 +43,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -70,5 +71,6 @@ serialized styles. Expected gain 50-100 ms per 50-slide open; measure before/aft
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Run and record the before/after timing on deck-50.pptx (the environments are up), including the cost of the new string keys, and make the external/sdkjs commit fe036d5 reachable for review
 
 ## Lessons for the Atlas
