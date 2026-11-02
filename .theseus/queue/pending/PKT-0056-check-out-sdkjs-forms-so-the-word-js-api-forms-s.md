@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -53,6 +53,7 @@ Have the factory check out github.com/Euro-Office/sdkjs-forms next to external/s
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16.2
 
 ## Spawned packets
 
