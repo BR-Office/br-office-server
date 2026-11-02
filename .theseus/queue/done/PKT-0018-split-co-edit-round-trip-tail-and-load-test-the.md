@@ -67,6 +67,7 @@ PKT-0015 measured the full stack with headless Chromium clients on a 2-CPU VM, u
 - Surprise: one deck-50.pptx → pdf took 124 s (1 of 3 runs), not explained.
 - Not done: 200 × 5 gave no result within 300 s (not diagnosed). Requested follow-up in .theseus/spawn/ (ceiling, valid saves, pptx outlier).
 - Raw numbers: .theseus/oracle/perf/results-2026-11-02.json.
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 - PKT-0021: Load-test beyond 1000 sockets, valid saves under load, pptx-to-pdf outlier
