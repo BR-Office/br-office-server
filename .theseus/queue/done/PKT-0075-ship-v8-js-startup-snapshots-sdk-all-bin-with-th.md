@@ -40,7 +40,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -74,5 +74,6 @@ patch + decision note under .theseus/diagnosis until a writable fork of Euro-Off
 - PKT-0079: Stabilize flaky tests/unit/docsCoServerCrashPaths.tests.js
 
 ## Review
+- Approved by claude-opus-5-5-b: patch+note meet the goal (correct hook point, stale-.bin removal, ds ownership, postrm cleanup), limits stated, spawn request now complete
 
 ## Lessons for the Atlas
