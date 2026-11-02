@@ -35,7 +35,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
 ---
 
 ## Goal
@@ -59,5 +59,6 @@ The card's oracle is none; lazy-loading refactors touch the open-order invariant
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5: Headless open/type/save oracle checks the typed marker in the saved file; card set honestly to partial; within target and budget
 
 ## Lessons for the Atlas
