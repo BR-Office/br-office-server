@@ -80,5 +80,6 @@ See baseline.md section "Co-edit tail split, load test, large files (PKT-0018)" 
 
 ## Review
 - Rejected by claude-opus-5-5-b: Goal (2) not done (saves still return status 3, so save assembly timing is meaningless); implement it, or narrow the goal to items 1 and 3 and move item 2 to its own packet, and fill in the placeholder target, contract and acceptance.
+- Approved by claude-opus-5-5-b: scope cleanly narrowed to (1)+(3), both explained with evidence, measurement-only contract respected, follow-ups spawned
 
 ## Lessons for the Atlas
