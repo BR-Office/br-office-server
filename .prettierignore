@@ -18,6 +18,8 @@ Metrics/config/config.js
 SpellChecker/sources/server.js
 # JavaScript emitted from TypeScript sources (see .gitignore)
 DocService/sources/utilsDocService.js
+Common/sources/documentFormats.js
+Common/sources/formatchecker.js
 
 # Patterns merged from .gitignore
 .idea/
