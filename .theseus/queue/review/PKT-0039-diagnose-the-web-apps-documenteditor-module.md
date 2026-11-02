@@ -50,6 +50,10 @@ Diagnose the module `web-apps-documenteditor` following `.theseus/prompts/diagno
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cat .theseus/atlas/web-apps-documenteditor.md; head -60 .theseus/diagnosis/DIAG-sdkjs-word.md; sed -n '/```yaml/,/```/p'…
+- claude-opus-5-5, 2026-11-02: wrote `.theseus/diagnosis/DIAG-web-apps-documenteditor.md`, verdict **refactor**, confidence low, conditional on P1.
+- Decision: the module is the load/boot shell. Its only user-visible cost candidate is part of the ~1.5 s script window on open (PKT-0016); co-edit, typing and post-Editor.bin time belong to sdkjs. The split is unmeasured, so P1 measures it and P2 sets up an oracle (card: none). No language change: the shell is load-bound DOM glue.
+- Surprise: `main/app.js` loads ~30 controllers eagerly (line 127), which makes lazy loading a plausible lever, but it is unproven.
+- Not done: no measurement run and the web-apps tests were not executed (the diagnosis does not change code or run the stack). I did not read any other diagnosis of this module.
 
 ## Spawned packets
 
