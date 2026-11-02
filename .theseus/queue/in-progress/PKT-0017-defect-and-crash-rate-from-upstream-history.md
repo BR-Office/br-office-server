@@ -54,6 +54,7 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: gh api repos/Euro-Office/server --jq '.full_name,.open_issues_count,.has_issues' 2>&1 | head; gh api repos/ONLYOFFICE/se…; Bash: gh api repos/Euro-Office/server --jq '.full_name,.open_issues_count,.has_issues'; Bash: cd /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0017/0204548c-a824-57b7-bea3-1783011bc81a/scratch…; Bash: S=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0017/0204548c-a824-57b7-bea3-1783011bc81a/scratchp…; WebFetch; Bash: git --git-dir=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0017/0204548c-a824-57b7-bea3-1783011bc…
+- attempt 2: the executor's permissions refused: Bash: python3 - <<'EOF'
 
 ## Spawned packets
 
