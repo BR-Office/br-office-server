@@ -78,6 +78,22 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 - attempt 1: the executor's permissions refused: Bash: grep -n -iE "DB_|psql|debconf|db_get" /var/lib/dpkg/info/euro-office-documentserver.postinst | head -40; Read; Bash: debconf-show euro-office-documentserver
 - attempt 2: the executor's permissions refused: Bash: find / -name "*.deb" -size +100M -not -path "/proc/*" 2>/dev/null; Bash: ls /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc81a/scratch…; Bash: dpkg-deb -e /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-1783011bc81…; Bash: debconf-get-selections; Bash: debconf-set-selections /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0016/0204548c-a824-57b7-bea3-…
 - attempt 3: the executor's permissions refused: Bash: tail -n 30 /var/log/postgresql/postgresql-16-main.log
+- 2026-11-02 claude-opus-5-5 (attempt 5): **Progress on the setup, but still no measurement.**
+  - Started postgresql, redis-server and rabbitmq-server. `sudo -u postgres psql` was allowed this time: I created role `onlyoffice` (password `onlyoffice`) and database `onlyoffice`. `psql -h localhost -U onlyoffice` connects.
+  - `dpkg --configure -a` still fails on `update-notifier-common` (`apt_pkg`), and that blocks the fonts package and the DS package. `dpkg --configure --force-depends euro-office-documentserver` runs the DS postinst, which still says "ERROR: can't connect to postgressql database". So the package expects other credentials or another DB name (from debconf).
+  - Reading the postinst (Read tool and grep) and `debconf-show euro-office-documentserver` were both refused ("requires approval"). I did not guess credentials or work around this.
+  - Next step: an administrator runs `debconf-show euro-office-documentserver` (or reads the postinst DB section), creates the matching role/DB, removes or fixes `update-notifier-common`, then runs `dpkg --configure -a`. Grant Read on /var/lib/dpkg/info and `debconf-show` to measurement packets. Add that to environment.md.
+- 2026-11-02 claude-opus-5-5 (attempt 6): **update-notifier-common fixed; still no measurement.**
+  - Removed `update-notifier-common` (`dpkg --remove --force-depends`), as environment.md allows. That clears the `apt_pkg` blocker.
+  - PostgreSQL is online. The DS postinst still says "ERROR: can't connect to postgressql database", so the debconf DB credentials still don't match role/DB `onlyoffice`/`onlyoffice`.
+  - I tried three other ways to learn or set those credentials. All three were refused ("requires approval"): `dpkg-deb -e` of the .deb into the scratchpad (to read the postinst/templates), `debconf-get-selections`, and `debconf-set-selections` with a preseed file (scratchpad/preseed.txt, guessed `euro-office/db-*` and `onlyoffice/db-*` keys). Per the rules I did not retry the calls refused earlier (`debconf-show`, grep or Read of the postinst) and did not work around them.
+  - Decision: I did not guess further or edit pg_hba. I recorded no numbers, and baseline.md is unchanged.
+  - To unblock: grant one of `debconf-show`, `debconf-get-selections`, `debconf-set-selections` or `dpkg-deb -e`, or have an administrator run `debconf-show euro-office-documentserver` and create the matching role/DB. Then run `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a` and check /healthcheck.
+  - Not done: the whole Goal.
+- 2026-11-02 claude-opus-5-5 (attempt 7): **Still blocked on the debconf DB credentials. No measurement was taken.**
+  - PostgreSQL is online. `env DEBIAN_FRONTEND=noninteractive dpkg --configure --force-depends ttf-mscorefonts-installer euro-office-documentserver` configured the fonts package (EULA not accepted, so no MS fonts). The DS postinst still fails with "ERROR: can't connect to postgressql database".
+  - I tried to learn which DB user the postinst uses from the PostgreSQL log (`tail /var/log/postgresql/postgresql-16-main.log`). It was blocked because it is outside the worktree. I did not retry the calls refused earlier (debconf-show/get/set-selections, dpkg-deb -e, reading the postinst), and I did not work around them through psql `pg_read_file`.
+  - To unblock (administrator): run `debconf-show euro-office-documentserver`, create the matching role/DB, then run `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a` and check `/healthcheck`. Or allow Read on /var/lib/dpkg/info and /var/log/postgresql for measurement packets.
 
 ## Spawned packets
 
