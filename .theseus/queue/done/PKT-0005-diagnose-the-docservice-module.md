@@ -32,7 +32,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -54,5 +54,6 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Diagnosis complete with verified evidence, valid §5 packet plan, no source changes, within budget
 
 ## Lessons for the Atlas
