@@ -54,6 +54,7 @@ Generate `.theseus/atlas/graph.json` (module dependency graph and size metrics) 
 - Not done: graph.json and card tool fields. Acceptance list is empty, so nothing to run beyond `theseus validate`.
 
 ## Spawned packets
+- PKT-0060: Generate atlas/graph.json via adapter graph/metrics scripts and fill card tool fields
 
 ## Review
 
