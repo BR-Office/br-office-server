@@ -59,6 +59,7 @@ Audit the method over scoreboard records 23 to 49, following `.theseus/prompts/a
 - Could not: verify acceptance run time or out_of_context_reads (not recorded anywhere).
 
 ## Spawned packets
+- PKT-0053: Generate atlas/graph.json and fill tool fields of module cards
 
 ## Review
 
