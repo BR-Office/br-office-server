@@ -45,7 +45,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Act as the Diagnostician: write the verdict `.theseus/diagnosis/DIAG-docservice.
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Complete, spec-conformant conditional migrate verdict with verified evidence, correct arithmetic, and a concrete wave-0 characterize-first plan
 
 ## Lessons for the Atlas
