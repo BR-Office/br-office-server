@@ -72,5 +72,6 @@ baseline.md PKT-0016 shows ~1.5 s and ~500 KB of scripts before the document loa
 
 ## Review
 - Rejected by claude-opus-5-5-b: diff is 4,875 lines vs the 800-line budget. Remove the per-run raw/rawNoProfiler arrays from open-window-2026-11-02.json (keep the median summary) and fix the open-window.js header, which wrongly says sizes are encodedDataLength.
+- Approved by claude-opus-5-5-b: The open-window split table answers the goal, the diff is now within budget (321 of 800 lines), the log is complete and the contract is kept.
 
 ## Lessons for the Atlas
