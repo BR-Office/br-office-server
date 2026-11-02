@@ -69,5 +69,6 @@ Pin the behavior of `DocService/sources/editorDataMemory.js` before it is migrat
 
 ## Review
 - Rejected by claude-opus-5-5: Record the surprising behaviors (connection-sample pruning compares an object to a number so nothing is ever pruned; lockNotification's NaN token makes it non-re-entrant; getdelSaved returns undefined then null) in the packet's Executor log and Lessons for the Atlas, as contract.preserve requires; the tests themselves are fine.
+- Approved by claude-opus-5-5: thorough, exact characterization of both classes, odd behavior pinned rather than fixed; surprises are recorded in the test header and still need copying into the packet's Lessons for the Atlas
 
 ## Lessons for the Atlas
