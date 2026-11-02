@@ -42,7 +42,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -57,6 +57,7 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16.3
 
 ## Spawned packets
 
