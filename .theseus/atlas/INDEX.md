@@ -4,3 +4,4 @@
 
 | Module | Responsibility (1 line) | Lines | Hotspot | Oracle | Verdict | Freshness |
 |---|---|---|---|---|---|---|
+| [docservice](docservice.md) | Co-editing coordination server, conversion/command API, WOPI | n/a (no tool data) | unknown | partial | — | current |

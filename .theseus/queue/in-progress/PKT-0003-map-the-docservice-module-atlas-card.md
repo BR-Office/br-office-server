@@ -46,6 +46,11 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 ## Suggested plan
 
 ## Executor log
+- 2026-11-02 claude-opus-5-5: wrote `.theseus/atlas/docservice.md` and the INDEX row (base_commit 23392b5).
+- Decision: `.theseus/atlas/graph.json` does not exist and no adapter scripts produce metrics, so all `# tool` fields (languages, size, dependencies, metrics) are left `null` per rule A1; INDEX shows lines "n/a", hotspot "unknown".
+- Decision: module kept as one card (wc of sources ≈14.7k lines, under the 20k split threshold), but `DocsCoServer.js` (~4.7k lines) is flagged as a split candidate.
+- Surprises: `package.json` pkg.scripts lists `sources/editorDataRedis.js`, which does not exist; `DocsCoServer.js:155` builds `editorStat` from `editorDataStorage` in its fallback branch; no tests for DocsCoServer/canvasservice/converterservice/wopiClient.
+- Not done: friction line in `.theseus/scoreboard/friction.jsonl` (outside target and would exceed max_files_changed 3); no spawn requests created — the Open questions in the card are candidates for follow-up investigate packets.
 
 ## Spawned packets
 
