@@ -54,6 +54,10 @@ to `ignores` (one line, easy to keep in sync with upstream). Found by PKT-0027.
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: git status --short; git log --oneline -3 -- eslint.config.js; timeout 900 npm run lint:check 2>&1 | tail -5; echo EXIT $…; Bash: git status --short; git log --oneline -3 -- eslint.config.js; npm run lint:check > ../lint35.log 2>&1; echo LINT $?; tai…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0035-*.md)
+- Surprise: `'external/**'` (and `.theseus/**`) were already in `ignores` of `eslint.config.js`, added by commit f500ee1 (PKT-0049). This packet duplicates PKT-0049; no code change was needed.
+- Decision: left `eslint.config.js` untouched (contract: lint rules unchanged). The code diff is empty.
+- Acceptance: `npm run lint:check` passes (0 errors, 1 pre-existing warning in AdminPanel useAiPlugin.js, no OOM); `.theseus/oracle/unit.sh` passes (178 passed, 1 skipped).
+- Could not do: nothing blocked. Compound shell commands using `$?`, `${PIPESTATUS}` or quoted heredocs were refused by permissions, so I ran commands separately and used the edit tools.
 
 ## Spawned packets
 
