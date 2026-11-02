@@ -390,6 +390,12 @@ describe('Characterization: remaining pure helpers', () => {
     expect(utils.getJwtHsKey({})).toBeUndefined();
   });
 
+  test('getJwtHsKey: a string and an equal Buffer share one cache entry', () => {
+    // the cache is keyed by String(secret), so the first caller decides the key object
+    const fromString = utils.getJwtHsKey('collide-me');
+    expect(utils.getJwtHsKey(Buffer.from('collide-me'))).toBe(fromString);
+  });
+
   test('convertLicenseInfoToFileParams maps fields and mode flags', () => {
     const info = {
       startDate: new Date(Date.UTC(2020, 0, 1)),
