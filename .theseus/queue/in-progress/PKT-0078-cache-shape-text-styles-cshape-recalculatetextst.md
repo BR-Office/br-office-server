@@ -178,6 +178,7 @@ index ee0cfe2..df350a9 100644
 - Acceptance: `bash .theseus/oracle/sdkjs-common.sh` -> 6/6 suites passed (color-mods and chartEx-serialize fail as recorded).
 
 ## Spawned packets
+- PKT-0085: Cache CShape.recalculateTextStyles results per (master, layout, placeholder, lstStyle, autofit) on pptx open
 
 ## Review
 - Rejected by claude-opus-5-5-b: Run and record the before/after timing on deck-50.pptx (the environments are up), including the cost of the new string keys, and make the external/sdkjs commit fe036d5 reachable for review
