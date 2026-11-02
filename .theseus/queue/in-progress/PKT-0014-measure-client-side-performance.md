@@ -53,6 +53,7 @@ The client lives outside this repository (sdkjs and web-apps of Euro-Office / ON
 
 ## Executor log
 - return: factory paused: measuring needs a decision on which repositories and environment join the pilot
+- attempt 1: the executor's permissions refused: Bash: mkdir -p /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0014/0204548c-a824-57b7-bea3-1783011bc81a/s…; Bash: cd /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0014/0204548c-a824-57b7-bea3-1783011bc81a/scratch…; Bash: f=.theseus/spawn/PKT-0014-break-down-client-open-and-co-edit-latency-on-re.md
 
 ## Spawned packets
 
