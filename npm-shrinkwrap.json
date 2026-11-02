@@ -6679,6 +6679,11 @@
         "reflect.getprototypeof": "^1.0.6"
       }
     },
+    "typescript": {
+      "version": "7.0.2",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz",
+      "dev": true
+    },
     "unbox-primitive": {
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/unbox-primitive/-/unbox-primitive-1.1.0.tgz",

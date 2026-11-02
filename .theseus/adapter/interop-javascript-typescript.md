@@ -115,6 +115,8 @@ Gradual, file by file, inside the same Node.js process:
 - Modules that mutate their own `module.exports` at runtime.
 - `config` reads with dynamic keys (`config.get(...)`) lose typing.
 - Lint: the current `eslint.config.js` is for JavaScript; adding `typescript-eslint` needs the `@typescript/typescript6` alias until TypeScript 7.1 ships its API.
-- `npx tsc` with TypeScript missing from `node_modules` does not fail cleanly: npx downloads the unrelated `tsc` package. Install the root dev dependencies first.
+- `npx tsc` with TypeScript missing from `node_modules` does not fail cleanly: npx downloads the unrelated `tsc` package (or silently uses a global install). Install the root dev dependencies first.
+- Root dev dependencies: `typescript@^7.0.2` and `@types/node@24.3.0` (the version already pinned in `npm-shrinkwrap.json` as a jest transitive). The shrinkwrap `typescript` entry was written by hand in PKT-0009 (the executor sandbox could not run `npm install` or reach the registry), so it has `version`/`resolved` but no `integrity` and no `requires`; npm fills both on the next `npm install` at the root. Run it once with network and commit the refreshed shrinkwrap.
+- An emitted `.js` that was committed before migration stays tracked despite `.gitignore`: run `git rm --cached <file>.js` when migrating a file.
 - `module.stripTypeScriptTypes` prints an `ExperimentalWarning` on Node 22; harmless. Non-erasable syntax makes the build throw, so `tsc` (`erasableSyntaxOnly`) catches it first.
 - A `catch (e)` variable is `unknown` under `strict`: `(e as Error).stack` keeps the old behavior; an `instanceof` guard would change it.
