@@ -57,6 +57,10 @@ Make npm run lint:check pass: ignore or fix .theseus/oracle/perf scripts.
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: python3 - <<'E'
+- Surprise: the fix was already on the branch. Commit f500ee1 (PKT-0049) added `.theseus/**` (and `external/**`) to the `ignores` of `eslint.config.js`.
+- Decision: no code change. `eslint.config.js` is left as it is, and the product lint rules are unchanged (contract kept).
+- Proof: `npm run lint:check` gives 0 errors (1 existing react-hooks warning in AdminPanel). `.theseus/oracle/unit.sh` gives 178 passed, 1 skipped.
+- Not done: nothing. This packet duplicates PKT-0049 and can be closed as already satisfied.
 
 ## Spawned packets
 
