@@ -85,7 +85,7 @@ effort:
   by_type: {}
 
 initial_routing:
-  investigate: [claude-sonnet-5-5]  # temporary: D3 second diagnoses by Sonnet (PKT-0007, PKT-0008); restore claude-opus-5-5 afterwards
+  investigate: [claude-opus-5-5]
   characterize: [claude-sonnet-5-5]
   refactor: [claude-sonnet-5-5]
   migrate: [claude-opus-5-5]

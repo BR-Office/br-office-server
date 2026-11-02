@@ -30,6 +30,8 @@ Migrations use **TypeScript 7** (`typescript@^7.0.2`, the native compiler writte
 
 The first `interop` packet must confirm these options against the TypeScript 7 release notes and `CHANGES.md` before anything is migrated, and record the result here.
 
+**Open decision: output location** (found by the second diagnosis, DIAG-common-b). `outDir: dist` with `rootDir: sources` would break the relative `require('../../Common/sources/x')` paths used by about 40 files and the `Makefile`, which runs `cp` and `sed` in place on `Common/sources/commondefines.js` and `license.js`. The first `interop` packet must choose between emitting `.js` next to the `.ts` sources (not committed) and changing the consumers' paths and the `Makefile`, and record the choice here before any file is migrated.
+
 ## Mechanism
 
 Gradual, file by file, inside the same Node.js process:

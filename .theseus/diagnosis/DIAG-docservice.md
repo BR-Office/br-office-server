@@ -6,7 +6,7 @@ target_language: typescript
 confidence: medium
 conditional_on: "Wave 0 done: characterize packets for wopiUtils, editorDataMemory and the DocsCoServer module-level helpers, plus the JS→TS interop packet"
 diagnosed_by: [claude-opus-5-5]
-agreement: partial
+agreement: divergent
 decided_by: null
 base_commit: c0703a9
 wave: 1

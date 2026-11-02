@@ -6,7 +6,7 @@ target_language: typescript
 confidence: medium
 conditional_on: "Wave 0 characterize packets for each file before that file is migrated (per-file gate); interop packet 1 (build layout) done before any file is migrated"
 diagnosed_by: [claude-sonnet-5-5]
-agreement: partial
+agreement: full
 decided_by: null
 base_commit: 83877ee
 wave: 2

@@ -6,7 +6,7 @@ target_language: typescript
 confidence: medium
 conditional_on: "characterize packets for DocsCoServer, canvasservice, wopiClient and converterservice done (oracle is level none today, rule D1)"
 diagnosed_by: [claude-sonnet-5-5]
-agreement: partial
+agreement: divergent
 decided_by: null
 base_commit: ea6eee6
 wave: 2
