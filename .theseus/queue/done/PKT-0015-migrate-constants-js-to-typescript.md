@@ -45,7 +45,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Migrate `Common/sources/constants.js` to `constants.ts`: the first migrated leaf
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Faithful git-mv migration with erasable `as const` only; runtime exports unchanged, ignore lines added, scope and budget respected.
 
 ## Lessons for the Atlas
