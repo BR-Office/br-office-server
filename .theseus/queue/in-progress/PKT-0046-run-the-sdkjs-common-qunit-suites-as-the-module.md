@@ -35,7 +35,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -52,5 +53,6 @@ The card says oracle none; tests/common has api, charts and color-mods suites ru
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Keep the color-mods and chartEx-serialize surprise in a test instead of skipping it: run color-mods by default and pass only if the failing tests are exactly the 11 known names and the count is 9766/10023, and check that chartEx-serialize still times out or explain on the card why that can't be checked. Also make the runner fail when no suite is run, and fix the header comment of sdkjs-common.sh.
 
 ## Lessons for the Atlas
