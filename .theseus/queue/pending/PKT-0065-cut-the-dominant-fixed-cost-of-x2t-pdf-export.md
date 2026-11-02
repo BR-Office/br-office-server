@@ -33,7 +33,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: claude-opus-5-5-b
 rejected_reviews: 2
 ---
@@ -50,6 +50,7 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 ## Executor log
 - attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
 - return: factory restarted on Theseus 0.16.3
+- return: factory restarted on Theseus 0.16.4
 
 ## Spawned packets
 
