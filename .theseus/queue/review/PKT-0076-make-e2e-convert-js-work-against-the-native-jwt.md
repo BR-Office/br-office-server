@@ -56,6 +56,11 @@ Found by PKT-0068: it measured with a scratch copy that signed the body with jso
 3. Run it and confirm no pair returns `{"error":-8}`.
 
 ## Executor log
+- Defaults now `http://127.0.0.1` and sample host `127.0.0.1`; header comment rewritten for the native stack.
+- Decision: sign HS256 with Node's built-in `crypto` (no dependency on DocService/node_modules/jsonwebtoken). Token payload is `{payload: body}` in `Authorization: Bearer`, the inbox header form DocService accepts. Secret from `$JWT_SECRET`, else `services.CoAuthoring.secret.inbox.string` of local.json (read only). No secret -> unsigned (old behaviour).
+- Decision: samples default to the installed server's own templates (`/var/www/euro-office/documentserver/document-templates/new/en-US`) if present, else the old `/tmp/eo-samples`; `$SAMPLES` still wins. Output format unchanged.
+- Result: full default run (10 runs, 7 pairs) exits 0 with `errors: 0` on every pair; no `{"error":-8}`. `npm run lint:check` passes (1 pre-existing warning in AdminPanel, unrelated).
+- Surprise: none beyond the template dir only having docx/xlsx/pptx/pdf, which covers all PAIRS.
 
 ## Spawned packets
 
