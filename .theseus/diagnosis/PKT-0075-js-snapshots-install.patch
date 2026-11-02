@@ -1,0 +1,33 @@
+diff -ru a/debian/postrm b/debian/postrm
+--- a/debian/postrm
++++ b/debian/postrm
+@@ -46,6 +46,7 @@
+ 	rm -f $DIR/sdkjs/common/AllFonts.js
+ 	rm -f $DIR/sdkjs/common/Images/fonts_thumbnail*
+ 	rm -f $DIR/sdkjs/*/sdk-all.cache
++	rm -f $DIR/sdkjs/*/sdk-all.bin
+ 	rm -f $DIR/server/FileConverter/bin/font_selection.bin
+ 	rm -f $DIR/server/FileConverter/bin/AllFonts.js
+ 	rm -fr $DIR/fonts
+diff -ru a/usr/bin/documentserver-generate-allfonts.sh b/usr/bin/documentserver-generate-allfonts.sh
+--- a/usr/bin/documentserver-generate-allfonts.sh
++++ b/usr/bin/documentserver-generate-allfonts.sh
+@@ -57,6 +57,18 @@
+ 
+ echo Done
+ 
++# V8 startup snapshots (sdkjs/<editor>/sdk-all.bin) cut ~0.1 s off every x2t run that
++# executes sdk-all.js (PKT-0065). A snapshot is bound to the exact x2t/V8 build and
++# sdk-all.js, so always drop the old ones first: a stale .bin after an upgrade must not survive.
++echo -n Generating js snapshots, please wait...
++rm -f "$DIR"/sdkjs/*/sdk-all.bin
++"$DIR/server/FileConverter/bin/x2t" -create-js-snapshots || {
++  echo "WARNING: js snapshots not created, x2t will run without them" >&2
++  rm -f "$DIR"/sdkjs/*/sdk-all.bin
++}
++
++echo Done
++
+ # Setting user rights for files created in the previous steps
+ if [ "${ONLYOFFICE_K8S_CONTAINER}" != "true" ]; then
+   chown -R ds:ds "$DIR/sdkjs"
