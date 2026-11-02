@@ -54,9 +54,15 @@ Have the factory check out github.com/Euro-Office/sdkjs-forms next to external/s
 
 ## Executor log
 - return: factory restarted on Theseus 0.16.2
+- Decision: no factory change needed. The oracle script itself shallow-clones github.com/Euro-Office/sdkjs-forms into external/sdkjs-forms when missing (not committed, like external/sdkjs), and builds develop with `SDK_ADDONS=../../sdkjs-forms`.
+- Decision: a stamp file `external/sdkjs/develop/.theseus-addons-forms` forces one rebuild in worktrees whose develop was built without the addon, then is reused.
+- Removed the local skip of word/js-api/js-api-forms.html from sdkjs-word-run.cjs.
+- Result: `.theseus/oracle/sdkjs-word.sh` 42/42 suites, 6195/6195 assertions, 129s (js-api-forms 27/27; forms/forms and complexForm still pass). Contract kept: the 41 earlier suites pass.
+- Surprise: the cloned sdkjs-forms is unpinned (HEAD 5c2f5a0 on 2026-11-02); sdkjs is d9e810c. If they drift apart the forms suite may break; pinning would need a factory mirror.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- The sdkjs-word oracle needs the sdkjs-forms addon; the oracle clones it itself, so a fresh worktree needs network on first run.

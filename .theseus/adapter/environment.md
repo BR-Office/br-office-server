@@ -70,6 +70,9 @@ The client (`sdkjs`, `web-apps`) and the converter (`core`, x2t) are checked out
 `external/` by the factory, from shallow mirrors of github.com/Euro-Office. They are read-only clones:
 nothing under `external/` is committed to this repository, and changing their code needs forks (not
 created yet). The installed Document Server runs the compiled build of the same projects.
+The forms addon `external/sdkjs-forms` is not cloned by the factory: `.theseus/oracle/sdkjs-word.sh`
+clones it shallow on first run (PKT-0056) and builds `develop` with `SDK_ADDONS=../../sdkjs-forms`,
+as upstream CI does (stamp `external/sdkjs/develop/.theseus-addons-forms`).
 
 ## Browser
 

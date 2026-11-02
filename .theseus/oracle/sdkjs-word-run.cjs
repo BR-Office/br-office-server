@@ -8,8 +8,6 @@ const src = fs.readFileSync(path.join(sdk, 'tests/runAll.js'), 'utf8');
 const all = [...new Set([...src.matchAll(/^\s*'(word\/[^']+\.html)',/gm)].map(m => m[1]))];
 const skipped = {};
 for (const m of src.matchAll(/'(word\/[^']+\.html)'\s*:\s*'([^']*)'/g)) skipped[m[1]] = m[2];
-// Local skips (this repo only, not upstream): suites that need what external/ lacks here.
-skipped['word/js-api/js-api-forms.html'] = 'local: needs the sdkjs-forms addon (AscTest.JsApi.CreateTextForm), not checked out under external/';
 const { runQunitPuppeteer } = require(path.join(sdk, 'node_modules/node-qunit-puppeteer'));
 process.on('unhandledRejection', r => console.error('late rejection: ' + r));
 const conc = parseInt(process.env.TESTS_CONCURRENCY, 10) || 2;
