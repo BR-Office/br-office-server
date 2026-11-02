@@ -40,7 +40,7 @@ budget:
 roles:
   executor: claude-opus-5-5-b
   reviewer: claude-opus-5-5
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -62,5 +62,6 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
 ## Review
 - Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release, which were not produced (gh/WebFetch refused); allow gh for the executor or narrow the goal and spawn an issues packet, and align the documented crash/fix rules with the script
 - Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release from GitHub; not produced (gh api refused). Allow `gh api` for the executor and add the counts, or have a human narrow the goal and accept the spawned follow-up.
+- Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release, not delivered (gh api refused); a human must allow gh api or formally narrow the goal to fix commits, and the counts must then be recomputed from the current script.
 
 ## Lessons for the Atlas
