@@ -32,7 +32,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -50,5 +50,6 @@ Map the module `common` (`Common`) into the Atlas card `.theseus/atlas/common.md
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Card is complete and accurate where checked; tool fields correctly left null, no source changes, within budget.
 
 ## Lessons for the Atlas
