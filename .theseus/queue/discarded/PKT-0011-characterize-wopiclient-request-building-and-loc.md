@@ -45,6 +45,7 @@ DocService/sources/wopiClient.js and wopiUtils.js; discovery is served at /hosti
 ## Suggested plan
 
 ## Executor log
+- discard: superseded: its plan answered other goals
 
 ## Spawned packets
 
