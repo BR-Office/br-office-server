@@ -1,0 +1,23 @@
+SKIP common/api/api-cell-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-slide-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-visio-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-word-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+PASS common/api/api.html 75/75 4.3s
+PASS common/api/api-cell.html 75/75 4.6s
+PASS common/api/api-visio.html 75/75 3.9s
+PASS common/api/api-slide.html 75/75 4.1s
+PASS (known-broken, as recorded) common/color-mods/color-mods.html 9766/10023 6.6s
+    Test applying color mods > Check colors with mods
+    Test applying color mods > Check colors with satMod
+    Test applying color mods > Test lumOff mod
+    Test applying color mods > Test satOff mod
+    Test applying color mods > Test hueMod mod
+    Test applying color mods > Test sat mod
+    Test applying color mods > Test lum mod
+    Test applying color mods > Test alphaMod mod
+    Test applying color mods > Test alphaOff mod
+    Test applying color mods > Test hue mod
+    Test applying color mods > Test hueOff mod
+PASS (known-broken, as recorded) common/charts/chartEx-serialize.html error: Error: Test run could not finish in 120000ms 121.0s
+
+6/6 suites passed, 10066/10323 assertions, 130s
