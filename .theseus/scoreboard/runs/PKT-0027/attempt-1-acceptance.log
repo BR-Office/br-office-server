@@ -1,0 +1,24 @@
+
+> builder@1.0.1 lint:check
+> eslint .
+
+
+<--- Last few GCs --->
+
+[14483:0x26175000]   108804 ms: Scavenge 2041.1 (2083.2) -> 2039.5 (2087.4) MB, pooled: 0 MB, 2.22 / 0.00 ms  (average mu = 0.222, current mu = 0.212) allocation failure; 
+[14483:0x26175000]   110192 ms: Mark-Compact (reduce) 2043.3 (2087.4) -> 2035.0 (2079.1) MB, pooled: 0 MB, 943.44 / 0.00 ms  (+ 414.6 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 1388 ms) (average mu = 0.164, 
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0xe48bbe node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+ 2: 0x1248d00 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 3: 0x1248fd7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 4: 0x1477ee5  [node]
+ 5: 0x1477f13  [node]
+ 6: 0x1490fea  [node]
+ 7: 0x14941b8  [node]
+ 8: 0x1cfcc61  [node]
+Aborted
