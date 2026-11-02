@@ -66,6 +66,7 @@ Raise the unit test coverage of `Common/sources/utils.js` with characterization 
 - attempt 2: acceptance failed: `npm run "unit tests"`
 - attempt 3: acceptance failed: `npm run "unit tests"`
 - block: 3 attempts failed; last: acceptance failed: `npm run "unit tests"`
+- release: oracle fixed: dependencies installed by factory.setup, network-dependent test excluded
 
 ## Spawned packets
 
