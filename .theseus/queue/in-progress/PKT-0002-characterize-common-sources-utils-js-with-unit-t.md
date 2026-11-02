@@ -62,6 +62,7 @@ Raise the unit test coverage of `Common/sources/utils.js` with characterization 
 4. Run the acceptance commands until they pass.
 
 ## Executor log
+- attempt 1: acceptance failed: `npm run "unit tests"`
 
 ## Spawned packets
 
