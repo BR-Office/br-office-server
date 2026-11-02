@@ -262,3 +262,285 @@ describe('Characterization: empty and null inputs', () => {
     expect(() => utils.getLicensePeriod(new Date(0), null)).toThrow(TypeError);
   });
 });
+
+describe('Characterization: remaining pure helpers', () => {
+  const constants = require('../../Common/sources/constants');
+  const makeCtx = cfg => {
+    const c = new operationContext.Context();
+    c.config = cfg;
+    return c;
+  };
+  const fakeReq = (headers, protocol) => ({
+    protocol,
+    get: name => headers[name.toLowerCase()]
+  });
+
+  test('getContentDisposition defaults to attachment and ignores the user agent', () => {
+    expect(utils.getContentDisposition('a.txt')).toEqual('attachment; filename="a.txt"');
+    expect(utils.getContentDisposition('a.txt', 'Mozilla', 'inline')).toEqual('inline; filename="a.txt"');
+    expect(utils.getContentDisposition('a.txt', 'Mozilla')).toEqual(utils.getContentDisposition('a.txt'));
+    expect(utils.getContentDisposition()).toEqual('attachment');
+    expect(utils.getContentDisposition('имя.txt')).toMatch(/^attachment; filename="\?+\.txt"; filename\*=UTF-8''/);
+  });
+
+  test.each([
+    ['NO_ERROR', 0],
+    ['CONVERT_CELLLIMITS', 0],
+    ['TASK_QUEUE', -6],
+    ['TASK_RESULT', -6],
+    ['CONVERT_PASSWORD', -5],
+    ['CONVERT_DRM', -5],
+    ['CONVERT_DRM_UNSUPPORTED', -5],
+    ['CONVERT_DOWNLOAD', -4],
+    ['CONVERT_TIMEOUT', -2],
+    ['CONVERT_DEAD_LETTER', -2],
+    ['CONVERT_PARAMS', -7],
+    ['CONVERT_LIMITS', -10],
+    ['CONVERT_NEED_PARAMS', -3],
+    ['CONVERT_LIBREOFFICE', -3],
+    ['CONVERT_CORRUPTED', -3],
+    ['CONVERT_UNKNOWN_FORMAT', -3],
+    ['CONVERT_READ_FILE', -3],
+    ['CONVERT_TEMPORARY', -3],
+    ['CONVERT', -3],
+    ['CONVERT_DETECT', -9],
+    ['VKEY', -8],
+    ['VKEY_ENCRYPT', -8],
+    ['VKEY_KEY_EXPIRE', -8],
+    ['VKEY_USER_COUNT_EXCEED', -8],
+    ['STORAGE', -1],
+    ['STORAGE_FILE_NO_FOUND', -1],
+    ['STORAGE_READ', -1],
+    ['STORAGE_WRITE', -1],
+    ['STORAGE_REMOVE_DIR', -1],
+    ['STORAGE_CREATE_DIR', -1],
+    ['STORAGE_GET_INFO', -1],
+    ['UPLOAD', -1],
+    ['READ_REQUEST_STREAM', -1],
+    ['UNKNOWN', -1]
+  ])('mapAscServerErrorToOldError maps %s to %i', (name, expected) => {
+    expect(constants[name]).toBeDefined();
+    expect(utils.mapAscServerErrorToOldError(constants[name])).toEqual(expected);
+  });
+
+  test('mapAscServerErrorToOldError falls back to -1 for unknown input', () => {
+    expect(utils.mapAscServerErrorToOldError(123456)).toEqual(-1);
+    expect(utils.mapAscServerErrorToOldError(undefined)).toEqual(-1);
+    expect(utils.mapAscServerErrorToOldError(null)).toEqual(-1);
+    expect(utils.mapAscServerErrorToOldError('0')).toEqual(-1);
+  });
+
+  test('changeOnlyOfficeUrl appends the ooname parameter with the file extension', () => {
+    expect(utils.changeOnlyOfficeUrl('http://h/file', 'doc.docx')).toEqual('http://h/file?ooname=output.docx');
+    expect(utils.changeOnlyOfficeUrl('http://h/file?a=1', 'doc.docx')).toEqual('http://h/file?a=1&ooname=output.docx');
+    // optFilename wins over strPath
+    expect(utils.changeOnlyOfficeUrl('http://h/f', 'doc.docx', 'x.xlsx')).toEqual('http://h/f?ooname=output.xlsx');
+    // no extension gives an empty extension
+    expect(utils.changeOnlyOfficeUrl('http://h/f', 'noext')).toEqual('http://h/f?ooname=output');
+    // an empty optFilename falls back to strPath
+    expect(utils.changeOnlyOfficeUrl('http://h/f', 'a.pdf', '')).toEqual('http://h/f?ooname=output.pdf');
+    expect(() => utils.changeOnlyOfficeUrl(null, 'a.pdf')).toThrow(TypeError);
+  });
+
+  test('getSecretByElem returns the string, reads and caches a file, or undefined', () => {
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
+    expect(utils.getSecretByElem(undefined)).toBeUndefined();
+    expect(utils.getSecretByElem(null)).toBeUndefined();
+    expect(utils.getSecretByElem({})).toBeUndefined();
+    expect(utils.getSecretByElem({string: ''})).toBeUndefined();
+    expect(utils.getSecretByElem({string: 's3'})).toEqual('s3');
+    // string has priority over file
+    expect(utils.getSecretByElem({string: 's3', file: '/nonexistent'})).toEqual('s3');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'secret-'));
+    const file = path.join(dir, 'key.pem');
+    try {
+      fs.writeFileSync(file, 'first');
+      const first = utils.getSecretByElem({file});
+      expect(Buffer.isBuffer(first)).toBe(true);
+      expect(first.toString()).toEqual('first');
+      // the second read comes from the cache, not from the disk
+      fs.writeFileSync(file, 'second');
+      expect(utils.getSecretByElem({file}).toString()).toEqual('first');
+    } finally {
+      fs.rmSync(dir, {recursive: true, force: true});
+    }
+    expect(() => utils.getSecretByElem({file: '/nonexistent/key.pem'})).toThrow(/ENOENT/);
+  });
+
+  test('getJwtHsKey builds and caches a secret KeyObject', () => {
+    const key = utils.getJwtHsKey('secret');
+    expect(key.type).toEqual('secret');
+    expect(key.symmetricKeySize).toEqual(6);
+    expect(utils.getJwtHsKey('secret')).toBe(key);
+    const bufKey = utils.getJwtHsKey(Buffer.from('abcd'));
+    expect(bufKey.symmetricKeySize).toEqual(4);
+    expect(utils.getJwtHsKey(undefined)).toBeUndefined();
+    expect(utils.getJwtHsKey(null)).toBeUndefined();
+  });
+
+  test('getJwtHsKey: behavior for empty and non-string secrets', () => {
+    // an empty string is falsy for the cache lookup, but createSecretKey accepts it
+    const empty = utils.getJwtHsKey('');
+    expect(empty).toBeDefined();
+    expect(empty.symmetricKeySize).toEqual(0);
+    // invalid types are swallowed and reported as undefined
+    expect(utils.getJwtHsKey(123)).toBeUndefined();
+    expect(utils.getJwtHsKey({})).toBeUndefined();
+  });
+
+  test('convertLicenseInfoToFileParams maps fields and mode flags', () => {
+    const info = {
+      startDate: new Date(Date.UTC(2020, 0, 1)),
+      endDate: new Date(Date.UTC(2021, 0, 1)),
+      mode: constants.LICENSE_MODE.Limited | constants.LICENSE_MODE.Developer,
+      branding: true,
+      customization: false,
+      advancedApi: true,
+      connections: 10,
+      connectionsView: 20,
+      usersCount: 5,
+      usersViewCount: 6,
+      usersExpire: 3 * constants.LICENSE_EXPIRE_USERS_ONE_DAY,
+      customerId: 'cid',
+      alias: 'al',
+      multitenancy: true,
+      graceDays: 7
+    };
+    expect(utils.convertLicenseInfoToFileParams(info)).toEqual({
+      start_date: '2020-01-01T00:00:00.000Z',
+      end_date: '2021-01-01T00:00:00.000Z',
+      timelimited: true,
+      trial: false,
+      developer: true,
+      branding: true,
+      customization: false,
+      advanced_api: true,
+      connections: 10,
+      connections_view: 20,
+      users_count: 5,
+      users_view_count: 6,
+      users_expire: 3,
+      customer_id: 'cid',
+      alias: 'al',
+      multitenancy: true,
+      grace_days: 7
+    });
+  });
+
+  test('convertLicenseInfoToFileParams with missing fields', () => {
+    const res = utils.convertLicenseInfoToFileParams({});
+    expect(res.start_date).toBeUndefined();
+    expect(res.end_date).toBeUndefined();
+    expect(res.timelimited).toBe(false);
+    expect(res.trial).toBe(false);
+    expect(res.developer).toBe(false);
+    // surprising: undefined / number gives NaN
+    expect(res.users_expire).toBeNaN();
+    expect(() => utils.convertLicenseInfoToFileParams(null)).toThrow(TypeError);
+  });
+
+  test('convertLicenseInfoToServerParams maps fields and adds build info', () => {
+    const commonDefines = require('../../Common/sources/commondefines');
+    const res = utils.convertLicenseInfoToServerParams({
+      count: 3,
+      type: 2,
+      packageType: 1,
+      buildDate: new Date(Date.UTC(2022, 5, 7))
+    });
+    expect(res).toEqual({
+      workersCount: 3,
+      resultType: 2,
+      packageType: 1,
+      buildDate: '2022-06-07T00:00:00.000Z',
+      buildVersion: commonDefines.buildVersion,
+      buildNumber: commonDefines.buildNumber
+    });
+    const empty = utils.convertLicenseInfoToServerParams({});
+    expect(empty.workersCount).toBeUndefined();
+    expect(empty.buildDate).toBeUndefined();
+    expect(() => utils.convertLicenseInfoToServerParams(undefined)).toThrow(TypeError);
+  });
+
+  describe('checkIpFilter', () => {
+    const cfg = rules => ({services: {CoAuthoring: {ipfilter: {rules, errorcode: 418}}}});
+
+    test('allows everything with the default rules', () => {
+      expect(utils.checkIpFilter(new operationContext.Context(), '1.2.3.4')).toEqual(0);
+    });
+
+    test('first matching rule wins; denied rule returns the error code', () => {
+      const c = makeCtx(
+        cfg([
+          {address: '10.0.0.*', allowed: true},
+          {address: '10.*', allowed: false},
+          {address: '*', allowed: true}
+        ])
+      );
+      expect(utils.checkIpFilter(c, '10.0.0.5')).toEqual(0);
+      expect(utils.checkIpFilter(c, '10.1.0.5')).toEqual(418);
+      expect(utils.checkIpFilter(c, '192.168.0.1')).toEqual(0);
+    });
+
+    test('no matching rule means allowed', () => {
+      const c = makeCtx(cfg([{address: '10.*', allowed: false}]));
+      expect(utils.checkIpFilter(c, '11.0.0.1')).toEqual(0);
+      expect(utils.checkIpFilter(c, 'not-an-ip')).toEqual(0);
+      expect(utils.checkIpFilter(c, undefined)).toEqual(0);
+    });
+
+    test('matches IPv4-mapped IPv6 addresses against IPv4 rules and vice versa', () => {
+      const c = makeCtx(cfg([{address: '10.0.0.1', allowed: false}]));
+      expect(utils.checkIpFilter(c, '::ffff:10.0.0.1')).toEqual(418);
+      expect(utils.checkIpFilter(c, '10.0.0.1')).toEqual(418);
+      const c6 = makeCtx(cfg([{address: '0:0:0:0:0:ffff:*', allowed: false}]));
+      expect(utils.checkIpFilter(c6, '10.0.0.1')).toEqual(418);
+    });
+
+    test('matches the optional hostname, case-insensitively, with escaped dots', () => {
+      const c = makeCtx(cfg([{address: '*.Example.com', allowed: false}]));
+      expect(utils.checkIpFilter(c, '1.1.1.1', 'host.example.com')).toEqual(418);
+      expect(utils.checkIpFilter(c, '1.1.1.1', 'hostXexample.com')).toEqual(0);
+      expect(utils.checkIpFilter(c, '1.1.1.1')).toEqual(0);
+    });
+  });
+
+  describe('getBaseUrlByRequest', () => {
+    const logCtx = new operationContext.Context();
+
+    test('uses the request protocol and host header', () => {
+      expect(utils.getBaseUrlByRequest(logCtx, fakeReq({host: 'example.com:8080'}, 'https'))).toEqual('https://example.com:8080');
+    });
+
+    test('forwarded headers take priority, first comma-separated value only', () => {
+      const req = fakeReq(
+        {
+          'host': 'internal',
+          'x-forwarded-proto': 'https, http',
+          'x-forwarded-host': 'public.com, other.com',
+          'x-forwarded-prefix': '/pfx, /other'
+        },
+        'http'
+      );
+      expect(utils.getBaseUrlByRequest(logCtx, req)).toEqual('https://public.com/pfx');
+    });
+
+    test('cloudfront-forwarded-proto wins over x-forwarded-proto', () => {
+      const req = fakeReq({'host': 'h', 'cloudfront-forwarded-proto': 'https', 'x-forwarded-proto': 'http'}, 'http');
+      expect(utils.getBaseUrlByRequest(logCtx, req)).toEqual('https://h');
+    });
+
+    test('invalid protocols fall back to the request protocol, then to http', () => {
+      expect(utils.getBaseUrlByRequest(logCtx, fakeReq({'host': 'h', 'x-forwarded-proto': 'javascript'}, 'https'))).toEqual('https://h');
+      expect(utils.getBaseUrlByRequest(logCtx, fakeReq({'host': 'h', 'x-forwarded-proto': 'ftp'}, 'ws'))).toEqual('http://h');
+      expect(utils.getBaseUrlByRequest(logCtx, fakeReq({host: 'h'}, undefined))).toEqual('http://h');
+      // the protocol case is preserved
+      expect(utils.getBaseUrlByRequest(logCtx, fakeReq({'host': 'h', 'x-forwarded-proto': 'HTTPS'}, 'http'))).toEqual('HTTPS://h');
+    });
+
+    test('a request without a get function throws', () => {
+      expect(() => utils.getBaseUrlByRequest(logCtx, {protocol: 'http'})).toThrow(TypeError);
+    });
+  });
+});
