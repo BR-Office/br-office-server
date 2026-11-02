@@ -58,6 +58,7 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 - Decision: save's 5 s `savetimeoutdelay` is configuration in Common, noted in the diagnosis but not planned.
 - Surprise: `DocsCoServer.js:155` builds `editorStat` with `new editorDataStorage()`; folded into P4.
 - Not done: no new measurement (baseline covers the module, except the server share of open, listed as what would change the verdict). A heredoc-based shell edit was refused by permissions; used file edits instead.
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
