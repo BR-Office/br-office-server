@@ -46,6 +46,7 @@ Map the module `common` (`Common`) into the Atlas card `.theseus/atlas/common.md
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/module-card.md; ls .theseus/atlas .theseus; ls .theseus/atlas/graph.json 2>&1; find Common -name '*.js…; Bash: cd Common && git ls-files | grep -v node_modules | xargs wc -l | sort -n | tail -45; Bash: git ls-files Common | grep -v node_modules; grep -n "^exports\.\|module.exports\|^function \|^async function " Common/so…; Bash: echo '| common | Shared library: config, context, tenants, storage, queues, logging, DTOs | n/a (no graph) | n/a | parti…
+- integration: merge conflict in .theseus/queue/done/PKT-0001-map-the-common-module-atlas-card.md
 
 ## Spawned packets
 
