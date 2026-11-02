@@ -74,7 +74,7 @@ Reading:
 Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
 RabbitMQ, FileConverter/x2t in one container), cloud VM with 2 CPUs and 7 GB RAM, measured 2026-11-02.
 Absolute numbers are a lower bound for production hardware; the proportions are the point.
-Samples: the image's own `en-US/new.{docx,xlsx,pptx,pdf}` templates (6–35 kB, copied to `perf/samples/`).
+Samples: the image's own `en-US/new.{docx,xlsx,pptx,pdf}` templates (6–35 kB, copied from the container at run time, see the header of `perf/e2e-convert.js`).
 **Small, near-empty documents only**: these numbers are fixed per-request costs, not content costs.
 
 Runtime configuration needed (container `local.json`, not source code):
@@ -85,7 +85,7 @@ builds the save-callback URLs from the browser's host, so through `:8080` the sa
 
 ### ConvertService (`perf/e2e-convert.js`, 20 conversions per pair, async mode polled every 50 ms)
 
-| Conversion | p50 (1 client) | p99 (1 client) | throughput 1 client | p50 (4 parallel) | p99 (4 parallel) | throughput 4 parallel | raw x2t p50 (`perf/x2t-direct.sh`) |
+| Conversion | p50 (1 client) | p99 (1 client) | throughput 1 client | p50 (4 parallel) | p99 (4 parallel) | throughput 4 parallel | raw x2t p50 (loop below) |
 |---|---|---|---|---|---|---|---|
 | docx → pdf | 767 ms | 873 ms | 1.3 /s | 1 880 ms | 2 253 ms | 1.85 /s | 647 ms |
 | docx → odt | 138 ms | 163 ms | 7.3 /s | 238 ms | 324 ms | 14.2 /s | 80 ms |
@@ -97,6 +97,15 @@ builds the save-callback URLs from the browser's host, so through `:8080` the sa
 
 (p99 over 20 samples = the maximum; 0 errors in 280 conversions. Download of the result adds ≈ 1 ms.)
 
+Raw x2t (no DocService/RabbitMQ), 5 runs per pair, inside the container:
+
+```sh
+docker exec eo sh -c 'cd /var/www/euro-office/documentserver/server/FileConverter/bin; T=/var/www/euro-office/documentserver/document-templates/new/en-US
+for p in docx:pdf docx:odt xlsx:pdf xlsx:ods pptx:pdf pptx:odp pdf:docx; do f=${p%:*}; t=${p#*:}; all=""
+ for i in 1 2 3 4 5; do s=$(date +%s%N); ./x2t $T/new.$f /tmp/o.$t >/dev/null 2>&1; all="$all $(( ($(date +%s%N)-s)/1000000 ))"; done
+ echo "$f->$t ms:$all"; done'
+```
+
 Reading:
 - **x2t is the cost.** Service overhead (HTTP, Redis/PostgreSQL task row, RabbitMQ round trip, storage, and up to
   50 ms of our own polling) is ≈ 55–95 ms per conversion; x2t is 70–90 % of every PDF conversion.
@@ -107,7 +116,15 @@ Reading:
 - **Sync mode (`async: false`) answers in whole seconds** (1 012 ms, 2 016 ms…): DocService polls the task
   status every ~1 s internally, so a 140 ms conversion is reported to sync callers after ≥ 1 s. Integrations
   that call ConvertService synchronously pay up to +900 ms per request. Cause: `CONVERT_ASYNC_DELAY = 1000` with `utils.sleep`
-  in `DocService/sources/converterservice.js:49,163`. Candidate improvement (not touched here).
+  in `DocService/sources/converterservice.js:49,163`. Candidate improvement (not touched here, no spawn filed
+  to stay within the file budget; see the packet log).
+
+### Upstream defect / crash rate: NOT MEASURED
+
+The Goal asks for it, but it could not be measured in this run: `gh api repos/Euro-Office/server` and WebFetch of
+github.com/Euro-Office/server were both refused by the executor's permissions, and the local git history starts
+on 2026-10-28 (see "Defect history" below). It needs a run with GitHub read access: spawn request
+`PKT-0015-defect-and-crash-rate-from-upstream-history`.
 
 ### Open, co-edit round trip, save (`perf/e2e-coedit.js`, headless Chromium through the example)
 

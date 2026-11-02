@@ -1,7 +1,7 @@
 // End-to-end ConvertService probe (PKT-0015).
 // Usage: node .theseus/oracle/perf/e2e-convert.js [runs] [concurrency] [base] [hostIp]
 // Needs the full-stack container running on :8080 with JWT_ENABLED=false (see .theseus/adapter/environment.md).
-// Serves the sample files (perf/samples, the image's own en-US "new.*" templates) over HTTP on the docker
+// Serves the sample files ($SAMPLES, the image's own en-US "new.*" templates) over HTTP on the docker
 // bridge gateway so the container can download them, then times POST /ConvertService.ashx (sync) per pair:
 // request -> DocService -> RabbitMQ -> FileConverter/x2t -> result URL, plus the download of the result.
 const http = require('http'), fs = require('fs'), path = require('path');
@@ -11,7 +11,9 @@ const BASE = process.argv[4] || 'http://127.0.0.1:8080';
 const HOST = process.argv[5] || '172.17.0.1';
 const ASYNC = process.env.SYNC !== '1'; // SYNC=1 measures the server's own sync mode instead
 const POLL = 50;
-const DIR =path.join(__dirname, 'samples');
+// Samples are not committed; copy them once from the container:
+//   mkdir -p /tmp/eo-samples && docker cp eo:/var/www/euro-office/documentserver/document-templates/new/en-US/. /tmp/eo-samples
+const DIR = process.env.SAMPLES || path.join(require('os').tmpdir(), 'eo-samples');
 const PAIRS = [['docx', 'pdf'], ['docx', 'odt'], ['xlsx', 'pdf'], ['xlsx', 'ods'], ['pptx', 'pdf'], ['pptx', 'odp'], ['pdf', 'docx']];
 
 const pct = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(q * s.length))]; };
