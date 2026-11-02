@@ -32,7 +32,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -55,5 +55,6 @@ Common/sources/operationContext.js; invariants in .theseus/atlas/common.md.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Characterization tests pin wire format, round trips, initFromRequest and getCfg precedence; both surprises are kept in tests and the source is unchanged
 
 ## Lessons for the Atlas
