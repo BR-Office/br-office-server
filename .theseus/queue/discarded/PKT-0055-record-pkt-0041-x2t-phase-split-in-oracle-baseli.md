@@ -61,6 +61,7 @@ Add a section "x2t phase split (PKT-0041)" to `.theseus/oracle/baseline.md` with
 ```
 sh: 1: [ORACLE: not found
 ```
+- discard: unfinished spawn request (template placeholders) queued before Theseus 0.16.2
 
 ## Spawned packets
 - PKT-0062: Give PKT-0055 a runnable acceptance instead of [ORACLE COMMAND]
