@@ -34,6 +34,19 @@ const documentFormats = require('../../Common/sources/documentFormats');
 
 const UNKNOWN = C.AVS_OFFICESTUDIO_FILE_UNKNOWN;
 
+/*
+ * Surprising behaviors pinned here (characterization only, none are fixed):
+ *  - getOfficeZipFormatBySignature detects xlsx only (marker xl/workbook.xml, searched in the last 8KB);
+ *    docx/pptx zips are UNKNOWN. ZIP headers 05 04 and 07 04 are accepted, 01 04 is not.
+ *  - getOfficeZipFormatBySignature(null) throws TypeError (no guard, unlike getDocumentFormatBySignature).
+ *  - getDocumentFormatBySignature does not detect %PDF or plain ZIP magic.
+ *  - pdfa has its own id but getStringFromFormat writes it back as pdf.
+ *  - getFormatFromString does not trim or strip a leading dot; throws TypeError on non-string truthy input.
+ *  - One-way mappings: vsdt (TEAMLAB_VSDY) has no reverse mapping.
+ *  - getImageFormat looks for the svg marker only in the first 1000 bytes.
+ *  - documentFormats.getAllFormats('') without a context rejects with TypeError instead of warning.
+ */
+
 function makeCtx() {
   return {logger: {warn: jest.fn(), error: jest.fn(), debug: jest.fn(), info: jest.fn()}};
 }
