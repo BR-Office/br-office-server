@@ -68,6 +68,7 @@ Surprises:
 Not done: nothing from the goal; the restore of PKT-0045's files is outside target.files.
 
 ## Spawned packets
+- PKT-0067: Restore the PKT-0045 baseline section and client-profile JSON lost in integration
 
 ## Review
 
