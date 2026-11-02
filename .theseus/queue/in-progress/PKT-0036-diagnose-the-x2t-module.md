@@ -49,6 +49,10 @@ Diagnose the module `x2t` following `.theseus/prompts/diagnostician.md` and writ
 ## Suggested plan
 
 ## Executor log
+- 2026-11-02, claude-opus-5-5: wrote `.theseus/diagnosis/DIAG-x2t.md`, verdict **refactor (C++), conditional** on P1 (profile of PDF export) and P2 (corpus oracle).
+- Decisions: no target language. The measured cost (PDF export 0.65 s on empty files, up to 6.5 s on large ones) runs in x2t's callees (`doct_bin2pdf` → `CDoctrenderer` V8/sdkjs layout → `CPdfFile`, `lib/pdf_image.h:339`), not the dispatcher, so a language change of this module gains nothing measurable; oracle `none` also blocks migrate/rewrite (D1). Open is not an x2t problem (0.1–0.3 s).
+- Surprises: `external/core` is a read-only checkout (no fork yet), so wave 1 refactors cannot land in this repository; P3 says to deliver a patch + note if the fork still does not exist. The fixed ~0.6 s of PDF export may be sdkjs JS run inside x2t, which would move the work to the sdkjs modules (stated in "What would change").
+- Not done: no measurement of my own (diagnosis only); the split of PDF time is unknown and is P1. Did not read other diagnoses of x2t (none existed). No spawn filed: the follow-ups are the plan's packets.
 
 ## Spawned packets
 
