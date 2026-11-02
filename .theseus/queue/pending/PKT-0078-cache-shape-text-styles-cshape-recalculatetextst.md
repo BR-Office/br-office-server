@@ -42,7 +42,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -65,6 +65,7 @@ serialized styles. Expected gain 50-100 ms per 50-slide open; measure before/aft
 
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.17.0
+- return: disk filled up; factory restarted on Theseus 0.17.1
 
 ## Spawned packets
 
