@@ -1,0 +1,2006 @@
+{
+ "medium-10p.docx": {
+  "open": {
+   "runs": 3,
+   "wallMsPerRun": 5119,
+   "busyMsPerRun": 3538,
+   "harnessMsPerRun": 3,
+   "buckets": [
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 661,
+     "selfPct": 18.7,
+     "inclMs": 1590,
+     "inclPct": 45
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 549,
+     "selfPct": 15.5,
+     "inclMs": 668,
+     "inclPct": 18.9
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 503,
+     "selfPct": 14.2,
+     "inclMs": 503,
+     "inclPct": 14.2
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 493,
+     "selfPct": 13.9,
+     "inclMs": 752,
+     "inclPct": 21.2
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 230,
+     "selfPct": 6.5,
+     "inclMs": 1776,
+     "inclPct": 50.2
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 202,
+     "selfPct": 5.7,
+     "inclMs": 754,
+     "inclPct": 21.3
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 180,
+     "selfPct": 5.1,
+     "inclMs": 299,
+     "inclPct": 8.5
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 168,
+     "selfPct": 4.8,
+     "inclMs": 2436,
+     "inclPct": 68.9
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 131,
+     "selfPct": 3.7,
+     "inclMs": 131,
+     "inclPct": 3.7
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 95,
+     "selfPct": 2.7,
+     "inclMs": 471,
+     "inclPct": 13.3
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 93,
+     "selfPct": 2.6,
+     "inclMs": 1910,
+     "inclPct": 54
+    },
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 77,
+     "selfPct": 2.2,
+     "inclMs": 231,
+     "inclPct": 6.5
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 60,
+     "selfPct": 1.7,
+     "inclMs": 209,
+     "inclPct": 5.9
+    },
+    {
+     "bucket": "sdkjs: unmapped",
+     "selfMs": 27,
+     "selfPct": 0.8,
+     "inclMs": 71,
+     "inclPct": 2
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 22,
+     "selfPct": 0.6,
+     "inclMs": 38,
+     "inclPct": 1.1
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 16,
+     "selfPct": 0.4,
+     "inclMs": 49,
+     "inclPct": 1.4
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 12,
+     "selfPct": 0.3,
+     "inclMs": 371,
+     "inclPct": 10.5
+    },
+    {
+     "bucket": "sdkjs: other (cell)",
+     "selfMs": 10,
+     "selfPct": 0.3,
+     "inclMs": 12,
+     "inclPct": 0.3
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 6,
+     "selfPct": 0.2,
+     "inclMs": 6,
+     "inclPct": 0.2
+    },
+    {
+     "bucket": "sdkjs: other (pdf)",
+     "selfMs": 2,
+     "selfPct": 0.1,
+     "inclMs": 2,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 478,
+     "inclPct": 13.5
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 991,
+     "inclPct": 28
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(program)",
+     "ms": 503,
+     "pct": 14.2
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 324,
+     "pct": 9.2
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 181,
+     "pct": 5.1
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 175,
+     "pct": 5
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 168,
+     "pct": 4.8
+    },
+    {
+     "name": "word/Editor/Styles.js",
+     "ms": 168,
+     "pct": 4.7
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 166,
+     "pct": 4.7
+    },
+    {
+     "name": "common/libfont/textmeasurer.js",
+     "ms": 136,
+     "pct": 3.8
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 131,
+     "pct": 3.7
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm",
+     "ms": 127,
+     "pct": 3.6
+    },
+    {
+     "name": "word/Editor/Document.js",
+     "ms": 122,
+     "pct": 3.5
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js",
+     "ms": 118,
+     "pct": 3.3
+    },
+    {
+     "name": "common/libfont/file.js",
+     "ms": 79,
+     "pct": 2.2
+    },
+    {
+     "name": "word/Editor/Serialize2.js",
+     "ms": 66,
+     "pct": 1.9
+    },
+    {
+     "name": "common/libfont/common.js",
+     "ms": 63,
+     "pct": 1.8
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(program) (program)",
+     "ms": 503,
+     "pct": 14.2
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 131,
+     "pct": 3.7
+    },
+    {
+     "name": "common/libfont/textmeasurer.js SetFontInternal",
+     "ms": 124,
+     "pct": 3.5
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js Ge",
+     "ms": 85,
+     "pct": 2.4
+    },
+    {
+     "name": "common/libfont/common.js AscFonts.hb_get_script_horizontal_direction",
+     "ms": 61,
+     "pct": 1.7
+    },
+    {
+     "name": "word/Editor/Document.js CDocument.private_UpdateTracks",
+     "ms": 61,
+     "pct": 1.7
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js (anonymous)",
+     "ms": 49,
+     "pct": 1.4
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 38,
+     "pct": 1.1
+    },
+    {
+     "name": "word/Editor/Styles.js CDocumentColor",
+     "ms": 37,
+     "pct": 1
+    },
+    {
+     "name": "common/libfont/file.js draw",
+     "ms": 35,
+     "pct": 1
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm wasm-function[895]",
+     "ms": 34,
+     "pct": 1
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Get_PosByElement",
+     "ms": 31,
+     "pct": 0.9
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js Paragraph.private_RecalculateLineCheckRanges",
+     "ms": 30,
+     "pct": 0.8
+    },
+    {
+     "name": "word/Editor/DocumentContent.js CDocumentContent.GetLogicDocument",
+     "ms": 29,
+     "pct": 0.8
+    },
+    {
+     "name": "(unmapped sdk-all.js) (anonymous)",
+     "ms": 27,
+     "pct": 0.8
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js Paragraph.private_RecalculateLineAlign",
+     "ms": 27,
+     "pct": 0.8
+    },
+    {
+     "name": "word/Editor/Paragraph/ParagraphContentPos.js CParagraphContentPos.Update",
+     "ms": 27,
+     "pct": 0.8
+    },
+    {
+     "name": "common/libfont/file.js CFontFile.SetTextMatrix",
+     "ms": 25,
+     "pct": 0.7
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js pushStack",
+     "ms": 25,
+     "pct": 0.7
+    },
+    {
+     "name": "common/stringserialize.js window.AscCommon.Hex.encode.window.AscCommon.Hex.encode",
+     "ms": 25,
+     "pct": 0.7
+    }
+   ]
+  },
+  "type": {
+   "runs": 3,
+   "wallMsPerRun": 7170,
+   "busyMsPerRun": 3572,
+   "harnessMsPerRun": 98,
+   "buckets": [
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 1088,
+     "selfPct": 30.5,
+     "inclMs": 1116,
+     "inclPct": 31.3
+    },
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 839,
+     "selfPct": 23.5,
+     "inclMs": 1621,
+     "inclPct": 45.4
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 725,
+     "selfPct": 20.3,
+     "inclMs": 725,
+     "inclPct": 20.3
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 195,
+     "selfPct": 5.5,
+     "inclMs": 603,
+     "inclPct": 16.9
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 169,
+     "selfPct": 4.7,
+     "inclMs": 285,
+     "inclPct": 8
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 153,
+     "selfPct": 4.3,
+     "inclMs": 2044,
+     "inclPct": 57.2
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 95,
+     "selfPct": 2.7,
+     "inclMs": 1901,
+     "inclPct": 53.2
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 88,
+     "selfPct": 2.5,
+     "inclMs": 88,
+     "inclPct": 2.5
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 63,
+     "selfPct": 1.8,
+     "inclMs": 2496,
+     "inclPct": 69.9
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 63,
+     "selfPct": 1.8,
+     "inclMs": 696,
+     "inclPct": 19.5
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 41,
+     "selfPct": 1.1,
+     "inclMs": 300,
+     "inclPct": 8.4
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 15,
+     "selfPct": 0.4,
+     "inclMs": 20,
+     "inclPct": 0.5
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 11,
+     "selfPct": 0.3,
+     "inclMs": 19,
+     "inclPct": 0.5
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 11,
+     "selfPct": 0.3,
+     "inclMs": 35,
+     "inclPct": 1
+    },
+    {
+     "bucket": "other scripts",
+     "selfMs": 7,
+     "selfPct": 0.2,
+     "inclMs": 8,
+     "inclPct": 0.2
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 5,
+     "selfPct": 0.2,
+     "inclMs": 5,
+     "inclPct": 0.2
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 3,
+     "selfPct": 0.1,
+     "inclMs": 9,
+     "inclPct": 0.3
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 3,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 450,
+     "inclPct": 12.6
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 1938,
+     "inclPct": 54.3
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(native) drawImage",
+     "ms": 947,
+     "pct": 26.5
+    },
+    {
+     "name": "(program)",
+     "ms": 725,
+     "pct": 20.3
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 232,
+     "pct": 6.5
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 197,
+     "pct": 5.5
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js",
+     "ms": 140,
+     "pct": 3.9
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 88,
+     "pct": 2.5
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 88,
+     "pct": 2.5
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/highlight-draw-state.js",
+     "ms": 67,
+     "pct": 1.9
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 63,
+     "pct": 1.8
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm",
+     "ms": 62,
+     "pct": 1.7
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 61,
+     "pct": 1.7
+    },
+    {
+     "name": "word/Drawing/Graphics.js",
+     "ms": 57,
+     "pct": 1.6
+    },
+    {
+     "name": "word/Editor/Document.js",
+     "ms": 52,
+     "pct": 1.5
+    },
+    {
+     "name": "common/libfont/textshaper.js",
+     "ms": 48,
+     "pct": 1.3
+    },
+    {
+     "name": "word/Drawing/DrawingDocument.js",
+     "ms": 48,
+     "pct": 1.3
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(native) drawImage drawImage",
+     "ms": 947,
+     "pct": 26.5
+    },
+    {
+     "name": "(program) (program)",
+     "ms": 725,
+     "pct": 20.3
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js BidiFlow.add",
+     "ms": 135,
+     "pct": 3.8
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Draw_HighLights",
+     "ms": 109,
+     "pct": 3.1
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 88,
+     "pct": 2.5
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.getColorMap",
+     "ms": 66,
+     "pct": 1.8
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/highlight-draw-state.js ParagraphHighlightDrawState.handleRunElement",
+     "ms": 46,
+     "pct": 1.3
+    },
+    {
+     "name": "(native) send send",
+     "ms": 42,
+     "pct": 1.2
+    },
+    {
+     "name": "common/libfont/textshaper.js CTextShaper.FlushWord",
+     "ms": 40,
+     "pct": 1.1
+    },
+    {
+     "name": "(native) anonymous (anonymous)",
+     "ms": 33,
+     "pct": 0.9
+    },
+    {
+     "name": "common/text_input2.js CTextInputPrototype.move",
+     "ms": 33,
+     "pct": 0.9
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.drawRunHighlight",
+     "ms": 26,
+     "pct": 0.7
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 23,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/line-draw-state.js ParagraphLineDrawState.handleRunElement",
+     "ms": 21,
+     "pct": 0.6
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js synchronizeChanges",
+     "ms": 20,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Table/TableDraw.js CTable.private_DrawCellsBorders",
+     "ms": 20,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Drawing/DrawingDocument.js SelectEnabled",
+     "ms": 19,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Draw",
+     "ms": 19,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Drawing/Graphics.js CGraphics.tg",
+     "ms": 18,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Reset",
+     "ms": 17,
+     "pct": 0.5
+    }
+   ]
+  },
+  "apply": {
+   "runs": 3,
+   "wallMsPerRun": 22569,
+   "busyMsPerRun": 5366,
+   "harnessMsPerRun": 66,
+   "buckets": [
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 1355,
+     "selfPct": 25.3,
+     "inclMs": 1395,
+     "inclPct": 26
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 1273,
+     "selfPct": 23.7,
+     "inclMs": 1273,
+     "inclPct": 23.7
+    },
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 1041,
+     "selfPct": 19.4,
+     "inclMs": 2338,
+     "inclPct": 43.6
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 433,
+     "selfPct": 8.1,
+     "inclMs": 917,
+     "inclPct": 17.1
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 289,
+     "selfPct": 5.4,
+     "inclMs": 388,
+     "inclPct": 7.2
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 277,
+     "selfPct": 5.2,
+     "inclMs": 2637,
+     "inclPct": 49.1
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 161,
+     "selfPct": 3,
+     "inclMs": 261,
+     "inclPct": 4.9
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 132,
+     "selfPct": 2.5,
+     "inclMs": 132,
+     "inclPct": 2.5
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 113,
+     "selfPct": 2.1,
+     "inclMs": 3082,
+     "inclPct": 57.4
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 94,
+     "selfPct": 1.8,
+     "inclMs": 94,
+     "inclPct": 1.8
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 86,
+     "selfPct": 1.6,
+     "inclMs": 1527,
+     "inclPct": 28.5
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 53,
+     "selfPct": 1,
+     "inclMs": 3319,
+     "inclPct": 61.9
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 50,
+     "selfPct": 0.9,
+     "inclMs": 276,
+     "inclPct": 5.1
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 4,
+     "selfPct": 0.1,
+     "inclMs": 9,
+     "inclPct": 0.2
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 2,
+     "selfPct": 0,
+     "inclMs": 2,
+     "inclPct": 0
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 1,
+     "selfPct": 0,
+     "inclMs": 1,
+     "inclPct": 0
+    },
+    {
+     "bucket": "sdkjs: other (cell)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 0,
+     "inclPct": 0
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 0,
+     "inclPct": 0
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 2395,
+     "inclPct": 44.6
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 857,
+     "inclPct": 16
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(program)",
+     "ms": 1273,
+     "pct": 23.7
+    },
+    {
+     "name": "(native) drawImage",
+     "ms": 1121,
+     "pct": 20.9
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 405,
+     "pct": 7.6
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 165,
+     "pct": 3.1
+    },
+    {
+     "name": "word/Editor/Styles.js",
+     "ms": 159,
+     "pct": 3
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js",
+     "ms": 158,
+     "pct": 2.9
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 152,
+     "pct": 2.8
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm",
+     "ms": 151,
+     "pct": 2.8
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 132,
+     "pct": 2.5
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 108,
+     "pct": 2
+    },
+    {
+     "name": "common/Drawings/Format/Format.js",
+     "ms": 100,
+     "pct": 1.9
+    },
+    {
+     "name": "word/Editor/SpellChecker/ParagraphSpellCheckerElement.js",
+     "ms": 94,
+     "pct": 1.8
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 86,
+     "pct": 1.6
+    },
+    {
+     "name": "(native) requestAnimationFrame",
+     "ms": 86,
+     "pct": 1.6
+    },
+    {
+     "name": "word/Editor/Document.js",
+     "ms": 71,
+     "pct": 1.3
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(program) (program)",
+     "ms": 1273,
+     "pct": 23.7
+    },
+    {
+     "name": "(native) drawImage drawImage",
+     "ms": 1121,
+     "pct": 20.9
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Draw_HighLights",
+     "ms": 191,
+     "pct": 3.6
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js BidiFlow.add",
+     "ms": 155,
+     "pct": 2.9
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 132,
+     "pct": 2.5
+    },
+    {
+     "name": "word/Editor/Styles.js CTextPr.Document_Get_AllFontNames",
+     "ms": 123,
+     "pct": 2.3
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_Range",
+     "ms": 99,
+     "pct": 1.8
+    },
+    {
+     "name": "common/Drawings/Format/Format.js CUniFill.createDuplicate",
+     "ms": 97,
+     "pct": 1.8
+    },
+    {
+     "name": "(native) requestAnimationFrame requestAnimationFrame",
+     "ms": 86,
+     "pct": 1.6
+    },
+    {
+     "name": "word/Editor/SpellChecker/ParagraphSpellCheckerElement.js CParagraphSpellCheckerElement.getEndParaPos",
+     "ms": 74,
+     "pct": 1.4
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm wasm-function[747]",
+     "ms": 59,
+     "pct": 1.1
+    },
+    {
+     "name": "common/libfont/textmeasurer.js SetFontInternal",
+     "ms": 58,
+     "pct": 1.1
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.drawRunContentLines",
+     "ms": 50,
+     "pct": 0.9
+    },
+    {
+     "name": "common/libfont/common.js AscFonts.hb_get_script_horizontal_direction",
+     "ms": 49,
+     "pct": 0.9
+    },
+    {
+     "name": "(native) getClientRects getClientRects",
+     "ms": 44,
+     "pct": 0.8
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 44,
+     "pct": 0.8
+    },
+    {
+     "name": "common/Drawings/Metafile.js RestoreGrState",
+     "ms": 40,
+     "pct": 0.7
+    },
+    {
+     "name": "word/Editor/Paragraph/search-position-by-coords.js ParagraphSearchPositionXY.handleRunElement",
+     "ms": 38,
+     "pct": 0.7
+    },
+    {
+     "name": "common/libfont/textshaper.js CTextShaper.FlushWord",
+     "ms": 37,
+     "pct": 0.7
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js (anonymous)",
+     "ms": 33,
+     "pct": 0.6
+    }
+   ]
+  },
+  "mapping": {
+   "sourceNames": 32655,
+   "ambiguousNamesSkipped": 154,
+   "bundleAnchors": 31792
+  }
+ },
+ "large-100p.docx": {
+  "open": {
+   "runs": 3,
+   "wallMsPerRun": 4298,
+   "busyMsPerRun": 3424,
+   "harnessMsPerRun": 2,
+   "buckets": [
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 793,
+     "selfPct": 23.1,
+     "inclMs": 1466,
+     "inclPct": 42.8
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 494,
+     "selfPct": 14.4,
+     "inclMs": 494,
+     "inclPct": 14.4
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 418,
+     "selfPct": 12.2,
+     "inclMs": 611,
+     "inclPct": 17.8
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 313,
+     "selfPct": 9.1,
+     "inclMs": 763,
+     "inclPct": 22.3
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 210,
+     "selfPct": 6.1,
+     "inclMs": 781,
+     "inclPct": 22.8
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 189,
+     "selfPct": 5.5,
+     "inclMs": 372,
+     "inclPct": 10.9
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 181,
+     "selfPct": 5.3,
+     "inclMs": 181,
+     "inclPct": 5.3
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 163,
+     "selfPct": 4.8,
+     "inclMs": 776,
+     "inclPct": 22.7
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 158,
+     "selfPct": 4.6,
+     "inclMs": 2168,
+     "inclPct": 63.3
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 148,
+     "selfPct": 4.3,
+     "inclMs": 1318,
+     "inclPct": 38.5
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 98,
+     "selfPct": 2.9,
+     "inclMs": 1406,
+     "inclPct": 41
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 88,
+     "selfPct": 2.6,
+     "inclMs": 338,
+     "inclPct": 9.9
+    },
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 55,
+     "selfPct": 1.6,
+     "inclMs": 139,
+     "inclPct": 4.1
+    },
+    {
+     "bucket": "sdkjs: unmapped",
+     "selfMs": 37,
+     "selfPct": 1.1,
+     "inclMs": 95,
+     "inclPct": 2.8
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 27,
+     "selfPct": 0.8,
+     "inclMs": 231,
+     "inclPct": 6.8
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 25,
+     "selfPct": 0.7,
+     "inclMs": 38,
+     "inclPct": 1.1
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 18,
+     "selfPct": 0.5,
+     "inclMs": 46,
+     "inclPct": 1.3
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 5,
+     "selfPct": 0.2,
+     "inclMs": 5,
+     "inclPct": 0.2
+    },
+    {
+     "bucket": "sdkjs: other (cell)",
+     "selfMs": 2,
+     "selfPct": 0.1,
+     "inclMs": 3,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "sdkjs: other (pdf)",
+     "selfMs": 2,
+     "selfPct": 0.1,
+     "inclMs": 3,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 622,
+     "inclPct": 18.2
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 478,
+     "inclPct": 14
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(program)",
+     "ms": 494,
+     "pct": 14.4
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 267,
+     "pct": 7.8
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 240,
+     "pct": 7
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 203,
+     "pct": 5.9
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 181,
+     "pct": 5.3
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 176,
+     "pct": 5.2
+    },
+    {
+     "name": "word/Editor/Styles.js",
+     "ms": 164,
+     "pct": 4.8
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 158,
+     "pct": 4.6
+    },
+    {
+     "name": "word/Editor/Serialize2.js",
+     "ms": 100,
+     "pct": 2.9
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm",
+     "ms": 80,
+     "pct": 2.3
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js",
+     "ms": 79,
+     "pct": 2.3
+    },
+    {
+     "name": "common/stringserialize.js",
+     "ms": 62,
+     "pct": 1.8
+    },
+    {
+     "name": "common/Drawings/Externals.js",
+     "ms": 60,
+     "pct": 1.8
+    },
+    {
+     "name": "common/libfont/file.js",
+     "ms": 54,
+     "pct": 1.6
+    },
+    {
+     "name": "common/libfont/common.js",
+     "ms": 54,
+     "pct": 1.6
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(program) (program)",
+     "ms": 494,
+     "pct": 14.4
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 181,
+     "pct": 5.3
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js (anonymous)",
+     "ms": 51,
+     "pct": 1.5
+    },
+    {
+     "name": "common/stringserialize.js window.AscCommon.Hex.encode.window.AscCommon.Hex.encode",
+     "ms": 51,
+     "pct": 1.5
+    },
+    {
+     "name": "common/libfont/common.js AscFonts.hb_get_script_horizontal_direction",
+     "ms": 48,
+     "pct": 1.4
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Get_PosByElement",
+     "ms": 47,
+     "pct": 1.4
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js Ge",
+     "ms": 40,
+     "pct": 1.2
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 37,
+     "pct": 1.1
+    },
+    {
+     "name": "(unmapped sdk-all.js) (anonymous)",
+     "ms": 37,
+     "pct": 1.1
+    },
+    {
+     "name": "word/Drawing/DrawingDocument.js CPage.Draw",
+     "ms": 32,
+     "pct": 0.9
+    },
+    {
+     "name": "common/libfont/file.js draw",
+     "ms": 31,
+     "pct": 0.9
+    },
+    {
+     "name": "common/Drawings/Externals.js xhr.onload",
+     "ms": 31,
+     "pct": 0.9
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Remove_FromContent",
+     "ms": 24,
+     "pct": 0.7
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_Range",
+     "ms": 20,
+     "pct": 0.6
+    },
+    {
+     "name": "common/digest/sha256.js Sha256.getResult",
+     "ms": 19,
+     "pct": 0.5
+    },
+    {
+     "name": "common/Drawings/Externals.js CFontFileLoader.LoadFontArrayBuffer",
+     "ms": 18,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_LineMetrics",
+     "ms": 17,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Split2",
+     "ms": 17,
+     "pct": 0.5
+    },
+    {
+     "name": "common/libfont/map.js GetSigPenalty",
+     "ms": 16,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Serialize2.js (anonymous)",
+     "ms": 15,
+     "pct": 0.4
+    }
+   ]
+  },
+  "type": {
+   "runs": 3,
+   "wallMsPerRun": 5041,
+   "busyMsPerRun": 2581,
+   "harnessMsPerRun": 687,
+   "buckets": [
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 744,
+     "selfPct": 28.8,
+     "inclMs": 753,
+     "inclPct": 29.2
+    },
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 648,
+     "selfPct": 25.1,
+     "inclMs": 1198,
+     "inclPct": 46.4
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 554,
+     "selfPct": 21.5,
+     "inclMs": 554,
+     "inclPct": 21.5
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 115,
+     "selfPct": 4.4,
+     "inclMs": 199,
+     "inclPct": 7.7
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 102,
+     "selfPct": 3.9,
+     "inclMs": 102,
+     "inclPct": 3.9
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 95,
+     "selfPct": 3.7,
+     "inclMs": 1288,
+     "inclPct": 49.9
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 92,
+     "selfPct": 3.6,
+     "inclMs": 415,
+     "inclPct": 16.1
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 75,
+     "selfPct": 2.9,
+     "inclMs": 1396,
+     "inclPct": 54.1
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 47,
+     "selfPct": 1.8,
+     "inclMs": 416,
+     "inclPct": 16.1
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 34,
+     "selfPct": 1.3,
+     "inclMs": 1558,
+     "inclPct": 60.4
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 26,
+     "selfPct": 1,
+     "inclMs": 190,
+     "inclPct": 7.4
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 15,
+     "selfPct": 0.6,
+     "inclMs": 21,
+     "inclPct": 0.8
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 14,
+     "selfPct": 0.5,
+     "inclMs": 20,
+     "inclPct": 0.8
+    },
+    {
+     "bucket": "other scripts",
+     "selfMs": 9,
+     "selfPct": 0.3,
+     "inclMs": 9,
+     "inclPct": 0.3
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 6,
+     "selfPct": 0.2,
+     "inclMs": 37,
+     "inclPct": 1.4
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 5,
+     "selfPct": 0.2,
+     "inclMs": 11,
+     "inclPct": 0.4
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 1,
+     "selfPct": 0,
+     "inclMs": 1,
+     "inclPct": 0
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 0,
+     "inclPct": 0
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 1236,
+     "inclPct": 47.9
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 411,
+     "inclPct": 15.9
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(native) drawImage",
+     "ms": 626,
+     "pct": 24.2
+    },
+    {
+     "name": "(program)",
+     "ms": 554,
+     "pct": 21.5
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 179,
+     "pct": 6.9
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 107,
+     "pct": 4.1
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 102,
+     "pct": 3.9
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js",
+     "ms": 73,
+     "pct": 2.8
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js",
+     "ms": 71,
+     "pct": 2.7
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 58,
+     "pct": 2.2
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/highlight-draw-state.js",
+     "ms": 56,
+     "pct": 2.2
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 47,
+     "pct": 1.8
+    },
+    {
+     "name": "word/Editor/Document.js",
+     "ms": 45,
+     "pct": 1.8
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 38,
+     "pct": 1.5
+    },
+    {
+     "name": "(native) anonymous",
+     "ms": 36,
+     "pct": 1.4
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/line-draw-state.js",
+     "ms": 35,
+     "pct": 1.4
+    },
+    {
+     "name": "word/Editor/Paragraph/ParagraphContentPos.js",
+     "ms": 32,
+     "pct": 1.3
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(native) drawImage drawImage",
+     "ms": 626,
+     "pct": 24.2
+    },
+    {
+     "name": "(program) (program)",
+     "ms": 554,
+     "pct": 21.5
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 102,
+     "pct": 3.9
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js BidiFlow.add",
+     "ms": 66,
+     "pct": 2.6
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Draw_HighLights",
+     "ms": 61,
+     "pct": 2.4
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/highlight-draw-state.js ParagraphHighlightDrawState.handleRunElement",
+     "ms": 41,
+     "pct": 1.6
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_LineMetrics",
+     "ms": 37,
+     "pct": 1.4
+    },
+    {
+     "name": "(native) anonymous (anonymous)",
+     "ms": 36,
+     "pct": 1.4
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js Paragraph.private_RecalculateRange",
+     "ms": 29,
+     "pct": 1.1
+    },
+    {
+     "name": "word/Editor/Paragraph/ParagraphContentPos.js CParagraphContentPos.Update",
+     "ms": 25,
+     "pct": 1
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_Range",
+     "ms": 22,
+     "pct": 0.9
+    },
+    {
+     "name": "(native) postMessage postMessage",
+     "ms": 17,
+     "pct": 0.7
+    },
+    {
+     "name": "(native) send send",
+     "ms": 16,
+     "pct": 0.6
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 16,
+     "pct": 0.6
+    },
+    {
+     "name": "common/text_input2.js CTextInputPrototype.move",
+     "ms": 15,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/line-draw-state.js ParagraphLineDrawState.handleRunElement",
+     "ms": 15,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.drawRunContentLines",
+     "ms": 13,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Paragraph/draw/content-draw-state.js ParagraphContentDrawState.handleRunElement",
+     "ms": 12,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Draw_Elements",
+     "ms": 10,
+     "pct": 0.4
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Draw",
+     "ms": 10,
+     "pct": 0.4
+    }
+   ]
+  },
+  "apply": {
+   "runs": 3,
+   "wallMsPerRun": 14805,
+   "busyMsPerRun": 2879,
+   "harnessMsPerRun": 461,
+   "buckets": [
+    {
+     "bucket": "word: paragraph/run layout & model",
+     "selfMs": 892,
+     "selfPct": 31,
+     "inclMs": 1402,
+     "inclPct": 48.7
+    },
+    {
+     "bucket": "browser: (program) native/Blink",
+     "selfMs": 663,
+     "selfPct": 23,
+     "inclMs": 663,
+     "inclPct": 23
+    },
+    {
+     "bucket": "browser: native builtins",
+     "selfMs": 595,
+     "selfPct": 20.7,
+     "inclMs": 611,
+     "inclPct": 21.2
+    },
+    {
+     "bucket": "fonts (common/libfont)",
+     "selfMs": 149,
+     "selfPct": 5.2,
+     "inclMs": 400,
+     "inclPct": 13.9
+    },
+    {
+     "bucket": "word: document recalc & pagination",
+     "selfMs": 144,
+     "selfPct": 5,
+     "inclMs": 1821,
+     "inclPct": 63.3
+    },
+    {
+     "bucket": "web-apps & vendor UI",
+     "selfMs": 132,
+     "selfPct": 4.6,
+     "inclMs": 192,
+     "inclPct": 6.7
+    },
+    {
+     "bucket": "word: styles & numbering",
+     "selfMs": 64,
+     "selfPct": 2.2,
+     "inclMs": 72,
+     "inclPct": 2.5
+    },
+    {
+     "bucket": "drawing & render (word/Drawing, common/Drawings)",
+     "selfMs": 62,
+     "selfPct": 2.2,
+     "inclMs": 1298,
+     "inclPct": 45.1
+    },
+    {
+     "bucket": "sdkjs base bundle (sdk-all-min.js, mangled)",
+     "selfMs": 53,
+     "selfPct": 1.9,
+     "inclMs": 815,
+     "inclPct": 28.3
+    },
+    {
+     "bucket": "browser: GC",
+     "selfMs": 41,
+     "selfPct": 1.4,
+     "inclMs": 41,
+     "inclPct": 1.4
+    },
+    {
+     "bucket": "word: table layout & model",
+     "selfMs": 34,
+     "selfPct": 1.2,
+     "inclMs": 182,
+     "inclPct": 6.3
+    },
+    {
+     "bucket": "spellcheck",
+     "selfMs": 24,
+     "selfPct": 0.9,
+     "inclMs": 25,
+     "inclPct": 0.9
+    },
+    {
+     "bucket": "sdkjs/common: other",
+     "selfMs": 15,
+     "selfPct": 0.5,
+     "inclMs": 1244,
+     "inclPct": 43.2
+    },
+    {
+     "bucket": "collab: changes, history, apply",
+     "selfMs": 4,
+     "selfPct": 0.1,
+     "inclMs": 9,
+     "inclPct": 0.3
+    },
+    {
+     "bucket": "word: other",
+     "selfMs": 3,
+     "selfPct": 0.1,
+     "inclMs": 3,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "word: Serialize2 reader (Editor.bin)",
+     "selfMs": 2,
+     "selfPct": 0.1,
+     "inclMs": 2,
+     "inclPct": 0.1
+    },
+    {
+     "bucket": "sdkjs: other (cell)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 0,
+     "inclPct": 0
+    },
+    {
+     "bucket": "sdkjs: other (vendor)",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 0,
+     "inclPct": 0
+    },
+    {
+     "bucket": "[stack] any *Draw*/*Paint* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 947,
+     "inclPct": 32.9
+    },
+    {
+     "bucket": "[stack] any *Recalc* function",
+     "selfMs": 0,
+     "selfPct": 0,
+     "inclMs": 660,
+     "inclPct": 22.9
+    }
+   ],
+   "topFiles": [
+    {
+     "name": "(program)",
+     "ms": 663,
+     "pct": 23
+    },
+    {
+     "name": "(native) drawImage",
+     "ms": 477,
+     "pct": 16.6
+    },
+    {
+     "name": "word/Editor/Run.js",
+     "ms": 343,
+     "pct": 11.9
+    },
+    {
+     "name": "word/Editor/Paragraph.js",
+     "ms": 259,
+     "pct": 9
+    },
+    {
+     "name": "word/Editor/Document.js",
+     "ms": 106,
+     "pct": 3.7
+    },
+    {
+     "name": "word/Editor/Paragraph_Recalculate.js",
+     "ms": 95,
+     "pct": 3.3
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js",
+     "ms": 66,
+     "pct": 2.3
+    },
+    {
+     "name": "web-apps/vendor/jquery/jquery.min.js",
+     "ms": 65,
+     "pct": 2.3
+    },
+    {
+     "name": "word/Editor/Styles.js",
+     "ms": 63,
+     "pct": 2.2
+    },
+    {
+     "name": "sdk-all-min.js",
+     "ms": 53,
+     "pct": 1.9
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js",
+     "ms": 52,
+     "pct": 1.8
+    },
+    {
+     "name": "common/libfont/engine/fonts.wasm",
+     "ms": 49,
+     "pct": 1.7
+    },
+    {
+     "name": "(garbage collector)",
+     "ms": 41,
+     "pct": 1.4
+    },
+    {
+     "name": "(native) requestAnimationFrame",
+     "ms": 39,
+     "pct": 1.4
+    },
+    {
+     "name": "(native) getClientRects",
+     "ms": 22,
+     "pct": 0.8
+    }
+   ],
+   "topFunctions": [
+    {
+     "name": "(program) (program)",
+     "ms": 663,
+     "pct": 23
+    },
+    {
+     "name": "(native) drawImage drawImage",
+     "ms": 477,
+     "pct": 16.6
+    },
+    {
+     "name": "word/Editor/Paragraph.js Paragraph.Document_Get_AllFontNames",
+     "ms": 182,
+     "pct": 6.3
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Draw_HighLights",
+     "ms": 100,
+     "pct": 3.5
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_LineMetrics",
+     "ms": 74,
+     "pct": 2.6
+    },
+    {
+     "name": "word/Editor/Paragraph/bidi-flow.js BidiFlow.add",
+     "ms": 65,
+     "pct": 2.3
+    },
+    {
+     "name": "word/Editor/Document.js CDocument.Document_Get_AllFontNames",
+     "ms": 64,
+     "pct": 2.2
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_Range",
+     "ms": 43,
+     "pct": 1.5
+    },
+    {
+     "name": "(garbage collector) (garbage collector)",
+     "ms": 41,
+     "pct": 1.4
+    },
+    {
+     "name": "(native) requestAnimationFrame requestAnimationFrame",
+     "ms": 39,
+     "pct": 1.4
+    },
+    {
+     "name": "word/Editor/Styles.js CTextPr.Document_Get_AllFontNames",
+     "ms": 33,
+     "pct": 1.2
+    },
+    {
+     "name": "(native) getClientRects getClientRects",
+     "ms": 22,
+     "pct": 0.8
+    },
+    {
+     "name": "web-apps/apps/documenteditor/main/app.js (anonymous)",
+     "ms": 19,
+     "pct": 0.7
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.RecalculateEndInfo",
+     "ms": 18,
+     "pct": 0.6
+    },
+    {
+     "name": "common/libfont/common.js AscFonts.hb_get_script_horizontal_direction",
+     "ms": 18,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Recalculate_Range_Width",
+     "ms": 17,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Get_AllFontNames",
+     "ms": 16,
+     "pct": 0.6
+    },
+    {
+     "name": "word/Editor/Run.js ParaRun.Get_CompiledPr",
+     "ms": 16,
+     "pct": 0.5
+    },
+    {
+     "name": "word/Editor/ParagraphContentBase.js CParagraphContentWithContentBase.protected_AddRange",
+     "ms": 15,
+     "pct": 0.5
+    },
+    {
+     "name": "common/libfont/grapheme.js window.AscFonts.DrawGrapheme",
+     "ms": 14,
+     "pct": 0.5
+    }
+   ]
+  },
+  "mapping": {
+   "sourceNames": 32655,
+   "ambiguousNamesSkipped": 154,
+   "bundleAnchors": 31792
+  }
+ }
+}
