@@ -67,6 +67,7 @@ Crash fixes upstream are almost all such guards in DocsCoServer.js, canvasservic
 - Acceptance: `.theseus/oracle/unit.sh` 183 passed / 1 skipped; `npm run lint:check` exit 0 (1 pre-existing AdminPanel warning).
 
 ## Spawned packets
+- PKT-0070: Flip the pinned DocsCoServer crash-path characterizations behind real guards
 
 ## Review
 
