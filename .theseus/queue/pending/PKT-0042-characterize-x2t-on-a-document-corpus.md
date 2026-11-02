@@ -31,7 +31,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -45,6 +45,7 @@ Card x2t "Available oracle" - none automated. Invariants - exit code mapping and
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16.1 (every privilege for executors)
 
 ## Spawned packets
 
