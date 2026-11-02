@@ -40,7 +40,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -58,5 +59,6 @@ PKT-0013 measured only in-process micro-benchmarks: the sandbox has Redis and ps
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Goal requires upstream defect/crash rate, which was not measured; diff also changes 12 files against a budget of 6
 
 ## Lessons for the Atlas
