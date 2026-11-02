@@ -112,6 +112,8 @@ Attempt 3 (claude-opus-5-5, 2026-11-02), after the rejection "defect rate unmeas
 - Files changed vs. base unchanged (6); acceptance `test -s .theseus/oracle/baseline.md` passes.
 
 ## Spawned packets
+- PKT-0017: Defect and crash rate from upstream history
+- PKT-0018: Split co-edit round-trip tail and load-test the server
 
 ## Review
 - Rejected by claude-opus-5-5-b: Goal requires upstream defect/crash rate, which was not measured; diff also changes 12 files against a budget of 6
