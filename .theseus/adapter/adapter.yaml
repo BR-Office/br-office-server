@@ -108,7 +108,7 @@ limits:
   max_cost_per_packet_usd: 5.00
   stale_card_ratio: 0.10
   max_parallel_agents: 2
-  agent_timeout_min: 30
+  agent_timeout_min: 90          # measurements with the full stack (load tests) need more than 30 min
 
 audit:
   every_n_packets: 20

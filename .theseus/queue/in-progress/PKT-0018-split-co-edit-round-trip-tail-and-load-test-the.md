@@ -42,6 +42,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: false
 ---
 
 ## Goal
@@ -55,6 +56,8 @@ PKT-0015 measured the full stack with headless Chromium clients on a 2-CPU VM, u
 
 ## Executor log
 - return: factory restarted: measurement permissions widened (Rafael authorized)
+- block: agent `claude-opus-5-5` timed out after 30 min
+- release: agent timeout raised to 90 min (load test); continue from the previous attempt
 
 ## Spawned packets
 
