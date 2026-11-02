@@ -162,12 +162,82 @@ Reading:
   in `DocService/sources/converterservice.js:49,163`. Candidate improvement (not touched here, no spawn filed
   to stay within the file budget; see the packet log).
 
-### Upstream defect / crash rate: NOT MEASURED
+### Upstream defect / crash rate (PKT-0017)
 
-The Goal asks for it, but it could not be measured in this run: `gh api repos/Euro-Office/server` and WebFetch of
-github.com/Euro-Office/server were both refused by the executor's permissions, and the local git history starts
-on 2026-10-28 (see "Defect history" below). It needs a run with GitHub read access: spawn request
-`PKT-0015-defect-and-crash-rate-from-upstream-history`.
+Script: `node .theseus/oracle/perf/defect-history.js git <bare.git> <name>` (fix/crash commits) and
+`node .theseus/oracle/perf/defect-history.js issues` (issue counts). Sources, 2026-11-02:
+blob-less `git clone --bare` of github.com/Euro-Office/server (default branch `main`) and ONLYOFFICE/server;
+issue counts from the GitHub **search** API (`/search/issues`; the per-repo API and `gh api` are blocked
+in the factory). ONLYOFFICE/server has issues disabled: its issues are in ONLYOFFICE/DocumentServer, which
+covers the **whole product** (editors, converter, server), so it is an upper bound for the server.
+
+Rules (quoted from the script): fix = subject matches
+`/\b(fix(e[sd])?|fixing|bugfix|hotfix|bug\s*#?\d+|regression)\b/i`; crash = subject contains `crash`, or
+fix and `/\b(crash\w*|segfault|unhandled|uncaught|oom|out of memory|hang\w*|deadlock|exit code|process exit|restart\w*)\b/i`.
+Merges excluded; commits with the same date + subject counted once (Euro-Office `main` has **1 828 duplicates**
+from a rebase of the upstream history: without dedup the counts nearly double). Issue crash = text matches
+`crash OR crashes OR hang OR "out of memory"`.
+
+**Fix commits per year** (Euro-Office `main` = ONLYOFFICE history up to the fork + Euro-Office work)
+
+| year | EO commits | EO fix | EO fix % | EO crash | OO commits | OO fix | OO fix % | OO crash |
+|---|---|---|---|---|---|---|---|---|
+| 2013–2017 | 893 | 52 | 6 | 1 | 885 | 52 | 6 | 1 |
+| 2018 | 129 | 29 | 22 | 1 | 127 | 29 | 23 | 1 |
+| 2019 | 107 | 30 | 28 | 0 | 104 | 29 | 28 | 0 |
+| 2020 | 207 | 102 | 49 | 0 | 199 | 97 | 49 | 0 |
+| 2021 | 152 | 65 | 43 | 1 | 148 | 64 | 43 | 1 |
+| 2022 | 150 | 60 | 40 | 5 | 145 | 55 | 38 | 5 |
+| 2023 | 194 | 83 | 43 | 4 | 176 | 76 | 43 | 4 |
+| 2024 | 224 | 123 | 55 | 5 | 211 | 119 | 56 | 5 |
+| 2025 | 402 | 218 | 54 | 4 | 287 | 139 | 48 | 4 |
+| 2026 (to 10-28 / 10-15) | 84 | 32 | 38 | 0 | 212 | 119 | 56 | 2 |
+| **total** | 2 542 | 794 | 31 | 21 | 2 494 | 779 | 31 | 23 |
+
+Euro-Office per month, last 12 with commits: 2025-11 6/13 fix, 12 4/9, 2026-01 5/11, 02 5/17, 03 1/9,
+05 5/8, 06 4/10, 08 0/1, 09 0/1, 10 12/27; crash-related 1 each in 2025-11 and 2025-12, none since.
+The low fix share before 2018 reflects commit-message habits (no `[bug]`/`Fix bug N` convention), not quality.
+
+**Bug and crash issues**
+
+| Tracker | Period | Issues | Bug-labelled | Crash/hang |
+|---|---|---|---|---|
+| ONLYOFFICE/DocumentServer (whole product), label `confirmed-bug` | 2022 / 2023 / 2024 / 2025 / 2026 | 426 / 391 / 478 / 432 / 293 | 163 / 151 / 200 / 202 / 147 (38→50 %) | 15 / 13 / 6 / 12 / 19 |
+| Euro-Office/server, label `bug` | 2026-01 … 2026-11 (first issue 2026-01-07) | 14 | 4 (Jan 1, Jun 1, Aug 2) | 2 (Aug) |
+| Euro-Office/DocumentServer (product), label `bug` | 2026-02 … 2026-11 | 276 (peak Jun: 86) | 61 (Jun 20, Aug 15, Sep 8) | 27 |
+
+Full yearly (2016–2026) and monthly tables: run the script; they are not repeated here.
+
+**Where fixes concentrate** (Euro-Office `main`, fix commits / all commits touching the file):
+
+| File / module | fix | commits | crash |
+|---|---|---|---|
+| `DocService/` (module) | 421 | 1 115 | 13 |
+| `Common/` (module) | 259 | 904 | 4 |
+| `FileConverter/` (module) | 71 | 259 | 5 |
+| `DocService/sources/DocsCoServer.js` | 197 | 562 | 7 |
+| `DocService/sources/canvasservice.js` | 131 | 318 | 5 |
+| `Common/config/default.json` | 79 | 322 | 1 |
+| `Common/sources/utils.js` | 66 | 203 | 2 |
+| `DocService/sources/wopiClient.js` | 64 | 130 | 1 |
+| `FileConverter/sources/converter.js` | 61 | 217 | 5 |
+| `DocService/sources/server.js` | 35 | 178 | 3 |
+
+Crash fixes (21 on EO `main`) are almost all **null/undefined guards and unhandled errors in Node**
+(undefined user name, permissions, tenant, connection; forcesave after close; socket error on client disconnect
+2025-12; `getJwtHsKey` 2025-11), clustered in `DocsCoServer.js`, `canvasservice.js` and `converter.js`.
+
+Reading:
+- About **half of all server commits since 2020 are fixes** (40–56 % per year); about **4–5 crash fixes a
+  year**, concentrated in the same three files that dominate fixes overall. `DocsCoServer.js` (4.7 k lines,
+  the structural hotspot below) gets a quarter of all fix commits.
+- **Finding:** two 2026 ONLYOFFICE crash/hang fixes are **not on Euro-Office `main`**: "Handle client
+  disconnect during file streaming to prevent process crash; Fix bug 81132" (2026-04-16; present only on
+  Euro-Office side branches such as `release/v9.4.0`) and "Release SaveVersion after a failed final assembly
+  so prepare4shutdown no longer hangs; Fix bug 81576" (2026-07-13; absent from every Euro-Office ref, by bug
+  number). Whether to port them is a decision for the humans.
+- No production crash telemetry exists; these are **fixed** defects, a proxy for the defect rate, not the
+  crash rate users see.
 
 ### Open, co-edit round trip, save (`perf/e2e-coedit.js`, headless Chromium through the example)
 
@@ -199,8 +269,8 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 - **Unit oracle** (`.theseus/oracle/unit.sh`): not run in this packet, the executor's permissions refused it
   (see the packet log). The factory runs it as `integrate_check`; its last result is the reference.
 - **Defect history**: git history here starts on 2026-10-28 (89 commits, restart from upstream). Only 3
-  commits in it match `fix|bug|crash|regress`, all touching tests/tooling. **Not usable as a defect rate**;
-  the upstream history (`github.com/Euro-Office/server`, and ONLYOFFICE before it) is needed.
+  commits in it match `fix|bug|crash|regress`, all touching tests/tooling. Not usable; the upstream rate is
+  in "Upstream defect / crash rate" above (PKT-0017).
 - **Structural risk** (what makes defects likely), from size alone: `DocsCoServer.js` 4 736 lines,
   `canvasservice.js` 2 106, `utils.js` 1 563, `wopiClient.js` 1 250, `commondefines.js` 1 245. Co-edit
   coordination concentrated in one 4.7 k-line file is the main structural hotspot.
@@ -212,5 +282,5 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 | End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | measured in PKT-0015 (section above), small documents only; not measured: large documents, a load test (many documents × many clients), server-side split of the co-edit tail | requested: spawn "Split co-edit round-trip tail and load-test the server" |
 | Client latency: x2t share of open, real network, low-end clients | PKT-0016 split open and remote apply (section above), but the server's open + x2t is not isolated from the client's lazy script loads, all timings are on localhost, and 2 CPUs host server and browsers | server-side timestamps per open (DocService log: open request → Editor.bin ready) |
 | x2t conversion time per format | measured in PKT-0015 for empty docx/xlsx/pptx/pdf → pdf/ODF; not for realistic files | part of the spawn above |
-| Crash and defect rate | history too short here; upstream query (`gh api` on Euro-Office/server) refused by the executor's permissions in PKT-0015; no production telemetry | requested: spawn "Defect and crash rate from upstream history" |
+| Crash rate seen by users | upstream fix and issue rates measured (PKT-0017, above); no production crash telemetry; issue counts for ONLYOFFICE cover the whole product, not only the server | production telemetry, if a deployment exists |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |

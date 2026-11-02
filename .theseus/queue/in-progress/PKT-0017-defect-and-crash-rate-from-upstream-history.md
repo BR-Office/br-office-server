@@ -81,6 +81,18 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
 - block: 3 attempts failed; last: Goal requires bug-issue counts per month/release, not delivered (gh api refused); a human must allow gh api or formally narrow the goal to fix commits, and the counts must then be recomputed from the current script.
 - release: gh api is not available here; git clone of the upstream history is (see environment.md)
 - return: factory restarted: measurement packets now run with every privilege (Theseus 0.13.4)
+- Attempt 4 (claude-opus-5-5-b, 2026-11-02): earlier attempts' files were not on this branch, so the script was
+  rewritten (`.theseus/oracle/perf/defect-history.js`) and all numbers recomputed from it.
+- Surprise: `gh api` and `api.github.com/repos/...` still return 403 ("GitHub access to this repository is not
+  enabled"), but **`/search/issues` works** (30 req/min). Bug-issue counts per year/month now come from it, so the
+  Goal is met without narrowing it. No spawn needed.
+- Surprise: ONLYOFFICE/server has issues disabled; its issues are in ONLYOFFICE/DocumentServer (whole product,
+  label `confirmed-bug`). Recorded as an upper bound for the server. Euro-Office uses label `bug`.
+- Surprise: search allows at most 5 OR operators; a query with more fails (first run aborted).
+- Fix commits deduplicated by (date, subject): 1 828 duplicates on Euro-Office `main` (rebased history).
+- Finding: crash fixes for bugs 81132 (only on EO side branches, e.g. release/v9.4.0) and 81576 (no EO ref)
+  are not on Euro-Office `main`; checked by bug number in `git log --all`. Recorded in baseline.md for the humans.
+- Updated the stale "Defect history" bullet and the gap row in baseline.md. No source code changed.
 
 ## Spawned packets
 
