@@ -23,7 +23,7 @@ goals:
   preferred_languages: [rust, go, typescript]
   # Rafael (2026-11-02, explicit): agents get every privilege they need in this disposable VM;
   # without it the VM cannot run the stack to measure. Measurement packets only.
-  baseline_commands: ["node", "npm", "npx", "curl", "apt-get", "dpkg", "service", "supervisorctl", "git", "psql", "sudo", "su", "env", "python3", "cat", "ls", "grep", "head", "tail", "find", "sed", "tee", "chmod", "mkdir", "cp", "mv", "rm", "ps", "kill"]
+  baseline_commands: ["*"]        # every privilege for measurement packets (Theseus 0.13.4)
 
 modules:
   - id: common
