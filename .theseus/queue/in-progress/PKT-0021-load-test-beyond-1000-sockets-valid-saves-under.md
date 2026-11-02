@@ -36,7 +36,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -52,5 +53,6 @@ See baseline.md section "Co-edit tail split, load test, large files (PKT-0018)" 
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Goal (2) not done (saves still return status 3, so save assembly timing is meaningless); implement it, or narrow the goal to items 1 and 3 and move item 2 to its own packet, and fill in the placeholder target, contract and acceptance.
 
 ## Lessons for the Atlas
