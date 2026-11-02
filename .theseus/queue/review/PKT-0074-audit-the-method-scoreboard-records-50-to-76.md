@@ -51,6 +51,11 @@ Audit the method over scoreboard records 50 to 76, following `.theseus/prompts/a
 ## Suggested plan
 
 ## Executor log
+- Wrote AUD-3 over records 50-76 (27 records, 23 packets) and friction lines 61-79; computed indicators with a one-off script from packets.jsonl.
+- Decisions: TEP-0001 recommended `confirmed` (mechanism; -46% vs -50% target); TEP-0002 lacks data; TEP-0003 not supported; TEP-0004 confirmed for done packets with a gap on blocked ones. No verdict on TEP-0005/0006 (still `proposed`).
+- Target-too-narrow and placeholder packets affect fewer than 20 packets, so recorded as observations; proposed TEP-0007 and TEP-0008 from them anyway, flagged as observation-based.
+- Surprises: permission denials fell from 3.3 to 0 per record with TEP-0005 unapplied; blocked packets carry no friction line; 5 discarded records.
+- Not done: no spawn requests (all findings are method-level, for the human to decide); same-family audit (pilot mode).
 
 ## Spawned packets
 
