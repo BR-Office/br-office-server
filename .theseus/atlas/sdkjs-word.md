@@ -17,8 +17,8 @@ dependencies: null                # tool — .theseus/atlas/graph.json does not 
 metrics: null                     # tool — not computed yet
 
 oracle:
-  level: none
-  sources: []
+  level: partial
+  sources: [external/sdkjs/tests/word (QUnit, 41 suites), .theseus/oracle/sdkjs-word.sh]
 
 verdict: null
 ---
@@ -52,7 +52,9 @@ Open: `asc_docs_api.OpenDocumentFromBin` (`api.js` ~1478) → `BinaryFileReader`
 Nothing measured yet. Largest files by `wc`: `Document.js` (29k), `Paragraph.js` (21k), `Table.js` (20k), `Styles.js` (18k), `Serialize2.js` (18k), `Run.js` (13k) [model].
 
 ## Available oracle
-Nothing known in this directory; whether sdkjs has its own tests (e.g. `external/sdkjs/tests`) is not checked [model].
+`.theseus/oracle/sdkjs-word.sh` runs the word entries of upstream `external/sdkjs/tests/runAll.js` headless (node-qunit-puppeteer on the preinstalled Playwright Chromium), one-time setup included (`npm ci` in `build/`, `npm run develop`) [tool].
+Measured 2026-11-02 (PKT-0044, 2-CPU VM, concurrency 2): **41/41 suites pass, 6168 assertions, ~2–2.7 min** [tool]. Skipped: `word/shortcuts/shortcuts.html` and `word/custom-xml/custom-xml-ooxml.html` (upstream skips), `word/js-api/js-api-forms.html` (local skip: needs the `sdkjs-forms` addon, not under `external/`; fails 0/5 with `CreateTextForm is not a function`) [tool].
+Level is **partial**: coverage is feature-level (content controls, tables, numbering, styles, revisions, forms, math, js-api); no suite covers `Serialize2` open/save round trips or the co-editing change apply path on real documents [model]. Suites load QUnit/jQuery from cdnjs, so they need network [tool]. Filter by substring: `.theseus/oracle/sdkjs-word.sh table` runs only matching suites [tool].
 
 ## Open questions
 - Exact sizes, languages, fan-in/out: need `graph.json`.
