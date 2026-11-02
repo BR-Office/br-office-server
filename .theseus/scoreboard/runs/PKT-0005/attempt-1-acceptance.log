@@ -1,0 +1,29 @@
+
+Structure
+  ✔ AGENTS.md points to .theseus/
+  ✔ CLAUDE.md imports AGENTS.md
+  ✔ queue with all 6 states
+  ✔ specifications present in .theseus/spec/
+
+Adapter
+  ✔ adapter.yaml loaded
+  ✔ weights sum to 1.0
+  ⚠ pilot mode: review.allow_same_family is on, so rule R4 only requires a different model, not a different family
+  ✔ interop-javascript-typescript.md present
+
+Packets
+  ✔ 6 of 6 packets without errors
+
+Atlas
+  ✔ 2 of 2 cards without errors
+
+Diagnosis
+  ⚠ DIAG-common.md: expensive decision without a double diagnosis from different families (rule D3)
+  ✔ 1 of 1 verdicts without errors
+
+Scoreboard
+  ✔ packets.jsonl: 5 records
+  ✔ escapes.jsonl: 0 records
+  ✔ friction.jsonl: 7 records
+
+13 ok · 2 warnings · 0 errors

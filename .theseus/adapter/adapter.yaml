@@ -43,6 +43,7 @@ build:
 factory:
   # Fresh worktrees have no node_modules: install before the executor starts (about 70 s).
   setup: npm ci --no-audit --no-fund && npm ci --prefix ./Common --no-audit --no-fund && npm ci --prefix ./DocService --no-audit --no-fund && npm ci --prefix ./FileConverter --no-audit --no-fund
+  read_only_commands: ["node --version", "theseus status", "theseus validate"]
 
 oracle:
   type: tests

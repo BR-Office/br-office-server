@@ -1,0 +1,10 @@
+
+> builder@1.0.1 lint:check
+> eslint .
+
+
+/home/claude/euro-office-server.theseus-worktrees/PKT-0009/AdminPanel/client/src/pages/AiIntegration/hooks/useAiPlugin.js
+  185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 1 problem (0 errors, 1 warning)
+
