@@ -83,6 +83,7 @@ Add the TypeScript 7 toolchain shared by Common and DocService, decide the outpu
 - attempt 3: changed tsconfig.json, outside the target (rule R2)
 - block: 3 attempts failed; last: changed tsconfig.json, outside the target (rule R2)
 - release: factory scope bugs fixed in Theseus 0.7.2/0.7.3
+- block: 3 attempts failed; last: Untrack the committed generated DocService/sources/utilsDocService.js (git rm --cached; the packet says emitted .js must not be committed), and show that npm ci with the hand-written typescript shrinkwrap entry installs a working tsc, or regenerate the shrinkwrap.
 
 ## Spawned packets
 
