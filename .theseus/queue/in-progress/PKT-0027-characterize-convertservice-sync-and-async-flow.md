@@ -192,6 +192,22 @@ The packet stays blocked until that follow-up merges or the target includes `esl
 ✖ 55 problems (54 errors, 1 warning)
 ```
 - release: blocked by a lint failure already on the main branch (measurement scripts); a repair packet goes first
+Attempt 7 (claude-opus-5-5, 2026-11-02): the test file was again absent (never committed), so it was rewritten and
+is committed this time: `tests/unit/converterService.tests.js`, 17 tests. Lint on main is now clean (PKT-0035/0040/0049
+merged), so both acceptance commands pass: `unit.sh` 150 passed, 1 skipped; `npm run lint:check` 0 errors, 1
+pre-existing warning (AdminPanel useAiPlugin.js).
+Pinned: async=true and async "true" answer at once (end=false, task queued, no select, no sleep); DEFAULT_SHARD_KEY
+without `shardkey` query forces sync, with it stays async; sync loop sleeps CONVERT_ASYNC_DELAY=1000 ms per poll and
+returns `{base}/conv_{key}_{format}/output.pdf`, filetype pdf; with timeout 3000 ms, CONVERT_TIMEOUT after exactly 4
+sleeps (strict `>`); Err -> status_info; ErrToReload -> status_info + cleanupErrToReload; NeedParams -> UNKNOWN; no row
+-> UNKNOWN; stale last_open_date -> CONVERT_TIMEOUT even if Ok; existing Ok task not re-queued and no sleep; status
+None re-queued; bad outputtype -> CONVERT_PARAMS before any upsert; auth code passed through; exception -> UNKNOWN;
+convertXml -> isJson=false.
+Decisions: jest.mock factories for taskresult (requireActual spread), DocsCoServer, canvasservice, wopiClient,
+storage-base; utils (fillResponse, sleep, getConvertionTimeout, getBaseUrlByRequest) and Context.prototype
+(initFromRequest, initTenantCache) stubbed with jest.spyOn, because utils and operationContext require each other.
+addTask mock returns an empty iterator (consumed with `yield*`). No fake timers: sleep resolves at once.
+Surprise: earlier attempts' work was lost because it was never committed before the block; commit early.
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
@@ -200,3 +216,5 @@ The packet stays blocked until that follow-up merges or the target includes `esl
 ## Review
 
 ## Lessons for the Atlas
+- converterservice: the sync wait polls taskResult.select every 1000 ms, so sync latency comes in whole seconds; CONVERT_TIMEOUT fires when waitTime > getConvertionTimeout (strict), and also whenever last_open_date is older than that timeout, even for an Ok row.
+- To unit-test DocService modules, stub utils with jest.spyOn rather than jest.mock (utils and operationContext require each other).
