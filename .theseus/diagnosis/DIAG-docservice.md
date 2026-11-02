@@ -7,7 +7,7 @@ confidence: medium
 conditional_on: "Wave 0 done: characterize packets for wopiUtils, editorDataMemory and the DocsCoServer module-level helpers, plus the JS→TS interop packet"
 diagnosed_by: [claude-opus-5-5]
 agreement: divergent
-decided_by: null
+decided_by: rafael
 base_commit: c0703a9
 wave: 1
 ---
@@ -75,3 +75,6 @@ Order: leaves first, never the core in this verdict. A `.js` file is deleted in 
 - **To migrate the core:** after that refactor, the core has a `partial` oracle and the leaf migrations (P5, P6) passed review on the first attempt with no upstream sync conflicts.
 - **To keep the whole package:** P4 shows that the TypeScript toolchain cannot coexist with `pkg` and the `bin` entries without a build step we do not want, or the first upstream sync after P5 or P6 costs more than the migration saved.
 - **Higher security score:** a CVE or bug report in socket message handling or WOPI. Characterization of those paths then moves ahead of the migrations.
+
+## Human decision (2026-11-02)
+Decided by Rafael Petinati: **the DocService core (`DocsCoServer.js`, `canvasservice.js`, `converterservice.js`, `wopiClient.js`) is `keep` for now**: characterize it with tests and reassess after wave 1. The leaves (`utilsDocService`, `wopiUtils`, `editorDataMemory`) migrate to TypeScript 7 as both diagnoses propose. This follows DIAG-docservice; DIAG-docservice-b's wave 2 migration of the core is deferred to the reassessment.

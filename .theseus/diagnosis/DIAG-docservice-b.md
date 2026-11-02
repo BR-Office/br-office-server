@@ -7,7 +7,7 @@ confidence: medium
 conditional_on: "characterize packets for DocsCoServer, canvasservice, wopiClient and converterservice done (oracle is level none today, rule D1)"
 diagnosed_by: [claude-sonnet-5-5]
 agreement: divergent
-decided_by: null
+decided_by: rafael
 base_commit: ea6eee6
 wave: 2
 ---
@@ -82,3 +82,6 @@ Wave 3 (center): `migrate` `canvasservice.js`, `DocsCoServer.js` (split first), 
 - To **keep**: if the goal shifts away from maintainability, or the first 3 to 4 migrated leaves show no measurable gain in review time or defects.
 - To **rewrite or a larger split**: if the `DocsCoServer` lift of closures proves the file cannot be decomposed without behavior changes.
 - Upwards (migrate sooner, smaller wave 0): if the integration tests (`tests/integration/`) get a CI-run server so they can serve as the oracle.
+
+## Human decision (2026-11-02)
+Decided by Rafael Petinati: **the DocService core (`DocsCoServer.js`, `canvasservice.js`, `converterservice.js`, `wopiClient.js`) is `keep` for now**: characterize it with tests and reassess after wave 1. The leaves (`utilsDocService`, `wopiUtils`, `editorDataMemory`) migrate to TypeScript 7 as both diagnoses propose. This follows DIAG-docservice; DIAG-docservice-b's wave 2 migration of the core is deferred to the reassessment.
