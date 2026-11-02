@@ -21,6 +21,7 @@ DocService/sources/utilsDocService.js
 Common/sources/constants.js
 Common/sources/documentFormats.js
 Common/sources/formatchecker.js
+DocService/sources/wopiUtils.js
 
 # Patterns merged from .gitignore
 .idea/
