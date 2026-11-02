@@ -33,7 +33,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -54,5 +54,6 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 ## Review
 - Rejected by claude-opus-5-5-b: Goal requires adding the docservice row to .theseus/atlas/INDEX.md, which was not done. Add INDEX.md to target.files, or remove that requirement from the goal, then complete it. The card itself is sound: 4 claims checked, all correct.
 - Rejected by claude-opus-5-5-b: Goal requires the INDEX.md row but INDEX.md is outside target.files; factory must add `.theseus/atlas/INDEX.md` to target.files (or drop the row from the goal) and rerun
+- Rejected by claude-opus-5-5-b: Goal requires a docservice row in .theseus/atlas/INDEX.md, which was not added because INDEX.md is not in target.files; factory must add it to the target or drop the row from the Goal (with the spawn approved)
 
 ## Lessons for the Atlas
