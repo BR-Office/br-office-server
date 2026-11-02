@@ -49,6 +49,7 @@ Give PKT-0055 a runnable acceptance instead of [ORACLE COMMAND].
 ## Suggested plan
 
 ## Executor log
+- discard: unfinished spawn request (template placeholders) queued before Theseus 0.16.2
 
 ## Spawned packets
 
