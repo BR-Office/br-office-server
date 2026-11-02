@@ -59,6 +59,7 @@ PKT-0043 (baseline.md "where the word editor's CPU goes"): on the 100-page docx 
 - Decision: do not ship an unsafe cache; record a spawn request (.theseus/spawn/PKT-0057-incremental-font-name-collection-for-remote-chan.md) with the right target and the traced call chain.
 - Not done: profile before/after (no change to measure; documentserver/browser not used).
 - Acceptance: bash .theseus/oracle/unit.sh -> 178 passed, 1 skipped.
+- block: the reviewer found an external blocker: goal needs changes in api.js/DrawingDocument.js/Run.js/CollaborativeEditing.js, which are outside target.files; factory/planner must approve the spawned follow-up packet with that wider target (plus Document Server and browser for the profile)
 
 ## Spawned packets
 - PKT-0066: Incremental font-name collection for remote changes in sdkjs word (pre_Save/CheckFontNeeds path)
