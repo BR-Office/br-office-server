@@ -45,7 +45,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Act as the Diagnostician: write the verdict `.theseus/diagnosis/DIAG-common.md` 
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Complete, evidence-backed verdict within scope and budget; D1 conditionality, plan size and score arithmetic check out.
 
 ## Lessons for the Atlas
