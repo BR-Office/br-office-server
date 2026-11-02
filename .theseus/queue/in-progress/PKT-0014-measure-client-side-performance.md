@@ -54,8 +54,17 @@ The client lives outside this repository (sdkjs and web-apps of Euro-Office / ON
 ## Executor log
 - return: factory paused: measuring needs a decision on which repositories and environment join the pilot
 
+- attempt 2 (claude-opus-5-5, 2026-11-02): the environment now has the Docker image plus Playwright, so the client repos were not needed: the image ships the compiled sdkjs/web-apps 9.3.7. Wrote `.theseus/oracle/perf/client-perf.js` and recorded the results in `baseline.md` ("Client (browser editors)" section).
+  - Decisions: measured against the built client through the example page (new docx), with no checkout of sdkjs. Readiness = `editor.isDocumentLoadComplete`. Typing = key press → char in the model → next rAF. Remote = text present in B's model, in two Playwright contexts. Memory = `performance.memory` in the editor iframe. 5 runs × (20 keys + 5 remote edits).
+  - Surprise: with the documented `docker run`, the document never loads. The SSRF guard refuses the download from the example on localhost (`DNS lookup 127.0.0.1 ... localhost` in converter/out.log), and the only client symptom is an editor with no logic document. Fix: `-e ALLOW_PRIVATE_IP_ADDRESS=true` (plus `EXAMPLE_ENABLED=true`). `.theseus/adapter/environment.md` should say this, but it is outside my target.
+  - Not done: a breakdown of open time and of the remote-apply tail, large/realistic documents, xlsx/pptx. Requested in the spawn below. The friction line is not appended, because `.theseus/scoreboard/friction.jsonl` is outside target.files. Its content: environment.md (adapter) is missing the ALLOW_PRIVATE_IP_ADDRESS flag, and it helped a lot that it named Playwright and the image.
+
 ## Spawned packets
+- spawn: "Break down client open and co-edit latency on realistic documents" (`.theseus/spawn/PKT-0014-break-down-client-open-and-co-edit-latency-on-re.md`)
 
 ## Review
 
 ## Lessons for the Atlas
+- The compiled client in `ghcr.io/euro-office/documentserver` is enough to measure the client. Use the sdkjs global `editor` in the `web-apps/apps/documenteditor/` iframe (`isDocumentLoadComplete`, `WordControl.m_oLogicDocument.GetText()`).
+- The example integration needs `ALLOW_PRIVATE_IP_ADDRESS=true` on localhost, or the document silently never loads.
+- Client baseline on an empty docx: open ≈3 s, remote apply ≈0.1 s p50, typing ≈30 ms, heap ≈75 MB. Server hot paths (µs) are negligible next to these.

@@ -39,6 +39,36 @@ message), two orders of magnitude above lock or format-detection work. All are f
 database and x2t latencies (milliseconds to seconds), so **a language change of these paths alone would not
 be felt by users**; the end-to-end numbers below are needed before any such decision.
 
+## Client (browser editors): measured (PKT-0014)
+
+Script: `node .theseus/oracle/perf/client-perf.js [runs]` against the full stack in Docker
+(`ghcr.io/euro-office/documentserver:latest`, client build 9.3.7). It must be started with
+`-e JWT_ENABLED=false -e EXAMPLE_ENABLED=true -e ALLOW_PRIVATE_IP_ADDRESS=true`: without the last flag the
+server's SSRF guard refuses to download from the example on localhost and the document never loads.
+Headless Chromium (Playwright), document editor (docx), new empty document from the example, two users in
+separate browser contexts. 2-CPU VM, 2026-11-02, 5 runs (open) / 100 keystrokes / 25 remote edits.
+
+| Scenario | Measured from → to | p50 | p90 | min–max |
+|---|---|---|---|---|
+| **Open + render** (first user, new docx) | `goto(editor)` → `editor.isDocumentLoadComplete` | 3.15 s | 3.84 s | 2.87–3.84 s |
+| **Join co-edit** (second user, same doc) | `goto` → load complete | 3.51 s | 3.69 s | 2.97–3.69 s |
+| **Typing latency** (local) | key press → char in sdkjs model → next animation frame | 31 ms | 68 ms | 14–119 ms |
+| **Remote change applied** (fast co-edit) | A types → text present in B's model | 101 ms | 361 ms | 73–793 ms |
+| **Memory** (JS heap, editor iframe, after edits) | `performance.memory.usedJSHeapSize` | 73 MB | — | 73–78 MB |
+
+A second 3-run pass gave remote apply p50 90 ms / p90 233 ms and the same heap, so the order of magnitude is stable.
+
+Reading:
+- **Open** is dominated by the client: loading and parsing the sdkjs/web-apps bundles and fonts plus
+  rendering (≈3 s), against server hot paths in the micro-second range and an x2t conversion of an
+  empty docx. Not split further here (see gaps).
+- **Remote apply** p50 ≈ 0.1 s includes A's client batching, Socket.IO, DocsCoServer, B's apply. The
+  server per-message cost measured above (≈60 µs) is < 0.1 % of it; the tail (p90 0.2–0.4 s) needs a
+  breakdown before blaming any component.
+- **Typing** is client-only and already below the ~50 ms perception threshold at p50.
+- These are a lower bound on content cost: an empty document. Large documents, xlsx/pptx and a real
+  network are not covered.
+
 ## Quality: what can be measured here today
 
 Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
@@ -57,7 +87,7 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 | Gap | Why | Follow-up |
 |---|---|---|
 | End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | needs the full stack running; x2t binaries are not in this repo; RabbitMQ is not installed here | requested: spawn "Measure end-to-end server latency" |
-| Client latency (open/render, apply remote changes, typing) | lives in `sdkjs` / `web-apps`, not in this repository | requested: spawn "Measure client-side performance" |
+| Client latency (open/render, apply remote changes, typing) | measured on an empty docx (PKT-0014, section above); not measured: large documents, xlsx/pptx, breakdown of open time (download / parse / x2t / render), breakdown of remote-apply tail | requested: spawn "Break down client open and co-edit latency on realistic documents" |
 | x2t conversion time per format | C++ in `core`, not here | part of the end-to-end request |
 | Crash and defect rate | history too short here; no production telemetry | part of the end-to-end request (upstream history) |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |
