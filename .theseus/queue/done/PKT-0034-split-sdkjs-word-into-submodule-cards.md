@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Write the first submodule cards of `sdkjs-word` (start with word/model-core, wor
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: three submodule cards written with spot-checked line numbers, size-driven split adjustments justified and recorded, links and log complete
 
 ## Lessons for the Atlas
