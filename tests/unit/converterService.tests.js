@@ -126,7 +126,7 @@ describe('convertJson async mode', () => {
     process.env.DEFAULT_SHARD_KEY = 'x';
     taskResult.select.mockResolvedValue([row(FileStatus.Ok)]);
     const r = await run(baseParams({async: true}));
-    expect(sleeps).toEqual([1000]);
+    expect(sleeps).toEqual([50]);
     expect(r.status.end).toBe(true);
   });
 
@@ -139,13 +139,13 @@ describe('convertJson async mode', () => {
 });
 
 describe('convertJson sync mode polling loop', () => {
-  test('sleeps CONVERT_ASYNC_DELAY=1000 per poll until Ok and returns the signed url', async () => {
+  test('sleeps with backoff 50 ms doubling to CONVERT_ASYNC_DELAY=1000 per poll until Ok and returns the signed url', async () => {
     taskResult.select
       .mockResolvedValueOnce([row(FileStatus.WaitQueue)])
       .mockResolvedValueOnce([row(FileStatus.WaitQueue)])
       .mockResolvedValueOnce([row(FileStatus.Ok)]);
     const r = await run(baseParams());
-    expect(sleeps).toEqual([1000, 1000, 1000]);
+    expect(sleeps).toEqual([50, 100, 200]);
     expect(r.status.err).toBe(constants.NO_ERROR);
     expect(r.status.end).toBe(true);
     const docId = 'conv_doc1_' + constants.AVS_OFFICESTUDIO_FILE_CROSSPLATFORM_PDF;
@@ -156,8 +156,8 @@ describe('convertJson sync mode polling loop', () => {
   test('CONVERT_TIMEOUT after the poll whose waitTime exceeds the timeout (strict >)', async () => {
     taskResult.select.mockResolvedValue([row(FileStatus.WaitQueue)]);
     const r = await run(baseParams());
-    // 3000 ms timeout: waitTime 1000, 2000, 3000 continue; 4000 > 3000 stops.
-    expect(sleeps).toEqual([1000, 1000, 1000, 1000]);
+    // 3000 ms timeout: waitTime 50, 150, 350, 750, 1550, 2550 continue; 3550 > 3000 stops.
+    expect(sleeps).toEqual([50, 100, 200, 400, 800, 1000, 1000]);
     expect(r.status.err).toBe(constants.CONVERT_TIMEOUT);
   });
 
@@ -209,7 +209,7 @@ describe('convertJson existing task', () => {
     taskResult.select.mockResolvedValueOnce([row(FileStatus.None)]).mockResolvedValue([row(FileStatus.Ok)]);
     const r = await run(baseParams());
     expect(docsCoServer.addTask).toHaveBeenCalledTimes(1);
-    expect(sleeps).toEqual([1000]);
+    expect(sleeps).toEqual([50]);
     expect(r.status.end).toBe(true);
   });
 });

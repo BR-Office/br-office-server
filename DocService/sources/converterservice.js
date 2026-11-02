@@ -47,6 +47,7 @@ const utilsDocService = require('./utilsDocService');
 const cfgTokenEnableBrowser = config.get('services.CoAuthoring.token.enable.browser');
 
 const CONVERT_ASYNC_DELAY = 1000;
+const CONVERT_SYNC_DELAY_MIN = 50;
 
 const clientStatsD = statsDClient.getClient();
 
@@ -156,14 +157,16 @@ function* convertByCmd(ctx, cmd, async, opt_fileTo, opt_taskExist, opt_priority,
   //wait
   if (!async) {
     let waitTime = 0;
+    let delay = CONVERT_SYNC_DELAY_MIN;
     while (true) {
       if (status.end || constants.NO_ERROR != status.err) {
         break;
       }
-      yield utils.sleep(CONVERT_ASYNC_DELAY);
+      yield utils.sleep(delay);
       selectRes = yield taskResult.select(ctx, docId);
       status = yield* getConvertStatus(ctx, cmd.getDocId(), cmd.getPassword(), selectRes, opt_checkPassword);
-      waitTime += CONVERT_ASYNC_DELAY;
+      waitTime += delay;
+      delay = Math.min(delay * 2, CONVERT_ASYNC_DELAY);
       if (waitTime > utils.getConvertionTimeout(ctx)) {
         status.err = constants.CONVERT_TIMEOUT;
       }
