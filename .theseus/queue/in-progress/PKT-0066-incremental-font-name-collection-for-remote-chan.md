@@ -69,6 +69,12 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - Not done: the before/after profile on the 100 p docx (profile-word.js/attribute-word.js) and a browser test of a remote change; requested as a spawned follow-up (.theseus/spawn/PKT-0066-profile-*.md, requires documentserver, browser).
 - block: the reviewer found an external blocker: The sdkjs code change exists only on an untracked local branch of `external/sdkjs` (`d46dde8`), and the required before/after profile can't run without serving that build. The project owner must provide a fork of sdkjs or an approved patch location so the change can be committed, reviewed and profiled.
 - release: Theseus 0.18.0: sdkjs changes now go to branch pkt/PKT-0066 of BR-Office/br-office-sdkjs and are reviewed and merged there
+- claude-opus-5-5, 2026-11-02 (attempt 2, after release 0.18.0).
+- Surprise: the first attempt's commit d46dde8 no longer exists; branch pkt/PKT-0066 of external/sdkjs started at upstream 9cea536. Re-implemented the same design, committed as 14e4a88 on pkt/PKT-0066 (4 files, +101/-1).
+- Same design as attempt 1 (CollaborativeEditing.js captures classes from CoHistory[m_nRecalcIndexStart..End], deduplicated; api.js pre_Save uses CheckFontNeedsIncremental when classes are pending; Document.js GetFontNamesFromClasses whitelists CDocumentContentElementBase and ParaRun, anything else -> null -> full walk).
+- Extra guards: incremental path only when isDocumentLoadComplete and logicDocument.Fonts is already non-empty (so apply-on-open keeps the full walk); fonts already in the list are not duplicated.
+- Acceptance: unit.sh 178 passed, 1 skipped. sdkjs-word.sh 42/42 suites, 6195/6195 assertions.
+- Not done here: before/after profile and browser check of a remote change; that is PKT-0071 (already spawned).
 
 ## Spawned packets
 - PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
@@ -76,3 +82,5 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 ## Review
 
 ## Lessons for the Atlas
+- Word remote apply: CoHistory holds the applied change objects (with GetClass) between m_nRecalcIndexStart/End; m_aChanges is binary only.
+- Commits on external/sdkjs local branches may not survive between attempts: check `git -C external/sdkjs log` first.
