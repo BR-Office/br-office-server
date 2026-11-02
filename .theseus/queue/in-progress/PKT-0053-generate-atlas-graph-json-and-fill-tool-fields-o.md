@@ -35,7 +35,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: null
+  executor: claude-opus-5-5
   reviewer: null
 ---
 
