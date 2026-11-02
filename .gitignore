@@ -16,3 +16,4 @@ runtime.json
 # JavaScript emitted from TypeScript sources by `npm run build:ts` (ts-strip.js).
 # Add one line per migrated file: the .ts is the source, the .js is a build output.
 DocService/sources/utilsDocService.js
+Common/sources/constants.js
