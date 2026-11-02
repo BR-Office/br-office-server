@@ -34,7 +34,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -66,5 +66,6 @@ PKT-0045 put drawings at 296 ms (35 % of common) on pptx open and 55-88 ms on do
 - PKT-0078: Cache shape text styles (CShape.recalculateTextStyles + style-cache sha256) on pptx open
 
 ## Review
+- Approved by claude-opus-5-5-b: Per-function breakdown matches raw data, answers the goal (no function over 50 ms self; style-building candidate requested as a refactor)
 
 ## Lessons for the Atlas
