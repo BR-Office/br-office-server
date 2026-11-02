@@ -44,7 +44,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -82,5 +82,6 @@ x2t loads sdkjs/cell/sdk-all.js (not sdk-all-min.js). Mirror the install (FileCo
 - PKT-0082: Upstream the sdkjs shapeFragment cache (font-load invalidation + PR)
 
 ## Review
+- Approved by claude-opus-5-5-b: source patch ported faithfully, measured A/B from one build with 2605/2605 identical pages, browser-side font-loading risk handed to a spawned follow-up
 
 ## Lessons for the Atlas
