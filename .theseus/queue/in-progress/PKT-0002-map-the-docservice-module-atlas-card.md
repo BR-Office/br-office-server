@@ -32,7 +32,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -50,5 +51,6 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Goal requires adding the docservice row to .theseus/atlas/INDEX.md, which was not done. Add INDEX.md to target.files, or remove that requirement from the goal, then complete it. The card itself is sound: 4 claims checked, all correct.
 
 ## Lessons for the Atlas
