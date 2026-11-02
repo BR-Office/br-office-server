@@ -53,6 +53,7 @@ Generate `.theseus/atlas/graph.json` (module dependency graph and size metrics) 
 - Decision: requested a replacement packet in `.theseus/spawn/` with a real target (adapter.yaml, atlas cards, scripts dir, graph.json), contract and acceptance suggestion.
 - Not done: graph.json and card tool fields. Acceptance list is empty, so nothing to run beyond `theseus validate`.
 - block: the reviewer found an external blocker: the packet's target and contract are still template placeholders ("[FILE]", "[WHAT MUST NOT CHANGE]") and it has no acceptance commands; whoever runs the queue must give it a real target (adapter.yaml, atlas cards, scripts/, graph.json), contract and acceptance, or queue the spawned replacement with the fixes listed above
+- discard: unfinished spawn request (template placeholders) queued by Theseus before 0.16.2; its replacement was spawned
 
 ## Spawned packets
 - PKT-0060: Generate atlas/graph.json via adapter graph/metrics scripts and fill card tool fields
