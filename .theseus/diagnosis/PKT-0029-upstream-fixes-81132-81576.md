@@ -30,4 +30,11 @@ Applicability tested with `git apply --check -C1 -v` against Euro-Office `main` 
 ## Human decision needed
 1. Port 81132 now (low risk)? 
 2. Port 81576 now with tests, or wait for upstream release?
-Spawned follow-up PKT-0050 (fetch the diffs with network access) is superseded by this document.
+
+## Verification by PKT-0050 (2026-11-02, fresh blobless clones of ONLYOFFICE/server and Euro-Office/server)
+- Full SHAs confirmed: 81132 = `12ba395e20af71a8ccb366cbd5b2f86abdf0e510` (2026-04-16, merge `3cf8b1fd` 2026-04-17 into ONLYOFFICE `release/v9.4.0`); 81576 = `8585bcf40fa823fe84cad7983a022a097364e0fc` (2026-07-13, ONLYOFFICE `master` only). File stats match the above.
+- **Euro-Office `release/v9.4.0` has no commit for 81132.** `git merge-base --is-ancestor 12ba395e` fails for both EO `release/v9.4.0` (tip `ccc73419`, 2026-03-29, before the fix) and EO `main` (tip `2e7a2a13`). No EO commit mentions 81132/81576 in its message. The upstream commits reach EO only on dependabot/feature branches (e.g. `feature/changes4forgotten`, `feature/checksum`), not on main or release.
+- 81576 (`8585bcf4`) is absent from every EO ref.
+- Not to be confused: EO main has `b29a4bae`/`07730e68` (2025-12-07, socket error handling on client disconnect) - an older, different fix; it does not cover the `static.js`/`aiProxyHandler.js` headersSent path.
+- Conclusion unchanged: port 81132 (low risk); 81576 after a test plan.
+
