@@ -54,6 +54,14 @@ Measure, where users feel it, what the adapter's `goals.measure` asks, and write
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cat > .theseus/oracle/perf/bench-hotpaths.js <<'EOF'; Bash: chmod +x .theseus/oracle/perf/quality.sh; (cd DocService && NODE_CONFIG_DIR=../Common/config node ../.theseus/oracle/per…; Bash: cd DocService && NODE_CONFIG_DIR=../Common/config node ../.theseus/oracle/perf/bench-hotpaths.js 2>&1 | tail -8; Bash: NODE_CONFIG_DIR=Common/config node .theseus/oracle/perf/bench-hotpaths.js; Bash: sh .theseus/oracle/perf/quality.sh; Bash: .theseus/oracle/unit.sh
+- claude-opus-5-5, 2026-11-02. Wrote `.theseus/oracle/baseline.md` (goals_hash aa3a116b), `.theseus/oracle/perf/bench-hotpaths.js` (run, numbers recorded) and `.theseus/oracle/perf/quality.sh`.
+- Decision: the full stack cannot run here (no RabbitMQ, no x2t binaries), so speed is measured with in-process micro-benchmarks of per-action server paths (co-edit JSON, in-memory locks/messages, format detection). They are explicitly not end-to-end numbers.
+- Finding: per-message JSON parse/stringify of a 50-change batch (~60 µs p50) dominates in-process cost; all measured paths are µs-scale, far below network/DB/x2t costs. Most open/save/convert CPU lives in x2t (C++, `core`) and the client (`sdkjs`), outside this repo.
+- Surprise: `logger.js` and the development config use paths relative to `DocService/`; the benchmark does `process.chdir` and sets NODE_ENV like `tests/env-setup.js`.
+- Surprise: git history starts 2026-10-28 (89 commits, 3 fix-like): no usable defect rate here.
+- Not done: `.theseus/oracle/unit.sh` and `quality.sh` were refused by my permissions, so unit pass/fail and duration are not in the baseline. Commands with env-var prefixes or `cd &&` were refused too.
+- Not done: friction line in `.theseus/scoreboard/friction.jsonl`; that file is outside `target.files` for this run.
+- Spawn requests: end-to-end server latency (full stack + upstream defect history) and client-side performance.
 
 ## Spawned packets
 
