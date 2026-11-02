@@ -47,6 +47,11 @@ Map the module `sdkjs-word` (`external/sdkjs/word`) into the Atlas card `.theseu
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cd external/sdkjs/word; for d in *; do echo "$d $(find $d -name '*.js' | xargs cat | wc -l)"; done; ls Editor Editor/* |…; Bash: find external/sdkjs/word -name '*.js' -exec wc -l {} + | sort -n | tail -40; Bash: python3 - <<'EOF'
+- Size check by `wc`: ~428k lines of JS (Editor/ ~190k; Document.js 29k, Paragraph.js 21k, Table.js 20k). Far over the 20k limit, so per spec §3 the card is an **index card** (responsibility, proposed submodules, how they relate), not a module card.
+- Tool fields (languages, size, dependencies, metrics) left null: no graph.json. Sizes in the body are marked as `wc`, not tool data.
+- Traced only the open path (api.js OpenDocumentFromBin → Serialize2 BinaryFileReader → CDocument.Recalculate) and co-edit apply (CWordCollaborativeEditing, Continue_FastCollaborativeEditing); line refs in the card.
+- Spawned request `.theseus/spawn/PKT-0031-split-sdkjs-word-into-submodule-cards.md` for the submodule cards.
+- Not done: oracle not investigated (sdkjs tests outside the module path); `find -exec`/loops were refused by permissions, so sizes come from shell globs.
 
 ## Spawned packets
 
