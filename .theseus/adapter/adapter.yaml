@@ -11,19 +11,17 @@ project:
     sync_every: 7d
 
 goals:
-  weights:
-    performance_gain: 0.10
-    security_risk: 0.20
-    maintenance_cost: 0.25
-    coupling: 0.10
-    oracle_strength: 0.15
-    interop_cost: 0.10
-    target_ecosystem: 0.05
-    goal_alignment: 0.05
+  # Rafael, 2026-11-02: the reason for the work is performance, in quality and speed,
+  # wherever users feel it (server or client). No weights.
   statement: >
-    Make the server easier to maintain and safer to change: map it, raise test
-    coverage where it is thin, and assess a gradual JavaScript to TypeScript
-    migration of the shared code (Common) and the coordination server (DocService).
+    Gain performance in quality (fewer defects, crashes and regressions) and in speed
+    (latency and throughput of what users do), wherever users feel it: in the server
+    or in the client. Change of language, partial or total, where it delivers that gain.
+  measure:
+    - "Speed: latency and throughput of what users do (open, co-edit, save, convert), on the server or in the client"
+    - "Quality: defects, crashes and regressions, and what in the code makes them likely"
+  preferred_languages: [rust, go, typescript]
+  baseline_commands: ["node", "npm", "npx"]
 
 modules:
   - id: common
@@ -35,8 +33,7 @@ modules:
 
 languages:
   present: [javascript]
-  allowed_targets:
-    javascript: [typescript]
+  allowed_targets: any           # Rafael: any language the diagnosis justifies; preferably goals.preferred_languages
 
 tools:
   hotspot:

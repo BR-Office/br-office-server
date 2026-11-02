@@ -35,19 +35,14 @@ project:
     branch: main
     sync_every: 7d
 
-goals:                            # diagnosis matrix weights (sum to 1.0)
-  weights:
-    performance_gain: 0.20
-    security_risk: 0.30
-    maintenance_cost: 0.15
-    coupling: 0.05
-    oracle_strength: 0.10
-    interop_cost: 0.10
-    target_ecosystem: 0.05
-    goal_alignment: 0.05
-  statement: >
-    Reduce memory risk in file processing and make it easier for new
-    contributors to join.
+goals:
+  statement: >                    # what the work must deliver; the diagnosis is judged against it
+    Gain performance where users feel it, in quality (fewer defects) and speed,
+    on the server or in the client.
+  measure:                        # what the performance baseline measures (theseus plan plans it)
+    - "Speed: latency and throughput of what users do (open, edit, save, convert)"
+    - "Quality: defects, crashes and regressions"
+  preferred_languages: [rust, go, typescript]   # first candidates for a migration
 
 languages:
   present: [cpp, javascript, typescript]
@@ -143,7 +138,7 @@ Each model declares how the factory starts it (`tool`):
 
 Optional fields: `model_name` (name passed to the tool; Claude Code defaults to the `id`, Codex without it uses its own default model) and `args` (extra arguments, e.g. tool permissions). `limits.agent_timeout_min` limits each agent run and each acceptance command (default 60). `factory.setup` is an optional command the factory runs in each new worktree before the executor starts, such as installing dependencies (`npm ci`). `factory.read_only_commands` lists read-only probes every agent may run without approval (for example `node --version`, `theseus status`).
 
-`theseus plan` creates the packets of the next step from the state of the project, so nobody writes them by hand. For each module in `modules` (`[{id, path, description}]`): an Atlas card packet (`role: cartographer`); then a diagnosis (`role: diagnostician`); for a `migrate` or `rewrite` verdict, an independent second diagnosis (rule D3) that the first diagnosticians may not execute (`exclude_executors`); then it compares the two verdicts and writes `agreement`, and a divergence waits for a person to fill in `decided_by` (and `plan_from` to follow the second plan); then the packets of the diagnosis plan, wave by wave. It also plans the method audit when `audit.every_n_packets` records were added to the scoreboard since the last one (`role: auditor`). `theseus run --plan` alternates planning and execution until nothing is left to plan.
+`theseus plan` creates the packets of the next step from the state of the project, so nobody writes them by hand. First, the **performance baseline** (`.theseus/oracle/baseline.md`): what `goals.measure` asks, measured where users feel it, on the server or in the client, with the commands of `goals.baseline_commands` pre-approved. Diagnoses wait for it. Every diagnosis and the baseline record `goals_hash`, a fingerprint of `goals`: when the goals change, the plan measures and diagnoses again, and discards the not-started packets of the old plans. `languages.allowed_targets: any` lets the diagnosis propose any language it justifies (`goals.preferred_languages` lists the first candidates). For each module in `modules` (`[{id, path, description}]`): an Atlas card packet (`role: cartographer`); then a diagnosis (`role: diagnostician`); for a `migrate` or `rewrite` verdict, an independent second diagnosis (rule D3) that the first diagnosticians may not execute (`exclude_executors`); then it compares the two verdicts and writes `agreement`, and a divergence waits for a person to fill in `decided_by` (and `plan_from` to follow the second plan); then the packets of the diagnosis plan, wave by wave. It also plans the method audit when `audit.every_n_packets` records were added to the scoreboard since the last one (`role: auditor`). `theseus run --plan` alternates planning and execution until nothing is left to plan.
 
 `factory.integrate: true` makes the factory merge each approved branch into the main branch. Conflicts only in the files of `factory.union_merge` (e.g. `.gitignore`) keep both sides; `factory.integrate_check` (e.g. the unit oracle) runs on the merged tree before the merge commit. Any other conflict, or a failing check, leaves the branch unmerged and records why in the packet. The factory keeps every packet's run folder (prompts, final reports, acceptance logs) in `.theseus/scoreboard/runs/<id>/` for the audits.
 
@@ -191,7 +186,7 @@ These files are reusable across projects and are good candidates for community c
 ## 6. Installing the method in a new project
 
 1. `theseus init` creates `.theseus/` with the core specifications and `AGENTS.md` at the root.
-2. Fill in `adapter.yaml` and `oracle.md`. A model may draft them from the repository, but a human reviews the goals and weights.
+2. Fill in `adapter.yaml` and `oracle.md`. A model may draft them from the repository, but a human reviews the goals.
 3. Implement the `tools` scripts and run them: graph and metrics.
 4. `theseus validate` until there are no errors (section 7).
 5. Follow the flow: **Atlas → Diagnosis → Oracle → Factory → Scoreboard**.
@@ -200,7 +195,7 @@ These files are reusable across projects and are good candidates for community c
 
 `theseus validate` checks:
 
-- [ ] The `goals` weights sum to 1.0.
+- [ ] `goals.statement` says what the work must deliver, and `goals.measure` how it is measured.
 - [ ] At least two model families have the reviewer role (packet rule R4).
 - [ ] There is an `interop-<pair>.md` for each allowed migration.
 - [ ] `AGENTS.md` points to `.theseus/`.

@@ -24,27 +24,24 @@ Each module gets a **verdict** with justification, evidence and an initial packe
 | # | Rule | Why |
 |---|---|---|
 | D1 | **No oracle, no big change.** `migrate` and `rewrite` require a `partial` or `good` oracle. With oracle `none`, the verdict is conditional and the first packet is `characterize`. | Equivalence cannot be proven without a reference. |
-| D2 | **Evidence before opinion.** Every scored criterion cites a card metric or a piece of code. | Makes the verdict auditable. |
+| D2 | **Evidence before opinion.** Every finding cites a measurement of the baseline, a card metric or a piece of code. | Makes the verdict auditable. |
 | D3 | **Double diagnosis for expensive decisions.** `migrate` and `rewrite` are diagnosed by two models from different families, neither seeing the other's result. If they disagree, a human decides. | These are the most expensive and hardest decisions to undo. |
 | D4 | **Every verdict says what would change it.** | Allows reassessment by criteria, not by impression. |
-| D5 | **Keep is a valid answer.** The diagnostician is not rewarded for proposing work. | Avoids the rewrite-everything bias. |
+| D5 | **The goal decides, not the effort.** The verdict is the one that delivers most toward the adapter's goal, as measured; keep is right when nothing measurable is gained, and an expensive verdict is right when the gain justifies it. Neither the amount of work nor the extra review a verdict brings is a reason for or against it. | Avoids both the rewrite-everything bias and the do-nothing bias. |
 
-## 4. The criteria matrix
+## 4. Judging against the goal
 
-Each criterion gets a score from 0 to 5. The **weights come from the adapter**, because each project has different goals (security, performance, ease of hiring).
+There are no scores and no weights. The verdict is the one that serves the adapter's `goals.statement` best, judged with the **performance baseline** (`.theseus/oracle/baseline.md`: what matters to users, where it runs, server or client, and today's numbers) and the module card. The diagnosis answers these questions, each with evidence:
 
-| Criterion | What it measures | Sources |
-|---|---|---|
-| **Performance gain** | How much the module weighs in profiling and how much there is to gain. | `metrics.cpu_pct`, hotspots |
-| **Security risk** | Manual memory management, parsing of untrusted input, history of flaws. | Code, bug history |
-| **Maintenance cost** | High churn, complexity, knowledge concentrated in few people. | `churn_90d`, card |
-| **Coupling** | How many modules depend on it (fan-in) and on how many it depends (fan-out). | `dependencies` |
-| **Oracle strength** | How well equivalence can be proven. | `oracle.level` |
-| **Interop cost** | How hard it is for new and old code to coexist during the transition. | Module boundaries, adapter |
-| **Target ecosystem** | Mature libraries and people who know the target language. | Adapter |
-| **Goal alignment** | How much touching this module serves the project's stated goals. | Adapter |
+| Question | Sources |
+|---|---|
+| **Goal:** what does each verdict gain toward the goal, in the baseline's own measures (speed, quality)? Where is the time or the defect, and is it in this module? | Baseline, profiling, card |
+| **Quality and security risk:** what could break, and how badly? | Code, bug history |
+| **Oracle:** can equivalence be proven (rule D1)? What must be characterized first? | `oracle.level`, tests |
+| **Coupling and interop:** who depends on it, and how do new and old code coexist during the transition? | `dependencies`, adapter |
+| **Target language:** which language serves the goal best, starting from the adapter's `goals.preferred_languages`? | Adapter, ecosystem |
 
-The matrix guides; it does not decide on its own. The diagnostician may go against the score, as long as it explains why.
+When the baseline does not cover a module, the diagnosis says what is missing and plans the measurement as its first packet.
 
 ## 5. Verdict format
 
@@ -61,6 +58,7 @@ conditional_on: null          # e.g. "PKT-0031 (characterize) done"
 diagnosed_by: [claude-opus-5-5, gpt-x]
 agreement: full               # full | partial | divergent (→ human)
 decided_by: null              # filled when a human breaks the tie
+goals_hash: 3f1c9a2b           # the adapter goals this diagnosis answers (theseus plan fills it in)
 base_commit: 3f9a2c1
 wave: 1
 ---
@@ -68,11 +66,11 @@ wave: 1
 ## Summary
 Two or three sentences: the verdict and the main reason.
 
-## Matrix
-| Criterion | Score | Weight | Evidence |
-|---|---|---|---|
-| Security risk | 5 | 0.30 | parses ZIP from uploads; 3 CVEs in history |
-| ... | | | |
+## Against the goal
+| Question | Finding | Evidence |
+|---|---|---|
+| Goal | conversion of large archives takes 4.2 s (p95), 70% in this module | baseline.md, profile |
+| ... | | |
 
 ## Discarded alternatives
 Why not the other verdicts. E.g. "refactor: does not solve the memory risk".
