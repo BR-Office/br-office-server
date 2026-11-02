@@ -135,6 +135,10 @@ index 07399b9..4195902 100644
   Fixed the second rejection reason: filled target (this packet file, create_in .theseus/oracle/perf/),
   contract and acceptance of the spawn request `PKT-0080-fix-pkt-0080-acceptance-placeholder-samples-dir.md`.
   This is the last attempt (max_attempts 3): the packet should be blocked on that spawn request.
+- block: 3 attempts failed; last: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`. Output:
+```
+sh: 1: cannot open samples-dir: No such file
+```
 
 ## Spawned packets
 - PKT-0083: Fix PKT-0080 acceptance: placeholder samples-dir and missing profile-fonts.js
