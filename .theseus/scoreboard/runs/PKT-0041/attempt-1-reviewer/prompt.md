@@ -1,26 +1,44 @@
-You are the Reviewer in a Theseus project. Read AGENTS.md and .theseus/prompts/reviewer.md, then review work packet PKT-0041, described in .theseus/queue/ (search for PKT-0041). The changes to review are `git diff 19e4f81669f2859a258db2e11a77666d574151ee..HEAD` in this worktree. The factory chose you as reviewer according to rule R4 and the adapter's review settings (pilot mode may allow a reviewer of the same model family), so do not refuse on that ground. The factory has already checked the scope (rule R2) and run every acceptance command successfully (rule R3) on this exact commit, so you do not need to rerun them. Check the diff against the goal, the contract and the budget, and look for what the oracle does not catch: wrong or weak assertions, edge cases, error handling, behavior that was changed instead of characterized. Do not change any file.
+You are the Reviewer in a Theseus project. Read AGENTS.md and .theseus/prompts/reviewer.md, then review work packet PKT-0041, described in .theseus/queue/ (search for PKT-0041). The changes to review are `git diff 13df0b7f199a91148f6f9e05fdcd6129409e7547..HEAD` in this worktree. The factory chose you as reviewer according to rule R4 and the adapter's review settings (pilot mode may allow a reviewer of the same model family), so do not refuse on that ground. The factory has already checked the scope (rule R2) and run every acceptance command successfully (rule R3) on this exact commit, so you do not need to rerun them. Check the diff against the goal, the contract and the budget, and look for what the oracle does not catch: wrong or weak assertions, edge cases, error handling, behavior that was changed instead of characterized. Do not change any file.
 Follow-up packets the executor requested are files in .theseus/spawn/ in the diff; the factory turns them into packets after approval.
 Reject the packet (TEP-0004) if: the Executor log section of the packet is empty; the packet asked for follow-ups and neither the Spawned packets section nor .theseus/spawn/ lists them; or, for a characterize packet, a surprising behavior mentioned in the log is not kept in a test.
 
 The executor's final report follows. If it says that something the packet's goal or context requires was not done or could not be done, reject and say what is missing.
 <executor-report>
-I couldn't do the main job of PKT-0041: nothing was measured. My permissions blocked running the installed `x2t` and even listing `/var/www/euro-office/documentserver/server/FileConverter/bin`, since only the worktree is allowed. I didn't try to get around that. So there are no per-phase timings, `baseline.md` is unchanged, and I make no claim about which phase dominates.
+PKT-0041 is measured and committed (`53ee44e`), but the numbers are not in `baseline.md` as the Goal asked: that file is outside this packet's target. I put them in `.theseus/diagnosis/PKT-0041-x2t-pdf-split.md` and requested a follow-up packet to copy them over. The packet has no acceptance commands, so there was nothing to run; `theseus validate` reports 0 errors.
 
-**What I did instead** (committed as e500a3d; `theseus validate` reports 0 errors; the packet has no acceptance commands):
-- **Source analysis:** I read the pipeline in `external/core` and wrote it up in `.theseus/diagnosis/PKT-0041-x2t-pdf-split.md`.
-  - Each `x2t` run creates a new `CDoctrenderer` and V8 context, so nothing is reused between conversions.
-  - The sdkjs scripts load from a precompiled snapshot (`sdkjs/<editor>/sdk-all.bin`) only if the build has snapshot support and that file exists. Otherwise the large `sdk-all-min.js`, `AllFonts.js` and `sdk-all.js` are compiled on every run, with an optional `sdk-all.cache` code cache.
-  - If building the snapshots fails, the error only goes to stderr (`doctrenderer.cpp:1105`), so the slow path is easy to miss.
-- **Hypothesis to check:** the 0.65 s for an empty docx→pdf, against 70 ms for ODF, is probably mostly V8 startup and script loading. If the package ships no snapshots, the P3 fix may just be generating them at install time with `x2t -create-js-snapshots`. If it does, most of the time is in sdkjs layout, and the "under 20 % fixed cost" downgrade rule in DIAG-x2t applies.
-- **Measurement script:** `.theseus/oracle/perf/x2t-split.sh` splits a conversion into phases using strace timestamps. It is an untested draft.
-- **Follow-up request:** in `.theseus/spawn/`, with `requires: [documentserver]`, to run the script on the empty templates, the PKT-0016 samples and a save conversion.
-- **Packet notes:** the Executor log, Lessons for the Atlas and the friction line are written.
+**Where the time goes** (native 9.3.7-1 package, median of 3 runs, traced with strace):
 
-**Lessons for the Atlas:**
-- How sdkjs loads (snapshot, else full compile with an optional code cache) and the silent snapshot failure belong on the x2t card.
-- Packets that measure the installed stack need `requires: [documentserver]` and access to `/var/www/euro-office`. `environment.md` says measurement packets run with every privilege, but this session didn't have them.
+| Run | Total | Start + V8 init | Loading the JS editor code | Layout (JS) | Writing the output |
+|---|---|---|---|---|---|
+| Empty docx → pdf | 0.84 s | ~55 ms | 333 ms | 413 ms | 22 ms |
+| Empty xlsx → pdf | 0.68 s | ~56 ms | 330 ms | 267 ms | 17 ms |
+| Empty pptx → pdf | 1.21 s | ~67 ms | 330 ms | 682 ms | 27 ms |
+| 300-page docx → pdf | 11.9 s | 64 ms | 330 ms | 7.5 s | 2.9 s |
+| 50k-row xlsx → pdf | 50.2 s | 84 ms | 349 ms | 44.3 s | 4.3 s |
+| 80-slide pptx → pdf | 5.9 s | 67 ms | 370 ms | 3.4 s | 1.3 s |
+| Save, empty doc → docx | 0.93 s | 72 ms | 331 ms | 495 ms | 60 ms |
+| Save, 300-page doc → docx | 4.0 s | 55 ms | 369 ms | 2.3 s | 1.1 s |
 
-**Decision for you:** the follow-up can only produce numbers if its session is allowed to execute `x2t` and `strace`/`perf` and read `/var/www/euro-office`.
+- **Small documents:** the cost is fixed and almost all JavaScript. Loading the editor code takes about 330 ms on every run, and the first layout pass adds 270–680 ms even for an empty file. Process start plus V8 setup is only about 60 ms, and writing the PDF about 20 ms.
+- **Large documents:** layout takes 63–88% of the time, the writer 9–24%, and reading the source file 3–5%.
+- **Worst case:** the 50k-row spreadsheet to PDF takes about 50 s, 44 s of it in layout.
+- **Code cache:** the package ships a V8 code cache (`sdk-all.cache`) for each editor, but no startup snapshot. Without the cache a run is about 400 ms slower, and x2t silently rebuilds it as whichever user runs it. I removed it for that test and put the original back.
+- **strace overhead:** tracing adds about 10–20%. Untraced, the empty docx takes 0.62–0.72 s and the 300-page docx 9.6 s.
+
+**Decisions**
+- **Save with no edits:** the save conversion was measured with an empty change list, because the database holds no real changes. It shows the fixed cost of a save, not the cost of applying edits.
+- **New script:** the files from attempt 1 were not in this worktree, so I rewrote the measurement script: `.theseus/oracle/perf/x2t-split.sh`.
+
+**Follow-up requests** (in `.theseus/spawn/`, waiting for the factory's approval):
+1. Copy the table and conclusion into `baseline.md`.
+2. Investigate why spreadsheet → PDF layout is so slow (needs `documentserver`).
+
+The Executor log, the Lessons section and the friction line are filled in.
+
+**Lessons for the Atlas**
+- **Fixed cost:** x2t's PDF and save time is in the JavaScript renderer, not in x2t's C++ code. A renderer process kept alive between conversions would cut both the 0.33 s code load and the first-layout warm-up. A V8 startup snapshot would only cut the code load.
+- **Code cache:** `sdk-all.cache` is already a V8 code cache (it saves about 0.4 s), and x2t regenerates it silently if it is missing.
+- **Phase markers:** tracing file opens is enough to split phases: `DoctRenderer.config`, `sdk-all-min.js`, `AllFonts.js` and `font_selection.bin` each mark a boundary.
 </executor-report>
 
 End your answer with exactly one line, the last one:
