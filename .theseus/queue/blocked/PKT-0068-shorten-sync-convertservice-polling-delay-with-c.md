@@ -62,6 +62,7 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - Tests: only `sleeps` expectations changed (`[1000]`→`[50]` x2, `[1000,1000,1000]`→`[50,100,200]`, timeout case `[1000 x4]`→`[50,100,200,400,800,1000,1000]` since cumulative 50..2550 ≤ 3000, 3550 > 3000) plus the matching test title/comment.
 - Acceptance: unit oracle 178 passed / 1 skipped; lint 0 errors, 1 pre-existing AdminPanel warning.
 - Not done: before/after latency with `.theseus/oracle/perf/e2e-convert.js` — no stack on :8080 and no docker daemon in this worktree environment. Expected gain: a task ending in < 1 s now returns after ~50-350 ms instead of 1000 ms. Trade-off: up to ~6 extra DB selects in the first 1.5 s per sync request.
+- block: the reviewer found an external blocker: The before/after latency measurement with .theseus/oracle/perf/e2e-convert.js needs a running DocService stack (:8080 or a docker daemon); the operator or factory must provide one, or drop the measurement from the goal. The code change itself is approvable.
 
 ## Spawned packets
 
