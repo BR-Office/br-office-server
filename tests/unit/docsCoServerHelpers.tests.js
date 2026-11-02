@@ -137,9 +137,10 @@ describeIfLoaded('DocsCoServer helpers', () => {
       tenantManager.getTenantSecret.mockResolvedValue(undefined);
       const ctx = makeCtx();
       const res = await docsCoServer.checkJwt(ctx, jwt.sign({a: 1}, SECRET), 0);
-      expect(ctx.logger.warn).toHaveBeenCalled();
+      // A missing secret only logs a warning; verification still runs and then fails.
+      expect(ctx.logger.warn).toHaveBeenCalledWith('empty secret: token = %s', expect.any(String));
       expect(res.decoded).toBeNull();
-      expect(res.code).not.toBeNull();
+      expect(res.code).toBe(constants.JWT_ERROR_CODE);
     });
   });
 
