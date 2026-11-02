@@ -4,7 +4,7 @@
 project:
   name: euro-office-server
   description: Euro-Office Document Server backend (Node.js) — fork used as the first Theseus pilot
-  repository: github.com/RafaelPetinati/euro-office-server
+  repository: github.com/BR-Office/br-office-server
   upstream:
     repository: github.com/Euro-Office/server
     branch: main
@@ -33,21 +33,25 @@ modules:
     path: DocService
     description: "Document coordination server (co-editing, conversion requests, WOPI)."
   # Rafael, 2026-11-02: the measured user-visible time is in the client and in x2t, so they
-  # join the pilot. Read-only checkouts of the Euro-Office repositories until forks exist.
+  # join the pilot. Their packets change the code through the BR-Office forks (Theseus 0.18.0).
   - id: x2t
     repository: https://github.com/Euro-Office/core
+    fork: https://github.com/BR-Office/br-office-core
     path: external/core/X2tConverter
     description: "The C++ document converter (x2t). 70-90% of every PDF conversion and the document conversion inside open; PDF export goes through PdfFile, DocxRenderer and DesktopEditor graphics in the same repository."
   - id: sdkjs-word
     repository: https://github.com/Euro-Office/sdkjs
+    fork: https://github.com/BR-Office/br-office-sdkjs
     path: external/sdkjs/word
     description: "The document editor's model and layout in the browser. After Editor.bin arrives, 1.5-2.4 s of parse, layout and first render on open; applying remote co-edit changes (p90 105-187 ms)."
   - id: sdkjs-common
     repository: https://github.com/Euro-Office/sdkjs
+    fork: https://github.com/BR-Office/br-office-sdkjs
     path: external/sdkjs/common
     description: "Shared browser engine of the editors (fonts, drawing, serialization, co-editing client). 14-25 font files per open."
   - id: web-apps-documenteditor
     repository: https://github.com/Euro-Office/web-apps
+    fork: https://github.com/BR-Office/br-office-web-apps
     path: external/web-apps/apps/documenteditor
     description: "The document editor application shell: what loads before the document (about 1.5 s of scripts and ~500 KB per open)."
 
