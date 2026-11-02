@@ -1,0 +1,165 @@
+From 8585bcf40fa823fe84cad7983a022a097364e0fc Mon Sep 17 00:00:00 2001
+From: Sergey Konovalov <Sergey.Konovalov@onlyoffice.com>
+Date: Mon, 13 Jul 2026 01:34:30 +0300
+Subject: [PATCH] [bug] Release SaveVersion after a failed final assembly so
+ prepare4shutdown no longer hangs; Fix bug 81576
+
+---
+ DocService/sources/DocsCoServer.js     |  8 ++--
+ DocService/sources/canvasservice.js    | 13 +++++-
+ DocService/sources/documentRecovery.js | 58 ++++++++++++++++++++++++++
+ 3 files changed, 74 insertions(+), 5 deletions(-)
+ create mode 100644 DocService/sources/documentRecovery.js
+
+diff --git a/DocService/sources/DocsCoServer.js b/DocService/sources/DocsCoServer.js
+index 73d37f61..b12f15de 100644
+--- a/DocService/sources/DocsCoServer.js
++++ b/DocService/sources/DocsCoServer.js
+@@ -95,6 +95,7 @@ const sqlBase = require('./databaseConnectors/baseConnector');
+ const canvasService = require('./canvasservice');
+ const converterService = require('./converterservice');
+ const taskResult = require('./taskresult');
++const documentRecovery = require('./documentRecovery');
+ const gc = require('./gc');
+ const shutdown = require('./shutdown');
+ const pubsubService = require('./pubsubRabbitMQ');
+@@ -3258,7 +3259,7 @@ exports.install = function (server, app, callbackFunction) {
+       } else {
+         conn.sessionId = conn.id;
+         const openedAt = openedAtStr ? sqlBase.DocumentAdditional.prototype.getOpenedAt(openedAtStr) : canvasService.getOpenedAt(resultRow);
+-        const endAuthRes = yield* endAuth(ctx, conn, false, documentCallback, openedAt);
++        const endAuthRes = yield* endAuth(ctx, conn, false, documentCallback, openedAt, resultRow);
+         if (endAuthRes && cmd) {
+           //todo to allow forcesave TemplateSource after convertion(move to better place)
+           if (wopiParamsFull?.commonInfo?.fileInfo?.TemplateSource) {
+@@ -3272,7 +3273,7 @@ exports.install = function (server, app, callbackFunction) {
+     }
+   }
+ 
+-  function* endAuth(ctx, conn, bIsRestore, documentCallback, opt_openedAt) {
++  function* endAuth(ctx, conn, bIsRestore, documentCallback, opt_openedAt, opt_resultRow) {
+     const tenExpLockDoc = ctx.getCfg('services.CoAuthoring.expire.lockDoc', cfgExpLockDoc);
+     const tenForgottenFiles = ctx.getCfg('services.CoAuthoring.server.forgottenfiles', cfgForgottenFiles);
+ 
+@@ -3316,7 +3317,8 @@ exports.install = function (server, app, callbackFunction) {
+         const forgotten = yield storage.listObjects(ctx, docId, tenForgottenFiles);
+         hasForgotten = forgotten.length > 0;
+         ctx.logger.debug('endAuth hasForgotten %s', hasForgotten);
+-        if (hasForgotten) {
++        // The recovery marker is not consumed, so a fresh editor open re-sends this warning until the marker clears.
++        if (hasForgotten || documentRecovery.isAssemblyRecovery(opt_resultRow)) {
+           sendDataWarning(ctx, conn, constants.FILE_NOT_ASSEMBLED, 'File not assembled');
+         }
+       }
+diff --git a/DocService/sources/canvasservice.js b/DocService/sources/canvasservice.js
+index dba01e21..cd89a5fd 100644
+--- a/DocService/sources/canvasservice.js
++++ b/DocService/sources/canvasservice.js
+@@ -45,6 +45,7 @@ const sqlBase = require('./databaseConnectors/baseConnector');
+ const utilsDocService = require('./utilsDocService');
+ const docsCoServer = require('./DocsCoServer');
+ const taskResult = require('./taskresult');
++const documentRecovery = require('./documentRecovery');
+ const newFileTemplateUtils = require('./newFileTemplateUtils');
+ const wopiUtils = require('./wopiUtils');
+ const wopiClient = require('./wopiClient');
+@@ -1286,7 +1287,8 @@ const commandSfcCallback = co.wrap(function* (ctx, cmd, isSfcm, isEncrypted) {
+             if (replyData && commonDefines.c_oAscServerCommandErrors.NoError != replyData.error) {
+               ctx.logger.warn('sendServerRequest returned an error: data = %s', replyStr);
+             }
+-            if (requestRes) {
++            // A callback ACK for Corrupted only confirms handling; a missing assembly output is still not a successful save.
++            if (requestRes && (!isError || isErrorCorrupted)) {
+               isSfcSuccess = true;
+               updateIfTask = undefined;
+               yield docsCoServer.cleanDocumentOnExitPromise(ctx, docId, true, callbackUserIndex);
+@@ -1302,7 +1304,7 @@ const commandSfcCallback = co.wrap(function* (ctx, cmd, isSfcm, isEncrypted) {
+                   clientStatsD.timing('coauth.saveAfterEditingSessionClosed', time);
+                 }
+               }
+-            } else {
++            } else if (!requestRes) {
+               storeForgotten = true;
+             }
+           } else {
+@@ -1318,6 +1320,13 @@ const commandSfcCallback = co.wrap(function* (ctx, cmd, isSfcm, isEncrypted) {
+       storeForgotten = true;
+     }
+     if (undefined !== updateIfTask && !isSfcm) {
++      // Terminal assembly error with no retry: release SaveVersion (no new open conversion), keep pending changes for replay.
++      const isTerminalAssemblyError =
++        commonDefines.FileStatus.SaveVersion === recoverTask.status && !needRetry && !isEncrypted && isError && !isErrorCorrupted;
++      if (isTerminalAssemblyError) {
++        ctx.logger.warn('commandSfcCallback release SaveVersion after assembly error without output: statusInfo = %d', statusInfo);
++        documentRecovery.markAssemblyRecovery(recoverTask);
++      }
+       ctx.logger.debug('commandSfcCallback restore %d status', recoverTask.status);
+       updateIfTask.status = recoverTask.status;
+       updateIfTask.statusInfo = recoverTask.statusInfo;
+diff --git a/DocService/sources/documentRecovery.js b/DocService/sources/documentRecovery.js
+new file mode 100644
+index 00000000..74c2b70c
+--- /dev/null
++++ b/DocService/sources/documentRecovery.js
+@@ -0,0 +1,58 @@
++/*
++ * Copyright (C) Ascensio System SIA, 2009-2026
++ *
++ * This program is a free software product. You can redistribute it and/or
++ * modify it under the terms of the GNU Affero General Public License (AGPL)
++ * version 3 as published by the Free Software Foundation, together with the
++ * additional terms provided in the LICENSE file.
++ *
++ * This program is distributed WITHOUT ANY WARRANTY; without even the implied
++ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. For
++ * details, see the GNU AGPL at: https://www.gnu.org/licenses/agpl-3.0.html
++ *
++ * You can contact Ascensio System SIA by email at info@onlyoffice.com
++ * or by postal mail at 20A-6 Ernesta Birznieka-Upisha Street, Riga,
++ * LV-1050, Latvia, European Union.
++ *
++ * The interactive user interfaces in modified versions of the Program
++ * are required to display Appropriate Legal Notices in accordance with
++ * Section 5 of the GNU AGPL version 3.
++ *
++ * No trademark rights are granted under this License.
++ *
++ * All non-code elements of the Product, including illustrations,
++ * icon sets, and technical writing content, are licensed under the
++ * Creative Commons Attribution-ShareAlike 4.0 International License:
++ * https://creativecommons.org/licenses/by-sa/4.0/legalcode
++ *
++ * This license applies only to such non-code elements and does not
++ * modify or replace the licensing terms applicable to the Program's
++ * source code, which remains licensed under the GNU Affero General
++ * Public License v3.
++ *
++ * SPDX-License-Identifier: AGPL-3.0-only
++ */
++
++'use strict';
++
++const constants = require('./../../Common/sources/constants');
++const commonDefines = require('./../../Common/sources/commondefines');
++
++// Ok + FILE_NOT_ASSEMBLED marks a failed-assembly doc; pending changes are kept for replay; the marker is overwritten by the next status change (save retry, empty-cache reconvert, or successful assembly).
++function markAssemblyRecovery(task) {
++  task.status = commonDefines.FileStatus.Ok;
++  task.statusInfo = constants.FILE_NOT_ASSEMBLED;
++}
++
++// Exact marker only; do not infer recovery from arbitrary negative status_info left by legacy paths.
++function isAssemblyRecoveryStatus(status, statusInfo) {
++  return status === commonDefines.FileStatus.Ok && statusInfo === constants.FILE_NOT_ASSEMBLED;
++}
++
++function isAssemblyRecovery(row) {
++  return isAssemblyRecoveryStatus(row?.status, row?.status_info);
++}
++
++exports.markAssemblyRecovery = markAssemblyRecovery;
++exports.isAssemblyRecovery = isAssemblyRecovery;
++exports.isAssemblyRecoveryStatus = isAssemblyRecoveryStatus;
+-- 
+2.43.0
+

@@ -1,0 +1,105 @@
+From 12ba395e20af71a8ccb366cbd5b2f86abdf0e510 Mon Sep 17 00:00:00 2001
+From: Sergey Konovalov <Sergey.Konovalov@onlyoffice.com>
+Date: Thu, 16 Apr 2026 16:46:11 +0300
+Subject: [PATCH] [bug] Handle client disconnect during file streaming to
+ prevent process crash; Fix bug 81132
+
+---
+ DocService/sources/ai/aiProxyHandler.js | 33 +++++++++++++++----------
+ DocService/sources/routes/static.js     | 20 ++++++++++++---
+ 2 files changed, 36 insertions(+), 17 deletions(-)
+
+diff --git a/DocService/sources/ai/aiProxyHandler.js b/DocService/sources/ai/aiProxyHandler.js
+index 52016c0d..c84c186b 100644
+--- a/DocService/sources/ai/aiProxyHandler.js
++++ b/DocService/sources/ai/aiProxyHandler.js
+@@ -226,7 +226,7 @@ async function proxyRequest(req, res) {
+       return;
+     }
+ 
+-    // Merge key in headers; providerHeaders (spread last) always win — axios normalises header names case-insensitively.
++    // Merge key in headers; providerHeaders (spread last) always wins - axios normalises header names case-insensitively.
+     const headers = {...body.headers, ...providerHeaders};
+ 
+     // Preserve Accept-Encoding from original request if not explicitly provided
+@@ -306,20 +306,27 @@ async function proxyRequest(req, res) {
+     await pipeline(result.stream, res);
+     success = true;
+   } catch (error) {
+-    ctx.logger.error(`proxyRequest: AI API request error: %s`, error);
+-    if (error.response) {
+-      // Set the response headers to match the target response
+-      res.set(error.response.headers);
+-
+-      // Use pipeline to pipe the response data to the client
+-      await pipeline(error.response.data, res);
++    if (error.code === 'ERR_STREAM_PREMATURE_CLOSE') {
++      ctx.logger.debug('proxyRequest: client disconnected: %s', error.stack);
+     } else {
+-      res.status(500).json({
+-        error: {
+-          message: 'proxyRequest: AI API request error',
+-          code: '500'
++      ctx.logger.error(`proxyRequest: AI API request error: %s`, error);
++    }
++    if (!res.headersSent) {
++      try {
++        if (error.response) {
++          res.set(error.response.headers);
++          await pipeline(error.response.data, res);
++        } else {
++          res.status(500).json({
++            error: {
++              message: 'proxyRequest: AI API request error',
++              code: '500'
++            }
++          });
+         }
+-      });
++      } catch (responseError) {
++        ctx.logger.debug('proxyRequest: error sending error response: %s', responseError.stack);
++      }
+     }
+   } finally {
+     // Record the time taken for the proxyRequest in StatsD (skip cors requests and errors)
+diff --git a/DocService/sources/routes/static.js b/DocService/sources/routes/static.js
+index 5e1a16d7..e5f60c99 100644
+--- a/DocService/sources/routes/static.js
++++ b/DocService/sources/routes/static.js
+@@ -126,8 +126,14 @@ function createCacheMiddleware(prefix, cfgStorage, rout, configKey) {
+ 
+         res.sendFile(filePath, sendFileOptions, err => {
+           if (err) {
+-            operationContext.global.logger.error(err);
+-            res.status(400).end();
++            if (err.code === 'ERR_STREAM_PREMATURE_CLOSE' || err.code === 'ECONNRESET' || err.code === 'ECONNABORTED') {
++              operationContext.global.logger.debug('client disconnected during sendFile: %s', err.stack);
++            } else {
++              operationContext.global.logger.error(err);
++            }
++            if (!res.headersSent) {
++              res.status(400).end();
++            }
+           }
+         });
+       } else if (['storage-s3', 'storage-az'].includes(tenantStorageCfg.name)) {
+@@ -144,8 +150,14 @@ function createCacheMiddleware(prefix, cfgStorage, rout, configKey) {
+         res.sendStatus(404);
+       }
+     } catch (e) {
+-      operationContext.global.logger.error(e);
+-      res.sendStatus(400);
++      if (e.code === 'ERR_STREAM_PREMATURE_CLOSE') {
++        operationContext.global.logger.debug('client disconnected during cache streaming: %s', e.stack);
++      } else {
++        operationContext.global.logger.error(e);
++      }
++      if (!res.headersSent) {
++        res.sendStatus(400);
++      }
+     }
+   };
+ }
+-- 
+2.43.0
+
