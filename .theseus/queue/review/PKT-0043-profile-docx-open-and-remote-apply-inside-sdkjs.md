@@ -55,6 +55,7 @@ baseline.md PKT-0016 shows 1.9–2.4 s after Editor.bin and apply p90 105–143 
 - Spawned one follow-up (font-name walk per remote change). Not done: GPU rendering, image-heavy docs, internals of the mangled base bundle. Acceptance list is empty; `theseus validate` run.
 
 ## Spawned packets
+- PKT-0057: Avoid whole-document font-name walk on every remote change in sdkjs word
 
 ## Review
 
