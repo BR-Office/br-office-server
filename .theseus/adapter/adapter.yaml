@@ -54,24 +54,21 @@ oracle:
     max_benchmark_regression_pct: 0
 
 models:
+  # Rafael, 2026-11-02: Opus with low effort for every role, with the Fable advisor; no Sonnet or Haiku.
   - id: claude-opus-5-5
     family: anthropic
     tool: claude-code
-    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
+    args: ["--settings", '{"advisorModel": "fable"}']
     context_window: 200000
     roles: [cartographer, diagnostician, executor, reviewer, auditor]
-  - id: claude-sonnet-5-5
+  # A second, independent Opus session, so a packet is never reviewed by the session that executed it.
+  - id: claude-opus-5-5-b
     family: anthropic
     tool: claude-code
-    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
+    model_name: claude-opus-5-5
+    args: ["--settings", '{"advisorModel": "fable"}']
     context_window: 200000
-    roles: [executor, reviewer]
-  - id: claude-haiku-5-5
-    family: anthropic
-    tool: claude-code
-    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
-    context_window: 200000
-    roles: [executor]
+    roles: [diagnostician, executor, reviewer]
 
 review:
   allow_same_family: true         # pilot: only Claude models; turn off when Codex joins
@@ -82,16 +79,15 @@ routing:
   explore: 0.15
 
 effort:
-  levels: [low, medium, high]
-  default: low                    # executors and reviewers
-  planning: high                  # cartographer, diagnostician, auditor, investigate packets
-  by_type:
-    interop: high                 # toolchain decisions are design work
+  levels: [low]                   # Rafael, 2026-11-02: low for everything
+  default: low
+  planning: low
+  by_type: {}
 
 initial_routing:
   investigate: [claude-opus-5-5]
-  characterize: [claude-sonnet-5-5]
-  refactor: [claude-sonnet-5-5]
+  characterize: [claude-opus-5-5]
+  refactor: [claude-opus-5-5]
   migrate: [claude-opus-5-5]
   interop: [claude-opus-5-5]
 
