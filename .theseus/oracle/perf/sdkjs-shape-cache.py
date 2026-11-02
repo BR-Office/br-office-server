@@ -1,6 +1,8 @@
 # PKT-0069: patch a COPY of sdkjs/cell/sdk-all.js with a memo cache on FragmentShaper.shapeFragment,
 # keyed by (font name, size, bold/italic, PPI, code points). On a hit it replays what
 # private_HandleItem wrote (grapheme, width, char per index) instead of shaping with HarfBuzz.
+# PKT-0077: superseded for real use by the sdkjs SOURCE patch .theseus/diagnosis/PKT-0077-sdkjs-shape-cache.patch
+# (cell/view/StringRender.js, built with webpack); this build-output patch stays as the quick prototype.
 # Usage: python3 -I sdkjs-shape-cache.py <copy of sdk-all.js>   (never the installed file)
 # Stats: set env SHAPE_CACHE_STATS=1 is not possible in x2t; hits/misses are kept on FragmentShaper.__s.
 import sys

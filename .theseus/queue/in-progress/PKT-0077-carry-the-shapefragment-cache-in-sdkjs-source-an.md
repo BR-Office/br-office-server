@@ -63,9 +63,27 @@ x2t loads sdkjs/cell/sdk-all.js (not sdk-all-min.js). Mirror the install (FileCo
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.17.0
 - return: disk filled up; factory restarted on Theseus 0.17.1
+- Ported the cache to sdkjs source (`cell/view/StringRender.js`, sdkjs 9cea536, +34/-1): original body renamed
+  `private_shapeFragment`, recording done inside `private_HandleItem` (no per-call monkey-patching). Patch kept as
+  `.theseus/diagnosis/PKT-0077-sdkjs-shape-cache.patch` (sdkjs checkout lives outside the repo, in the scratchpad).
+- Decision: build baseline AND patched from the same checkout with webpack (cell config) instead of comparing to
+  the installed 9.3.7 sdk-all.js, so only the patch differs. Each side runs in its own mirror install
+  (`sdkjs-mirror.sh`, new) with its own `x2t -create-js-snapshots` sdk-all.bin; installed files untouched.
+- Surprise: the earlier attempt's webpack build was OOM-killed ("Killed") with other agents on the VM;
+  `NODE_OPTIONS=--max-old-space-size=2500` builds in ~60 s.
+- Results (median of 2 interleaved runs, `x2t-cpu-ab.py`, new): 25k 17.8 -> 14.9 s (16 %), numbers 50k
+  36.6 -> 31.5 s (14 %), 50k 35.5 -> 26.8 s (24 %); 2605/2605 pages pixel-identical. Details in
+  `.theseus/diagnosis/PKT-0077-shape-cache-source.md` (new; PKT-0069-shape-cache.md left untouched, not in target).
+- Found risk: the cache key ignores whether the font is loaded; harmless in x2t, but in the browser editor a
+  fallback shaping could be replayed after the real font loads. Spawned a follow-up to fix that and prepare the PR.
+- Not done: sdkjs QUnit tests not run against the build; PR not opened (outward action, left to the follow-up/humans).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t perf A/B on sdkjs: build both sides from one sdkjs checkout, give each its own mirror + snapshot
+  (`.theseus/oracle/perf/sdkjs-mirror.sh`), interleave runs (`x2t-cpu-ab.py`); base swings about ±2 s per run here.
+- sdkjs webpack cell build needs `NODE_OPTIONS=--max-old-space-size=2500` on the shared 7 GB VM.
+- Memo caches in sdkjs shaping are safe in x2t but must handle lazy font loading in the browser.
