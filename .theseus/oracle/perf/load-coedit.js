@@ -8,6 +8,17 @@
 // -> unSaveLock, at <ratePerDoc> changes/s per document. Timed per change: send -> sender's unSaveLock (ack)
 // and send -> each other client's `saveChanges` broadcast. Also: open (auth -> documentOpen), CPU of docservice.
 // The load generator shares the CPUs with the server; its own CPU is reported so its share can be judged.
+//
+// Valid saves (PKT-0023). The mode above replays one isolated change, which x2t cannot apply (status 3). Two more modes:
+//   node load-coedit.js capture ["text"] [out.json]   Playwright: open a new docx in the example, type <text>, record
+//       every saveChanges payload the browser sends, from the first one, in order (writes out.json, default stdout).
+//   node load-coedit.js replay <docs> [seq.json]       per document: a fresh key on a pristine copy of the en-US blank
+//       template, ONE client, isSaveLock -> every captured batch in order -> close; timed: open, ack, and save
+//       assembly = socket close -> callback (savetimeoutdelay 5 s + queue + x2t), with the callback status counted.
+//   Default sequence: SEQ below ("hello world" typed in a new docx, captured on 9.3.7-1). It starts with a `64;`
+//   change (document info) before the first `35;` (add text): replaying only the `35;` change is what failed before.
+//   The base must be the untouched template: the capture's own file is overwritten by the browser's save, and
+//   replaying onto it fails with status 3 again.
 const io = require('socket.io-client'), jwt = require(require('path').resolve(__dirname, '../../../DocService/node_modules/jsonwebtoken'));
 const fs = require('fs'), http = require('http');
 const K = +process.argv[2] || 1, N = +process.argv[3] || 2, SECS = +(process.argv[4] || 30), RATE = +(process.argv[5] || 2);
@@ -109,4 +120,68 @@ function procCpu() {
   } catch (e) {} }
   return o;
 }
-main().catch(e => { console.error(e); process.exit(1); });
+
+const SEQ = { text: 'hello world', batches: [{ changes: JSON.stringify(['64;AgAAADEA//8BAAQ0z5DtEQAALQEAAAUAAAAAAAAAAAAAAAMAAAAAAAAA9v///w4AAAA5AC4AMwAuADcALgAwAA==',
+  '35;BgAAADYANwAyAAEAHAABAAAAAAAAAAEAAABoAAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAAAQAAAAEAAABlAAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAAAgAAAAEAAABsAAAAAAMAAAA=',
+  '35;BgAAADYANwAyAAEAHAABAAAAAwAAAAEAAABsAAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAABAAAAAEAAABvAAAAAAMAAAA=',
+  '64;AgAAADEA//8BAAQ0z5DtEQAApwAAAAEAAAABAAAAAAAAAAMAAAAAAAAA9v///w4AAAA5AC4AMwAuADcALgAwAA==', '34;BgAAADYANwAyAAEAHAABAAAABQAAAAIAAAAgAAAAAwAAAA==',
+  '64;AgAAADEA//8BAAQ0z5DtEQAAiAEAAAIAAAACAAAAAAAAAAMAAAAAAAAA9v///w4AAAA5AC4AMwAuADcALgAwAA==', '35;BgAAADYANwAyAAIAHAABAAAAAAAAAAEAAABoAAAAAAAAAAA=',
+  '35;BgAAADYANwAyAAEAHAABAAAAAAAAAAEAAABIAAAAAAMAAAA=', '64;AgAAADEA//8BAAQ0z5DtEQAALQEAAAUAAAADAAAAAAAAAAMAAAAAAAAA9v///w4AAAA5AC4AMwAuADcALgAwAA==',
+  '35;BgAAADYANwAyAAEAHAABAAAABgAAAAEAAAB3AAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAABwAAAAEAAABvAAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAACAAAAAEAAAByAAAAAAMAAAA=',
+  '35;BgAAADYANwAyAAEAHAABAAAACQAAAAEAAABsAAAAAAMAAAA=', '35;BgAAADYANwAyAAEAHAABAAAACgAAAAEAAABkAAAAAAMAAAA=']), excelAdditionalInfo: '{}' }] };
+const STORE = '/var/lib/euro-office/documentserver-example/files/127.0.0.1';
+
+async function capture() {
+  const { chromium } = require('playwright'), text = process.argv[3] || 'hello world';
+  const b = await chromium.launch(), p = await b.newPage();
+  // Hook WebSocket.send in every frame before the editor loads: Socket.IO frames are '42["message",{...}]'.
+  await p.addInitScript(() => { const s = WebSocket.prototype.send; window.__out = [];
+    WebSocket.prototype.send = function (d) { if (typeof d === 'string' && d.includes('"saveChanges"')) window.__out.push(d); return s.call(this, d); }; });
+  await p.goto(BASE + '/example/editor?fileExt=docx');
+  let f; for (let i = 0; i < 2400; i++) { f = p.frames().find(x => /documenteditor/.test(x.url()) && /index/.test(x.url()));
+    if (f && await f.evaluate(() => !!(window.editor && editor.isDocumentLoadComplete)).catch(() => 0)) break; f = null; await p.waitForTimeout(50); }
+  if (!f) throw new Error('editor not ready');
+  await p.keyboard.type(text, { delay: 150 }); await p.waitForTimeout(3000); // fast co-editing mode sends within ~1 s
+  const batches = (await f.evaluate(() => window.__out)).map(d => JSON.parse(d.slice(d.indexOf('[')))[1])
+    .map(m => ({ changes: m.changes, excelAdditionalInfo: m.excelAdditionalInfo }));
+  const out = JSON.stringify({ capturedIn: decodeURIComponent(p.url().split('fileName=')[1] || ''), text, batches });
+  await b.close();
+  process.argv[4] ? fs.writeFileSync(process.argv[4], out) : console.log(out);
+}
+
+async function replay() {
+  const D = +process.argv[3] || 1, seq = process.argv[4] ? JSON.parse(fs.readFileSync(process.argv[4])) : SEQ;
+  const base = `replay-base-${Date.now()}.docx`; // pristine blank document, never saved back (callbacks go to cbSrv)
+  fs.copyFileSync('/var/www/euro-office/documentserver/document-templates/new/en-US/new.docx', `${STORE}/${base}`);
+  const cbAt = {}, status = {};
+  cbSrv = http.createServer((q, r) => { let b = ''; q.on('data', d => b += d); q.on('end', () => { try { const m = JSON.parse(b);
+    if (m.status === 2 || m.status === 3) { cbAt[m.key] = Date.now(); status[m.status] = (status[m.status] || 0) + 1; } } catch (e) {} r.end('{"error":0}'); }); });
+  await new Promise(r => cbSrv.listen(0, '127.0.0.1', r));
+  const url = `${BASE}/example/download?fileName=${encodeURIComponent(base)}&useraddress=127.0.0.1`;
+  const cl = [];
+  for (let k = 0; k < D; k++) { const key = `replay${Date.now()}k${k}`; cl.push(Object.assign(client(key, 0, url, base), { key })); }
+  await Promise.all(cl.map(c => c.ready));
+  const ack = [], errs = { lockBusy: 0, missing: 0 }, cpu0 = procCpu(), w0 = Date.now();
+  await Promise.all(cl.map(async c => {
+    c.s.emit('message', { type: 'isSaveLock', syncChangesIndex: 0 });
+    const lk = await Promise.race([once(c, m => m.type === 'saveLock'), new Promise(r => setTimeout(() => r(null), 30000))]);
+    if (!lk || lk.saveLock) { errs.lockBusy++; return; }
+    const t = Date.now();
+    seq.batches.forEach((b, i) => c.s.emit('message', { type: 'saveChanges', changes: b.changes, startSaveChanges: i === 0, endSaveChanges: i === seq.batches.length - 1,
+      isCoAuthoring: false, isExcel: false, deleteIndex: null, excelAdditionalInfo: b.excelAdditionalInfo || '{}', unlock: false, releaseLocks: false, syncChangesIndex: 0 }));
+    const un = await Promise.race([once(c, m => m.type === 'unSaveLock'), new Promise(r => setTimeout(() => r(null), 30000))]);
+    un ? ack.push(Date.now() - t) : errs.missing++;
+  }));
+  // Disconnect all at once; save assembly per doc = this moment -> its callback.
+  const tc = Date.now(); for (const c of cl) c.s.close();
+  while (Object.keys(cbAt).length < D && Date.now() - tc < 120000 + D * 3000) await new Promise(r => setTimeout(r, 100));
+  const wall = (Date.now() - w0) / 1000, cpu1 = procCpu(), cpu = {};
+  for (const k in cpu1) cpu[k] = +((cpu1[k] - (cpu0[k] || 0)) / 100 / wall).toFixed(2);
+  const asm = cl.filter(c => cbAt[c.key]).map(c => cbAt[c.key] - tc);
+  cbSrv.close(); fs.unlinkSync(`${STORE}/${base}`);
+  console.log(JSON.stringify({ mode: 'replay', docs: D, clientsPerDoc: 1, text: seq.text, batches: seq.batches.length,
+    changes: seq.batches.reduce((n, b) => n + JSON.parse(b.changes).length, 0), openMs: st(cl.map(c => c.opened)), ackMs: st(ack), errors: errs,
+    callbackStatus: status, noCallback: D - asm.length, assemblyMs: st(asm), allSavedMs: asm.length ? Math.max(...asm) : NaN, coresUsed: cpu }));
+  process.exit(0);
+}
+(process.argv[2] === 'capture' ? capture() : process.argv[2] === 'replay' ? replay() : main()).catch(e => { console.error(e); process.exit(1); });
