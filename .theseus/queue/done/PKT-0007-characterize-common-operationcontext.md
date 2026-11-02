@@ -51,6 +51,7 @@ Common/sources/operationContext.js; invariants in .theseus/atlas/common.md.
 - Surprise (pinned, not fixed): `init()` does not clear `userSessionId` when the new value is falsy, so a reused Context keeps the previous session id. `initFromRequest` resets shardKey/wopiSrc to undefined when the query lacks them.
 - Acceptance: unit.sh 10 suites, 133 passed, 1 skipped; lint:check 0 errors (1 pre-existing AdminPanel warning).
 - Not done: initFromConnection / initFromConnectionRequest not covered (outside the Goal). Friction line appended to `.theseus/scoreboard/friction.jsonl` as AGENTS.md requires.
+- integration: merge conflict in .theseus/scoreboard/friction.jsonl
 
 ## Spawned packets
 
