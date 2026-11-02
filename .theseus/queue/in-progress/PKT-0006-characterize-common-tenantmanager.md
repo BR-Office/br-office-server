@@ -32,7 +32,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -50,5 +51,6 @@ Common/sources/tenantManager.js; see the common card pitfalls. Run with .theseus
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Surprise 2's "missing config is re-read on every call" is not kept in a test; add a second getTenantConfig call for tenant b asserting undefined and that cleanTenantConfigCache is called again
 
 ## Lessons for the Atlas
