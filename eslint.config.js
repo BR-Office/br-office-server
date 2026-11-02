@@ -25,7 +25,10 @@ module.exports = [
       'package-lock.json',
       'npm-shrinkwrap.json',
       'SpellChecker/**',
-      'Metrics/**'
+      'Metrics/**',
+      // TypeScript sources are type-checked by tsc (tsconfig.json); typescript-eslint needs the
+      // @typescript/typescript6 alias until TypeScript 7.1. The .js emitted from them is in .gitignore.
+      '**/*.ts'
     ]
   },
   js.configs.recommended,

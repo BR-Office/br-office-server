@@ -51,7 +51,10 @@ FROM web-base AS server
 
     ENV BUILD_ROOT=${BUILD_ROOT}
 
+    # Emit .js next to the TypeScript sources (Node type stripping, no dev dependencies) before pkg.
     RUN TARGETARCH_PKG=$(echo "$TARGETARCH" | sed 's/amd64/x64/') && \
+        cd /server && \
+        npm run build:ts && \
         cd /server/Common && \
         sed "s|\(const buildVersion = \).*|\1'${PRODUCT_VERSION}';|" -i sources/commondefines.js && \
         cd /server/DocService && \

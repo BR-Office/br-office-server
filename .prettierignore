@@ -16,6 +16,8 @@ npm-shrinkwrap.json
 *.temp
 Metrics/config/config.js
 SpellChecker/sources/server.js
+# JavaScript emitted from TypeScript sources (see .gitignore)
+DocService/sources/utilsDocService.js
 
 # Patterns merged from .gitignore
 .idea/
