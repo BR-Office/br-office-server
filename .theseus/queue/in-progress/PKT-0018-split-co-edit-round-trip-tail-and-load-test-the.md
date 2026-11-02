@@ -59,8 +59,21 @@ PKT-0015 measured the full stack with headless Chromium clients on a 2-CPU VM, u
 - block: agent `claude-opus-5-5` timed out after 30 min
 - release: agent timeout raised to 90 min (load test); continue from the previous attempt
 
+- claude-opus-5-5, attempt 2026-11-02 (resume): the scripts from the timed-out attempt (coedit-split.js, load-coedit.js, convert-large.js) were already committed by the factory; this attempt ran them and wrote the results. No source change; DocService DEBUG logging (log4js config, already set) gives the server timestamps.
+- Decision: split the tail with browsers + server log timestamps (coedit-split.js), and load-test with raw Socket.IO clients (load-coedit.js) so the load generator does not starve the server (loadgen used ≤ 0.14 core).
+- Finding: server segment (receive → broadcast) p99 ≤ 69 ms with 2 and 4 clients; the 4-client tail (p99 2.1 s) is in the sender's `type` (1.8 s) and receiver `down` (0.9 s) segments with the host at 99 % CPU, Chromium 74–76 % → client CPU starvation, not DocsCoServer.
+- Finding: load to 100 docs × 10 clients (1 771 broadcasts/s) keeps ack/broadcast p99 ≈ 12 ms, DocService 0.28 core.
+- Surprise: through nginx, 1 000 sockets fail (TransportError) — stock worker_connections 768; ran direct on port 8000.
+- Surprise: all load-test saves end with callback status 3 (replayed change does not fit the doc), so save times under load are indicative only.
+- Surprise: one deck-50.pptx → pdf took 124 s (1 of 3 runs), not explained.
+- Not done: 200 × 5 gave no result within 300 s (not diagnosed). Requested follow-up in .theseus/spawn/ (ceiling, valid saves, pptx outlier).
+- Raw numbers: .theseus/oracle/perf/results-2026-11-02.json.
+
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- The co-edit tail on a 2-CPU host is the browsers' CPU, not DocsCoServer: measure the server with raw Socket.IO clients, not Chromium.
+- nginx's stock worker_connections (768) caps co-edit sockets at ≈ 700 before DocService is anywhere near busy.
+- PDF export (x2t rendering) is the expensive conversion (1–7 s on realistic files); the open conversion stays ≈ 0.1–0.3 s.

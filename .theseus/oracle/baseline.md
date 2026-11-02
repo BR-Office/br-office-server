@@ -262,6 +262,57 @@ Reading:
 - **Open ≈ 2.8 s is the client** (bundles, fonts, render); the server part (x2t docx → internal format ≈ 80 ms
   raw, by analogy with the ODF rows) is a few percent.
 
+### Co-edit tail split, load test, large files (PKT-0018, native package 9.3.7-1, 2-CPU VM)
+
+Raw numbers: `perf/results-2026-11-02.json`. Scripts: `perf/coedit-split.js`, `perf/load-coedit.js`, `perf/convert-large.js`.
+Server-side timestamps come from DocService DEBUG logs (log4js level DEBUG, config only, no source change).
+
+**Co-edit round trip split** (`coedit-split.js`, headless Chromium, new docx, ms):
+
+| Segment | 2 clients p50 / p99 | 4 clients p50 / p99 |
+|---|---|---|
+| total (type → marker in receiver model) | 101 / 294 | 126 / 2 066 |
+| type (sender keystroke → WebSocket send) | 46 / 120 | 48 / 1 843 |
+| up (send → DocService receive) | 1 / 21 | 1 / 22 |
+| **server (receive → broadcast)** | **4 / 69** | **4 / 57** |
+| down (broadcast → receiver WebSocket event) | 1 / 198 | 1 / 924 |
+| apply (receiver event → marker in model) | 47 / 165 | 58 / 169 |
+
+Host CPU was ≈ 99 % busy throughout; Chromium took 46–76 % of CPU time, DocService 3–7 %.
+**Verdict: the tail is the clients, not DocsCoServer.** The server segment stays ≤ 70 ms p99 and does not grow
+with clients; the 4-client tail is in the sender's main thread (sdkjs batching/CPU) and the receiver being
+scheduled (`down`), i.e. CPU starvation of the browsers on 2 CPUs. 17/60 (2 clients) edits were sent in
+more than one batch.
+
+**Load test** (`load-coedit.js`, raw Socket.IO clients, 2 changes/s per document, 30 s, ms):
+
+| Docs × clients | changes/s | broadcasts/s | ack p50 / p99 / max | broadcast p50 / p99 / max | open p99 | DocService cores |
+|---|---|---|---|---|---|---|
+| 1 × 2 | 2 | 2 | 4 / 15 / 15 | 4 / 15 / 15 | 1 031 (cold) | 0.02 |
+| 10 × 5 | 20 | 79 | 3 / 7 / 10 | 3 / 7 / 10 | 131 | 0.04 |
+| 50 × 5 | 98 | 393 | 3 / 12 / 41 | 3 / 12 / 41 | 160 | 0.13 |
+| 100 × 10 (port 8000, no nginx) | 197 | 1 771 | 3 / 12 / 32 | 2 / 11 / 32 | 149 | 0.28 |
+
+- Latency is flat up to 1 000 sockets and ≈ 1 800 broadcasts/s; DocService used 0.28 of a core, PostgreSQL 0.09.
+- 100 × 10 **through nginx** failed with Socket.IO `TransportError`: stock `worker_connections 768` caps the
+  proxy at ≈ 700 sockets. A deployment config limit, not a server limit.
+- 200 × 5 (direct) produced no result within the 300 s timeout (not diagnosed).
+- Save after all clients leave: every save returned callback status 3 (the replayed change does not fit the
+  document, so assembly fails); the time `saveAllMs` (6 s for 1 doc, 67 s for 100) is therefore indicative only.
+
+**Large files** (`convert-large.js`, PKT-0016 samples, 3 runs, concurrency 1, ms p50):
+
+| File | raw x2t open (→ Editor.bin) | raw → pdf | service → pdf | service → ODF | service → own format (save path) |
+|---|---|---|---|---|---|
+| medium-10p.docx (40 kB) | 107 | 1 340 | 1 454 | 198 | 128 |
+| large-100p.docx (77 kB) | 104 | 3 545 | 3 894 | 268 | 145 |
+| large-10k.xlsx (421 kB) | 299 | 6 518 | 6 417 | 3 121 | 213 |
+| deck-50.pptx (74 kB) | 113 | 1 955 | 3 057 (max 124 316) | 202 | 136 |
+
+- The open conversion stays ≈ 0.1–0.3 s even on large files: open time is the client, as PKT-0016 found.
+- PDF export dominates (1.3–6.5 s, all x2t rendering; DocService overhead ≈ 0.1 s).
+- One pptx → pdf took 124 s (one in three runs): an outlier not explained here (converter timeout/retry?).
+
 ## Quality: what can be measured here today
 
 Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
@@ -279,8 +330,8 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 
 | Gap | Why | Follow-up |
 |---|---|---|
-| End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | measured in PKT-0015 (section above), small documents only; not measured: large documents, a load test (many documents × many clients), server-side split of the co-edit tail | requested: spawn "Split co-edit round-trip tail and load-test the server" |
+| End-to-end server under load beyond 1 000 sockets; save under load; pptx→pdf 124 s outlier | PKT-0018 measured split, load to 100×10 and large files (above); 200×5 timed out, replayed changes make saves fail (status 3), outlier seen once | spawn requested by PKT-0018 |
 | Client latency: x2t share of open, real network, low-end clients | PKT-0016 split open and remote apply (section above), but the server's open + x2t is not isolated from the client's lazy script loads, all timings are on localhost, and 2 CPUs host server and browsers | server-side timestamps per open (DocService log: open request → Editor.bin ready) |
-| x2t conversion time per format | measured in PKT-0015 for empty docx/xlsx/pptx/pdf → pdf/ODF; not for realistic files | part of the spawn above |
+| x2t conversion time per format | measured on realistic files in PKT-0018 (above) | — |
 | Crash rate seen by users | upstream fix and issue rates measured (PKT-0017, above); no production crash telemetry; issue counts for ONLYOFFICE cover the whole product, not only the server | production telemetry, if a deployment exists |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |
