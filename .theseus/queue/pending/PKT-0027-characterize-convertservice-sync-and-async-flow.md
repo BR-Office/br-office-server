@@ -33,6 +33,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -93,6 +94,7 @@ at the time. Nothing in the target can fix this; still blocked on the spawned es
  8: 0x1cfcc61  [node]
 Aborted
 ```
+- release: the lint ran out of memory on the client's sources checked out under external/ (fixed in Theseus 0.15.3: this packet no longer gets them)
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
