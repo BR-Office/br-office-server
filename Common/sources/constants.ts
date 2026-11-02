@@ -25,6 +25,11 @@
 
 'use strict';
 
+// TypeScript source. Only erasable syntax is allowed (tsconfig.json: erasableSyntaxOnly):
+// `node ts-strip.js` erases the types and writes constants.js next to this file.
+// CommonJS stays as it was (exports.NAME = ...) so the exports shape is unchanged.
+// The values are a protocol shared with many modules: `as const` keeps them literal.
+
 exports.DOC_ID_PATTERN = '0-9-.a-zA-Z_=';
 exports.DOC_ID_REGEX = new RegExp('^[' + exports.DOC_ID_PATTERN + ']*$', 'i');
 exports.DOC_ID_REPLACE_REGEX = new RegExp('[^' + exports.DOC_ID_PATTERN + ']', 'g');
@@ -53,14 +58,14 @@ exports.RIGHTS = {
   Review: 2,
   Comment: 3,
   View: 4
-};
+} as const;
 
 exports.LICENSE_MODE = {
   None: 0,
   Trial: 1,
   Developer: 2,
   Limited: 4
-};
+} as const;
 
 exports.LICENSE_RESULT = {
   Error: 1,
@@ -79,7 +84,7 @@ exports.LICENSE_RESULT = {
   UsersViewCount: 14,
   UsersViewCountOS: 15,
   NotBefore: 16
-};
+} as const;
 
 exports.LICENSE_CONNECTIONS = 99999;
 exports.LICENSE_USERS = 99999;
@@ -324,7 +329,7 @@ exports.TEMPLATES_FOLDER_LOCALE_COLLISON_MAP = {
   zh: 'zh-CH',
   'pt-PT': 'pt-PT',
   'zh-TW': 'zh-TW'
-};
+} as const;
 exports.TABLE_RESULT_SCHEMA = [
   'tenant',
   'id',
@@ -338,5 +343,5 @@ exports.TABLE_RESULT_SCHEMA = [
   'baseurl',
   'password',
   'additional'
-];
-exports.TABLE_CHANGES_SCHEMA = ['tenant', 'id', 'change_id', 'user_id', 'user_id_original', 'user_name', 'change_data', 'change_date'];
+] as const;
+exports.TABLE_CHANGES_SCHEMA = ['tenant', 'id', 'change_id', 'user_id', 'user_id_original', 'user_name', 'change_data', 'change_date'] as const;
