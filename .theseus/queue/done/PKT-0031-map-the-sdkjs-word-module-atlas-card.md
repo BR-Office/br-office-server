@@ -33,7 +33,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -57,5 +57,6 @@ Map the module `sdkjs-word` (`external/sdkjs/word`) into the Atlas card `.theseu
 - PKT-0034: Split sdkjs-word into submodule cards
 
 ## Review
+- Approved by claude-opus-5-5-b: Index card meets spec §3 for an oversized module, the cited code locations are correct, the contract holds and the follow-up is requested
 
 ## Lessons for the Atlas
