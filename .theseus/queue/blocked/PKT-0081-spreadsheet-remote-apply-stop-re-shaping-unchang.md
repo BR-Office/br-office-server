@@ -67,6 +67,10 @@ On a spreadsheet remote change, do not re-shape the text of cells that did not c
 - Surprise / blocker: the acceptance `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3` cannot run: `<samples-dir>` is parsed by the shell as a redirection (`samples-dir: No such file or directory`, exit 1) and `profile-fonts.js` is not on this base branch (only on pkt/PKT-0072). Identical to PKT-0080's blocker; PKT-0083 (pending) already fixes it, so no new spawn. This packet should depend on PKT-0083 and be re-run after it.
 - Attempt 2 (2026-11-02): re-ran the acceptance exactly as written; it still fails before node starts (`bash: samples-dir: No such file or directory`, exit 1) and `.theseus/oracle/perf/profile-fonts.js` is still absent. No code change can fix this inside `target.files`: the packet's acceptance line must be fixed by the factory (PKT-0083, pending) and the packet re-queued with `depends_on: [PKT-0083]`. Code change unchanged (sdkjs f11c1d1). Not re-attempting a third time with the same unrunnable command is recommended.
 - Attempt 3 (2026-11-02): acceptance re-run exactly as written; same failure before node starts (`/bin/bash: line 1: samples-dir: No such file or directory`, exit 1). `.theseus/oracle/perf/profile-fonts.js` still absent from this branch; PKT-0083 still in `pending`. Code change unchanged (sdkjs f11c1d1). This is the last allowed attempt (max_attempts: 3): the packet cannot pass until the factory replaces `<samples-dir>` with a real path and brings `profile-fonts.js` onto the base (PKT-0083), then re-queues it.
+- block: 3 attempts failed; last: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`. Output:
+```
+sh: 1: cannot open samples-dir: No such file
+```
 
 ## Spawned packets
 
