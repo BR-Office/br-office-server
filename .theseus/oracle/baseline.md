@@ -453,6 +453,74 @@ DIAG-common's **keep** verdict: there is no performance case for reworking Commo
 Note for later measurements: reset the log level to WARN (`/etc/euro-office/documentserver/log4js/production.json`)
 or say which level was on.
 
+### Document editor open window split by resource and CPU (PKT-0047)
+
+Script: `node .theseus/oracle/perf/open-window.js <out.json> <file.docx>... [--runs 5] [--interval 1000]`; raw output in
+`perf/open-window-2026-11-02.json`. **Native package** 9.3.7-1, same VM (2 CPUs), PKT-0016 samples (docx 10 p / 100 p),
+1 warm-up + 5 runs each, new browser context per open (cold HTTP cache). Marks, ms after `goto`:
+**LoadDoc** = first call of `asc_docs_api.prototype.asc_LoadDocument` (wrapped by an init script);
+**Bin** = CDP `requestWillBeSent` of Editor.bin; **Ready** = `isDocumentLoadComplete`. Resource times come from
+unprofiled opens; CPU from paired opens with a CDP CPU profile (1 ms sampling; the profiler moves the marks by < 100 ms).
+
+Marks, p50 (unprofiled / profiled): docx 10 p LoadDoc 1 422 / 1 368, Bin 1 524 / 1 481, Ready 3 844 / 4 394;
+docx 100 p LoadDoc 1 414 / 1 348, Bin 1 478 / 1 464, Ready 4 422 / 4 439. Bin follows LoadDoc by 65–100 ms
+(open request → DocService/x2t → Editor.bin URL), so **the pre-document window is ≈ 1.4 s and ends at LoadDoc**.
+
+Resources (docx 10 p, p50; 100 p within ± 100 ms except Editor.bin size). Size = decoded body (CDP `dataLength`);
+wire size is not available (Chromium reports `encodedDataLength` −1/0 for these responses, so PKT-0016's
+"~500 KB" was a transferSize undercount, not the payload).
+
+| Resource | n | Decoded KB | Requested → last finished (ms) | Before LoadDoc? |
+|---|---|---|---|---|
+| example host page + api.js | 2 | 33 | 3 → 1 193 | yes |
+| web-apps index.html, api.js (frame), code.js | 4 | 414 | 27 → 3 850 | 3 of 4 |
+| vendor: require.js, jQuery, xregexp, socket.io | 4 | 262 | 82 → 320 | yes |
+| app.css | 1 | 560 | 115 → 133 | yes |
+| **documenteditor app.js** (webpack: DE app + apps/common + Backbone etc.) | 1 | 2 447 | 126 → 255 | yes |
+| **sdkjs word/sdk-all-min.js** (base, mangled) | 1 | 2 416 | 339 → 460 | yes |
+| locale en.json + svg/plugins/themes json | 7 | 305 | 656 → 3 963 | 1 (en.json) |
+| **sdkjs word/sdk-all.js** (word engine) | 1 | 18 115 | 799 → 1 820 | requested yes, **finished after** LoadDoc and Bin |
+| apps/common separate files (alphabet letters) | 1 | 0.3 | 1 145 → 1 225 | yes |
+| sdkjs other (AllFonts.js, fonts.js/wasm, spell, ChartStyles) | 24 | 5 848 | 81 → 3 091 | 5 of 24 |
+| Editor.bin | 1 | 199 (100 p: 684) | 1 524 → 1 723 | no |
+| font files | 25 | 16 286 | 2 369 → 3 125 | no |
+
+CPU of the main thread from `goto` to LoadDoc, ms p50 (self time of the leaf frame's script; window ≈ 1 370 ms profiled):
+
+| Bucket | docx 10 p | docx 100 p |
+|---|---|---|
+| idle (waiting on network) | 258 | 239 |
+| browser (program): HTML/JS parse + compile, style, layout | 194 | 197 |
+| browser native builtins + GC | 85 | 77 |
+| vendor files (jQuery ≈ all of it, called by the UI build) | 444 | 407 |
+| documenteditor app.js, `DE.*` modules | 184 | 167 |
+| apps/common in app.js (`Common.*` modules: UI components, utils) | 125 | 166 |
+| Backbone/underscore/webpack runtime in app.js | 22 | 35 |
+| **sdkjs sdk-all-min.js** | 77 | 88 |
+| sdkjs sdk-all.js (word engine) | 0 | 0 |
+| locale / CSS | not JS: inside (program)/native; CSS is 560 KB parsed in (program) | same |
+
+Controller launch (busy CPU before LoadDoc attributed to the nearest controller module on the stack, p50 ms; sum ≈ 665 of
+≈ 1 110 busy ms in both files): **Toolbar 252 / 238** (`Main.onEditorPermissions → applyModeEditorElements →
+Toolbar.onAppShowed → Views.Toolbar.render`, ≈ 500 ms inclusive in a single profile, mostly
+`Common.Utils.injectComponent`, `getWidthOfCaption` and jQuery DOM work), **Comments 116 / 96** (≈ 90–100 ms inside its
+`onLaunch`), **Main 80 / 105**, **Viewport 68 / 70**, LeftMenu 28 / 14, Statusbar 25 / 24, ReviewChanges 19 / 21,
+HeaderFooterTab, Links, RightMenu, ViewTab 10–19 each, the other ~15 controllers ≤ 10 each. Inclusive `onLaunch` itself is
+small except Comments (Viewport 19, LeftMenu 12–26, Main 9–13): the cost is the UI build after the license/permissions
+message, not the launch hooks. Between LoadDoc and Bin (≈ 0.1 s) only ≈ 40 ms of parse/compile and ≈ 10 ms of sdkjs are added.
+
+Reading:
+- **Before the document is requested (≈ 1.4 s) the time is the web-apps UI, not sdkjs.** About 1.1 s of the window is
+  busy; ≈ 0.95 s of it is web-apps (app.js DE + common + vendor/jQuery + parse) and ≈ 0.08 s is sdkjs
+  (sdk-all-min.js). The word engine sdk-all.js (18 MB decoded) is downloaded in parallel and finishes *after*
+  Editor.bin is requested; it costs nothing in this window (its parse lands in the "after Editor.bin" phase of PKT-0016/0043).
+- **The toolbar build is the single biggest item (≈ 0.25 s self, ≈ 0.5 s inclusive).** Deferring the toolbar tabs that
+  are not shown (Links, HeaderFooter, ViewTab, Review, Forms, Draw ≈ 70–90 ms) and Comments' launch (≈ 0.1 s) is the
+  realistic gain (estimate, not measured): ≈ 0.3–0.4 s off ≈ 1.4 s, on a 2-CPU VM, and only if Editor.bin is ready that early (server open
+  ≈ 65–100 ms after LoadDoc here). Lazy-loading the ~30 controllers *as code* would save little: module evaluation
+  (`__webpack_require__` + Backbone) is < 0.1 s.
+- **A refactor here is worth less than the post-Editor.bin phase** (2.3–2.9 s: sdk-all.js parse, fonts, layout).
+
 ## Quality: what can be measured here today
 
 Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
