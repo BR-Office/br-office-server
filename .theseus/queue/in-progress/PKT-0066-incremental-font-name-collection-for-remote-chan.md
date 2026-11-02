@@ -69,6 +69,7 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - Not done: the before/after profile on the 100 p docx (profile-word.js/attribute-word.js) and a browser test of a remote change; requested as a spawned follow-up (.theseus/spawn/PKT-0066-profile-*.md, requires documentserver, browser).
 - block: the reviewer found an external blocker: The sdkjs code change exists only on an untracked local branch of `external/sdkjs` (`d46dde8`), and the required before/after profile can't run without serving that build. The project owner must provide a fork of sdkjs or an approved patch location so the change can be committed, reviewed and profiled.
 - release: Theseus 0.18.0: sdkjs changes now go to branch pkt/PKT-0066 of BR-Office/br-office-sdkjs and are reviewed and merged there
+- attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 - PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
