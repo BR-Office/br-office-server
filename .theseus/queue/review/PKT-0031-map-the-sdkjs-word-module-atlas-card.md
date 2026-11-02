@@ -54,6 +54,7 @@ Map the module `sdkjs-word` (`external/sdkjs/word`) into the Atlas card `.theseu
 - Not done: oracle not investigated (sdkjs tests outside the module path); `find -exec`/loops were refused by permissions, so sizes come from shell globs.
 
 ## Spawned packets
+- PKT-0034: Split sdkjs-word into submodule cards
 
 ## Review
 
