@@ -1,5 +1,5 @@
 ---
-goals_hash: aa3a116b
+goals_hash: dcb03039
 packet: PKT-0013
 date: 2026-11-02
 machine: sandbox, Linux 6.18, Node v22.23.4 (single run, numbers are indicative ±20%)
