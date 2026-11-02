@@ -56,6 +56,7 @@ Replace the per-character switch with a precomputed table: libfont: table lookup
 ## Suggested plan
 
 ## Executor log
+- attempt 1: acceptance failed: `node .theseus/oracle/perf/profile-fonts.js <samples-dir> external/sdkjs 3`
 
 ## Spawned packets
 
