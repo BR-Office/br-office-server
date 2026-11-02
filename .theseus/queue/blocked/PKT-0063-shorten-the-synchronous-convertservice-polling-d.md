@@ -51,6 +51,7 @@ Baseline PKT-0015 - sync mode adds up to 900 ms per request. Keep DB load reason
 - Spawned a replacement request (`.theseus/spawn/PKT-0063-shorten-sync-convertservice-polling-delay-with-c.md`) that adds the test file to target and narrows the preserve clause to the sleep-sequence expectations.
 - Not done: perf measurement with e2e-convert.js (no change to measure).
 - Lint: 0 errors, 1 pre-existing warning in AdminPanel (unrelated).
+- block: the reviewer found an external blocker: goal needs tests/unit/converterService.tests.js, which is outside the target and protected by "existing tests unchanged"; the factory/human owner must approve the spawned replacement packet that widens the target.
 
 ## Spawned packets
 - PKT-0068: Shorten sync ConvertService polling delay (with characterization test update)
