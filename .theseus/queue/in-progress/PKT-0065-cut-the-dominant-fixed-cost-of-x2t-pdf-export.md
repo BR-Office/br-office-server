@@ -34,7 +34,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -51,5 +52,6 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: patch hunk header is wrong (`@@ -53,6 +53,12 @@` should be `@@ -53,7 +53,13 @@`), so the patch is malformed; fix it, dry-run it against the installed script and log the result
 
 ## Lessons for the Atlas
