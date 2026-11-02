@@ -57,16 +57,19 @@ models:
   - id: claude-opus-5-5
     family: anthropic
     tool: claude-code
+    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
     context_window: 200000
     roles: [cartographer, diagnostician, executor, reviewer, auditor]
   - id: claude-sonnet-5-5
     family: anthropic
     tool: claude-code
+    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
     context_window: 200000
     roles: [executor, reviewer]
   - id: claude-haiku-5-5
     family: anthropic
     tool: claude-code
+    args: ["--settings", '{"advisorModel": ""}']   # no advisor in factory runs (Rafael, 2026-11-02)
     context_window: 200000
     roles: [executor]
 
@@ -82,13 +85,15 @@ effort:
   levels: [low, medium, high]
   default: low                    # executors and reviewers
   planning: high                  # cartographer, diagnostician, auditor, investigate packets
-  by_type: {}
+  by_type:
+    interop: high                 # toolchain decisions are design work
 
 initial_routing:
   investigate: [claude-opus-5-5]
   characterize: [claude-sonnet-5-5]
   refactor: [claude-sonnet-5-5]
   migrate: [claude-opus-5-5]
+  interop: [claude-opus-5-5]
 
 limits:
   max_context_ratio: 0.40
