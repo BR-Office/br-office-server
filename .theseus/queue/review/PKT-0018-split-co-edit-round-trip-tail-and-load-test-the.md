@@ -69,6 +69,7 @@ PKT-0015 measured the full stack with headless Chromium clients on a 2-CPU VM, u
 - Raw numbers: .theseus/oracle/perf/results-2026-11-02.json.
 
 ## Spawned packets
+- PKT-0021: Load-test beyond 1000 sockets, valid saves under load, pptx-to-pdf outlier
 
 ## Review
 
