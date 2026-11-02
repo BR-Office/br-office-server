@@ -46,6 +46,7 @@ Map the module `x2t` (`external/core/X2tConverter`) into the Atlas card `.theseu
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/module-card.md; cat .theseus/atlas/docservice.md | head -40; ls .theseus/atlas/graph.json 2>&1; cd ext…; Bash: D=external/core/X2tConverter; cat $D/README.md | head -30; find $D -type f | sed 's|/[^/]*$||' | sort | uniq -c | sort -…; Bash: echo '| [x2t](x2t.md) | C++ CLI dispatcher that chains core format libraries to convert documents | n/a (no tool data) |…; Bash: tail -1 .theseus/scoreboard/friction.jsonl; awk 'c>=2;/^---$/{c++}' .theseus/atlas/x2t.md | wc -w
 
 ## Spawned packets
 
