@@ -59,6 +59,7 @@ Add a section "x2t phase split (PKT-0041)" to `.theseus/oracle/baseline.md` with
 - Attempt 3: same rejection, same cause (placeholder acceptance, exit 127). No content change; existing spawn request stands. Factory must fix the packet's acceptance (or stop retrying) — re-executing cannot make it pass.
 
 ## Spawned packets
+- PKT-0062: Give PKT-0055 a runnable acceptance instead of [ORACLE COMMAND]
 
 ## Review
 
