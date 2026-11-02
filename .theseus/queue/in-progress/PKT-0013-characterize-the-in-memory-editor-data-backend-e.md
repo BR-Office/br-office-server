@@ -60,6 +60,7 @@ Pin the behavior of `DocService/sources/editorDataMemory.js` before it is migrat
 3. Record surprising behavior in the executor log.
 
 ## Executor log
+- attempt 2: changed .theseus/queue/in-progress/PKT-0013-characterize-the-in-memory-editor-data-backend-e.md, outside the target (rule R2)
 
 ## Spawned packets
 
