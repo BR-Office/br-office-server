@@ -180,6 +180,16 @@ async function connect(docId, opt_noHandshake) {
 function authMessage(docId, user, extra) {
   return {type: 'auth', token: 'legacy', docid: docId, user, lang: 'en', editorType: 0, ...extra};
 }
+// io.use calls next() only after async work (initTenantCache, checkJwt) whose duration is not bounded
+// by a fixed number of event-loop ticks: wait for next() itself instead of flushing (PKT-0079).
+function runUseHandler(socket, next) {
+  return new Promise(resolve => {
+    fakeIo.useHandler(socket, (...args) => {
+      next(...args);
+      resolve();
+    });
+  });
+}
 function sentOfType(conn, type) {
   return conn.sent.filter(m => m && m.type === type);
 }
@@ -233,16 +243,14 @@ describe('io.use handshake auth', () => {
     const socket = createConn(uniqueDocId());
     socket.handshake.auth = {};
     const next = jest.fn();
-    fakeIo.useHandler(socket, next);
-    await flush();
+    await runUseHandler(socket, next);
     expect(next).toHaveBeenCalledWith(undefined);
   });
   test('invalid token: next(Error("not authorized")) with code/description', async () => {
     const socket = createConn(uniqueDocId());
     socket.handshake.auth = {token: 'not-a-jwt'};
     const next = jest.fn();
-    fakeIo.useHandler(socket, next);
-    await flush(10);
+    await runUseHandler(socket, next);
     expect(next).toHaveBeenCalledTimes(1);
     const err = next.mock.calls[0][0];
     expect(err).toBeInstanceOf(Error);
