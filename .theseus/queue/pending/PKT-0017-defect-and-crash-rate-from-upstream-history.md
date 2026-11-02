@@ -41,6 +41,7 @@ roles:
   executor: claude-opus-5-5-b
   reviewer: claude-opus-5-5
 rejected_reviews: 3
+resume: true
 ---
 
 ## Goal
@@ -78,6 +79,7 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
   Both now quote the actual `FIX`/`CRASH` regexes. Counts were not recomputed (re-clone not needed: the
   text was wrong, the numbers came from the code).- Attempt 3: `gh api` is still not allowed and was not retried. Without it this packet cannot produce the bug-issue counts. The goal stays narrowed to fix commits, and the issue counts are in the spawned request. A human must either accept that narrowing or allow `gh api` for the executor.
 - block: 3 attempts failed; last: Goal requires bug-issue counts per month/release, not delivered (gh api refused); a human must allow gh api or formally narrow the goal to fix commits, and the counts must then be recomputed from the current script.
+- release: gh api is not available here; git clone of the upstream history is (see environment.md)
 
 ## Spawned packets
 
