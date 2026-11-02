@@ -45,6 +45,11 @@ Map the module `common` (`Common`) into the Atlas card `.theseus/atlas/common.md
 ## Suggested plan
 
 ## Executor log
+- [claude-opus-5-5] Wrote `.theseus/atlas/common.md` (base 59fa3ad) and added its INDEX row.
+- Surprise: `.theseus/atlas/graph.json` does not exist, so every `# tool` field (languages, size, dependencies, metrics) is left `null`; I did not fill them from my own reading (rule A1). Index "Lines"/"Hotspot" are `n/a` for the same reason.
+- Decision: one card for all of Common (sources ≈ 6.8k lines, under the 20k split threshold); `utils.js` flagged in Open questions as split candidate.
+- Decision: INDEX.md says "generated, do not edit by hand", but the Goal asks for the row and no generator exists yet; added it by hand.
+- Not done: friction line in `.theseus/scoreboard/friction.jsonl` — that path is outside `target.create_in`, so left to the factory/reviewer.
 
 ## Spawned packets
 

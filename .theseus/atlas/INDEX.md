@@ -4,3 +4,4 @@
 
 | Module | Responsibility (1 line) | Lines | Hotspot | Oracle | Verdict | Freshness |
 |---|---|---|---|---|---|---|
+| common | Shared library: config, context, tenants, storage, queues, logging, DTOs | n/a (no graph) | n/a | partial | — | current |
