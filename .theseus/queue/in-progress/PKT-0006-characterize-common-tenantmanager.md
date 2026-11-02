@@ -45,6 +45,7 @@ Common/sources/tenantManager.js; see the common card pitfalls. Run with .theseus
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: .theseus/oracle/unit.sh tenantManager 2>&1 | grep -v "^\s*$" | head -40; Bash: cd DocService && npx jest ../tests/unit/tenantManager --inject-globals=false --config=../tests/jest.config.js 2>&1 | hea…; Bash: .theseus/oracle/unit.sh > /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0006/0204548c-a824-57b7-be…; Bash: npx prettier --check tests/unit/tenantManager.tests.js; tail -2 .theseus/scoreboard/friction.jsonl
 
 ## Spawned packets
 
