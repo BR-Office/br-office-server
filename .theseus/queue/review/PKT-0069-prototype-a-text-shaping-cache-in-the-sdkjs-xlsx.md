@@ -75,6 +75,7 @@ x2t-cpuprofile.js; say whether it is worth a fork of sdkjs.
   commands verified to pass here; no re-run of the scratchpad mirror (that call was refused last time).
 
 ## Spawned packets
+- PKT-0077: Carry the shapeFragment cache in sdkjs source and re-measure with the V8 snapshot
 
 ## Review
 
