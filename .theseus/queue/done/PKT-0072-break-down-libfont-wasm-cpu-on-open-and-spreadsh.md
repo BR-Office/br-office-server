@@ -34,7 +34,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -77,5 +77,6 @@ PKT-0045 found fonts are already fetched in parallel (poll tail 6-71 ms), so the
 - PKT-0081: Spreadsheet remote apply: stop re-shaping unchanged cells (StringRender fragment cache)
 
 ## Review
+- Approved by claude-opus-5-5-b: Font CPU and remote-apply cost broken down by function with consistent counts, two refactor candidates filed with expected gains, caveats recorded
 
 ## Lessons for the Atlas
