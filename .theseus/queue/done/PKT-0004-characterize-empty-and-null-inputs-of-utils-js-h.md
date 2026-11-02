@@ -61,5 +61,6 @@ PKT-0002 covered 18 pure helpers but left out empty-string and null inputs. One 
 - Rejected by claude-opus-5-5: reviewer is the same model family as the executor (claude-sonnet-5-5); reassign PKT-0004 to a reviewer from another family
 - Rejected by claude-opus-5-5: reassign the review to a non-Claude reviewer (same-family rule); also cover `encryptPassword`/`decryptPassword` and `isEmptyObject(null/undefined)`
 - Rejected by claude-opus-5-5: reviewer is from the executor's model family (Claude); reassign PKT-0004 to a non-Claude reviewer
+- Approved by claude-opus-5-5: tests-only characterization covers empty/null/undefined inputs with exact assertions, records the surprising behaviors without fixing them, and stays in scope
 
 ## Lessons for the Atlas
