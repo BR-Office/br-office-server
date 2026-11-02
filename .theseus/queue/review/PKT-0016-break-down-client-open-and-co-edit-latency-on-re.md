@@ -105,6 +105,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
   - Not done: x2t time isolated from the client open; documents with images; a real network.
 
 ## Spawned packets
+- PKT-0019: Record the working native Document Server install recipe in environment.md
 
 ## Review
 - Rejected by claude-opus-5-5-b: No latency measurements were taken, so the goal is not met; set up the Document Server stack (or grant the needed permissions), fix environment.md, and make the acceptance check require real numbers before retrying.
