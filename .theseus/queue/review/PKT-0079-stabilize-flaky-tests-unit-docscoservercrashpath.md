@@ -56,6 +56,11 @@ Stabilize flaky tests/unit/docsCoServerCrashPaths.tests.js.
 2. Make timing deterministic (fake timers or awaited cleanup) in the test file only.
 
 ## Executor log
+- Reproduced: 1 failure in 6 isolated runs, always `io.use handshake auth > no token ... next() without error` (the first test touching io.use).
+- Cause: the io.use handler calls `next()` only after `ctx.initTenantCache()` (and `checkJwt` for the token test). The test waited a fixed `flush()` (5 / 10 setImmediate ticks); on a cold first call that async work can take longer, so `next` was not yet called when asserted.
+- Fix (test only): helper `runUseHandler` wraps `next` and returns a promise resolved when `next` is called; both io.use tests await it. Assertions unchanged; no jest config/retry change; no production code touched.
+- Verified: 15/15 isolated runs green, oracle 1 + 5x loop green, lint 0 errors (1 pre-existing warning in AdminPanel, outside target).
+- Not done: the Jest open-handle warning was not investigated separately; it did not cause the failure.
 
 ## Spawned packets
 
