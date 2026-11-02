@@ -1,26 +1,41 @@
 // End-to-end ConvertService probe (PKT-0015).
 // Usage: node .theseus/oracle/perf/e2e-convert.js [runs] [concurrency] [base] [hostIp]
-// Needs the full-stack container running on :8080 with JWT_ENABLED=false (see .theseus/adapter/environment.md).
-// Serves the sample files ($SAMPLES, the image's own en-US "new.*" templates) over HTTP on the docker
-// bridge gateway so the container can download them, then times POST /ConvertService.ashx (sync) per pair:
+// Needs the native Document Server on 127.0.0.1:80 (see .theseus/adapter/environment.md). JWT is on there:
+// requests are signed HS256 with $JWT_SECRET or, if unset, services.CoAuthoring.secret.inbox.string from
+// /etc/euro-office/documentserver/local.json (read only), sent as `Authorization: Bearer` (PKT-0076).
+// Serves the sample files ($SAMPLES, the server's own en-US "new.*" templates) over HTTP on localhost
+// so the server can download them, then times POST /ConvertService.ashx (sync) per pair:
 // request -> DocService -> RabbitMQ -> FileConverter/x2t -> result URL, plus the download of the result.
-const http = require('http'), fs = require('fs'), path = require('path');
+const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
 const RUNS = +(process.argv[2] || 10);
 const CONC = +(process.argv[3] || 1);
-const BASE = process.argv[4] || 'http://127.0.0.1:8080';
-const HOST = process.argv[5] || '172.17.0.1';
+const BASE = process.argv[4] || 'http://127.0.0.1';
+const HOST = process.argv[5] || '127.0.0.1';
 const ASYNC = process.env.SYNC !== '1'; // SYNC=1 measures the server's own sync mode instead
 const POLL = 50;
-// Samples are not committed; copy them once from the container:
-//   mkdir -p /tmp/eo-samples && docker cp eo:/var/www/euro-office/documentserver/document-templates/new/en-US/. /tmp/eo-samples
-const DIR = process.env.SAMPLES || path.join(require('os').tmpdir(), 'eo-samples');
+// Samples are not committed; by default the installed server's own templates are used.
+const TEMPLATES = '/var/www/euro-office/documentserver/document-templates/new/en-US';
+const DIR = process.env.SAMPLES || (fs.existsSync(TEMPLATES) ? TEMPLATES : path.join(require('os').tmpdir(), 'eo-samples'));
+const LOCAL_JSON = '/etc/euro-office/documentserver/local.json';
+function readSecret() {
+  if (process.env.JWT_SECRET) return process.env.JWT_SECRET;
+  try { return JSON.parse(fs.readFileSync(LOCAL_JSON, 'utf8')).services.CoAuthoring.secret.inbox.string || null; } catch (e) { return null; }
+}
+const SECRET = readSecret();
+const b64u = b => Buffer.from(b).toString('base64url');
+function sign(payload) {
+  const data = b64u(JSON.stringify({ alg: 'HS256', typ: 'JWT' })) + '.' + b64u(JSON.stringify(payload));
+  return data + '.' + crypto.createHmac('sha256', SECRET).update(data).digest('base64url');
+}
 const PAIRS = [['docx', 'pdf'], ['docx', 'odt'], ['xlsx', 'pdf'], ['xlsx', 'ods'], ['pptx', 'pdf'], ['pptx', 'odp'], ['pdf', 'docx']];
 
 const pct = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(q * s.length))]; };
 
 function post(url, body) {
   return new Promise((res, rej) => {
-    const r = http.request(url, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' } }, rs => {
+    const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
+    if (SECRET) headers.Authorization = 'Bearer ' + sign({ payload: body });
+    const r = http.request(url, { method: 'POST', headers }, rs => {
       let d = ''; rs.on('data', c => d += c); rs.on('end', () => { try { res(JSON.parse(d)); } catch (e) { rej(new Error(d.slice(0, 200))); } });
     });
     r.on('error', rej); r.end(JSON.stringify(body));
