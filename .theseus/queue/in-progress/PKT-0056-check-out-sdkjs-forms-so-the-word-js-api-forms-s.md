@@ -54,6 +54,7 @@ Have the factory check out github.com/Euro-Office/sdkjs-forms next to external/s
 
 ## Executor log
 - return: factory restarted on Theseus 0.16.2
+- attempt 1: changed external/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 
