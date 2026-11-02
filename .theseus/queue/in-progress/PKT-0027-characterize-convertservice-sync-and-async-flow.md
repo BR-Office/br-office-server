@@ -83,6 +83,7 @@ Attempt 3 (claude-opus-5-5, 2026-11-02): same result. `unit.sh` passes (148 pass
 at the time. Nothing in the target can fix this; still blocked on the spawned eslint-ignore follow-up.
 
 ## Spawned packets
+- PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
 
 ## Review
 
