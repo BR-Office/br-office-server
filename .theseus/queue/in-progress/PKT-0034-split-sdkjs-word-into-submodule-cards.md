@@ -53,6 +53,7 @@ Write the first submodule cards of `sdkjs-word` (start with word/model-core, wor
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034/external/sdkjs/word/Editor; sed -n 2844,2870p Document.js;…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034/external/sdkjs/word/Editor; grep -n "setTimeout" Document.…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034; sed -n 7954,7975p external/sdkjs/word/Editor/Serialize2.j…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034 && python3 - <<'EOF'; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0034 && python3 /tmp/claude-0/-home-claude-euro-office-server-t…; Bash: python3 /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0034/0204548c-a824-57b7-bea3-1783011bc81a/sc…; Bash: sed -i 's#^id: sdkjs-word/model-core#id: sdkjs-word-model-core#' .theseus/atlas/sdkjs-word-model-core.md && sed -i 's#^i…
 
 ## Spawned packets
 
