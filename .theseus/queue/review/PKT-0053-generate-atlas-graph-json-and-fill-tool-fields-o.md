@@ -48,6 +48,10 @@ Generate `.theseus/atlas/graph.json` (module dependency graph and size metrics) 
 ## Suggested plan
 
 ## Executor log
+- Surprise: `target.files` is the template placeholder `"[FILE]"`, `create_in` is empty and `contract.preserve` is `"[WHAT MUST NOT CHANGE]"`. The work (graph.json, card tool fields, adapter graph/metrics scripts) lies entirely outside the target, so per the target rule I changed no atlas or adapter file.
+- Also found: `.theseus/adapter/scripts/` is empty and `adapter.yaml` `tools` declares only `hotspot` (no `graph`/`metrics` script), so producing graph.json needs adapter changes too.
+- Decision: requested a replacement packet in `.theseus/spawn/` with a real target (adapter.yaml, atlas cards, scripts dir, graph.json), contract and acceptance suggestion.
+- Not done: graph.json and card tool fields. Acceptance list is empty, so nothing to run beyond `theseus validate`.
 
 ## Spawned packets
 
