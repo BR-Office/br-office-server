@@ -52,6 +52,7 @@ PKT-0002 covered 18 pure helpers but left out empty-string and null inputs. One 
 ## Suggested plan
 
 ## Executor log
+- block: 3 attempts failed; last: reviewer is from the executor's model family (Claude); reassign PKT-0004 to a non-Claude reviewer
 
 ## Spawned packets
 
