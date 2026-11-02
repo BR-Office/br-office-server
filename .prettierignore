@@ -22,6 +22,8 @@ Common/sources/constants.js
 Common/sources/documentFormats.js
 Common/sources/formatchecker.js
 DocService/sources/wopiUtils.js
+DocService/sources/editorDataMemory.js
+DocService/sources/editorData.types.js
 
 # Patterns merged from .gitignore
 .idea/
