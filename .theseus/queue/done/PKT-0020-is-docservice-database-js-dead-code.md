@@ -36,7 +36,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-sonnet-5-5
 ---
 
 ## Goal
@@ -57,5 +57,6 @@ Confirm whether `DocService/sources/database.js` is dead code (unused, cannot lo
 ## Spawned packets
 
 ## Review
+- Approved by claude-sonnet-5-5: Evidence verified, and the finding and caveats are recorded in the card. The four proposed packets still need creating.
 
 ## Lessons for the Atlas
