@@ -72,6 +72,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
   - The only ways to create it (`sudo -u postgres psql`, `su postgres -c`, a python helper) were refused in earlier attempts. Per the run rules I did not retry them or work around them.
   - The two spawn requests (provisioning plus environment.md, and a stricter acceptance check) are still pending in .theseus/spawn/. This packet should wait until they are done, or until psql as postgres is granted.
   - Not done: the whole Goal. baseline.md is unchanged.
+- block: 3 attempts failed; last: Goal not done: no client open/co-edit latency breakdown was measured (the stack is still not set up and the acceptance check passes trivially). Set up the stack first (spawn request), then retry and record real numbers in baseline.md.
 
 ## Spawned packets
 
