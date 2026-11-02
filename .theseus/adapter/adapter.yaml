@@ -1,0 +1,103 @@
+# Theseus adapter for the Euro-Office server fork. See .theseus/spec/adapter.md.
+# Pilot: Claude models only, so review.allow_same_family is on (rule R4 exception).
+
+project:
+  name: euro-office-server
+  description: Euro-Office Document Server backend (Node.js) — fork used as the first Theseus pilot
+  repository: github.com/RafaelPetinati/euro-office-server
+  upstream:
+    repository: github.com/Euro-Office/server
+    branch: main
+    sync_every: 7d
+
+goals:
+  weights:
+    performance_gain: 0.10
+    security_risk: 0.20
+    maintenance_cost: 0.25
+    coupling: 0.10
+    oracle_strength: 0.15
+    interop_cost: 0.10
+    target_ecosystem: 0.05
+    goal_alignment: 0.05
+  statement: >
+    Make the server easier to maintain and safer to change: map it, raise test
+    coverage where it is thin, and assess a gradual JavaScript to TypeScript
+    migration of the shared code (Common) and the coordination server (DocService).
+
+languages:
+  present: [javascript]
+  allowed_targets:
+    javascript: [typescript]
+
+tools:
+  hotspot:
+    high: "cpu_pct >= 5 or (churn_90d >= 30 and coverage < 0.5)"
+    medium: "cpu_pct >= 1 or churn_90d >= 10"
+
+build:
+  install: npm ci && npm ci --prefix ./Common && npm ci --prefix ./DocService && npm ci --prefix ./FileConverter
+  test: npm run "unit tests"
+  lint: npm run lint:check
+
+oracle:
+  type: tests
+  description: .theseus/adapter/oracle.md
+  commands:
+    unit: npm run "unit tests"
+    lint: npm run lint:check
+  tolerances:
+    max_benchmark_regression_pct: 0
+
+models:
+  - id: claude-opus-5-5
+    family: anthropic
+    tool: claude-code
+    context_window: 200000
+    roles: [cartographer, diagnostician, executor, reviewer, auditor]
+  - id: claude-sonnet-5-5
+    family: anthropic
+    tool: claude-code
+    context_window: 200000
+    roles: [executor, reviewer]
+  - id: claude-haiku-5-5
+    family: anthropic
+    tool: claude-code
+    context_window: 200000
+    roles: [executor]
+
+review:
+  allow_same_family: true         # pilot: only Claude models; turn off when Codex joins
+
+routing:
+  mode: auto
+  min_samples: 5
+  explore: 0.15
+
+effort:
+  levels: [low, medium, high]
+  default: low                    # executors and reviewers
+  planning: high                  # cartographer, diagnostician, auditor, investigate packets
+  by_type: {}
+
+initial_routing:
+  investigate: [claude-opus-5-5]
+  characterize: [claude-sonnet-5-5]
+  refactor: [claude-sonnet-5-5]
+  migrate: [claude-opus-5-5]
+
+limits:
+  max_context_ratio: 0.40
+  abandon_after_hours: 2
+  max_cost_per_packet_usd: 5.00
+  stale_card_ratio: 0.10
+  max_parallel_agents: 2
+  agent_timeout_min: 30
+
+audit:
+  every_n_packets: 20
+  alarms:
+    - "high_severity_escapes_7d > 2"
+    - "first_review_approval_30d < 0.5"
+
+shared_telemetry: false
