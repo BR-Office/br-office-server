@@ -52,6 +52,7 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: P=$(ls .theseus/queue/in-progress/PKT-0025-*.md)
 
 ## Spawned packets
 
