@@ -37,7 +37,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -50,6 +50,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted with Theseus 0.13.2 (baseline commands for nested measurements)
 
 ## Spawned packets
 
