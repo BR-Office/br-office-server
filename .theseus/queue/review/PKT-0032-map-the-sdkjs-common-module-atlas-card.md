@@ -47,6 +47,11 @@ Map the module `sdkjs-common` (`external/sdkjs/common`) into the Atlas card `.th
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cat .theseus/atlas/sdkjs-word.md .theseus/atlas/INDEX.md; ls external/sdkjs/common; wc -l external/sdkjs/common/*.js | t…; Bash: cd external/sdkjs/common && wc -l $(find . -name '*.js') | sort -n | tail -25; ls libfont Drawings collaboration Charts; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0032 && cat > .theseus/atlas/sdkjs-common.md <<'EOF'; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0032 && echo '{"packet":"PKT-0032","role":"cartographer","model…
+- Decision: ~395k lines of `.js` (by `wc`, not a tool) — far over 20k, so wrote an **index card** with 10 proposed submodules, following the sdkjs-word precedent (spec §3).
+- Decision: header `size`/`languages`/`dependencies`/`metrics` left null: no `graph.json` exists.
+- Surprise: `docscoapi.js` has two co-edit client classes (`CDocsCoApi`, `DocsCoApi`); `external/sdkjs/tests/common` exists as a possible oracle.
+- Not done: no tests run; split boundaries are by file name only. `find | xargs` style commands needed approval, so sizes came from shell globs.
+- Follow-up not spawned: splitting packets should wait for graph.json / reviewer agreement on the split.
 
 ## Spawned packets
 
