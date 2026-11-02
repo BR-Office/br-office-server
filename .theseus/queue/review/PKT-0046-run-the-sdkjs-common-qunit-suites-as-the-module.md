@@ -62,6 +62,7 @@ The card says oracle none; tests/common has api, charts and color-mods suites ru
 - Acceptance: `sdkjs-common.sh` 6/6 suites; `unit.sh` and `lint:check` rerun (see commit).
 
 ## Spawned packets
+- PKT-0058: Diagnose failing sdkjs color-mods and chartEx-serialize QUnit suites
 
 ## Review
 - Rejected by claude-opus-5-5-b: Keep the color-mods and chartEx-serialize surprise in a test instead of skipping it: run color-mods by default and pass only if the failing tests are exactly the 11 known names and the count is 9766/10023, and check that chartEx-serialize still times out or explain on the card why that can't be checked. Also make the runner fail when no suite is run, and fix the header comment of sdkjs-common.sh.
