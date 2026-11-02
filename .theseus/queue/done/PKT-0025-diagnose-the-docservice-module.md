@@ -37,7 +37,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -62,5 +62,6 @@ Diagnose the module `docservice` following `.theseus/prompts/diagnostician.md` a
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: refactor diagnosis is grounded in baseline and code, includes a valid §5 plan, and respects scope and contract
 
 ## Lessons for the Atlas
