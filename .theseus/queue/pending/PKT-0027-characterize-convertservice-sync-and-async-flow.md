@@ -33,7 +33,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -191,6 +191,7 @@ The packet stays blocked until that follow-up merges or the target includes `esl
   185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 ✖ 55 problems (54 errors, 1 warning)
 ```
+- release: blocked by a lint failure already on the main branch (measurement scripts); a repair packet goes first
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
