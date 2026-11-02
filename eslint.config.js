@@ -25,7 +25,11 @@ module.exports = [
       'package-lock.json',
       'npm-shrinkwrap.json',
       'SpellChecker/**',
-      'Metrics/**'
+      'Metrics/**',
+      // Theseus method tooling (measurement scripts run inside the browser page, not product code)
+      '.theseus/**',
+      // Read-only upstream clones placed by the Theseus factory (see .theseus/adapter/environment.md)
+      'external/**'
     ]
   },
   js.configs.recommended,
