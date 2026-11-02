@@ -75,6 +75,10 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - Extra guards: incremental path only when isDocumentLoadComplete and logicDocument.Fonts is already non-empty (so apply-on-open keeps the full walk); fonts already in the list are not duplicated.
 - Acceptance: unit.sh 178 passed, 1 skipped. sdkjs-word.sh 42/42 suites, 6195/6195 assertions.
 - Not done here: before/after profile and browser check of a remote change; that is PKT-0071 (already spawned).
+- claude-opus-5-5, 2026-11-02 (attempt 3, rejected for R2: external/sdkjs/.theseus-addons/sdkjs-forms changed).
+- Cause: an untracked `.theseus-addons/sdkjs-forms` checkout (a nested git repo, not created by my code change) sat in external/sdkjs; the factory's "commit what you leave" step added it as a gitlink (bf9b2ea).
+- Fix: `git rm --cached .theseus-addons/sdkjs-forms` committed in external/sdkjs, and `.theseus-addons/` added to external/sdkjs's .git/info/exclude so it is not re-added. Diff vs upstream 9cea536 is now only the 4 target files (+101/-1). Directory left on disk (other tooling may use it).
+- Acceptance: unit.sh re-run, passes.
 
 ## Spawned packets
 - PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
@@ -82,5 +86,6 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 ## Review
 
 ## Lessons for the Atlas
+- Before finishing, check `git -C external/sdkjs status --short` for untracked items (e.g. .theseus-addons/): the factory commits everything left there, and it counts for R2.
 - Word remote apply: CoHistory holds the applied change objects (with GetClass) between m_nRecalcIndexStart/End; m_aChanges is binary only.
 - Commits on external/sdkjs local branches may not survive between attempts: check `git -C external/sdkjs log` first.
