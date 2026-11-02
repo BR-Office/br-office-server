@@ -44,7 +44,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 2
+rejected_reviews: 3
 ---
 
 ## Goal
@@ -73,5 +73,6 @@ serialized styles. Expected gain 50-100 ms per 50-slide open; measure before/aft
 ## Review
 - Rejected by claude-opus-5-5-b: Run and record the before/after timing on deck-50.pptx (the environments are up), including the cost of the new string keys, and make the external/sdkjs commit fe036d5 reachable for review
 - Rejected by claude-opus-5-5-b: recalculateTextStyles and total open time did not drop (124.8→175.5 ms, 2063→2327 ms busy), so the goal isn't met; the StyleCache.remove fall to ~0 needs an explanation; the stale "Not done" log line must be fixed
+- Rejected by claude-opus-5-5-b: Embed the full `git format-patch fe036d5~1..2dc4784` output for style-cache.js in the packet; the 2dc4784 Map/WeakMap change exists only in the untracked nested clone and is not recorded. Also add a log line saying the goal was met through its "cheaper key" alternative.
 
 ## Lessons for the Atlas
