@@ -46,6 +46,7 @@ Common/sources/storage/storage-base.js and storage-fs.js.
 
 ## Executor log
 - return: factory stopped by Rafael to redo the diagnosis against the real goals
+- discard: superseded: its plan answered other goals
 
 ## Spawned packets
 
