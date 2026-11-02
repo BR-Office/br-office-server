@@ -71,6 +71,8 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - Surprise: e2e-convert.js is stale for the native stack (port, docker bridge host, no JWT). Requested a follow-up packet to fix it.
 - Acceptance: unit 178 passed / 1 skipped; lint 0 errors (1 pre-existing warning).
 
+- Attempt fix (review rejection): filled the spawn request PKT-0068-make-e2e-convert-js-work-against-the-native-jwt.md (target e2e-convert.js, contract, acceptance, requires: [documentserver], suggested plan); removed duplicate empty heading. No code change in this attempt.
+
 ## Spawned packets
 
 ## Review
