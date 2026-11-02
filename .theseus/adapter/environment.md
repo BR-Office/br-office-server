@@ -64,6 +64,13 @@ After a VM restart only steps 3 (services, not dpkg), 4 and the nginx start are 
 `git clone` of public repositories works (github.com/Euro-Office/server, github.com/ONLYOFFICE/server).
 The GitHub API (`gh api`, issues) is not available here.
 
+## Other Euro-Office repositories (read only)
+
+The client (`sdkjs`, `web-apps`) and the converter (`core`, x2t) are checked out in every worktree under
+`external/` by the factory, from shallow mirrors of github.com/Euro-Office. They are read-only clones:
+nothing under `external/` is committed to this repository, and changing their code needs forks (not
+created yet). The installed Document Server runs the compiled build of the same projects.
+
 ## Browser
 
 Chromium and Playwright are installed (`require('playwright')` works from any directory; `chromium.launch()`
