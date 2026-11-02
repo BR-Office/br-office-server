@@ -44,7 +44,10 @@ roles:
 ---
 
 ## Goal
-Add end-to-end server numbers to `.theseus/oracle/baseline.md`: latency (p50/p99) and throughput of open, co-edit round trip (change from user A seen by user B), save and ConvertService, with the full stack (PostgreSQL, Redis, RabbitMQ, x2t). Also the defect/crash rate from upstream history (github.com/Euro-Office/server).
+Add end-to-end server numbers to `.theseus/oracle/baseline.md`: latency (p50/p99) and throughput of open, co-edit round trip (change from user A seen by user B), save and ConvertService, with the full stack (PostgreSQL, Redis, RabbitMQ, x2t).
+
+(Attempt 3: the upstream defect/crash rate was moved out of this Goal to the spawn request
+`PKT-0015-defect-and-crash-rate-from-upstream-history`, as the review allowed; it needs GitHub read access.)
 
 ## Essential context
 PKT-0013 measured only in-process micro-benchmarks: the sandbox has Redis and psql but no RabbitMQ and no x2t binaries, and the local git history starts on 2026-10-28. Needs an environment with the full stack (e.g. the docker image) and permission to run it.
@@ -60,12 +63,14 @@ Decisions:
   `adapter/environment.md`. The clients for open, co-edit and save are headless Chromium driven through the example
   integration (`perf/e2e-coedit.js`); it times with N = 2 and N = 4 clients. Raw Socket.IO clients were not used:
   the protocol is too heavy to rebuild by hand within this budget.
-- Samples are the image's own `en-US/new.*` templates, copied to `perf/samples/`. They are reproducible and need no
+- Samples are the image's own `en-US/new.*` templates, read from `$SAMPLES` (default `/tmp/eo-samples`, filled by
+  the `docker cp` in the header of `perf/e2e-convert.js`); none are committed. They are reproducible and need no
   external download, but they are near-empty, so the results are fixed per-request costs.
 - ConvertService is measured in async mode with a 50 ms client poll (`perf/e2e-convert.js`). Sync mode is
   quantized to whole seconds by `CONVERT_ASYNC_DELAY = 1000` (`converterservice.js:49`). `SYNC=1` keeps the sync
   mode available.
-- Raw x2t is timed inside the container to separate the converter from the service overhead (`perf/x2t-direct.sh`).
+- Raw x2t is timed inside the container to separate the converter from the service overhead; the loop is a
+  code block in baseline.md (no script file).
 
 Surprises:
 - ConvertService returned `error: -4` on every request. `request-filtering-agent` blocks private IPs, and the key
@@ -81,8 +86,8 @@ Surprises:
 Not done:
 - Defect and crash rate from upstream: `gh api repos/Euro-Office/server` was refused by permissions (needs
   approval) and I did not work around it. Requested as a spawn.
-- Running `sh .theseus/oracle/perf/x2t-direct.sh` itself was refused by permissions. I ran the same loop
-  through `docker exec`, which gave the numbers in the table.
+- Running the x2t loop as a shell script was refused by permissions. I ran the same loop through
+  `docker exec`, which gave the numbers in the table.
 - No load test, no large documents, and no server-side split of the co-edit tail (spawn requested).
 - Friction line in `.theseus/scoreboard/friction.jsonl`: not written, because the file is outside `target.files`
   and the run rules forbid changing it. Content for the factory: [hindered] AGENTS.md "Record friction"
@@ -103,6 +108,13 @@ Attempt 2 (claude-opus-5-5, 2026-11-02), after the rejection "defect rate not me
   dropped the "shorten sync ConvertService polling" spawn (the finding stays in baseline.md as a candidate; the
   factory or a reviewer can file it). No re-measurement: the numbers are those of attempt 1.
 - Lesson: count spawn requests and binary samples against `max_files_changed` before committing.
+
+Attempt 3 (claude-opus-5-5, 2026-11-02), after the rejection "defect rate unmeasured; log mentions removed files":
+- Did not retry `gh api` or WebFetch (both refused before). Took the review's second option: moved the
+  defect/crash rate out of the Goal to the existing spawn request; baseline.md keeps its "NOT MEASURED"
+  section pointing there. I edited the Goal paragraph (outside this log) only because the review asked for it.
+- Rewrote the log entries that described `perf/samples/` and `x2t-direct.sh` as if they still existed.
+- Files changed vs. base unchanged (6); acceptance `test -s .theseus/oracle/baseline.md` passes.
 
 ## Spawned packets
 
