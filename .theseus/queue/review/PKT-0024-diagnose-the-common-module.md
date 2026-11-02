@@ -53,6 +53,11 @@ Diagnose the module `common` following `.theseus/prompts/diagnostician.md` and w
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0024; f=$(ls .theseus/queue/in-progress/PKT-0024-*.md); python3…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0024; echo '{"packet":"PKT-0024","role":"diagnostician","model"…
+- Decision: verdict **keep**. It replaces the old refactor diagnosis, which answered the earlier maintainability goals. Under the speed and quality goal, the baseline puts user time in the client and in x2t. The whole server costs about 4 ms p50 per co-edit message and 55–95 ms of conversion overhead. Common's fix rate (259/904, 29 %) is below DocService's.
+- Decision: planned one wave-0 investigate packet (P1, profile Common's share of DocService CPU), because the baseline never isolates Common (spec §4). It makes keep conditional.
+- Surprise: the only sleep in Common (`taskqueueRabbitMQ.closeOrWait`, 1 s) runs at shutdown only. The sync-convert +900 ms delay is in DocService, not here.
+- Surprise: DIAG-common-b.md did not exist, so there was nothing to `git rm`.
+- Not done: no profiling (that is P1). SUMMARY.md waves were not updated (outside the target). A python heredoc was refused by permissions; I used the edit tools instead.
 
 ## Spawned packets
 
