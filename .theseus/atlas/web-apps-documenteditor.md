@@ -17,8 +17,8 @@ dependencies: null                # tool — .theseus/atlas/graph.json does not 
 metrics: null                     # tool — not computed yet
 
 oracle:
-  level: none
-  sources: []
+  level: partial                  # PKT-0048: one end-to-end smoke check, see Available oracle
+  sources: [.theseus/oracle/documenteditor-open.sh (Playwright, native server example app)]
 
 verdict: null
 ---
@@ -70,7 +70,11 @@ This is an **index card**: about 90k lines of `.js`/`.jsx` excluding `locale/` a
 Nothing measured here yet. Packet context: ~1.5 s of scripts and ~500 KB per open happen before the document loads [human]. Likely contributors: `sdk-all-min` download/parse, ~30 eager controllers and their views/templates, locale and less/CSS [model].
 
 ## Available oracle
-`external/web-apps/test/documenteditor/main` and `test/unit-tests` exist but were not inspected or run [model]. No end-to-end open-time check is known.
+`.theseus/oracle/documenteditor-open.sh` (PKT-0048) drives headless Chromium against the native Document Server example: new docx → `#toolbar` visible → load mask gone → type a marker → close → wait for the save callback (status 2: the example rewrites the file) → marker present in `word/document.xml`. PASS 3/3 on 2026-11-02, ~11.3 s each (toolbar ~1.2 s, loaded ~1.2–2.9 s, saved ~11.2 s; most of the save time is the server's close-to-callback delay) [tool]. It fails if the server is down (checked with an unreachable URL, exit 1) [tool]. Needs the native stack running (`.theseus/adapter/environment.md`); it tests the deployed build in `/var/www`, not the `external/web-apps` checkout, so a refactor must be built and deployed before the check sees it [tool].
+
+Limits: one docx, one user; it does not assert the controller order (sdk first, `asc_LoadDocument` after `onEditorPermissions`), plugins, or dialogs — it only proves the open/edit/save path still works end to end [model].
+
+`external/web-apps/test/documenteditor/main` is a manual viewer harness (embed-style `ApplicationController`, dev `sdkjs/develop` scripts, `less.js`), with no assertions; it is not a test suite and was not adopted as an oracle [tool]. `test/unit-tests` was not inspected [model].
 
 ## Open questions
 - Exact sizes, languages, fan-in/out: need `graph.json`.
