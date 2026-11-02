@@ -59,6 +59,8 @@ Have the factory check out github.com/Euro-Office/sdkjs-forms next to external/s
 - Removed the local skip of word/js-api/js-api-forms.html from sdkjs-word-run.cjs.
 - Result: `.theseus/oracle/sdkjs-word.sh` 42/42 suites, 6195/6195 assertions, 129s (js-api-forms 27/27; forms/forms and complexForm still pass). Contract kept: the 41 earlier suites pass.
 - Surprise: the cloned sdkjs-forms is unpinned (HEAD 5c2f5a0 on 2026-11-02); sdkjs is d9e810c. If they drift apart the forms suite may break; pinning would need a factory mirror.
+- Rejection fix (R2: external/sdkjs-forms committed): the clone next to external/sdkjs was an untracked nested repo, not covered by the factory's info/exclude (`/external/sdkjs/`), so the factory's "uncommitted changes" commit added it as a gitlink. Removed the gitlink from the index and moved the clone to `external/sdkjs/.theseus-addons/sdkjs-forms`, inside the excluded dir; SDK_ADDONS is now `../.theseus-addons/sdkjs-forms` (build accepts any dir). Rebuilt develop: 42/42 suites, 6195/6195 assertions, 125s; `git status` clean apart from my edits.
+- Lesson: anything an oracle downloads must live under an already-ignored path; .gitignore is not in the target.
 
 ## Spawned packets
 

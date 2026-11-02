@@ -17,12 +17,13 @@ fi
 [ -d node_modules/node-qunit-puppeteer ] || { mkdir -p node_modules && PUPPETEER_SKIP_DOWNLOAD=1 npm install --no-save --no-package-lock node-qunit-puppeteer; }
 # The forms addon (PKT-0056): word/js-api/js-api-forms.html needs it, as in upstream CI
 # (external/sdkjs/AGENTS.md: SDK_ADDONS=../../sdkjs-forms npm run --prefix build develop).
-# The factory does not clone it, so the oracle does, shallow, next to external/sdkjs.
-FORMS="$SDK/../sdkjs-forms"
+# The factory does not clone it, so the oracle does, shallow, inside external/sdkjs (which the
+# factory git-excludes): a clone next to it would be an untracked repo the factory commits as a gitlink.
+FORMS="$SDK/.theseus-addons/sdkjs-forms"
 [ -d "$FORMS/.git" ] || git clone --depth 1 https://github.com/Euro-Office/sdkjs-forms "$FORMS"
 # Rebuild develop when it was built without the addon (stamp written after a build with it).
 STAMP=develop/.theseus-addons-forms
 if [ ! -f develop/sdkjs/word/scripts.js ] || [ ! -f "$STAMP" ]; then
-	(cd build && SDK_ADDONS=../../sdkjs-forms npm run develop) && touch "$STAMP"
+	(cd build && SDK_ADDONS=../.theseus-addons/sdkjs-forms npm run develop) && touch "$STAMP"
 fi
 exec node "$HERE/sdkjs-word-run.cjs" "$SDK" "$@"
