@@ -43,6 +43,7 @@ Card pitfalls in .theseus/atlas/docservice.md; check upstream Euro-Office/server
 ## Suggested plan
 
 ## Executor log
+- discard: superseded: its plan answered other goals
 
 ## Spawned packets
 
