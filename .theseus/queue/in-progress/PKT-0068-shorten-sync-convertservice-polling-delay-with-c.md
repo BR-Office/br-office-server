@@ -66,6 +66,7 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - block: the reviewer found an external blocker: The before/after latency measurement with .theseus/oracle/perf/e2e-convert.js needs a running DocService stack (:8080 or a docker daemon); the operator or factory must provide one, or drop the measurement from the goal. The code change itself is approvable.
 - release: Theseus 0.16.4 tells agents the DocService is up (native .deb on 127.0.0.1:80); the block was a wrong port, not a missing stack
 - attempt 1: the spawn request PKT-0068-make-e2e-convert-js-work-against-the-native-jwt.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
