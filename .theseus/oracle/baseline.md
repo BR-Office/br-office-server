@@ -355,6 +355,46 @@ Assembly = socket close → callback (includes `savetimeoutdelay` 5 s). All docs
   `convert-large.js` now waits for the queue to drain (small probe conversion < 3 s) before timing; run it on an idle
   server or before the load tests.
 
+### Common's share of DocService CPU (PKT-0026, native 9.3.7-1 stack, 2-CPU VM)
+
+Raw numbers: `perf/common-share-2026-11-02.json`. Scripts: `perf/profile-toggle.js` (windowed V8 profiler, started and
+stopped with `SIGUSR2`), `perf/profile-common.js` (attribution). **DocService ran from this repository's source** with
+Node 22 (`node --require profile-toggle.js sources/server.js`, same env and config as the `ds-docservice` unit): the
+packaged `docservice` binary ignores `NODE_OPTIONS`, and `--cpu-prof` alone profiles startup and writes only on a clean
+exit. Load numbers matched PKT-0018 (ack / broadcast p50 3 ms, p99 10–12 ms), so the source run is representative.
+ConvertService was driven with `convert-large.js` on the en-US `new.*` templates (5 runs × 9 pairs, 45 conversions):
+`e2e-convert.js` sends no JWT and the native install has JWT on. Two log levels: DEBUG (what this VM has been
+left on since PKT-0018) and WARN (stock).
+
+Self = leaf frame in `Common/sources`. Inclusive = a `Common/sources` frame anywhere on the stack (Common and what it
+calls). "+ libs" also counts library code only Common uses (log4js, amqplib, config, aws-sdk…), whose async callbacks
+run without a Common frame. Percentages are of DocService busy CPU; "of wall" is of the profiled window.
+
+| Run | DocService cores | Common self | Common inclusive | Common + libs inclusive | Common inclusive, % of wall |
+|---|---|---|---|---|---|
+| co-edit 50 × 5, WARN | 0.077 | 4.0 % | 14.6 % | 17.3 % | 1.1 % |
+| co-edit 50 × 5, DEBUG | 0.115 | 2.6 % | 12.2 % | 38.8 % | 1.4 % |
+| ConvertService ×45, WARN | 0.043 | 3.5 % | 25.4 % | 26.8 % | 1.1 % |
+| ConvertService ×45, DEBUG | 0.037 | 3.3 % | 29.3 % | 46.5 % | 1.1 % |
+
+Where the inclusive Common time enters (WARN):
+- Co-edit: `utils.postRequestPromise` 6.5 % (the save callbacks to the integrator, HTTP via axios),
+  `utils.fillJwtForRequest` 1.9 %, `operationContext` (Context, getCfg, initFromConnection) ≈ 2.3 %,
+  `storage-base` (getSignedUrls, listObjects → storage-fs) 1.5 %, `taskqueueRabbitMQ` 0.4 %, `logger` 0.5 %.
+- ConvertService: `utils.fillResponse` 17.5 % (writing the HTTP response, mostly `writev`/socket: the client polls
+  every 50 ms), `utils.checkClientIp` 3.6 %, `taskqueueRabbitMQ` 1.4 %, `tenantManager.getTenantSecret` 0.9 %,
+  `operationContext` 0.7 %. ≈ 4.6 ms of Common CPU per conversion (18 ms DocService CPU per conversion in total,
+  most of it the 50 ms polls), against 125–1 000 ms end to end: Common is < 4 % of a conversion's latency.
+
+**Verdict.** Common's own code is 3–4 % of DocService CPU; with everything it calls, 15–25 %; in absolute terms
+≈ 0.01 core and ≈ 1 % of wall time under the 50 × 5 load. Common is not a performance hotspot: the tenant config
+lookups (`operationContext.getCfg`) are ≈ 1 %, storage-base < 2 %, the RabbitMQ task queue < 1.5 %. The one sizeable
+Common-related cost is **logging at DEBUG**: it adds ≈ 50 % to DocService CPU under co-edit load (0.077 → 0.115 core;
+log4js + console + date-format), all of it in the appenders, not in `Common/sources/logger.js`. These numbers support
+DIAG-common's **keep** verdict: there is no performance case for reworking Common.
+Note for later measurements: reset the log level to WARN (`/etc/euro-office/documentserver/log4js/production.json`)
+or say which level was on.
+
 ## Quality: what can be measured here today
 
 Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
