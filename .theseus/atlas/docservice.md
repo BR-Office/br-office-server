@@ -68,6 +68,27 @@ Runs the Express + socket.io server that coordinates co-editing: editor connecti
 - Default `editorDataMemory` keeps state in-process, so multi-node deployments need another `EditorData` implementation (none in this repo). [model]
 - `changes2forgotten.js` is a standalone script: it runs `shutdown()` on load and calls `process.exit`. Never require it from the server. [model]
 - `_checkLicenseAuth` always returns Success (open-source build); license plumbing remains. [model]
+- `database.js` is dead code (PKT-0020): an old MongoDB helper (`insert`/`remove`/`load`) that nothing requires and that cannot load. See "Findings" below. Do not migrate, test or refactor it. [model]
+- `editorDataRedis.js` is listed in three `pkg.scripts` lists (`DocService/package.json:48`, `FileConverter/package.json:24`, `AdminPanel/server/package.json:30`) but does not exist in this repository. It is only a packaging entry: no code path loads it unless the config sets `editorDataStorage`/`editorStatStorage` to `editorDataRedis`, which would crash at startup (`MODULE_NOT_FOUND` from `DocsCoServer.js:100-101`, `changes2forgotten.js:42`, `notificationService.js:36`). [model]
+
+## Findings (PKT-0020, 2026-11-02)
+
+**`DocService/sources/database.js` is dead code.** Evidence, all from `grep -rnI --exclude-dir=node_modules --exclude-dir=.git` over the whole repository (sources, tests, `Gruntfile.js`, `Makefile`, `.docker/server.bake.Dockerfile`, `.github/workflows`, every `package.json`):
+1. **No static caller.** No `require` of `./database`, `sources/database` or `database.js` anywhere. Every `database` hit is `databaseConnectors/*` (a different directory) or a Theseus document. [model]
+2. **No dynamic caller.** The only computed `require` paths in DocService/Common are `'./' + cfgEditorDataStorage` / `cfgEditorStatStorage` (`DocsCoServer.js:100-101`, `changes2forgotten.js:42`, `notificationService.js:36`, default `editorDataMemory`) and `moduleReloader.reloadNpmModule(moduleName)` (npm modules only). Setting the editor-data storage to `database` would not work either: the module exports neither `EditorData` nor a constructor. [model]
+3. **Not shipped.** It is not a `bin` entry and not in any `pkg.scripts` list, and nothing reachable requires it, so `pkg` does not bundle it into the `docservice` binary. [model]
+4. **Cannot load.** `require('mongodb')` fails: `mongodb` is not in any `package.json` or `npm-shrinkwrap.json` (root, `Common`, `DocService`) and there is no `node_modules/mongodb` in the worktree (the only `mongodb` directories are `@sentry/server-utils` integration folders). `require('./config.json')` would fail next: `DocService/sources/config.json` is not tracked and does not exist. Expected result is `MODULE_NOT_FOUND` for `mongodb` on the first line. Not executed: this factory run did not allow running `node`; a reviewer can confirm with `cd DocService/sources && node -e "require('./database.js')"`. [model]
+5. **Obsolete API.** It uses `new mongoDB.Db(name, new mongoDB.Server(...))` and `db.open`, a 2.x-era driver API (`Db.prototype.open` was dropped in driver 3.0), so even with `mongodb` installed it would need an old driver. [model]
+6. **Still costs something.** ESLint lints it (not in `eslint.config.js` ignores) and `tsconfig.json` includes it via `DocService/sources/**/*`. Git history cannot date it: the repository history starts at a single import commit. [model]
+
+**Why `pkg.scripts` lists the absent `editorDataRedis.js`.** Most likely the lists were inherited from the upstream server, where a Redis `EditorData` backend is shipped outside the open-source tree (the `Gruntfile.js:30-68` `--addon` mechanism merges extra `package.json` files from sibling directories for such add-ons). Not provable from this repository, whose history starts at one import commit. In this repository it is a stale entry. `pkg` expands `scripts` as globs, so a missing file should match nothing and not fail the build (not run here). Answer to the open question "Which `EditorData` backends are used in production?": in this repository only `editorDataMemory` can run. [model]
+
+**Proposed packets (not created).** This factory run forbade writes under `.theseus/queue/`, so `theseus packet new` could not be run. To create:
+- `refactor` (docservice, low): delete `DocService/sources/database.js`. Acceptance: `grep -rn "sources/database'\|require('./database')" --exclude-dir=node_modules .` is empty, unit oracle and `npx eslint DocService/sources` pass.
+- `refactor` (docservice, low): remove `./sources/editorDataRedis.js` from `DocService/package.json` `pkg.scripts`.
+- `refactor` (fileconverter, low): remove `../DocService/sources/editorDataRedis.js` from `FileConverter/package.json` `pkg.scripts`.
+- `refactor` (adminpanel, low): remove `../../DocService/sources/editorDataRedis.js` from `AdminPanel/server/package.json` `pkg.scripts`.
+The three `pkg.scripts` edits change no runtime behaviour; check first that no deployment of this fork supplies its own `editorDataRedis.js` at build time.
 
 ## Hotspots
 No profiling data. `DocsCoServer.js` is the structural hotspot (size, coupling, no tests). `getPresence` is called on most publish/close paths and may dominate with many connections. [model]
@@ -78,8 +99,8 @@ None for the core. `DocsCoServer.js`, `canvasservice.js`, `converterservice.js` 
 ## Open questions
 - Split into submodules? Proposed: `coserver/connection` (io setup, auth, endAuth), `coserver/locks` (lock checks, recalc index), `coserver/changes` (saveChanges, publish), `coserver/save` (save timer, force-save), `coserver/pubsub` (pubsubOnMessage), `coserver/commands` (commandFromServer), plus `canvas`, `converter`, `wopi`, `storage` (databaseConnectors, taskresult, editorData). [model]
 - Can `install` closures be lifted to module level to enable unit tests without behaviour change? [model]
-- Which `EditorData` backends are used in production (Redis outside the repo?) [model]
-- Is `database.js` (reads `./config.json`, no callers found by grep) dead code? [model]
+- Which `EditorData` backends are used in production? In this repository only `editorDataMemory` exists; `editorDataRedis.js` is a stale `pkg` entry (PKT-0020). Whether a deployment supplies its own Redis backend is outside the repository. [model]
 
 ## Lessons
-Nothing known yet.
+- PKT-0020: a "no callers" check must cover computed `require` paths (`require('./' + cfg...)`) and packaging lists (`bin`, `pkg.scripts`), not only literal `require('./x')`. In this repository the computed ones are the editor-data storage selector and `moduleReloader`. [model]
+- PKT-0020: dead code here is found by three independent signals: no literal or computed caller, no packaging entry, and a dependency absent from every lockfile. [model]
