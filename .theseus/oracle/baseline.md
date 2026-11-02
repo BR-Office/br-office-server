@@ -69,6 +69,69 @@ Reading:
 - These are a lower bound on content cost: an empty document. Large documents, xlsx/pptx and a real
   network are not covered.
 
+## End-to-end server (full stack, PKT-0015)
+
+Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
+RabbitMQ, FileConverter/x2t in one container), cloud VM with 2 CPUs and 7 GB RAM, measured 2026-11-02.
+Absolute numbers are a lower bound for production hardware; the proportions are the point.
+Samples: the image's own `en-US/new.{docx,xlsx,pptx,pdf}` templates (6–35 kB, copied to `perf/samples/`).
+**Small, near-empty documents only**: these numbers are fixed per-request costs, not content costs.
+
+Runtime configuration needed (container `local.json`, not source code):
+`services.CoAuthoring.request-filtering-agent.allowPrivateIPAddress: true`, otherwise every download from a
+private address (the bench file server, the example's own callback) fails with ConvertService `error: -4`.
+The editors must be opened through the container's bridge IP (port 80), not `127.0.0.1:8080`: the example
+builds the save-callback URLs from the browser's host, so through `:8080` the save fails with `ECONNREFUSED`.
+
+### ConvertService (`perf/e2e-convert.js`, 20 conversions per pair, async mode polled every 50 ms)
+
+| Conversion | p50 (1 client) | p99 (1 client) | throughput 1 client | p50 (4 parallel) | p99 (4 parallel) | throughput 4 parallel | raw x2t p50 (`perf/x2t-direct.sh`) |
+|---|---|---|---|---|---|---|---|
+| docx → pdf | 767 ms | 873 ms | 1.3 /s | 1 880 ms | 2 253 ms | 1.85 /s | 647 ms |
+| docx → odt | 138 ms | 163 ms | 7.3 /s | 238 ms | 324 ms | 14.2 /s | 80 ms |
+| xlsx → pdf | 758 ms | 995 ms | 1.3 /s | 1 711 ms | 2 141 ms | 2.1 /s | 723 ms |
+| xlsx → ods | 137 ms | 158 ms | 7.3 /s | 243 ms | 422 ms | 13.5 /s | 67 ms |
+| pptx → pdf | 1 169 ms | 1 350 ms | 0.9 /s | 2 899 ms | 3 803 ms | 1.2 /s | 1 013 ms |
+| pptx → odp | 175 ms | 210 ms | 5.9 /s | 258 ms | 323 ms | 12.9 /s | 81 ms |
+| pdf → docx | 136 ms | 148 ms | 7.3 /s | 195 ms | 261 ms | 15.6 /s | 66 ms |
+
+(p99 over 20 samples = the maximum; 0 errors in 280 conversions. Download of the result adds ≈ 1 ms.)
+
+Reading:
+- **x2t is the cost.** Service overhead (HTTP, Redis/PostgreSQL task row, RabbitMQ round trip, storage, and up to
+  50 ms of our own polling) is ≈ 55–95 ms per conversion; x2t is 70–90 % of every PDF conversion.
+- **Anything → PDF costs ~0.6–1 s even for an empty document** (pdf rendering path through DoctRenderer/sdkjs),
+  against ~70 ms for the ODF formats: an order of magnitude, worth a look in `core`.
+- **Throughput is CPU-bound**: 4 parallel requests only give 1.4× (PDF) to 2× (ODF) on 2 CPUs, and latency
+  rises accordingly — no queueing pathology visible, the converter simply saturates the cores.
+- **Sync mode (`async: false`) answers in whole seconds** (1 012 ms, 2 016 ms…): DocService polls the task
+  status every ~1 s internally, so a 140 ms conversion is reported to sync callers after ≥ 1 s. Integrations
+  that call ConvertService synchronously pay up to +900 ms per request. Cause: `CONVERT_ASYNC_DELAY = 1000` with `utils.sleep`
+  in `DocService/sources/converterservice.js:49,163`. Candidate improvement (not touched here).
+
+### Open, co-edit round trip, save (`perf/e2e-coedit.js`, headless Chromium through the example)
+
+| Operation | What is timed | 2 clients p50 | 2 clients p99 | 4 clients p50 | 4 clients p99 |
+|---|---|---|---|---|---|
+| Open (first user, new docx) | `goto` → editor load complete (includes x2t docx→internal) | 2.78 s | 2.96 s | 2.72 s | 2.75 s |
+| Join (other users, same doc) | `goto` → load complete | 2.83 s | 3.37 s | 3.14 s | 3.33 s |
+| Co-edit round trip | A types a marker → present in every other client's model | 99 ms | 1 110 ms | 105 ms | 2 442 ms |
+| Save after close | last client closes → saved file in the example storage (callback status 2) | 5.89 s | 6.04 s | 6.22 s | 6.35 s |
+
+Samples: 2 clients 5 runs × 20 edits (100 round trips); 4 clients 3 runs × 20 edits × 3 receivers (180).
+Edits are sequential (one marker, wait for all receivers, 300 ms pause), so this is latency, not a load test.
+
+Reading:
+- **Round trip p50 ≈ 0.1 s, unchanged from 2 to 4 clients**; the server's per-message cost (≈ 60 µs, micro-benchmarks
+  above) is < 0.1 % of it. The **tail grows with clients** (p99 1.1 s → 2.4 s). With 4 Chromium instances
+  on 2 CPUs the receivers are CPU-starved, so the tail is probably client/host contention and the sdkjs
+  change-batching interval, not DocsCoServer — but this run does not prove it; it needs a server-side
+  timestamp per message (receive → broadcast) to split.
+- **Save ≈ 6 s is almost all configured delay**: `services.CoAuthoring.server.savetimeoutdelay` = 5 000 ms after
+  the last user leaves, then ≈ 0.9–1.3 s of assembling changes (x2t) + callback + example download.
+- **Open ≈ 2.8 s is the client** (bundles, fonts, render); the server part (x2t docx → internal format ≈ 80 ms
+  raw, by analogy with the ODF rows) is a few percent.
+
 ## Quality: what can be measured here today
 
 Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
@@ -86,8 +149,8 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 
 | Gap | Why | Follow-up |
 |---|---|---|
-| End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | needs the full stack running; x2t binaries are not in this repo; RabbitMQ is not installed here | requested: spawn "Measure end-to-end server latency" |
+| End-to-end server latency (open, co-edit round trip, save, convert) with DB + Redis + RabbitMQ + x2t | measured in PKT-0015 (section above), small documents only; not measured: large documents, a load test (many documents × many clients), server-side split of the co-edit tail | requested: spawn "Split co-edit round-trip tail and load-test the server" |
 | Client latency (open/render, apply remote changes, typing) | measured on an empty docx (PKT-0014, section above); not measured: large documents, xlsx/pptx, breakdown of open time (download / parse / x2t / render), breakdown of remote-apply tail | requested: spawn "Break down client open and co-edit latency on realistic documents" |
-| x2t conversion time per format | C++ in `core`, not here | part of the end-to-end request |
-| Crash and defect rate | history too short here; no production telemetry | part of the end-to-end request (upstream history) |
+| x2t conversion time per format | measured in PKT-0015 for empty docx/xlsx/pptx/pdf → pdf/ODF; not for realistic files | part of the spawn above |
+| Crash and defect rate | history too short here; upstream query (`gh api` on Euro-Office/server) refused by the executor's permissions in PKT-0015; no production telemetry | requested: spawn "Defect and crash rate from upstream history" |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |
