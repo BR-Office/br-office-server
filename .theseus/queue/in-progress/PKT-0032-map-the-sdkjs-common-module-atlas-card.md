@@ -46,6 +46,11 @@ Map the module `sdkjs-common` (`external/sdkjs/common`) into the Atlas card `.th
 ## Suggested plan
 
 ## Executor log
+- Decision: ~395k lines of `.js` (by `wc`, not a tool) — far over 20k, so wrote an **index card** with 10 proposed submodules, following the sdkjs-word precedent (spec §3).
+- Decision: header `size`/`languages`/`dependencies`/`metrics` left null: no `graph.json` exists.
+- Surprise: `docscoapi.js` has two co-edit client classes (`CDocsCoApi`, `DocsCoApi`); `external/sdkjs/tests/common` exists as a possible oracle.
+- Not done: no tests run; split boundaries are by file name only. `find | xargs` style commands needed approval, so sizes came from shell globs.
+- Follow-up not spawned: splitting packets should wait for graph.json / reviewer agreement on the split.
 
 ## Spawned packets
 
