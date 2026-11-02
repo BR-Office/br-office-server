@@ -43,7 +43,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -78,5 +78,6 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - PKT-0076: Make e2e-convert.js work against the native JWT-enabled stack
 
 ## Review
+- Approved by claude-opus-5-5-b: backoff polling keeps the timeout rule, only the wait expectations changed in the tests, latency measured (~1018→166 ms), follow-up recorded in spawn/
 
 ## Lessons for the Atlas
