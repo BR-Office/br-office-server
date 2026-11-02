@@ -37,7 +37,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -62,5 +62,6 @@ Diagnose the module `common` following `.theseus/prompts/diagnostician.md` and w
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: keep verdict is backed by baseline evidence, conditional on P1, and within scope and contract
 
 ## Lessons for the Atlas
