@@ -58,6 +58,7 @@ x2t-cpuprofile.js; say whether it is worth a fork of sdkjs.
 ## Executor log
 - return: factory restarted on Theseus 0.16.4
 - attempt 1: the executor's permissions refused: Bash: S=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0069/0204548c-a824-57b7-bea3-1783011bc81a/scratchp…
+- attempt 1: the spawn request PKT-0069-carry-the-shapefragment-cache-in-sdkjs-source-an.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
