@@ -75,6 +75,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
   - Not done: the whole Goal. baseline.md is unchanged.
 - block: 3 attempts failed; last: Goal not done: no client open/co-edit latency breakdown was measured (the stack is still not set up and the acceptance check passes trivially). Set up the stack first (spawn request), then retry and record real numbers in baseline.md.
 - release: measurement packets now have administrator commands (Rafael); see environment.md for the install notes
+- attempt 1: the executor's permissions refused: Bash: grep -n -iE "DB_|psql|debconf|db_get" /var/lib/dpkg/info/euro-office-documentserver.postinst | head -40; Read; Bash: debconf-show euro-office-documentserver
 
 ## Spawned packets
 
