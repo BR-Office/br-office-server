@@ -160,3 +160,105 @@ describe('Characterization: pure helpers', () => {
     expect(start.getTime()).toEqual(Date.UTC(2020, 0, 15, 10));
   });
 });
+
+describe('Characterization: empty and null inputs', () => {
+  test('encryptPassword / decryptPassword with empty and invalid passwords', async () => {
+    const encrypted = await utils.encryptPassword(ctx, '');
+    expect(encrypted).toMatch(/^[0-9a-f]+:[0-9a-f]+$/);
+    expect(await utils.decryptPassword(ctx, encrypted)).toEqual('');
+    // errors raised inside node core come from another realm, so match by name instead of by constructor
+    await expect(utils.encryptPassword(ctx, null)).rejects.toMatchObject({name: 'TypeError'});
+    await expect(utils.encryptPassword(ctx, undefined)).rejects.toMatchObject({name: 'TypeError'});
+    await expect(utils.decryptPassword(ctx, '')).rejects.toMatchObject({name: 'TypeError'});
+    await expect(utils.decryptPassword(ctx, null)).rejects.toMatchObject({name: 'TypeError'});
+    await expect(utils.decryptPassword(ctx, undefined)).rejects.toMatchObject({name: 'TypeError'});
+  });
+
+  test('compareStringByLength treats the empty string as a missing value', () => {
+    // surprising: an empty string sorts after a non-empty one and is not equal to another empty string
+    expect(utils.compareStringByLength('', 'a')).toEqual(1);
+    expect(utils.compareStringByLength('a', '')).toEqual(1);
+    expect(utils.compareStringByLength('', '')).toEqual(1);
+    expect(utils.compareStringByLength(null, 'a')).toEqual(-1);
+    expect(utils.compareStringByLength('a', null)).toEqual(1);
+    expect(utils.compareStringByLength('a', undefined)).toEqual(1);
+    expect(utils.compareStringByLength(null, '')).toEqual(-1);
+    expect(utils.compareStringByLength('', null)).toEqual(1);
+    expect(utils.compareStringByLength(null, null)).toEqual(0);
+    expect(utils.compareStringByLength(undefined, undefined)).toEqual(0);
+  });
+
+  test('encodeXml, addSeconds, getMillisecondsOfHour, getDateTimeTicks with empty or null', () => {
+    expect(utils.encodeXml('')).toEqual('');
+    expect(() => utils.encodeXml(null)).toThrow(TypeError);
+    expect(() => utils.encodeXml(undefined)).toThrow(TypeError);
+    expect(() => utils.addSeconds(null, 1)).toThrow(TypeError);
+    expect(() => utils.getMillisecondsOfHour(null)).toThrow(TypeError);
+    expect(() => utils.getDateTimeTicks(null)).toThrow(TypeError);
+  });
+
+  test('containsAllAscii / containsAllAsciiNP coerce null and undefined to strings', () => {
+    expect(utils.containsAllAscii(null)).toBe(true);
+    expect(utils.containsAllAscii(undefined)).toBe(true);
+    expect(utils.containsAllAsciiNP('')).toBe(true);
+    expect(utils.containsAllAsciiNP(null)).toBe(true);
+    expect(utils.containsAllAsciiNP(undefined)).toBe(true);
+  });
+
+  test('isEmptyObject with falsy values', () => {
+    expect(utils.isEmptyObject('')).toBe(true);
+    expect(utils.isEmptyObject(0)).toBe(true);
+    expect(utils.isEmptyObject([])).toBe(true);
+  });
+
+  test('getIndexFromUserId with empty and null arguments', () => {
+    expect(utils.getIndexFromUserId('', '')).toBeNaN();
+    expect(utils.getIndexFromUserId('user', '')).toBeNaN();
+    expect(utils.getIndexFromUserId('12', '')).toEqual(12);
+    expect(() => utils.getIndexFromUserId(null, 'user')).toThrow(TypeError);
+    expect(() => utils.getIndexFromUserId(undefined, 'user')).toThrow(TypeError);
+    expect(() => utils.getIndexFromUserId('user1', null)).toThrow(TypeError);
+  });
+
+  test('resolvePath with empty and null arguments', () => {
+    expect(utils.resolvePath(null, 'a', 'def')).toEqual('def');
+    expect(utils.resolvePath(undefined, 'a', 'def')).toEqual('def');
+    // the default value is indexed again by the next path segment
+    expect(utils.resolvePath(null, 'a.b', 'def')).toBeUndefined();
+    expect(utils.resolvePath({a: 1}, '', 'def')).toBeUndefined();
+    expect(() => utils.resolvePath({a: 1}, null, 'def')).toThrow(TypeError);
+  });
+
+  test('removeIllegalCharacters and getFunctionArguments with null', () => {
+    expect(utils.removeIllegalCharacters(null)).toBeNull();
+    expect(() => utils.getFunctionArguments(null)).toThrow(TypeError);
+  });
+
+  test('isObject / deepMergeObjects with empty and null', () => {
+    expect(utils.isObject(undefined)).toBeUndefined();
+    expect(utils.isObject('')).toEqual('');
+    expect(utils.isObject(0)).toEqual(0);
+    const target = {a: 1};
+    expect(utils.deepMergeObjects(target)).toBe(target);
+    expect(utils.deepMergeObjects(target, null, undefined)).toBe(target);
+    expect(target).toEqual({a: 1});
+    expect(utils.deepMergeObjects(null, {a: 1})).toBeNull();
+  });
+
+  test('getImpl with empty and null arguments', () => {
+    expect(utils.getImpl({a: 1}, '')).toBeUndefined();
+    expect(utils.getImpl({a: 1}, [])).toBeUndefined();
+    expect(() => utils.getImpl(null, 'a')).toThrow(TypeError);
+    expect(() => utils.getImpl(undefined, 'a')).toThrow(TypeError);
+    expect(() => utils.getImpl({a: 1}, null)).toThrow(TypeError);
+  });
+
+  test('Date helpers and license helpers with null', () => {
+    // surprising: null is coerced to 0, which is a leap year
+    expect(Date.isLeapYear(null)).toBe(true);
+    expect(Date.isLeapYear(undefined)).toBe(false);
+    expect(() => utils.getMonthDiff(null, new Date(0))).toThrow(TypeError);
+    expect(() => utils.getLicensePeriod(null, new Date(0))).toThrow(TypeError);
+    expect(() => utils.getLicensePeriod(new Date(0), null)).toThrow(TypeError);
+  });
+});
