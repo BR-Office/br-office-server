@@ -31,7 +31,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -81,5 +81,6 @@ Baseline PKT-0015/PKT-0018 - empty docx->pdf 0.65 s raw vs 70 ms for ODF; large 
 - PKT-0055: Record PKT-0041 x2t phase split in oracle baseline.md
 
 ## Review
+- Approved by claude-opus-5-5-b: Phases measured and the dominant part identified; baseline.md is out of target and correctly sent to a follow-up request
 
 ## Lessons for the Atlas
