@@ -46,6 +46,7 @@ Map the module `web-apps-documenteditor` (`external/web-apps/apps/documenteditor
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/module-card.md; cat .theseus/atlas/sdkjs-word.md; ls .theseus/atlas/graph.json; grep -n documenteditor…; Bash: D=external/web-apps/apps/documenteditor; for s in main forms embed mobile; do echo $s $(find $D/$s \( -name '*.js' -o -n…; Bash: cd external/web-apps/apps/documenteditor; for s in main forms embed mobile; do echo $s; find $s \( -name '*.js' -o -name…; Bash: cd external/web-apps/apps/documenteditor; find main forms embed mobile \( -name '*.js' -o -name '*.jsx' \) -not -path '*…; Bash: cd /home/claude/euro-office-server.theseus-worktrees/PKT-0033 && sed -i 's/^| \[x2t\]/| [web-apps-documenteditor](web-ap…
 
 ## Spawned packets
 
