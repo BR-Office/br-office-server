@@ -50,6 +50,7 @@ Audit the method over scoreboard records 1 to 22, following `.theseus/prompts/au
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: cd .theseus; sed -n '/## 4/,/## 7/p' spec/method-measurement.md; cat METHOD-CHANGELOG.md | head -40; ls proposals; cat s…; Bash: sed -n '/^## 4/,/^## 7/p' .theseus/spec/method-measurement.md; Bash: f=.theseus/audits/AUD-1.md
 
 ## Spawned packets
 
