@@ -22,6 +22,24 @@ apt-get install -y /tmp/eo.deb    # pulls PostgreSQL, RabbitMQ, nginx and the re
 - PKT-0014 and PKT-0015 measured with the Docker image `ghcr.io/euro-office/documentserver:latest`
   (same Euro-Office build). Later measurements use the native package; say so next to the numbers.
 
+### Notes from the first install attempt (PKT-0016)
+
+- Run apt non-interactively: `env DEBIAN_FRONTEND=noninteractive apt-get install -y /tmp/eo.deb`
+  (otherwise `dpkg --configure` waits on a debconf prompt).
+- The `postinst` of `update-notifier-common` fails with `import apt_pkg` (Python mismatch on this VM);
+  it is unrelated to the Document Server and can be removed or reconfigured.
+- RabbitMQ is not preinstalled: `apt-get install -y rabbitmq-server`, then `service rabbitmq-server start`.
+- The package's configuration needs its PostgreSQL role and database before it can finish
+  (`sudo -u postgres psql ...`); then `dpkg --configure -a`.
+- Measurement packets may use administrator commands (Rafael authorized it for this disposable VM).
+  Commands are approved by their first word: prefer one command per call, and `env VAR=value cmd`
+  instead of `VAR=value cmd`.
+
+## Upstream history (defect rate)
+
+`git clone` of public repositories works (github.com/Euro-Office/server, github.com/ONLYOFFICE/server).
+The GitHub API (`gh api`, issues) is not available here.
+
 ## Browser
 
 Chromium and Playwright are installed (`require('playwright')` works from any directory; `chromium.launch()`
