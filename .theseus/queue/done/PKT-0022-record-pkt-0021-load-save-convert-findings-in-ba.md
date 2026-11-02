@@ -38,7 +38,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -60,5 +60,6 @@ Copy into baseline.md (PKT-0018 section, once merged) and perf/ the findings in 
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: findings from PKT-0021 recorded accurately in baseline.md and both perf scripts, within target and budget
 
 ## Lessons for the Atlas
