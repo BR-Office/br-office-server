@@ -192,6 +192,7 @@ The packet stays blocked until that follow-up merges or the target includes `esl
 ✖ 55 problems (54 errors, 1 warning)
 ```
 - release: blocked by a lint failure already on the main branch (measurement scripts); a repair packet goes first
+- attempt 1: the executor's permissions refused: Bash: npm run lint:check 2>&1 | tail -3; npx prettier --check tests/unit/converterService.tests.js; tail -1 .theseus/scoreboar…; Bash: python3 - <<'PY'
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
