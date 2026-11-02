@@ -53,6 +53,12 @@ PKT-0041 could not run or list /var/www/euro-office/documentserver/server/FileCo
 ## Suggested plan
 
 ## Executor log
+- Ran `x2t-split.sh` on the installed x2t (native 9.3.7-1), 3 runs each, for empty docx/xlsx/pptx, the big PKT-0018 samples and two save conversions (Editor.bin made by x2t + `changes0.json` = `[]`). Results: `.theseus/diagnosis/PKT-0051-x2t-split.md`.
+- Script fixes: worked as-is; renamed the save output (`save-save-*` -> `out-*`) and added a `sdk-files=` column listing which sdk-all.* files were opened.
+- Findings: empty docs — script load (~0.37-0.44 s) and first Execute (~0.3-0.8 s) dominate; big docs — JS layout dominates (54-88 %), then the writer. `sdk-all.cache` ships and loads; `sdk-all.bin` is looked up (ENOENT) but not shipped.
+- Decision: `.theseus/oracle/baseline.md` is outside target/create_in, so numbers went into the diagnosis file and a spawn request asks for the baseline update.
+- Surprise: the PKT-0041 diagnosis already held a table of the same shape; my numbers agree within noise (±30 % on big inputs on this 2-CPU VM).
+- No real change set was available, so the save measures the fixed cost only. `acceptance.commands` is empty: nothing to run.
 
 ## Spawned packets
 
