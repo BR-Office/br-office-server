@@ -39,6 +39,10 @@ contract:
     - "No other source file is migrated in this packet"
   forbidden: ["Common/sources/commondefines.js", "Common/sources/license.js", "Makefile"]
 
+allowed_commands:
+  - "npm install"
+  - "npm ci"
+
 acceptance:
   commands:
     - "npx tsc -p tsconfig.json --noEmit"
@@ -55,6 +59,7 @@ roles:
   executor: claude-opus-5-5
   reviewer: claude-sonnet-5-5
 rejected_reviews: 3
+resume: true
 ---
 
 ## Goal
@@ -84,6 +89,7 @@ Add the TypeScript 7 toolchain shared by Common and DocService, decide the outpu
 - block: 3 attempts failed; last: changed tsconfig.json, outside the target (rule R2)
 - release: factory scope bugs fixed in Theseus 0.7.2/0.7.3
 - block: 3 attempts failed; last: Untrack the committed generated DocService/sources/utilsDocService.js (git rm --cached; the packet says emitted .js must not be committed), and show that npm ci with the hand-written typescript shrinkwrap entry installs a working tsc, or regenerate the shrinkwrap.
+- release: executor can now run npm install, git rm (Theseus 0.8.0); resume from the previous branch
 
 ## Spawned packets
 
