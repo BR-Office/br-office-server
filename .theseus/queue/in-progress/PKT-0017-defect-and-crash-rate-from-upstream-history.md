@@ -39,7 +39,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -57,5 +58,6 @@ The local git history starts on 2026-10-28, so it cannot be used for this. In PK
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5: Goal requires bug-issue counts per month/release, which were not produced (gh/WebFetch refused); allow gh for the executor or narrow the goal and spawn an issues packet, and align the documented crash/fix rules with the script
 
 ## Lessons for the Atlas
