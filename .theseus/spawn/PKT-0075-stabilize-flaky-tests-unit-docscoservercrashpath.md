@@ -13,7 +13,7 @@ depends_on: []
 
 target:
   files:
-    - "[FILE]"
+    - "tests/unit/docsCoServerCrashPaths.tests.js"
   create_in: []
 
 context:
@@ -22,11 +22,16 @@ context:
 
 contract:
   preserve:
-    - "[WHAT MUST NOT CHANGE]"
-  forbidden: []
+    - "Production code under DocService/ and Common/ (test-only fix)"
+    - "The behaviours asserted by docsCoServerCrashPaths.tests.js (no test removed or weakened)"
+  forbidden:
+    - "jest.config / retry settings to mask the flake"
 
 acceptance:
-  commands: []
+  commands:
+    - ".theseus/oracle/unit.sh"
+    - "for i in 1 2 3 4 5; do .theseus/oracle/unit.sh || exit 1; done"
+    - "npm run lint:check"
 
 budget:
   max_files_changed: 6
@@ -47,6 +52,8 @@ Stabilize flaky tests/unit/docsCoServerCrashPaths.tests.js.
 - Seen by PKT-0075 (no JS changes): 3 runs of `.theseus/oracle/unit.sh` gave rc 0,1,0; 1 failed test in that suite only. Likely timing/handle-dependent (Jest also reports open handles).
 
 ## Suggested plan
+1. Run the suite in a loop to reproduce; inspect timers/handles left open.
+2. Make timing deterministic (fake timers or awaited cleanup) in the test file only.
 
 ## Executor log
 

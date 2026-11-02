@@ -66,6 +66,7 @@ patch + decision note under .theseus/diagnosis until a writable fork of Euro-Off
 - Not done: real `dpkg -i` of a rebuilt package and a Docker build (no fork, no Docker); that the Euro-Office
   Docker entrypoint calls generate-allfonts.sh is assumed from upstream, unverified.
 - Surprise: `.theseus/oracle/unit.sh` is flaky (rc 0,1,0 over 3 runs; 1 test in docsCoServerCrashPaths.tests.js), unrelated to this packet (no JS touched). Final runs pass; follow-up requested in .theseus/spawn/.
+- Rework (review R6): filled the spawn request's target (the test file), contract (no prod code change, no weakened tests, no retry masking) and acceptance (unit.sh, 5x loop, lint). Re-ran unit.sh and lint: both pass.
 - Side effect: the VM's .bin files are now regenerated ones (old copies in the session scratchpad).
 
 ## Spawned packets
