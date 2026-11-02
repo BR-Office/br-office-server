@@ -50,6 +50,13 @@ Audit the method over scoreboard records 1 to 22, following `.theseus/prompts/au
 ## Suggested plan
 
 ## Executor log
+- Wrote `.theseus/audits/AUD-1.md` and TEP-0001 to TEP-0004 in `.theseus/proposals/`.
+- Decision: the 22 records cover 18 distinct packets, and no rule affected 20 or more packets. So every result is labelled an observation, not a finding, as the auditor prompt requires. The TEPs are framed so the next audit can test them.
+- Decision: no spawn requests. All the gaps found are in the method, not in the project.
+- Surprise: `estimated`, `context_ratio`, `out_of_context_reads` and `flaky_oracle` are null in every record. The Packet and Atlas indicators could not be computed.
+- Surprise: the reviewers (`claude-opus-5-5-b`) are the same family as the executors, and this audit was also run by the same family. This goes against spec §5 "Who audits". I did not check whether the adapter enables pilot mode.
+- Surprise: the acceptance command for this packet (`test -s`) is the kind of existence-only check that TEP-0003 criticises.
+- Not done: I did not read `scoreboard/runs/` or each packet's log in depth. Indicators come from `packets.jsonl` and `friction.jsonl`. Python heredocs and some `sed` commands were refused by permissions, so I made the edits with the Edit tool.
 
 ## Spawned packets
 
