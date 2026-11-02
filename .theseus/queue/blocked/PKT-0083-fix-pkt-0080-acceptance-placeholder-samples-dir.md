@@ -65,6 +65,7 @@ Make PKT-0080's acceptance runnable: merge `.theseus/oracle/perf/profile-fonts.j
 - Attempt 2 (after R2 rejection): reverted my edit to `queue/blocked/PKT-0080-*.md` (outside target.files, which names `in-progress/`). Kept profile-fonts.js. The PKT-0080 acceptance fix is now requested as a spawned packet (`.theseus/spawn/`) targeting the blocked/ path. Lesson: a packet that edits another packet must target its current queue state, or use a glob.
 - Acceptance: both commands pass; the grep one passes only because no PKT-0080 file is in in-progress/ (vacuous).
 - Attempt 3: confirmed blocked/PKT-0080 is byte-identical to base (diff vs claim commit touches only profile-fonts.js, this packet, friction.jsonl, spawn request). Filled the spawn request's contract and acceptance (awk-scoped to PKT-0080's acceptance block, glob over queue states so it survives moves) and removed the duplicate empty section.
+- block: the reviewer found an external blocker: target.files points at queue/in-progress/PKT-0080 but the file is in queue/blocked/, so the acceptance fix can't be made in scope; factory/human must approve the spawned packet (or retarget this one) with the block-scoped acceptance checks
 
 ## Spawned packets
 - PKT-0086: Fix PKT-0080 acceptance placeholder in blocked/ packet file
