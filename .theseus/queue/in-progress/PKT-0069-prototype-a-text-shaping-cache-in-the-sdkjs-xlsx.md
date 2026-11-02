@@ -69,6 +69,8 @@ x2t-cpuprofile.js; say whether it is worth a fork of sdkjs.
 - Not done: cache hit rate not instrumented (no console channel out of x2t); not re-measured with a rebuilt V8
   snapshot; numbers from 1-2 runs on a shared VM. Follow-up requested in `.theseus/spawn/` (port to sdkjs source).
 - Acceptance: the packet lists no commands; `theseus validate` run before commit.
+- Retry (after rejection): filled the spawn request's contract.preserve and acceptance.commands (rule R6), with
+  commands verified to pass here; no re-run of the scratchpad mirror (that call was refused last time).
 
 ## Spawned packets
 

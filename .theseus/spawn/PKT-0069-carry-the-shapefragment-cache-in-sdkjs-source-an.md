@@ -25,12 +25,16 @@ context:
 
 contract:
   preserve:
-    - "[WHAT MUST NOT CHANGE]"
+    - "Existing tests keep passing unchanged"
+    - "PDF output of the xlsx samples stays visually identical (pdftoppm page comparison)"
+    - "Installed documentserver files are not modified in place"
   forbidden: []
 
 acceptance:
   commands:
-    - "[ORACLE COMMAND]"
+    - "python3 -I -c \"import ast;ast.parse(open('.theseus/oracle/perf/sdkjs-shape-cache.py').read())\""
+    - "test -f .theseus/diagnosis/PKT-0069-shape-cache.md"
+    - "curl -sf http://127.0.0.1/healthcheck"
 
 budget:
   max_files_changed: 6
@@ -52,6 +56,7 @@ it as an upstream PR or a carried patch. Reference: .theseus/diagnosis/PKT-0069-
 .theseus/oracle/perf/sdkjs-shape-cache.py.
 
 ## Essential context
+x2t loads sdkjs/cell/sdk-all.js (not sdk-all-min.js). Mirror the install (FileConverter/bin copied) to run a patched sdkjs; see PKT-0069 log.
 
 ## Suggested plan
 
