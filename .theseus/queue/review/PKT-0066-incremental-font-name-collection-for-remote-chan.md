@@ -68,6 +68,7 @@ Found by PKT-0057. The walk is triggered by: CCollaborativeEditingBase.Apply_Cha
 - Not done: the before/after profile on the 100 p docx (profile-word.js/attribute-word.js) and a browser test of a remote change; requested as a spawned follow-up (.theseus/spawn/PKT-0066-profile-*.md, requires documentserver, browser).
 
 ## Spawned packets
+- PKT-0071: Profile remote-change apply before/after incremental font collection (PKT-0066)
 
 ## Review
 
