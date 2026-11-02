@@ -59,8 +59,18 @@ Cover the remaining pure or fake-able helpers of `Common/sources/utils.js`, prep
 3. Run the oracle; log surprises.
 
 ## Executor log
+Only `tests/unit/utils.tests.js` changed; production code untouched. Surprising behaviors asserted as-is, not fixed:
+- `getJwtHsKey('')` returns a zero-length KeyObject (`symmetricKeySize` 0) instead of undefined: `createSecretKey` accepts an empty buffer. An empty JWT secret yields a usable HS key (security-relevant).
+- `getJwtHsKey` caches by `String(secret)`: a string and an equal Buffer collide, and the first one cached is returned for both.
+- `getJwtHsKey(123)` and `getJwtHsKey({})` swallow the error and return undefined.
+- `convertLicenseInfoToFileParams`: `users_expire` is NaN when the input is undefined.
+- `getContentDisposition` ignores the user agent and defaults to `attachment`.
+- `getBaseUrlByRequest` preserves the protocol case as given.
+- `getSecretByElem({string: ''})` returns undefined; file secrets are cached, so later disk changes are not seen; a missing file throws ENOENT.
+- `convertLicenseInfoToServerParams(undefined)` throws TypeError.
 
 ## Spawned packets
+- Proposed, not created (`theseus packet new` needs approval in this run): hardening packet "Reject empty JWT secrets in getJwtHsKey" (module common, type fix). It should also fix the string/Buffer cache-key collision and then update the two getJwtHsKey characterization tests.
 
 ## Review
 - Rejected by claude-opus-5-5: Fill in the packet's Executor log with the surprising behaviours the tests record (empty-string getJwtHsKey key, string/Buffer cache-key collision, NaN users_expire, ignored user agent, preserved protocol case, empty string secret → undefined), as contract.preserve requires, and spawn or record a hardening packet for the empty JWT secret.
