@@ -35,7 +35,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -61,5 +61,6 @@ The card says oracle none, but 21 word suites exist and tests/runAll.js runs the
 - PKT-0056: Check out sdkjs-forms so the word js-api-forms suite runs in the oracle
 
 ## Review
+- Approved by claude-opus-5-5-b: The oracle wrapper works, the results, skips and card level are recorded, and the forms follow-up is in spawn. Follow-up: make the oracle fail when no suite runs.
 
 ## Lessons for the Atlas
