@@ -44,6 +44,7 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 
 ## Executor log
 - return: factory restarted on Theseus 0.16 (main-branch repair first)
+- attempt 1: the executor's permissions refused: Bash: sed -n 60,120p .theseus/queue/done/PKT-0017-*.md; git branch -a | head; ls /home/claude; Bash: cd /tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0029/0204548c-a824-57b7-bea3-1783011bc81a/scratch…; Bash: git clone -q --filter=blob:none https://github.com/ONLYOFFICE/server /tmp/claude-0/-home-claude-euro-office-server-these…; Bash: git clone -q --filter=blob:none https://github.com/Euro-Office/server /tmp/claude-0/-home-claude-euro-office-server-thes…; Bash: gh api "search/commits?q=repo:ONLYOFFICE/server+81132" --jq '.items[]|.sha+" "+.commit.message'; WebFetch; Bash: f=$(ls .theseus/spawn/PKT-0029-fetch-*.md); python3 - "$f" <<'EOF'
 
 ## Spawned packets
 
