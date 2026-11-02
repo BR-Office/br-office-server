@@ -57,7 +57,9 @@ After `apt-get install` of the package (see above), this got the native stack ru
 6. Check: `curl localhost/healthcheck` returns `true`; the example is at http://localhost/example/
    (upload: `POST /example/upload`, form field `uploadedFile`).
 
-After a VM restart only steps 3 (services, not dpkg), 4 and the nginx start are needed.
+After a VM restart only steps 3 (services, not dpkg), 4 and the nginx start are needed;
+`.theseus/adapter/scripts/start-documentserver.sh` does them, and the factory runs it by itself
+when the `documentserver` check fails (`environment.start` in the adapter).
 
 ## Upstream history (defect rate)
 

@@ -106,6 +106,8 @@ environment:
   checks:                         # TEP-0002: packets list the ones they need in `requires`
     documentserver: curl -sf http://127.0.0.1/healthcheck
     browser: node -e "require('playwright')"
+  start:                          # run once when a check fails, then the check runs again
+    documentserver: .theseus/adapter/scripts/start-documentserver.sh
 
 review:
   allow_same_family: true         # pilot: only Claude models; turn off when Codex joins
