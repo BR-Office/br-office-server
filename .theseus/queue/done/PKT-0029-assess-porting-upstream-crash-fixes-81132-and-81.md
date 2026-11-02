@@ -30,7 +30,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -62,5 +62,6 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 - PKT-0050: Fetch upstream diffs for bugs 81132 and 81576 with network access
 
 ## Review
+- Approved by claude-opus-5-5-b: Both upstream commits are located and assessed for fit with Euro-Office main, with risks and the decision left to a human; PKT-0050 should be closed as redundant.
 
 ## Lessons for the Atlas
