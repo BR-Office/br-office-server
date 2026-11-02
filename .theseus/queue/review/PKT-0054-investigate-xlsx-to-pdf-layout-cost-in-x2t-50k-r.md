@@ -68,6 +68,7 @@ Run with `.theseus/oracle/perf/x2t-split.sh`; samples from `make-samples.py`.
   formula recalc cost was not profiled separately. Follow-up requested in .theseus/spawn/.
 
 ## Spawned packets
+- PKT-0069: Prototype a text-shaping cache in the sdkjs xlsx print path
 
 ## Review
 
