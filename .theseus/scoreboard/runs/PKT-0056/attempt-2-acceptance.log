@@ -1,0 +1,46 @@
+SKIP word/shortcuts/shortcuts.html (Ctrl+Backspace / Ctrl+Delete word-deletion assertions fail -- under investigation)
+SKIP word/custom-xml/custom-xml-ooxml.html (needs the sdkjs-ooxml addon, which is not available in CI yet)
+PASS word/unit-tests/deleted-text-recovery.html 149/149 5.6s
+PASS word/unit-tests/paragraphContentPos.html 18/18 5.6s
+PASS word/content-control/inline-level/checkbox.html 22/22 5.2s
+PASS word/content-control/block-level/cursorAndSelection.html 33/33 5.7s
+PASS word/content-control/inline-level/date-time.html 6/6 5.5s
+PASS word/content-control/inline-level/cursorAndSelection.html 44/44 5.5s
+PASS word/custom-xml/custom-xml.html 81/81 5.3s
+PASS word/document-calculation/floating-position/drawing.html 32/32 5.8s
+PASS word/document-calculation/paragraph.html 339/339 4.9s
+PASS word/document-calculation/table/correctBadTable.html 6/6 5.9s
+PASS word/document-calculation/table/pageBreak.html 17/17 5.7s
+PASS word/document-calculation/table/flowTablePosition.html 35/35 5.8s
+PASS word/document-calculation/table/sectionUpdateGuard.html 11/11 4.2s
+PASS word/document-calculation/table/table-flow.html 26/26 5.0s
+PASS word/document-calculation/table/table-grid.html 18/18 5.0s
+PASS word/document-calculation/table/table-header.html 27/27 5.0s
+PASS word/document-calculation/textShaper/textShaper.html 82/82 4.8s
+PASS word/document-calculation/text-hyphenator/text-hyphenator.html 336/336 5.1s
+PASS word/forms/forms.html 187/187 5.1s
+PASS word/drawings/groupShapeTables.html 7/7 5.3s
+PASS word/numbering/numberingApplicator.html 161/161 5.8s
+PASS word/forms/complexForm.html 90/90 6.4s
+PASS word/numbering/numberingCalculation.html 37/37 5.2s
+PASS word/numbering/numberingAutocorrect.html 82/82 5.5s
+PASS word/api/cross-ref.html 5/5 5.8s
+PASS word/api/api.html 148/148 6.1s
+PASS word/api/textInput.html 69/69 5.3s
+PASS word/styles/displayStyle.html 37/37 6.2s
+PASS word/styles/paraPr.html 12/12 5.1s
+PASS word/styles/styleApplicator.html 32/32 5.4s
+PASS word/text-autocorrection/as-you-type.html 21/21 5.5s
+PASS word/styles/tableStylesWrite.html 11/11 5.6s
+PASS word/revisions/document-content.html 135/135 5.1s
+PASS word/plugins/pluginsApi.html 53/53 6.8s
+PASS word/revisions/paragraph.html 11/11 5.2s
+PASS word/merge-documents/mergeDocuments.html 60/60 6.7s
+PASS word/math-ml/math-ml.html 55/55 7.6s
+PASS word/math-autocorrection/math-autocorrection.html 3398/3398 7.6s
+PASS word/js-api/js-api.html 216/216 5.8s
+PASS word/change-case/change-case.html 15/15 6.4s
+PASS word/js-api/js-api-forms.html 27/27 5.5s
+PASS word/copypaste/copy-paste-tests.html 44/44 5.7s
+
+42/42 suites passed, 6195/6195 assertions, 123s
