@@ -1,5 +1,25 @@
+diff --git a/cell/api.js b/cell/api.js
+index 86f9bf7..ab0c573 100644
+--- a/cell/api.js
++++ b/cell/api.js
+@@ -1796,6 +1796,7 @@ var editor;
+   };
+ 
+   spreadsheet_api.prototype.asyncFontsDocumentEndLoaded = function(blockType) {
++    AscCommonExcel.clearShapeCache();
+     this.sync_EndAction(undefined === blockType ? c_oAscAsyncActionType.BlockInteraction : blockType, c_oAscAsyncAction.LoadDocumentFonts);
+ 
+     if (this.asyncMethodCallback !== undefined) {
+@@ -1812,6 +1813,7 @@ var editor;
+   };
+ 
+   spreadsheet_api.prototype.asyncFontEndLoaded = function(font) {
++    AscCommonExcel.clearShapeCache();
+     this.sync_EndAction(c_oAscAsyncActionType.Information, c_oAscAsyncAction.LoadFont);
+   };
+ 
 diff --git a/cell/view/StringRender.js b/cell/view/StringRender.js
-index c105a49..39e7ead 100644
+index c105a49..35bec24 100644
 --- a/cell/view/StringRender.js
 +++ b/cell/view/StringRender.js
 @@ -141,6 +141,8 @@
@@ -11,18 +31,28 @@ index c105a49..39e7ead 100644
  		}
  		FragmentShaper.prototype = Object.create(AscFonts.CTextShaper.prototype);
  		FragmentShaper.prototype.constructor = FragmentShaper;
-@@ -155,10 +157,40 @@
+@@ -155,10 +157,50 @@
  
  			return AscFonts.hb_get_script_by_unicode(nUnicode);
  		};
 +		// Shaping results depend only on (font, size, style, PPI, code points): memoize them so repeated
 +		// cell texts (labels, codes, small numbers) skip HarfBuzz. Bounded to keep memory in check.
++		// Enabled only in the native engine (x2t / mobile), where every font file is local and loaded
++		// synchronously. In the browser fonts load lazily and a fallback shaping could be replayed after the
++		// real font arrives, so there the cache is off; clearShapeCache() is also called on font load events.
 +		var c_nShapeCacheMax = 200000;
 +		var g_oShapeCache = new Map();
++		function clearShapeCache() {
++			g_oShapeCache.clear();
++		}
  		FragmentShaper.prototype.shapeFragment = function(chars, font, stringRenderer, beginIndex) {
  			this.font           = font;
  			this.stringRenderer = stringRenderer;
  
++			if (window["NATIVE_EDITOR_ENJINE"] !== true) {
++				this.private_shapeFragment(chars, stringRenderer, beginIndex);
++				return;
++			}
 +			let key = font.getName() + "\u0001" + font.getSize() + "\u0001"
 +				+ ((font.getBold() ? 1 : 0) | (font.getItalic() ? 2 : 0)) + "\u0001"
 +				+ stringRenderer.drawingCtx.getPPIY() + "\u0001" + chars.join(",");
@@ -52,7 +82,7 @@ index c105a49..39e7ead 100644
  			this.StartString();
  			for (let i = 0; i < chars.length; ++i) {
  				let char = chars[i];
-@@ -251,7 +283,8 @@
+@@ -251,7 +293,8 @@
  			pr.idx = oItem.idx;
  			st.charWidths[oItem.idx] = w;
  			st.chars[oItem.idx] = oItem.char;
@@ -62,3 +92,11 @@ index c105a49..39e7ead 100644
  		};
  
  		/**
+@@ -1356,6 +1399,7 @@
+ 		//------------------------------------------------------------export---------------------------------------------------
+ 		window['AscCommonExcel'] = window['AscCommonExcel'] || {};
+ 		window["AscCommonExcel"].StringRender = StringRender;
++		window["AscCommonExcel"].clearShapeCache = clearShapeCache;
+ 
+ 
+ 		function TableCellDrawState(stringRender) {

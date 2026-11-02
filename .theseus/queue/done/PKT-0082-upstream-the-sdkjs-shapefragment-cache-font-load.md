@@ -76,3 +76,5 @@ could be replayed after the real font arrives.
 - Approved by claude-opus-5-5-b: native-only gate keeps the browser editor's behavior unchanged, font-load invalidation added, x2t saving and identical pages re-measured, PR text written
 
 ## Lessons for the Atlas
+- x2t runs sdkjs with `NATIVE_EDITOR_ENJINE === true`; it is the right switch for native-only optimizations.
+- sdkjs cell webpack build needs ~3000 MB heap when the VM is shared.
