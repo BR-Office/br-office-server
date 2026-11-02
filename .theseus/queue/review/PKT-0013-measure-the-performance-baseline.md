@@ -64,6 +64,8 @@ Measure, where users feel it, what the adapter's `goals.measure` asks, and write
 - Spawn requests: end-to-end server latency (full stack + upstream defect history) and client-side performance.
 
 ## Spawned packets
+- PKT-0014: Measure client-side performance
+- PKT-0015: Measure end-to-end server latency
 
 ## Review
 
