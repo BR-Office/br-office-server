@@ -40,7 +40,7 @@ roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
 rejected_reviews: 6
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -95,6 +95,7 @@ PKT-0014 measured the client only on an empty docx with `.theseus/oracle/perf/cl
   - I tried to learn which DB user the postinst uses from the PostgreSQL log (`tail /var/log/postgresql/postgresql-16-main.log`). It was blocked because it is outside the worktree. I did not retry the calls refused earlier (debconf-show/get/set-selections, dpkg-deb -e, reading the postinst), and I did not work around them through psql `pg_read_file`.
   - To unblock (administrator): run `debconf-show euro-office-documentserver`, create the matching role/DB, then run `env DEBIAN_FRONTEND=noninteractive dpkg --configure -a` and check `/healthcheck`. Or allow Read on /var/lib/dpkg/info and /var/log/postgresql for measurement packets.
 - block: 3 attempts failed; last: goal not met — no latency measurements taken and baseline.md unchanged; an admin must fix the Document Server PostgreSQL install before the measurements are done and recorded
+- release: measurement packets now run with every privilege; debconf-show lists the DB settings (see environment.md)
 
 ## Spawned packets
 
