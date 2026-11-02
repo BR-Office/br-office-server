@@ -67,6 +67,12 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - release: Theseus 0.16.4 tells agents the DocService is up (native .deb on 127.0.0.1:80); the block was a wrong port, not a missing stack
 - attempt 1: the spawn request PKT-0068-make-e2e-convert-js-work-against-the-native-jwt.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 - attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
+- attempt 2 (claude-opus-5-5): previous diff was not on the branch, re-applied it: `CONVERT_SYNC_DELAY_MIN = 50`, `delay` doubling to `CONVERT_ASYNC_DELAY` (1000), `waitTime += delay` (actual waited time; strict `> getConvertionTimeout` unchanged). Tests: only `sleeps` expectations + matching title/comment changed (`[50]` x2, `[50,100,200]`, timeout `[50,100,200,400,800,1000,1000]`).
+- Measurement (native .deb stack, 127.0.0.1:80, JWT on, sync docx->odt, 10 sequential runs, new.docx template): `e2e-convert.js` returns errors -8 here because it sends no JWT and targets :8080/docker bridge, so I used a scratch copy that signs the body with the inbox secret (not committed; the oracle script is outside target). Installed binary: p50 1013 ms. Worktree DocService run from source on :8099 against the same DB/RabbitMQ/converters: before (HEAD code) p50 1018 ms / mean 1018; after p50 166 ms / mean 169. About 850 ms saved per sync request.
+- Surprise: e2e-convert.js is stale for the native stack (port, docker bridge host, no JWT). Requested a follow-up packet to fix it.
+- Acceptance: unit 178 passed / 1 skipped; lint 0 errors (1 pre-existing warning).
+- Attempt fix (review rejection): filled the spawn request PKT-0068-make-e2e-convert-js-work-against-the-native-jwt.md (target e2e-convert.js, contract, acceptance, requires: [documentserver], suggested plan); removed duplicate empty heading. No code change in this attempt.
+- Attempt 3 (review rejection): spawn request already had target/contract/acceptance filled (commit ffbb90c); verified no placeholders remain. The rejected unit run failed only in tests/unit/request.tests.js with a 5 s `beforeAll` hook timeout (Express test-server startup), a file outside target and unrelated to converterservice.js. Re-ran `.theseus/oracle/unit.sh` 3 times: 12/12 suites, 178 passed / 1 skipped each time; lint 0 errors. Treated as a load-induced flake; no code change.
 
 ## Spawned packets
 
