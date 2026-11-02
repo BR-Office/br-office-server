@@ -38,7 +38,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -62,5 +62,6 @@ to `ignores` (one line, easy to keep in sync with upstream). Found by PKT-0027.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: goal already met by PKT-0049 (external/** in eslint ignores), contract preserved, log and friction recorded
 
 ## Lessons for the Atlas
