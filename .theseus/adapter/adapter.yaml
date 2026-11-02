@@ -68,7 +68,9 @@ build:
 factory:
   # Fresh worktrees have no node_modules: install before the executor starts (about 70 s).
   setup: npm ci --no-audit --no-fund && npm ci --prefix ./Common --no-audit --no-fund && npm ci --prefix ./DocService --no-audit --no-fund && npm ci --prefix ./FileConverter --no-audit --no-fund
-  read_only_commands: ["node --version", "theseus status", "theseus validate", "git clone", "git fetch"]   # cloning public upstream history is read only
+  # Rafael (2026-11-02): every privilege for every executor in this disposable VM ("libera todos
+  # privilégios para os agentes"). Scope (R2), acceptance and review still apply.
+  read_only_commands: ["*"]
   integrate: true                 # merge each approved branch into theseus-v2
   union_merge: [.gitignore, .prettierignore]
   integrate_check: .theseus/oracle/unit.sh && npm run lint:check   # every oracle command packets use
