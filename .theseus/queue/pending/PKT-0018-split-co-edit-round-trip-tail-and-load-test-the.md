@@ -40,7 +40,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -54,6 +54,7 @@ PKT-0015 measured the full stack with headless Chromium clients on a 2-CPU VM, u
 1. Add server-side timing (config or logs only, no source change) or use raw Socket.IO clients. 2. Rerun `perf/e2e-coedit.js` with that split. 3. Load-test with K documents × N clients. 4. Repeat convert, open and save on large samples.
 
 ## Executor log
+- return: factory restarted: measurement permissions widened (Rafael authorized)
 
 ## Spawned packets
 
