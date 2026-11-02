@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Found by PKT-0068: it measured with a scratch copy that signed the body with jso
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: e2e-convert.js signs requests with JWT and defaults to the native 127.0.0.1 server; contract and budget respected
 
 ## Lessons for the Atlas
