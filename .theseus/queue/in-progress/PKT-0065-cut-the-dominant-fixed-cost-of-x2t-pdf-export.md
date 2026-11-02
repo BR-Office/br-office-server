@@ -48,6 +48,7 @@ external/core is a read-only checkout until forks exist; if still so, deliver th
 ## Suggested plan
 
 ## Executor log
+- attempt 2: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
