@@ -47,6 +47,24 @@ Crash fixes upstream are almost all such guards in DocsCoServer.js, canvasservic
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-02. Baseline oracle green before edits (178 passed, 1 skipped).
+- **Conflict found:** `contract.preserve` says existing tests stay unchanged and the P2 test file
+  `tests/unit/docsCoServerCrashPaths.tests.js` is not in `target.files`, yet P2 pinned every
+  "crash-prone: P4 target" as current behaviour (TypeError strings in logs/rejections, `idOriginal === 'undefined'`).
+  Any real guard on those paths flips a pinned expectation, so they are **not done here**. Classification:
+  no-handshake conn, unLockDocument/saveChanges before auth, startForceSave(Form) without user, user without id: blocked;
+  auth without user/token: only absences are pinned, so a warn log was added (behaviour unchanged).
+  I did not fake guards that still throw TypeError to keep the regexes green.
+- **Done:** editorStat fallback at old line 155 used `new editorDataStorage()`; now all three storages
+  (editorData, editorStat, editorStatProxy) go through a new exported `createStorageInstance(module, className, ...args)`
+  that prefers the named class, falls back to the legacy constructor of the *same* module, and throws a clear
+  TypeError otherwise. `editorStatProxy` (REDIS_SERVER_DB_KEYS_NUM) had no fallback at all; now it has.
+- `auth`: `ctx.logger.warn('auth ignored: missing user|token')` when the auth message lacks token or user (was silent).
+- Tests: new `tests/unit/docsCoServerGuards.tests.js` (5 tests: helper paths + default-config instances).
+  The auth warn log is not unit-tested (would need the P2 socket harness copied); left to the follow-up.
+- Upstream fixes 81132/81576 (PKT-0029) live mostly outside this target (static.js, aiProxyHandler.js, canvasservice.js): not touched.
+- Spawned: request to flip the pinned characterizations with real guards (target includes the P2 test file).
+- Acceptance: `.theseus/oracle/unit.sh` 183 passed / 1 skipped; `npm run lint:check` exit 0 (1 pre-existing AdminPanel warning).
 
 ## Spawned packets
 
