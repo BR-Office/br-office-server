@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -73,5 +73,6 @@ could be replayed after the real font arrives.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: native-only gate keeps the browser editor's behavior unchanged, font-load invalidation added, x2t saving and identical pages re-measured, PR text written
 
 ## Lessons for the Atlas
