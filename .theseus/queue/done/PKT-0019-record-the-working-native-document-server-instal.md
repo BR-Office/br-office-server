@@ -37,7 +37,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -68,5 +68,6 @@ PKT-0016 got the native package running. Recipe that worked (not yet in environm
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Faithful transcription of the PKT-0016 recipe; the only gap is the untested VM-restart note, which isn't marked as unverified in environment.md.
 
 ## Lessons for the Atlas
