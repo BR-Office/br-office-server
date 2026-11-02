@@ -45,6 +45,7 @@ Common/sources/operationContext.js; invariants in .theseus/atlas/common.md.
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the executor's permissions refused: Bash: head -24 tests/unit/utils.tests.js > tests/unit/operationContext.tests.js && cat >> tests/unit/operationContext.tests.js…; Bash: f=$(ls .theseus/queue/in-progress/PKT-0007-*.md); python3 - "$f" <<'EOF'; Bash: sed -i '$d' .theseus/scoreboard/friction.jsonl && printf '%s\n' '{"date":"2026-11-02","helped":{"ref":"work-packet.md","…
 
 ## Spawned packets
 
