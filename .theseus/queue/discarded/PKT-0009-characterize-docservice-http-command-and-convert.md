@@ -45,6 +45,7 @@ Routes are registered in DocService/sources/server.js; handlers live in DocsCoSe
 ## Suggested plan
 
 ## Executor log
+- discard: superseded: its plan answered other goals
 
 ## Spawned packets
 
