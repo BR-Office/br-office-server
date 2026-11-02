@@ -48,9 +48,17 @@ The card's oracle is none; lazy-loading refactors touch the open-order invariant
 ## Suggested plan
 
 ## Executor log
+- Added `.theseus/oracle/documenteditor-open.sh` + `documenteditor-open-run.cjs`: Playwright (global install, `/opt/pw-browsers` Chromium) against the running native server's `/example/`. Phases: toolbar, load mask detached, type marker, close page, wait for file rewrite (= callback status 2 handled by the example), unzip and grep the marker.
+- Results (native package, 2 CPU VM): PASS 3/3, total 11.2–11.5 s; toolbar 1.1–1.3 s, loaded 1.2–2.9 s, typed ~5.2 s, saved ~11.2 s. Negative run with an unreachable URL: FAIL, exit 1.
+- Decision: status 2 is observed indirectly (example's stored file mtime changes, plus marker in the saved docx) instead of running a custom callback server, to avoid JWT setup; the marker check makes it a stronger proof than mtime alone.
+- Decision: card oracle level set to `partial` (smoke only; no controller-order assertions).
+- Surprise: `test/documenteditor/main` is a manual viewer page with no assertions and needs dev sdkjs scripts; not adopted. Clicking `#id_viewer` fails (overlay canvas + load mask intercept); click `#id_viewer_overlay` after the mask is gone.
+- Surprise: eslint ignores `.theseus/`, so `npm run lint:check` does not lint the runner.
+- Not done: the oracle is not part of the acceptance set (it needs the running stack); the check tests the deployed `/var/www` build, not the `external/web-apps` checkout. Each run leaves a `new (N).docx` in the example store.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- The documenteditor open/save path can be checked headless in ~11 s with `.theseus/oracle/documenteditor-open.sh`; refactors must be deployed to the native server before it means anything.
