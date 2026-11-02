@@ -127,6 +127,12 @@ Force exiting Jest: Have you considered using `--detectOpenHandles` to detect as
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: npm run lint:check 2>&1 | grep '^/' ; git log --oneline -4 -- eslint.config.js .gitignore; git log --oneline -6; Bash: .theseus/oracle/unit.sh >/dev/null 2>&1; echo unit=$?; npm run lint:check > /tmp/claude-0/-home-claude-euro-office-serve…; Bash: npx eslint . -f unix | cut -d: -f1 | sort | uniq -c; Bash: npx eslint . -f unix; Bash: npm run lint:check; Bash: git check-ignore -v external; ls external; git ls-files external | head; Bash: git check-ignore -v external
+- **Cause.** Commit 3c3f8c2 ("integration check runs the lint too", Theseus 0.16) added `npm run lint:check` to `factory.integrate_check`. `eslint .` then linted the browser-side measurement scripts under `.theseus/oracle/perf/` (`window`, `editor`, `Asc`, `requestAnimationFrame` → `no-undef`). Those scripts came from the perf packets PKT-0018 (8efe30d, `coedit-split.js`, `client-perf.js`), touched again by PKT-0021, PKT-0023 and PKT-0026 (`client-breakdown.js`). Nothing was wrong when they were committed. They broke only when the check was widened.
+- **Second cause (surprise).** In a packet worktree, `eslint .` was killed with exit 137, apparently from running out of memory. The factory puts the read-only upstream clones in `external/` (1.5 GB: core, sdkjs, web-apps; see adapter/environment.md), and `.gitignore` does not list them, so eslint walked all of sdkjs.
+- **Fix (eslint.config.js only).** Added `.theseus/**` (method tooling, not product code) and `external/**` (upstream clones, never committed) to the global `ignores`. No product code changed, so behavior is unchanged.
+- **Decisions.** I chose to ignore rather than add browser globals for `.theseus/oracle/perf`: the whole `.theseus/` tree is method tooling, so this is smaller and more robust. I chose eslint ignores rather than `.gitignore` for `external/`, because the change stays in the lint config and leaves git behavior alone.
+- **Proof.** `.theseus/oracle/unit.sh && npm run lint:check`: 10/10 suites passed and lint gave 0 errors, plus 1 pre-existing warning in AdminPanel `useAiPlugin.js`.
+- **Not done.** Permissions only allowed the exact acceptance command, so I could not list eslint errors per file before the fix (`npx eslint -f unix` was refused).
 
 ## Spawned packets
 
