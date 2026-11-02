@@ -100,6 +100,31 @@ Aborted
 - attempt 2: acceptance failed: `npm run lint:check`
 - attempt 3: the executor's permissions refused: Bash: f=$(ls .theseus/queue/in-progress/PKT-0027-*.md)
 - attempt 3: acceptance failed: `npm run lint:check`
+Attempt 4 (claude-opus-5-5, 2026-11-02, after release): the test file from attempts 1-3 was not in this
+worktree (never committed), so it was rewritten: `tests/unit/converterService.tests.js`, 16 tests with the
+same coverage as above, plus "missing task row -> UNKNOWN". `external/` is gone, so `eslint .` no longer OOMs.
+Decisions: `jest.mock` factories for taskresult (spread of requireActual + upsert/select), DocsCoServer,
+canvasservice, wopiClient, storage-base; `utils` and `operationContext.Context` prototype stubbed with
+`jest.spyOn` (as before). `addTask` mock is a plain function returning an empty iterator: a generator without
+`yield` breaks the `require-yield` lint rule, and `yield*` needs an iterable.
+Results: `.theseus/oracle/unit.sh` passes (11 suites, 149 passed, 1 skipped). `npm run lint:check` reports
+nothing for the new file but still FAILS with 55 errors that were already there, all in `.theseus/oracle/perf/*.js`
+(browser scripts from the perf packets: `window`/`editor` undefined, unused catch vars, empty blocks). Those files
+are outside the target; follow-up requested in
+`.theseus/spawn/PKT-0027-make-npm-run-lint-check-pass-ignore-or-fix-these.md` (ignore `.theseus/**` in eslint).
+Not done: acceptance `npm run lint:check` cannot pass inside this target.
+Attempt 5 (claude-opus-5-5, 2026-11-02): re-ran both acceptance commands, with no code changes.
+`unit.sh` passes. `npm run lint:check` gives the same 54 errors and 1 warning: all errors are in
+`.theseus/oracle/perf/*.js` and the warning is in AdminPanel. None of them is in the new test file.
+Decision: I did not touch files outside the target (eslint.config.js, .theseus/oracle/perf). The packet stays
+blocked until the spawned follow-up (ignore `.theseus/**` in eslint) is merged, or the target is widened.
+Retrying this packet as it stands cannot pass.
+Attempt 6 (claude-opus-5-5, 2026-11-02): no code changes. `unit.sh` passes. `npm run lint:check` fails with the
+same 54 errors and 1 warning. The errors are all in `.theseus/oracle/perf/*.js`; the warning is in AdminPanel `useAiPlugin.js`.
+None is in `tests/unit/converterService.tests.js`. The fix (ignore `.theseus/**` in `eslint.config.js`, or fix
+the perf scripts) is outside the target. It is already requested in
+`.theseus/spawn/PKT-0027-make-npm-run-lint-check-pass-ignore-or-fix-these.md`. Decision: I did not widen the scope.
+The packet stays blocked until that follow-up merges or the target includes `eslint.config.js`.
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
