@@ -57,6 +57,7 @@ patch + decision note under .theseus/diagnosis until a writable fork of Euro-Off
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the spawn request PKT-0075-stabilize-flaky-tests-unit-docscoservercrashpath.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
