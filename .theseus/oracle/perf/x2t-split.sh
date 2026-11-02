@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PKT-0041: split raw x2t time into phases using strace file-open timestamps (installed native package).
+# PKT-0041 (run and fixed by PKT-0051): split raw x2t time into phases using strace file-open timestamps (installed native package).
 # Usage: .theseus/oracle/perf/x2t-split.sh <workdir> <input>...   (input .docx/.xlsx/.pptx -> pdf;
 #        input ending in /Editor.bin -> save conversion with m_bFromChanges, a changes/ dir must sit next to it)
 # Markers (first openat after the previous marker):
@@ -15,7 +15,7 @@ B=/var/www/euro-office/documentserver/server/FileConverter/bin
 for IN in "$@"; do
   base=$(basename "$IN"); T="$W/trace-$base-$RANDOM.txt"
   if [[ $IN == */Editor.bin ]]; then
-    OUT="$W/save-$(basename "$(dirname "$IN")").docx"; X="$W/p-$RANDOM.xml"
+    OUT="$W/out-$(basename "$(dirname "$IN")").docx"; X="$W/p-$RANDOM.xml"
     cat > "$X" <<X
 <?xml version="1.0" encoding="utf-8"?><TaskQueueDataConvert><m_sFileFrom>$IN</m_sFileFrom><m_sFileTo>$OUT</m_sFileTo><m_nFormatTo>65</m_nFormatTo><m_bFromChanges>true</m_bFromChanges><m_sAllFontsPath>$B/AllFonts.js</m_sAllFontsPath><m_bIsNoBase64>false</m_bIsNoBase64></TaskQueueDataConvert>
 X
@@ -46,6 +46,7 @@ fs=[e[0] for e in ev if d and d<=e[0]<=(o or tend) and e[2].endswith('font_selec
 e_=fs[-1] if len(fs)>1 else (o or tend)
 marks=[('start',t0,a),('native',a,b),('v8init',b,c),('script',c,d),('layout',d,e_),('write',e_,tend)]
 s=' '.join(f"{n}={(y-x)*1000:.0f}" if x and y else f"{n}=-" for n,x,y in marks)
-print(f"{inp.split('/')[-2] if inp.endswith('Editor.bin') else inp.split('/')[-1]}: total={(tend-t0)*1000:.0f}ms {s}")
+snap=sorted({e[2].split('/')[-1] for e in ev if 'sdk-all' in e[2] and e[1]=='openat'})
+print(f"{inp.split('/')[-2] if inp.endswith('Editor.bin') else inp.split('/')[-1]}: total={(tend-t0)*1000:.0f}ms {s} sdk-files={','.join(snap)}")
 PY
 done
