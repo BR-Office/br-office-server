@@ -39,7 +39,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -56,6 +56,7 @@ x2t-cpuprofile.js; say whether it is worth a fork of sdkjs.
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16.4
 
 ## Spawned packets
 
