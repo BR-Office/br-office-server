@@ -53,6 +53,10 @@ to `ignores` (one line, easy to keep in sync with upstream). Found by PKT-0027.
 ## Suggested plan
 
 ## Executor log
+- Surprise: `'external/**'` (and `.theseus/**`) were already in `ignores` of `eslint.config.js`, added by commit f500ee1 (PKT-0049). This packet duplicates PKT-0049; no code change was needed.
+- Decision: left `eslint.config.js` untouched (contract: lint rules unchanged). The code diff is empty.
+- Acceptance: `npm run lint:check` passes (0 errors, 1 pre-existing warning in AdminPanel useAiPlugin.js, no OOM); `.theseus/oracle/unit.sh` passes (178 passed, 1 skipped).
+- Could not do: nothing blocked. Compound shell commands using `$?`, `${PIPESTATUS}` or quoted heredocs were refused by permissions, so I ran commands separately and used the edit tools.
 
 ## Spawned packets
 
