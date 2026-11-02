@@ -58,6 +58,10 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 
 ## Executor log
 - return: factory restarted on Theseus 0.16.3
+- Done: `convertByCmd` sync loop now sleeps `delay` starting at `CONVERT_SYNC_DELAY_MIN = 50` ms, doubling up to `CONVERT_ASYNC_DELAY` (1000); `waitTime += delay` (actual waited time), so the strict `waitTime > getConvertionTimeout` check is unchanged.
+- Tests: only `sleeps` expectations changed (`[1000]`→`[50]` x2, `[1000,1000,1000]`→`[50,100,200]`, timeout case `[1000 x4]`→`[50,100,200,400,800,1000,1000]` since cumulative 50..2550 ≤ 3000, 3550 > 3000) plus the matching test title/comment.
+- Acceptance: unit oracle 178 passed / 1 skipped; lint 0 errors, 1 pre-existing AdminPanel warning.
+- Not done: before/after latency with `.theseus/oracle/perf/e2e-convert.js` — no stack on :8080 and no docker daemon in this worktree environment. Expected gain: a task ending in < 1 s now returns after ~50-350 ms instead of 1000 ms. Trade-off: up to ~6 extra DB selects in the first 1.5 s per sync request.
 
 ## Spawned packets
 
