@@ -40,7 +40,7 @@ The block above was the diagnosis proposal. The adopted configuration is in "Dec
 4. **Which artifact Jest runs: the emitted `.js`, rebuilt first (option 2).** `.theseus/oracle/unit.sh` runs `node ts-strip.js` before Jest, so a stale or missing `.js` cannot satisfy the oracle; the root `npm run "unit tests"`/`tests`/integration scripts do the same. Jest needs no transform and runs exactly the file `pkg` ships. `tests/jest.config.js` is unchanged.
 5. **Where the build runs.** `.docker/server.bake.Dockerfile` runs `npm run build:ts` in `/server` before `pkg`. The root `prepare` script also runs it, so `npm ci`/`npm install` at the root (factory setup, the `Makefile` grunt target) leaves the `.js` in place.
 6. **`tsconfig.json` options, against the 6.0/7.0 defaults.** `strict` is the default in 6.0+ but is kept explicit. `types` defaults to `[]` since 6.0, so `"types": ["node"]` is required for `require`, `module`, `process` and `Buffer`. `moduleDetection: "force"` makes every `.ts` a module even though it has no `import`/`export` (otherwise two migrated files declaring `const os` would collide as global scripts); with `noEmit` it has no runtime effect. `esModuleInterop` is dropped (always on since 6.0). No deprecated option is used (`moduleResolution: nodenext`, `target: es2022`, no `baseUrl`, no `outFile`).
-7. **Lint.** `eslint.config.js` ignores `**/*.ts` explicitly (ESLint 9 would skip them anyway); `.ts` linting with `typescript-eslint` is a follow-up packet.
+7. **Lint.** `eslint.config.js` ignores `**/*.ts` explicitly (ESLint 9 would skip them anyway); `.ts` linting with `typescript-eslint` (through the `@typescript/typescript6` alias, or plain once TypeScript 7.1 ships its API) is a follow-up packet. It still has to be created: the factory run that executed PKT-0009 forbade writes under `.theseus/queue/`, so `theseus packet new` could not be run from it.
 
 ## Minimal example
 
@@ -92,7 +92,7 @@ module.exports.localeToLCID = localeToLCID;               // same exports shape 
 Checklist to migrate the next file `foo.js`:
 
 1. `git mv foo.js foo.ts`, add types (strict inside, `unknown` or a local interface at external input), erasable syntax only.
-2. Add `path/to/foo.js` to `.gitignore` and `.prettierignore`.
+2. Add `path/to/foo.js` to `.gitignore` and `.prettierignore`; check that `git ls-files path/to/foo.js` prints nothing.
 3. Run `npx tsc -p tsconfig.json --noEmit`, `.theseus/oracle/unit.sh`, `npm run lint:check`.
 
 ## Mechanism
@@ -116,7 +116,9 @@ Gradual, file by file, inside the same Node.js process:
 - `config` reads with dynamic keys (`config.get(...)`) lose typing.
 - Lint: the current `eslint.config.js` is for JavaScript; adding `typescript-eslint` needs the `@typescript/typescript6` alias until TypeScript 7.1 ships its API.
 - `npx tsc` with TypeScript missing from `node_modules` does not fail cleanly: npx downloads the unrelated `tsc` package (or silently uses a global install). Install the root dev dependencies first.
-- Root dev dependencies: `typescript@^7.0.2` and `@types/node@24.3.0` (the version already pinned in `npm-shrinkwrap.json` as a jest transitive). The shrinkwrap `typescript` entry was written by hand in PKT-0009 (the executor sandbox could not run `npm install` or reach the registry), so it has `version`/`resolved` but no `integrity` and no `requires`; npm fills both on the next `npm install` at the root. Run it once with network and commit the refreshed shrinkwrap.
-- An emitted `.js` that was committed before migration stays tracked despite `.gitignore`: run `git rm --cached <file>.js` when migrating a file.
+- Root dev dependencies: `typescript@^7.0.2` and `@types/node@24.3.0` (the version already pinned in `npm-shrinkwrap.json` as a jest transitive).
+- **TypeScript 7 ships its compiler as 20 optional per-platform packages** (`@typescript/typescript-linux-x64`, `-darwin-arm64`...). `node_modules/typescript` alone is a launcher: without the platform package `tsc` fails with "Unable to resolve @typescript/typescript-linux-x64". A shrinkwrap entry for `typescript` written without its `requires` (as PKT-0009's first attempts did) installs only the launcher, and `npm ci` then rejects the file as out of sync.
+- **Keep the root shrinkwrap at `lockfileVersion: 1`** (every shrinkwrap in this repo is v1). A plain `npm install` with npm >= 7 converts it to v3 (~9,000 changed lines). To change root dependencies without that churn: `npm install` (lets npm resolve the tree, writes v3), then `npm install --lockfile-version=1` (writes the same tree back as v1, platform packages included as `"optional": true`), then check with `npm ci` and `npx tsc -p tsconfig.json --noEmit`. Running `--lockfile-version=1` straight from the old v1 file drops the optional platform packages.
+- An emitted `.js` that was committed before migration stays tracked despite `.gitignore`: run `git rm --cached <file>.js` when migrating a file, and never `git add -f` an emitted file.
 - `module.stripTypeScriptTypes` prints an `ExperimentalWarning` on Node 22; harmless. Non-erasable syntax makes the build throw, so `tsc` (`erasableSyntaxOnly`) catches it first.
 - A `catch (e)` variable is `unknown` under `strict`: `(e as Error).stack` keeps the old behavior; an `instanceof` guard would change it.
