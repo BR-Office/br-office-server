@@ -9,7 +9,7 @@ You review a packet executed by a model of **another family**. You do not fix th
 
 ## Do
 
-1. Confirm the executor is from another family. If it is from yours, do not review.
+1. Confirm the executor is from another family, or, when `.theseus/adapter/adapter.yaml` sets `review.allow_same_family: true` (pilot mode), at least another model. Never review your own work.
 2. Rerun every `acceptance` command. Do not trust the executor's result.
 3. Check the diff against the packet:
    - only files in `target.files` and `target.create_in` were touched;

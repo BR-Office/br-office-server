@@ -15,7 +15,7 @@ This repository uses the **Theseus** method. These rules apply to any agent (Cla
 - **Scope never expands.** Found work outside the target? Create a new packet with `theseus packet new` and record its id under "Spawned packets".
 - **Respect the contract.** Nothing in `contract.preserve` may change; nothing in `contract.forbidden` may be touched.
 - **Proof before delivery.** Deliver only when every `acceptance` command passes.
-- **Reviewer from another family.** Never review a packet executed by a model of your own family.
+- **Reviewer from another family.** Never review a packet executed by a model of your own family, unless the adapter enables pilot mode (`review.allow_same_family: true`); even then, never review your own work.
 - **Record everything in the repository.** Decisions, surprises and lessons go into the packet and the Atlas, never only into the conversation.
 - **Record friction.** When a packet ends, append to `.theseus/scoreboard/friction.jsonl` what in the method hindered, was missing or was unneeded.
 
