@@ -176,6 +176,7 @@ index ee0cfe2..df350a9 100644
   against upstream (fe036d5~1..2dc4784, 1 file, +42/-12) is the final style-cache.js; the attempt-3 patch above is its first half.
   Pushing to a fork is not possible yet (no sdkjs fork exists).
 - Acceptance: `bash .theseus/oracle/sdkjs-common.sh` -> 6/6 suites passed (color-mods and chartEx-serialize fail as recorded).
+- block: 3 attempts failed; last: Embed the full `git format-patch fe036d5~1..2dc4784` output for style-cache.js in the packet; the 2dc4784 Map/WeakMap change exists only in the untracked nested clone and is not recorded. Also add a log line saying the goal was met through its "cheaper key" alternative.
 
 ## Spawned packets
 - PKT-0085: Cache CShape.recalculateTextStyles results per (master, layout, placeholder, lstStyle, autofit) on pptx open
