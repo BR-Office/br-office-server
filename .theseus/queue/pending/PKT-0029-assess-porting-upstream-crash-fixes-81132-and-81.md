@@ -29,7 +29,7 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -43,6 +43,7 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.16 (main-branch repair first)
 
 ## Spawned packets
 
