@@ -144,6 +144,10 @@ Optional fields: `model_name` (name passed to the tool; Claude Code defaults to 
 
 `.theseus/adapter/environment.md` (optional) describes what is installed and running for the project: services, container images and tools, and how to start them. The factory tells every agent to read it first.
 
+A module may live in **another repository**: `modules[].repository` (a git URL) and optionally `checkout` (default `external/<name>`). The factory keeps a shallow mirror next to the worktrees and checks it out, read only, in every worktree at `checkout`; the checkout paths are excluded from the project's git, so nothing under them reaches a packet branch. Changing code in those repositories needs forks and is not covered yet. The factory also removes a packet's worktree once its branch is merged.
+
+`theseus plan` also checks the main branch: when `factory.integrate_check` fails on it twice in a row, it plans one **repair** packet (priority `critical`, open target `create_in: ["**"]`), and nothing else can be claimed until it is done. Make `integrate_check` run every oracle command the packets' acceptance uses, so that what reaches the main branch keeps passing them.
+
 `factory.integrate: true` makes the factory merge each approved branch into the main branch. Conflicts only in the files of `factory.union_merge` (e.g. `.gitignore`) keep both sides; `factory.integrate_check` (e.g. the unit oracle) runs on the merged tree before the merge commit. Any other conflict, or a failing check, leaves the branch unmerged and records why in the packet. The factory keeps every packet's run folder (prompts, final reports, acceptance logs) in `.theseus/scoreboard/runs/<id>/` for the audits.
 
 ### Routing and reasoning effort

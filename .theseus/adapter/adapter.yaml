@@ -71,7 +71,7 @@ factory:
   read_only_commands: ["node --version", "theseus status", "theseus validate"]
   integrate: true                 # merge each approved branch into theseus-v2
   union_merge: [.gitignore, .prettierignore]
-  integrate_check: .theseus/oracle/unit.sh
+  integrate_check: .theseus/oracle/unit.sh && npm run lint:check   # every oracle command packets use
 
 oracle:
   type: tests
