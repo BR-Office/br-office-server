@@ -31,6 +31,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -51,6 +52,7 @@ Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9
 - Finding (81576): `shutdown.js:73` waits for SaveVersion rows to reach 0; the failure path that should release SaveVersion was not traced. Recommendation: fetch diff first, medium risk.
 - Acceptance: no commands declared; nothing to run.
 - block: the reviewer found an external blocker: Upstream ONLYOFFICE commits for 81132/81576 can't be found without network access to github.com (`git clone`/`gh api`) or a full-history upstream mirror; the operator or factory admin must grant one, then the spawned follow-up can finish the goal.
+- release: executors now run with every privilege (Rafael); git clone, x2t, strace, perf and system paths are allowed
 
 ## Spawned packets
 - PKT-0050: Fetch upstream diffs for bugs 81132 and 81576 with network access
