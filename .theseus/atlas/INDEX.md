@@ -8,5 +8,8 @@
 | [docservice](docservice.md) | Co-editing coordination server, conversion/command API, WOPI | n/a (no tool data) | unknown | partial | — | current |
 | [sdkjs-common](sdkjs-common.md) | Shared browser engine: base API, co-edit client, fonts, drawings/charts, serialization (index card, to split) | n/a (no tool data) | unknown | none | — | current |
 | [sdkjs-word](sdkjs-word.md) | Browser document editor: API, model, layout, Editor.bin, co-edit (index card, to split) | n/a (no tool data) | unknown | none | — | current |
+| [sdkjs-word-model-core](sdkjs-word-model-core.md) | CDocument root, actions, page recalculation loop | n/a (no tool data) | unknown | partial | — | current |
+| [sdkjs-word-paragraph](sdkjs-word-paragraph.md) | Paragraph model and line layout | n/a (no tool data) | unknown | partial | — | current |
+| [sdkjs-word-serialize](sdkjs-word-serialize.md) | Editor.bin reader/writer | n/a (no tool data) | unknown | partial | — | current |
 | [web-apps-documenteditor](web-apps-documenteditor.md) | Document editor UI shell: pages, boot, controllers around sdkjs (index card, to split) | n/a (no tool data) | unknown | none | — | current |
 | [x2t](x2t.md) | C++ CLI dispatcher that chains core format libraries to convert documents | n/a (no tool data) | unknown | none | — | current |
