@@ -75,6 +75,7 @@ Replaces PKT-0063, which was blocked by a contract conflict. Make synchronous co
 - Attempt 3 (review rejection): spawn request already had target/contract/acceptance filled (commit ffbb90c); verified no placeholders remain. The rejected unit run failed only in tests/unit/request.tests.js with a 5 s `beforeAll` hook timeout (Express test-server startup), a file outside target and unrelated to converterservice.js. Re-ran `.theseus/oracle/unit.sh` 3 times: 12/12 suites, 178 passed / 1 skipped each time; lint 0 errors. Treated as a load-induced flake; no code change.
 
 ## Spawned packets
+- PKT-0076: Make e2e-convert.js work against the native JWT-enabled stack
 
 ## Review
 
