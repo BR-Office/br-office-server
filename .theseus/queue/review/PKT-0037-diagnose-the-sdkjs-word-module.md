@@ -50,6 +50,11 @@ Diagnose the module `sdkjs-word` following `.theseus/prompts/diagnostician.md` a
 
 ## Executor log
 - attempt 1: the executor's permissions refused: Bash: cd external/sdkjs; ls tests/word | head -30; ls tests/word | wc -l; cat tests/runAll.js | head -30; git log --oneline -1…; Bash: S=external/sdkjs; ls $S/tests/word | head -30; ls $S/tests/word | wc -l; head -30 $S/tests/runAll.js; find $S/word -name…; Bash: find external/sdkjs/word -name '*.js' -exec cat {} + | wc -l; Bash: sed -i 's/requires: \[documentserver\]/requires: [documentserver, browser]/' .theseus/diagnosis/DIAG-sdkjs-word.md
+- Verdict **refactor**, conditional on P1 (profile open / remote apply). Reason: the baseline puts ~1.9–2.4 s of every docx open after Editor.bin, the co-edit apply tail and typing p90 > 100 ms in the client, plausibly much of it in this module; no profile yet splits it from sdkjs/common, fonts or the browser.
+- Migrate/rewrite discarded: oracle not established (D1), hotspot unknown, model tightly coupled to sdkjs/common globals (a WASM boundary would copy per edit).
+- Surprise: the card says oracle `none`, but `external/sdkjs/tests/word/` holds 21 QUnit suites run headless by `tests/runAll.js` in upstream CI. Planned P2 to make them the oracle and update the card.
+- Could not do: line counts via `find -exec`/pipelines were refused by permissions; used the card's ~428k figure. Did not run the QUnit suites (out of scope for a diagnosis).
+- Did not read any other sdkjs-word diagnosis (independence); read DIAG-common only for the format.
 
 ## Spawned packets
 
