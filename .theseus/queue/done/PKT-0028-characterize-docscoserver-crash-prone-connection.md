@@ -32,7 +32,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -84,5 +84,6 @@ These are the paths of the upstream crash fixes listed in .theseus/oracle/baseli
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: The goal's crash paths are pinned with concrete assertions, every wrong behaviour is tagged as a P4 target, no source changed and the budget is respected.
 
 ## Lessons for the Atlas
