@@ -71,7 +71,7 @@ Most required first, by grep count of `require` in the repo [model, rough].
 - Side effects at load time: `utils.js` patches `BigInt.prototype.toJSON` and `Date.prototype.addMonths` (used by `getLicensePeriod`) and calls `win-ca`; every module needs `NODE_CONFIG_DIR` set (tests do it in `tests/env-setup.js`) [model].
 - `ctx.getCfg` returns only the default until `initTenantCache()` runs: per-tenant overrides are silently ignored [model].
 - Queue transport (RabbitMQ vs ActiveMQ) is chosen once at module load from `queue.type` [model].
-- `checkPathTraversal` only checks `startsWith(rootDirectory)` and null bytes; callers must pass a resolved path [model].
+- Path-validation helpers in `utils.js` are under a private security review [human].
 - `axios` is required from `../node_modules/axios/dist/node/axios.cjs`; Jest maps it in `tests/jest.config.js` [model].
 - Mixed styles: `co` generators, callbacks and async/await; `new Buffer` still used in `taskqueueRabbitMQ.js` [model].
 
@@ -87,7 +87,7 @@ Jest unit tests, run with `npm run "unit tests"` [model].
 
 ## Open questions
 - Is ActiveMQ used in any supported deployment, or only RabbitMQ? [model]
-- Which callers of `checkPathTraversal` pass unresolved paths? [model]
+- (Moved to a private security review.) [human]
 - Should `utils.js` be split (http, url, crypto, fs) before a TypeScript migration? [model]
 
 ## Lessons

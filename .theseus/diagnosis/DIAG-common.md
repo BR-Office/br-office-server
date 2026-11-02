@@ -21,7 +21,7 @@ Scale: 0–5, higher = stronger case for changing the module (for oracle and int
 | Criterion | Score | Weight | Evidence |
 |---|---|---|---|
 | Performance gain | 1 | 0.10 | No profile (`metrics.cpu_pct: null`). TS adds no runtime gain. The only likely costs are `pbkdf2` in `encryptPassword` (`utils.js:1199-1213`) and stream helpers; migrating changes neither. |
-| Security risk | 3 | 0.20 | Common holds the SSRF filter (`request-filtering-agent`, `utils.js:52,277`), JWT/secret helpers, password encryption (`utils.js:1199-1247`) and parsing of untrusted bytes (`formatchecker.js:31,703,732`, signature scan over uploaded buffers). `checkPathTraversal` (`utils.js:1146-1156`) uses `startsWith(rootDirectory)` with no trailing separator, so a sibling such as `<root>_x` passes. Its only callers, `FileConverter/sources/converter.js:614,1205`, build `fileFrom` with `path.join` on a client-influenced format suffix. Types help at the `InputCommand` boundary but do not fix logic flaws. |
+| Security risk | 3 | 0.20 | Common holds the SSRF filter (`request-filtering-agent`, `utils.js:52,277`), JWT/secret helpers, password encryption (`utils.js:1199-1247`) and parsing of untrusted bytes (`formatchecker.js:31,703,732`, signature scan over uploaded buffers). A path-handling helper is under private security review (see SECURITY note below). Types help at the `InputCommand` boundary but do not fix logic flaws. |
 | Maintenance cost | 3 | 0.25 | 7,541 lines in 24 files. `utils.js` has 1,563 lines and 126 top-level functions/exports (a grab bag). `commondefines.js` has 1,245 lines of accessor classes. Styles are mixed: `co` generators (9 in `taskqueueRabbitMQ.js`, `utils.js:175,201,217,1025`, `tenantManager.js:159`), and deprecated `new Buffer` remains (`taskqueueRabbitMQ.js:590`). There is a circular require `utils → operationContext → tenantManager → utils`, and load-time patches of `BigInt.prototype` and `Date.prototype` (`utils.js:91,1311-1319`). `churn_90d` cannot be measured: the fork history is one import commit (`0567757`, 2026-10-28). |
 | Coupling | 3 | 0.10 | Fan-in: 36 files in DocService, FileConverter and tests require Common. `utils` and `operationContext` are the most required (about 27 references each), then `commondefines` (about 20), `storage-base` (about 15), `constants` and `tenantManager` (about 12). High fan-in raises the value of types for callers and the risk of a shape change. The interop rule (keep the `module.exports` shape) protects callers. |
 | Oracle strength | 2 | 0.15 | Card `oracle.level: partial`. Covered: 18 pure `utils` helpers plus encrypt/decrypt (`tests/unit/utils.tests.js`), request/SSRF, `watchWithFallback`, `runtimeConfigManager`, `mailService`, `reporters/sentry`. Oracle is `none` for `constants`, `commondefines`, `formatchecker`, `documentFormats`, `tenantManager`, `storage/*`, `taskqueueRabbitMQ`, `rabbitMQCore`, `activeMQCore`. |
@@ -53,7 +53,7 @@ The old `.js` file of each migrated module is removed in the same `migrate` pack
 | 1 | 0 | characterize | create `tests/unit/commondefines.tests.js` | Pin `constants` values that are protocol (error codes) and `InputCommand`/`TaskQueueData`/`OutputSfcData` construction from plain objects and `JSON.stringify` round-trip, including the fields forced to `undefined` (`commondefines.js:33-37`, `copyExplicit`). | — |
 | 2 | 0 | characterize | create `tests/unit/formatchecker.tests.js` | Pin `getFormatFromString` ↔ `getStringFromFormat`, `documentFormats` maps, and signature detection for sample, empty and truncated buffers. | — |
 | 3 | 0 | interop | `package.json`, `tests/jest.config.js`, `eslint.config.*`, create `tsconfig.json` | Add the TypeScript toolchain (`allowJs`, CommonJS, Jest transform, lint for `.ts`) and fill in the interop doc's "Minimal example". | — |
-| 4 | 0 | investigate | `FileConverter/sources/converter.js`, `Common/sources/utils.js` (read only) | Decide whether the separator-less `startsWith` in `checkPathTraversal` is exploitable from `cmd.getFormat()`/`fileFrom`, and propose the fix packet. | — |
+| 4 | 0 | investigate | (private) | Private security review of a path-handling helper; outcome tracked outside this public repository. | — |
 | 5 | 1 | migrate | `Common/sources/constants.js` → `.ts` | First migrated leaf: typed constants, same exports. | 1, 3 |
 | 6 | 1 | migrate | `Common/sources/commondefines.js` → `.ts` | Typed command/data classes, `unknown` at the untrusted input boundary. | 1, 5 |
 | 7 | 1 | migrate | `Common/sources/documentFormats.js`, `formatchecker.js` → `.ts` | Typed format ids and signature detection. | 2, 5 |
@@ -67,12 +67,12 @@ Wave 2 packets for `utils.js` come from #9, and the summary is revisited after w
 - **Toolchain friction** (Jest transform, `axios` path mapping, lint on `.ts`) slowing every packet. Detection: #3 must leave `unit.sh` and `lint:check` green with one `.ts` file present. If the cost exceeds budget, record it as friction and reassess.
 - **Load-order breakage** if a migrated leaf starts importing a cycle member. Detection: only allow leaf modules in wave 1, and review imports in each migrate packet.
 - **Deployments that run Common without a build step.** Detection: #3 must state how the compiled output is produced and used by DocService/FileConverter (including any packaging scripts).
-- **Security fix scope creep:** the path traversal finding (#4) must not be fixed inside a migrate packet (no behavior change in `migrate`).
+- **Security fix scope creep:** any fix coming from the private review (#4) must not be done inside a migrate packet (no behavior change in `migrate`).
 
 ## What would change this verdict
 - **Down to keep** for the remaining waves if #3 shows the toolchain cannot be added without changing the build/packaging of DocService/FileConverter, or if wave 1 costs exceed 2× the packet budgets.
 - **Down to refactor (JS only) for `utils.js`** if #9 shows the cycle cannot be broken without changing `ctx` behavior.
 - **Up to migrate for the queue/storage adapters** if integration tests for them become part of the oracle (oracle `partial` or better) and upstream churn shows them changing often.
 - **Retire `activeMQCore.js`** if the maintainers confirm no supported deployment uses ActiveMQ.
-- **Raise security priority** (fix before any migration) if #4 confirms `checkPathTraversal` is exploitable.
+- **Raise security priority** (fix before any migration) if the private review (#4) confirms an issue.
 - A **divergent** second diagnosis (D3) sends the decision to a human.
