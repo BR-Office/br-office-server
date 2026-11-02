@@ -32,7 +32,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -50,5 +51,6 @@ Card x2t "Available oracle" - none automated. Invariants - exit code mapping and
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: surprise "wrong m_nFormatTo gives exit 88 with no output" is in the log but not kept in a test/baseline; add an unsupported-format case to corpus.py and baseline-9.3.7-1.json (and document that the make-corpus output dir must be named `corpus`)
 
 ## Lessons for the Atlas
