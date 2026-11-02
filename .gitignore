@@ -17,3 +17,5 @@ runtime.json
 # Add one line per migrated file: the .ts is the source, the .js is a build output.
 DocService/sources/utilsDocService.js
 Common/sources/constants.js
+Common/sources/documentFormats.js
+Common/sources/formatchecker.js

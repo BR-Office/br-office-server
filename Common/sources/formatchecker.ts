@@ -25,10 +25,27 @@
 
 'use strict';
 
-const constants = require('./constants');
-const {open} = require('node:fs/promises');
+// TypeScript source. Only erasable syntax is allowed (tsconfig.json: erasableSyntaxOnly):
+// `node ts-strip.js` erases the types and writes formatchecker.js next to this file.
+// CommonJS stays as it was (require / module.exports) so the exports shape is unchanged.
 
-function getImageFormatBySignature(buffer) {
+/** A format id: one of the AVS_OFFICESTUDIO_FILE_* numeric constants. */
+type FormatId = number;
+
+interface Logger {
+  error(format: string, ...args: unknown[]): void;
+}
+
+/** The subset of operationContext used here. */
+interface OperationContext {
+  logger: Logger;
+}
+
+/** constants.js is not migrated yet: every AVS_OFFICESTUDIO_FILE_* export is a numeric format id. */
+const constants: Readonly<Record<string, FormatId>> = require('./constants');
+const {open}: typeof import('node:fs/promises') = require('node:fs/promises');
+
+function getImageFormatBySignature(buffer: Buffer): FormatId {
   const length = buffer.length;
   //1000 for svg(xml header and creator comment)
   const startText = buffer.toString('ascii', 0, 1000);
@@ -261,7 +278,7 @@ function getImageFormatBySignature(buffer) {
 
   return constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
 }
-exports.getFormatFromString = function (ext) {
+exports.getFormatFromString = function (ext: string | null | undefined): FormatId {
   if (!ext) {
     return constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
   }
@@ -440,7 +457,7 @@ exports.getFormatFromString = function (ext) {
       return constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
   }
 };
-exports.getStringFromFormat = function (format) {
+exports.getStringFromFormat = function (format: FormatId): string {
   switch (format) {
     case constants.AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX:
       return 'docx';
@@ -640,38 +657,38 @@ exports.getStringFromFormat = function (format) {
       return '';
   }
 };
-exports.getImageFormat = function (ctx, buffer) {
+exports.getImageFormat = function (ctx: OperationContext, buffer: Buffer): FormatId {
   let format = constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
   try {
     //signature
     format = getImageFormatBySignature(buffer);
   } catch (e) {
-    ctx.logger.error('error getImageFormat: %s', e.stack);
+    ctx.logger.error('error getImageFormat: %s', (e as Error).stack);
   }
   return format;
 };
-exports.isDocumentFormat = function (format) {
+exports.isDocumentFormat = function (format: FormatId): boolean {
   return (
     0 !== (format & constants.AVS_OFFICESTUDIO_FILE_DOCUMENT) ||
     format === constants.AVS_OFFICESTUDIO_FILE_CANVAS_WORD ||
     format === constants.AVS_OFFICESTUDIO_FILE_TEAMLAB_DOCY
   );
 };
-exports.isSpreadsheetFormat = function (format) {
+exports.isSpreadsheetFormat = function (format: FormatId): boolean {
   return (
     0 !== (format & constants.AVS_OFFICESTUDIO_FILE_SPREADSHEET) ||
     format === constants.AVS_OFFICESTUDIO_FILE_CANVAS_SPREADSHEET ||
     format === constants.AVS_OFFICESTUDIO_FILE_TEAMLAB_XLSY
   );
 };
-exports.isPresentationFormat = function (format) {
+exports.isPresentationFormat = function (format: FormatId): boolean {
   return (
     0 !== (format & constants.AVS_OFFICESTUDIO_FILE_PRESENTATION) ||
     format === constants.AVS_OFFICESTUDIO_FILE_CANVAS_PRESENTATION ||
     format === constants.AVS_OFFICESTUDIO_FILE_TEAMLAB_PPTY
   );
 };
-exports.isOOXFormat = function (format) {
+exports.isOOXFormat = function (format: FormatId): boolean {
   return (
     constants.AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX === format ||
     constants.AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCM === format ||
@@ -692,7 +709,7 @@ exports.isOOXFormat = function (format) {
     constants.AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLTM === format
   );
 };
-exports.isBrowserEditorFormat = function (format) {
+exports.isBrowserEditorFormat = function (format: FormatId): boolean {
   return (
     constants.AVS_OFFICESTUDIO_FILE_CROSSPLATFORM_PDF === format ||
     constants.AVS_OFFICESTUDIO_FILE_CROSSPLATFORM_PDFA === format ||
@@ -700,7 +717,7 @@ exports.isBrowserEditorFormat = function (format) {
     constants.AVS_OFFICESTUDIO_FILE_CROSSPLATFORM_XPS === format
   );
 };
-function getDocumentFormatBySignature(buffer) {
+function getDocumentFormatBySignature(buffer: Buffer | null | undefined): FormatId {
   if (!buffer) {
     return constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
   }
@@ -729,7 +746,7 @@ function getDocumentFormatBySignature(buffer) {
  * @param {Buffer} buffer - File data buffer
  * @returns {number} Format constant or AVS_OFFICESTUDIO_FILE_UNKNOWN
  */
-function getOfficeZipFormatBySignature(buffer) {
+function getOfficeZipFormatBySignature(buffer: Buffer): FormatId {
   const length = buffer.length;
 
   // Check ZIP signature (PK header)
@@ -744,7 +761,7 @@ function getOfficeZipFormatBySignature(buffer) {
     const startPos = Math.max(0, length - searchFromEnd);
 
     // Helper function for direct byte search in ZIP central directory
-    const searchOfficeFile = filename => {
+    const searchOfficeFile = (filename: string): boolean => {
       const searchBytes = Buffer.from(filename, 'utf8');
       const searchLen = searchBytes.length;
       const endPos = Math.max(0, length - searchLen);
@@ -771,14 +788,14 @@ function getOfficeZipFormatBySignature(buffer) {
   return constants.AVS_OFFICESTUDIO_FILE_UNKNOWN;
 }
 
-async function getDocumentFormatByFile(file) {
+async function getDocumentFormatByFile(file: string): Promise<FormatId> {
   const firstBytesLen = 100;
-  let buffer;
-  let fd;
+  let buffer: Buffer | undefined;
+  let fd: import('node:fs/promises').FileHandle | undefined;
   try {
     fd = await open(file, 'r');
     const stream = fd.createReadStream({start: 0, end: firstBytesLen});
-    const chunks = [];
+    const chunks: Buffer[] = [];
     for await (const chunk of stream) {
       chunks.push(Buffer.from(chunk));
     }

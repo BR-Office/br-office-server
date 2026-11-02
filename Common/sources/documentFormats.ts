@@ -25,7 +25,27 @@
 
 'use strict';
 
-const {readFile} = require('fs/promises');
+// TypeScript source. Only erasable syntax is allowed (tsconfig.json: erasableSyntaxOnly):
+// `node ts-strip.js` erases the types and writes documentFormats.js next to this file.
+// CommonJS stays as it was (require / module.exports) so the exports shape is unchanged.
+
+const {readFile}: typeof import('fs/promises') = require('fs/promises');
+
+interface Logger {
+  warn(format: string, ...args: unknown[]): void;
+}
+
+/** The subset of operationContext used here. */
+interface OperationContext {
+  logger: Logger;
+}
+
+/** One entry of onlyoffice-docs-formats.json, as read from disk (unvalidated). */
+interface FormatEntry {
+  name?: unknown;
+  type?: unknown;
+  actions?: unknown;
+}
 
 const CATEGORIES = [
   'pdfView',
@@ -39,11 +59,16 @@ const CATEGORIES = [
   'diagramView',
   'diagramEdit',
   'forms'
-];
+] as const;
+
+type Category = (typeof CATEGORIES)[number];
+
+/** Map of category -> extensions. */
+type FormatsByCategory = Record<Category, string[]>;
 
 // Keyed by filePath: documentFormatsFile is per-tenant, so a single global cache
 // would serve one tenant's format list to all tenants.
-const cache = new Map();
+const cache = new Map<string, FormatsByCategory>();
 
 /**
  * Load and parse all formats from JSON file (with caching)
@@ -51,13 +76,13 @@ const cache = new Map();
  * @param {Object} ctx - operation context, used to log when the file cannot be read
  * @returns {Promise<Object>} Map of category -> extensions array
  */
-async function getAllFormats(filePath, ctx) {
+async function getAllFormats(filePath: string, ctx: OperationContext): Promise<FormatsByCategory> {
   if (cache.has(filePath)) {
-    return cache.get(filePath);
+    return cache.get(filePath) as FormatsByCategory;
   }
 
   // Initialize empty categories
-  const result = Object.fromEntries(CATEGORIES.map(key => [key, []]));
+  const result = Object.fromEntries(CATEGORIES.map((key): [Category, string[]] => [key, []])) as FormatsByCategory;
 
   if (!filePath) {
     ctx.logger.warn('getAllFormats: documentFormatsFile is not configured; WOPI discovery will list no formats');
@@ -65,14 +90,14 @@ async function getAllFormats(filePath, ctx) {
   }
 
   try {
-    const formats = JSON.parse(await readFile(filePath, 'utf8'));
+    const formats: unknown = JSON.parse(await readFile(filePath, 'utf8'));
 
     if (!Array.isArray(formats)) {
       ctx.logger.warn('getAllFormats: "%s" is not a JSON array; WOPI discovery will list no formats', filePath);
       return result;
     }
 
-    for (const {name, type, actions} of formats) {
+    for (const {name, type, actions} of formats as FormatEntry[]) {
       if (!name || !type || !Array.isArray(actions)) {
         continue;
       }
@@ -80,19 +105,21 @@ async function getAllFormats(filePath, ctx) {
       // 'edit' = native edit, 'lossy-edit' = edit with potential format loss
       const hasEdit = actions.includes('edit') || actions.includes('lossy-edit');
       const hasView = actions.includes('view');
-      const key = type + (hasEdit ? 'Edit' : hasView ? 'View' : '');
+      const key: string = (type as string) + (hasEdit ? 'Edit' : hasView ? 'View' : '');
 
-      if (result[key]) {
-        result[key].push(name);
+      // Same lookup as before: any key on the object (including inherited ones) counts
+      const list = (result as Record<string, string[] | undefined>)[key];
+      if (list) {
+        list.push(name as string);
       }
 
       if (type === 'pdf' && actions.includes('fill')) {
-        result.forms.push(name);
+        result.forms.push(name as string);
       }
     }
   } catch (err) {
     // Do not cache the empty result, so a later request retries once the file is available
-    ctx.logger.warn('getAllFormats: failed to read formats file "%s": %s', filePath, err.stack);
+    ctx.logger.warn('getAllFormats: failed to read formats file "%s": %s', filePath, (err as Error).stack);
     return result;
   }
 
