@@ -44,7 +44,7 @@ Method change proposals are called **TEPs** (Theseus Enhancement Proposals).
 
 ### 4.1 Per packet (extends the work packet Scoreboard record)
 
-Each line of `.theseus/scoreboard/packets.jsonl` gains these fields. The factory writes every one of them on every record; an unknown value is `null`, never omitted (TEP-0001). `block_reason` of a blocked packet is `{"cause": "method" | "model" | "task", "ref": "<rule or section>", "text": "..."}` (TEP-0002); the routing statistics leave out blocks caused by the method, and the audit reports their cost separately.
+Each line of `.theseus/scoreboard/packets.jsonl` gains these fields. The factory writes every one of them on every record; an unknown value is `null`, never omitted (TEP-0001). `block_reason` of a blocked packet is `{"cause": "method" | "model" | "task", "ref": "<rule or section>", "text": "..."}` (TEP-0002); the routing statistics leave out blocks caused by the method, and the audit reports their cost separately. The factory fills in (TEP-0004): `estimated` (the packet's `estimated`, or its budget limits with `source: budget`), `context_ratio` (the largest context of one model call over the model's context window, from the tool's per-call usage), `flaky_oracle` (the same commit failed and then passed an acceptance command); `out_of_context_reads` stays `null` until a tool reports file reads.
 
 ```json
 {

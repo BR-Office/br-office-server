@@ -91,6 +91,8 @@ budget:
   max_attempts: 3         # after 3 failed reviews, goes to blocked/
   timeout_min: null       # optional: minutes per agent run, overriding limits.agent_timeout_min
 
+requires: []              # optional: environment checks (adapter environment.checks) run before any agent (TEP-0002)
+
 roles:                    # filled at claim / review time
   executor: null          # e.g. claude-opus-5-5 | gpt-x
   reviewer: null
