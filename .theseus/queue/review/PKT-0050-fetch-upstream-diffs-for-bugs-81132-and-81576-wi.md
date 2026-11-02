@@ -49,6 +49,11 @@ PKT-0029 could not fetch: `git clone`, `gh api` and WebFetch to github.com were 
 ## Suggested plan
 
 ## Executor log
+- Surprise: the PKT-0029 diagnosis had already got the upstream diffs (SHAs, files, apply check). Only the Euro-Office `release/v9.4.0` commit for 81132 was missing.
+- Network worked this time: blobless `git clone` of ONLYOFFICE/server and Euro-Office/server into the scratchpad (not committed).
+- Finding: EO has no commit for 81132 on `release/v9.4.0` or `main` (ancestry check); the release branch tip (2026-03-29) predates the fix. 81576 is absent from EO entirely. Appended a "Verification by PKT-0050" section to the diagnosis.
+- Decision: no new .patch files; the PKT-0029 patches are correct (same SHAs). No code changed, so no tests to run; acceptance is empty.
+- Not done: no port (needs the human decision recorded in the diagnosis).
 
 ## Spawned packets
 
