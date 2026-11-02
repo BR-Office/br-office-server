@@ -61,6 +61,7 @@ PKT-0043 (baseline.md "where the word editor's CPU goes"): on the 100-page docx 
 - Acceptance: bash .theseus/oracle/unit.sh -> 178 passed, 1 skipped.
 
 ## Spawned packets
+- PKT-0066: Incremental font-name collection for remote changes in sdkjs word (pre_Save/CheckFontNeeds path)
 
 ## Review
 
