@@ -96,6 +96,7 @@ Aborted
 ```
 - release: the lint ran out of memory on the client's sources checked out under external/ (fixed in Theseus 0.15.3: this packet no longer gets them)
 - attempt 1: the executor's permissions refused: Bash: cat > tests/unit/converterService.tests.js <<'EOF'; Bash: npm run lint:check > ../lint27.log 2>&1; echo exit=$?; tail -15 ../lint27.log; Bash: cd .theseus/spawn && f=PKT-0027-make-npm-run-lint-check-pass-ignore-or-fix-these.md && sed -i 's#    - "\[FILE\]"#    - …
+- attempt 1: acceptance failed: `npm run lint:check`
 
 ## Spawned packets
 - PKT-0035: Ignore external/ in eslint.config.js so npm run lint:check does not OOM
