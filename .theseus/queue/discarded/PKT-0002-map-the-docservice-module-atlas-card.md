@@ -49,6 +49,7 @@ Map the module `docservice` (`DocService`) into the Atlas card `.theseus/atlas/d
 - attempt 1: the executor's permissions refused: Bash: cat .theseus/spec/module-card.md; ls .theseus .theseus/adapter; cat .theseus/atlas/graph.json 2>/dev/null | head -50; th…; Bash: cat .theseus/spec/module-card.md; ls .theseus .theseus/adapter; ls .theseus/atlas; theseus --help 2>&1 | head -40; wc -l…; Bash: cd DocService/sources && wc -l ai/*.js databaseConnectors/*.js routes/*.js 2>/dev/null; grep -nE "app\.(get|post|put|use…; Bash: sed -n '/^## Responsibility/,$p' .theseus/atlas/docservice.md | wc -w; test -s .theseus/atlas/docservice.md && echo OK
 - attempt 2: the executor's permissions refused: Bash: theseus --help 2>&1 | head -30; head -30 .theseus/atlas/docservice.md; Bash: f=.theseus/spawn/PKT-0002-regenerate-atlas-index-md-rows-from-module-cards.md
 - block: 3 attempts failed; last: Goal requires a docservice row in .theseus/atlas/INDEX.md, which was not added because INDEX.md is not in target.files; factory must add it to the target or drop the row from the Goal (with the spawn approved)
+- discard: planned with a target that did not include INDEX.md (fixed in Theseus 0.12.2); the next plan recreates it
 
 ## Spawned packets
 
