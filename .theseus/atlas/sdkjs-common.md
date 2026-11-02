@@ -17,8 +17,9 @@ dependencies: null                # tool — .theseus/atlas/graph.json does not 
 metrics: null                     # tool — not computed yet
 
 oracle:
-  level: none
-  sources: []
+  level: unit                     # PKT-0046: narrow, see Available oracle
+  sources:
+    - .theseus/oracle/sdkjs-common.sh
 
 verdict: null
 ---
@@ -49,14 +50,22 @@ Open: the editor's `baseEditorsApi` starts `DocsCoApi.init`, which connects to D
 Nothing measured yet. Largest files by `wc`: `Charts/ChartsDrawer.js` (21k), `Drawings/Format/Format.js` (21k), `Drawings/Format/ChartFormat.js` (20k), `editorscommon.js` (16k), `SerializeChart.js` (15k), `wordcopypaste.js` (15k), `Drawings/Format/ChartSpace.js` (14k), `Drawings/CommonController.js` (12k), `Shapes/Serialize.js` (12k) [model]. `Native/jquery_native.js` (9k) looks vendored [model].
 
 ## Available oracle
-`external/sdkjs/tests/` exists with `common/`, `word/`, `cell/`… and `runAll.js`; `libfont/test/` has hyphen/shaper HTML pages. Not run; whether they run headless is unknown [model].
+`.theseus/oracle/sdkjs-common.sh [filter]` (PKT-0046) runs `external/sdkjs/tests/common` headless with node-qunit-puppeteer on the preinstalled Playwright Chromium. First run does the setup (`npm ci` in build, `npm run develop`, ~2 min); after that ~15 s. Measured 2026-11-02 on the 2-CPU VM [tool]:
+
+| Suite | Result | Time |
+|---|---|---|
+| common/api/api.html (word), api-cell, api-slide, api-visio | PASS 75/75 each | 4-6 s each |
+| common/api/*-compiled.html (4) | skipped: load `deploy/` bundles, need a full `npm run build` | — |
+| common/color-mods/color-mods.html | FAIL 9766/10023, 11 tests (lum/sat/hue/alpha mods); not in upstream `runAll.js`; skipped unless `ORACLE_ALL=1` | 7.6 s |
+| common/charts/chartEx-serialize.html | does not finish in 120 s; not in upstream `runAll.js`; skipped unless `ORACLE_ALL=1` | >120 s |
+
+Green oracle: 4/4 suites, 300/300 assertions. **Coverage is narrow**: the api suites check the Builder API surface (`common/apiBase*`, `api/`) only. Not covered: font loading (`GlobalLoaders.js`, `libfont/`), co-editing send/apply (`docscoapi.js`, `CollaborativeEditingBase.js`), history/undo, DrawingML serialization, charts and SmartArt layout, clipboard. A refactor in those areas must bring its own check (e.g. the word suites via `.theseus/oracle/sdkjs-word.sh`, which exercise common code indirectly, or a new characterization test). `libfont/test/` pages were not tried. A follow-up asks why color-mods and chartEx fail.
 
 ## Open questions
 - Exact sizes, languages, fan-in/out: need `graph.json`.
 - Is the proposed split right? Boundaries are by file name, not by call graph.
 - How many font files does an open fetch, and serially or in parallel (`GlobalLoaders.js`, `downloaderfiles.js`)?
-- Can `external/sdkjs/tests/common` run headless as an oracle?
 - Why two classes `CDocsCoApi` (~41) and `DocsCoApi` (~561) in `docscoapi.js`?
 
 ## Lessons
-Nothing known yet.
+- `tests/common` has more suites than upstream `runAll.js` lists; the unlisted ones (color-mods, chartEx-serialize) are not green, so do not trust them as an oracle until diagnosed (PKT-0046).

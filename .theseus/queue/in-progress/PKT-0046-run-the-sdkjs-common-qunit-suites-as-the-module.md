@@ -48,9 +48,19 @@ The card says oracle none; tests/common has api, charts and color-mods suites ru
 ## Suggested plan
 
 ## Executor log
+- Wrote `.theseus/oracle/sdkjs-common.sh` + `sdkjs-common-run.cjs`, modelled on the PKT-0044 word oracle (same setup, Playwright Chromium, concurrency 2). The runner takes the `common/` entries of upstream `tests/runAll.js` and also every other `tests/common/**/*.html`.
+- Result: the 4 upstream api suites pass (300/300 assertions, ~11-20 s). Setup on a fresh worktree adds ~2 min.
+- Decision: `*-compiled.html` (4) skipped, since they need a full `npm run build`, which this oracle does not do.
+- Surprise: color-mods (not in upstream runAll) fails 11 tests (9766/10023) and chartEx-serialize times out at 120 s. Decision: local skips so the oracle is green, kept runnable with `ORACLE_ALL=1`; spawned an investigate request for both.
+- Card: oracle level `unit`, source the script; table of results; uncovered areas listed (fonts, co-edit apply, history, serialization, charts, clipboard).
+- Not done: did not try a longer timeout for chartEx, did not run `libfont/test/` pages or the compiled variants.
+- Acceptance: `unit.sh` 178 passed / 1 skipped; `lint:check` 0 errors, 1 pre-existing warning.
 
 ## Spawned packets
+- Request: Diagnose failing sdkjs color-mods and chartEx-serialize QUnit suites (investigate, requires browser).
 
 ## Review
 
 ## Lessons for the Atlas
+- sdkjs common's QUnit oracle only covers the Builder API surface; fonts and co-editing still need their own checks.
+- Upstream runAll.js is the list of suites known to be green; other suites in the tree may be broken.
