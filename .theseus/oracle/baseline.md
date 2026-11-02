@@ -112,6 +112,64 @@ Reading:
   p99 seen in PKT-0015 with 4 clients is therefore most likely CPU contention among Chromium instances.
 - Not isolated: x2t time inside the open (it overlaps with script loading); images, real networks.
 
+## Client: where the word editor's CPU goes (PKT-0043)
+
+Scripts: `NODE_PATH=/opt/node-tools/node_modules node .theseus/oracle/perf/profile-word.js <file.docx> <out-dir> [runs]`
+records CDP `Profiler` CPU profiles (100 µs sampling, headless Chromium from Playwright 1.63) of the editor tab;
+`node .theseus/oracle/perf/attribute-word.js <out-dir> [--json]` attributes them. Aggregated output for both files in
+`perf/word-profile-2026-11-02.json` (raw `.cpuprofile` files are not committed: 1–3 MB each, regenerate).
+**Native package** 9.3.7-1, same VM and samples as PKT-0016 (docx 10 p / 100 p, text + tables, no images), 3 runs each.
+- *open*: samples between CDP `Network.loadingFinished` of Editor.bin and `isDocumentLoadComplete` (same clock).
+- *type*: user A types 40 characters one by one (A's profile). *apply*: A types 30 markers; profile of user B.
+- Frames are named: `sdkjs/word/sdk-all.js` ships with names (whitespace-only minification); its frames are mapped
+  to source files through definition anchors (names from the files `configs/word.json` bundles, looked up in
+  `external/sdkjs`). `sdk-all-min.js` (the "min" base: docscoapi, CollaborativeEditingBase, SerializeCommonWordExcel,
+  libfont loader…) is name-mangled and stays one bucket. Samples under Playwright's own `evaluate`/`predicate`
+  frames (the harness polling `GetText`) are excluded (2–690 ms per run).
+- Profiling inflates the open window (2.5–6.9 s here vs 1.9–2.4 s unprofiled in PKT-0016): read shares, not ms.
+
+Self share of busy main-thread time, % (inclusive % in brackets = bucket anywhere on the stack), mean of 3 runs:
+
+| Bucket | open 10 p | open 100 p | type 10 p | type 100 p | apply 10 p | apply 100 p |
+|---|---|---|---|---|---|---|
+| busy ms per run | 3 538 | 3 424 | 3 572 | 2 581 | 5 366 | 2 879 |
+| word: paragraph/run layout & model (Paragraph*, Run, Paragraph/ draw states, bidi) | 18.7 (45) | 23.1 (43) | 23.5 (45) | 25.1 (46) | 19.4 (44) | 31.0 (49) |
+| word: document recalc & pagination (Document*, DocumentContent*, sections, Layout) | 6.5 (50) | 4.3 (39) | 2.7 (53) | 2.9 (54) | 2.1 (57) | 5.0 (63) |
+| word: table layout & model | 1.7 (6) | 2.6 (10) | 1.1 (8) | 1.0 (7) | 0.9 (5) | 1.2 (6) |
+| word: styles & numbering | 5.1 (8) | 5.5 (11) | 0.4 | 0.5 | 3.0 (5) | 2.2 (3) |
+| word: Serialize2 reader (Editor.bin) | 2.7 (13) | 4.8 (23) | 0 | 0 | 0 | 0 |
+| collab: changes, history, apply (sdk-all.js part) | 0.5 (1) | 0.5 (1) | 0.3 | 0.6 | 0.1 | 0.1 |
+| drawing & render (word/Drawing, common/Drawings) | 5.7 (21) | 6.1 (23) | 4.3 (57) | 3.7 (50) | 5.2 (49) | 2.2 (45) |
+| fonts (common/libfont, fonts.wasm) | 15.5 (19) | 9.1 (22) | 5.5 (17) | 3.6 (16) | 8.1 (17) | 5.2 (14) |
+| sdkjs/common: other | 2.6 | 2.9 | 1.8 | 1.3 | 1.0 | 0.5 |
+| sdkjs base bundle sdk-all-min.js (mangled) | 4.8 (69) | 4.6 (63) | 1.8 (20) | 1.8 (16) | 1.6 (29) | 1.9 (28) |
+| web-apps & vendor UI (app.js, jQuery) | 13.9 | 12.2 | 4.7 | 4.4 | 5.4 | 4.6 |
+| browser: native builtins (canvas `drawImage` 21–27 % in type/apply) | 2.2 | 1.6 | 30.5 | 28.8 | 25.3 | 20.7 |
+| browser: (program) = Blink style/layout/paint, V8 outside JS | 14.2 | 14.4 | 20.3 | 21.5 | 23.7 | 23.0 |
+| browser: GC | 3.7 | 5.3 | 2.5 | 3.9 | 2.5 | 1.4 |
+| *[stack] any sdkjs `*Recalc*` function* | (28) | (18) | (13) | (16) | (16) | (23) |
+| *[stack] any sdkjs `*Draw*`/`*Paint*` function* | (14) | (14) | (54) | (48) | (45) | (33) |
+
+Top self functions: open — `SetFontInternal` (textmeasurer), `hb_get_script_horizontal_direction`,
+`CDocument.private_UpdateTracks`, `Paragraph.Get_PosByElement`, Styles (`CDocumentColor`, table-style creation),
+`AscCommon.Hex.encode`; type/apply — `drawImage`, `ParaRun.Draw_HighLights` (2–4 %), `BidiFlow.add` (2–4 %),
+`*.Document_Get_AllFontNames` (apply 100 p: 9 % self across Paragraph/Document/CTextPr, walks the whole
+document per change), `ParaRun.Recalculate_Range`/`Recalculate_LineMetrics`, `CUniFill.createDuplicate`.
+
+Reading:
+- **Open after Editor.bin is mostly word layout, not parsing.** Serialize2 reading is 13–23 % inclusive (grows with
+  size); paragraph/run + document recalc (≈ 40–50 % inclusive) and fonts (≈ 20 %, text measuring/shaping in
+  fonts.wasm) dominate. web-apps UI start-up is ≈ 12–14 % self in the same window. Styles ≈ 5 % self.
+- **Typing and remote apply are dominated by repainting, not by the change itself.** The collab apply code proper is
+  < 1 % (the part in sdk-all-min.js is mangled but its whole stack share is ≤ 29 % including the recalc it calls);
+  `*Draw*` on the stack is 33–57 %, canvas `drawImage` alone 17–27 % self and Blink `(program)` ≈ 21–24 %. In headless
+  Chromium the canvas is software-rasterised, so drawImage is likely over-weighted here versus a GPU desktop.
+- **Pure-JS kernels with a migration profile:** none dominates. The largest single sdkjs functions are 2–4 % each
+  (`Draw_HighLights`, `BidiFlow.add`, font-name collection); text shaping already runs in WASM (fonts.wasm). Refactor
+  candidates for wave 1: per-change `Document_Get_AllFontNames` walk, highlight/bidi draw passes, repaint scope on
+  remote changes, styles construction at open.
+- Not measured: GPU-backed rendering, images/drawings-heavy documents, the mangled base bundle's internals.
+
 ## End-to-end server (full stack, PKT-0015)
 
 Environment: `ghcr.io/euro-office/documentserver:latest` (DocService 9.3.7 build 37, PostgreSQL, Redis,
