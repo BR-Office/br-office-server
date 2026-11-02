@@ -19,29 +19,136 @@ Acceptance commands (pre-approved: run them exactly as written, from the reposit
 - `npm run lint:check`
 
 Previous attempts were rejected. Fix these problems:
-- These calls were refused by your permissions in the previous attempt; do not retry them, and if the packet cannot be finished without them say so in your report: Bash: mkdir -p x; head -24 tests/unit/utilsDocService.tests.js > tests/unit/converterService.tests.js; cat >> tests/unit/conve…; Bash: cd tests/unit && python3 - <<'PY'; Bash: npm run lint:check 2>&1 | tail -15; npx prettier --check tests/unit/converterService.tests.js 2>&1 | tail -3; Bash: npx eslint tests/unit/converterService.tests.js && npx prettier --check tests/unit/converterService.tests.js && echo OK; Bash: sed -n 26,40p eslint.config.js; ls external; git check-ignore -v external; git ls-files external | head -3; Bash: node -e "const {ESLint}=require('eslint');new ESLint().lintFiles(['tests/unit/converterService.tests.js']).then(r=>{cons…; Bash: cd .theseus/spawn && python3 -c "
+- These calls were refused by your permissions in the previous attempt; do not retry them, and if the packet cannot be finished without them say so in your report: Bash: cat > tests/unit/converterService.tests.js <<'EOF'; Bash: npm run lint:check > ../lint27.log 2>&1; echo exit=$?; tail -15 ../lint27.log; Bash: cd .theseus/spawn && f=PKT-0027-make-npm-run-lint-check-pass-ignore-or-fix-these.md && sed -i 's#    - "\[FILE\]"#    - …
 - acceptance failed: `npm run lint:check`. Output:
 ```
- 1: 0xe48bbe node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
- 2: 0x1248d00 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 3: 0x1248fd7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 4: 0x1477ee5  [node]
- 5: 0x1477f13  [node]
- 6: 0x1490fea  [node]
- 7: 0x14941b8  [node]
- 8: 0x1cfcc61  [node]
-Aborted
+   20:13  error  'window' is not defined                 no-undef
+   21:3   error  'window' is not defined                 no-undef
+   24:65  error  'window' is not defined                 no-undef
+   26:77  error  'window' is not defined                 no-undef
+   38:53  error  'window' is not defined                 no-undef
+   38:71  error  'window' is not defined                 no-undef
+   38:85  error  'Asc' is not defined                    no-undef
+   91:38  error  'editor' is not defined                 no-undef
+   96:35  error  'editor' is not defined                 no-undef
+   97:46  error  'requestAnimationFrame' is not defined  no-undef
+  103:31  error  'window' is not defined                 no-undef
+  103:85  error  'window' is not defined                 no-undef
+  108:35  error  'editor' is not defined                 no-undef
+  111:42  error  'window' is not defined                 no-undef
+  112:42  error  'window' is not defined                 no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/client-perf.js
+  17:44  error  'window' is not defined                 no-undef
+  17:61  error  'editor' is not defined                 no-undef
+  17:94  error  'editor' is not defined                 no-undef
+  24:39  error  'editor' is not defined                 no-undef
+  24:85  error  'editor' is not defined                 no-undef
+  49:37  error  'editor' is not defined                 no-undef
+  50:48  error  'requestAnimationFrame' is not defined  no-undef
+  58:37  error  'editor' is not defined                 no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/coedit-split.js
+  22:13  error  'window' is not defined                                                       no-undef
+  23:3   error  'window' is not defined                                                       no-undef
+  26:67  error  'window' is not defined                                                       no-undef
+  28:79  error  'window' is not defined                                                       no-undef
+  37:40  error  'window' is not defined                                                       no-undef
+  37:57  error  'editor' is not defined                                                       no-undef
+  37:90  error  'editor' is not defined                                                       no-undef
+  42:50  error  'editor' is not defined                                                       no-undef
+  43:49  error  'window' is not defined                                                       no-undef
+  43:68  error  'window' is not defined                                                       no-undef
+  66:14  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  66:17  error  Empty block statement                                                         no-empty
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/convert-large.js
+  27:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  46:157  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-coedit.js
+  21:40  error  'window' is not defined  no-undef
+  21:57  error  'editor' is not defined  no-undef
+  21:90  error  'editor' is not defined  no-undef
+  26:59  error  'editor' is not defined  no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-convert.js
+  24:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/load-coedit.js
+   63:204  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+   63:207  error  Empty block statement                                                         no-empty
+   81:41   error  'k' is defined but never used. Allowed unused args must match /^_/u           no-unused-vars
+  120:12   error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  120:15   error  Empty block statement                                                         no-empty
+  138:69   error  'window' is not defined                                                       no-undef
+  139:105  error  'window' is not defined                                                       no-undef
+  142:40   error  'window' is not defined                                                       no-undef
+  142:57   error  'editor' is not defined                                                       no-undef
+  145:43   error  'window' is not defined                                                       no-undef
+  158:130  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  158:133  error  Empty block statement                                                         no-empty
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/AdminPanel/client/src/pages/AiIntegration/hooks/useAiPlugin.js
+  185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+✖ 55 problems (54 errors, 1 warning)
 ```
-- These calls were refused by your permissions in the previous attempt; do not retry them, and if the packet cannot be finished without them say so in your report: Bash: .theseus/oracle/unit.sh 2>&1 | tail -5; npm run lint:check > ../lint.log 2>&1; echo exit=$?; tail -3 ../lint.log; Bash: sed -i '38s/.*/{"packet":"PKT-0027","role":"executor","model":"claude-opus-5-5","date":"2026-11-02","hindered":{"ref":"w…
 - acceptance failed: `npm run lint:check`. Output:
 ```
- 1: 0xe48bbe node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
- 2: 0x1248d00 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 3: 0x1248fd7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 4: 0x1477ee5  [node]
- 5: 0x1477f13  [node]
- 6: 0x1490fea  [node]
- 7: 0x14941b8  [node]
- 8: 0x1cfcc61  [node]
-Aborted
+   20:13  error  'window' is not defined                 no-undef
+   21:3   error  'window' is not defined                 no-undef
+   24:65  error  'window' is not defined                 no-undef
+   26:77  error  'window' is not defined                 no-undef
+   38:53  error  'window' is not defined                 no-undef
+   38:71  error  'window' is not defined                 no-undef
+   38:85  error  'Asc' is not defined                    no-undef
+   91:38  error  'editor' is not defined                 no-undef
+   96:35  error  'editor' is not defined                 no-undef
+   97:46  error  'requestAnimationFrame' is not defined  no-undef
+  103:31  error  'window' is not defined                 no-undef
+  103:85  error  'window' is not defined                 no-undef
+  108:35  error  'editor' is not defined                 no-undef
+  111:42  error  'window' is not defined                 no-undef
+  112:42  error  'window' is not defined                 no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/client-perf.js
+  17:44  error  'window' is not defined                 no-undef
+  17:61  error  'editor' is not defined                 no-undef
+  17:94  error  'editor' is not defined                 no-undef
+  24:39  error  'editor' is not defined                 no-undef
+  24:85  error  'editor' is not defined                 no-undef
+  49:37  error  'editor' is not defined                 no-undef
+  50:48  error  'requestAnimationFrame' is not defined  no-undef
+  58:37  error  'editor' is not defined                 no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/coedit-split.js
+  22:13  error  'window' is not defined                                                       no-undef
+  23:3   error  'window' is not defined                                                       no-undef
+  26:67  error  'window' is not defined                                                       no-undef
+  28:79  error  'window' is not defined                                                       no-undef
+  37:40  error  'window' is not defined                                                       no-undef
+  37:57  error  'editor' is not defined                                                       no-undef
+  37:90  error  'editor' is not defined                                                       no-undef
+  42:50  error  'editor' is not defined                                                       no-undef
+  43:49  error  'window' is not defined                                                       no-undef
+  43:68  error  'window' is not defined                                                       no-undef
+  66:14  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  66:17  error  Empty block statement                                                         no-empty
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/convert-large.js
+  27:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  46:157  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-coedit.js
+  21:40  error  'window' is not defined  no-undef
+  21:57  error  'editor' is not defined  no-undef
+  21:90  error  'editor' is not defined  no-undef
+  26:59  error  'editor' is not defined  no-undef
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-convert.js
+  24:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/load-coedit.js
+   63:204  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+   63:207  error  Empty block statement                                                         no-empty
+   81:41   error  'k' is defined but never used. Allowed unused args must match /^_/u           no-unused-vars
+  120:12   error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  120:15   error  Empty block statement                                                         no-empty
+  138:69   error  'window' is not defined                                                       no-undef
+  139:105  error  'window' is not defined                                                       no-undef
+  142:40   error  'window' is not defined                                                       no-undef
+  142:57   error  'editor' is not defined                                                       no-undef
+  145:43   error  'window' is not defined                                                       no-undef
+  158:130  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  158:133  error  Empty block statement                                                         no-empty
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/AdminPanel/client/src/pages/AiIntegration/hooks/useAiPlugin.js
+  185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+✖ 55 problems (54 errors, 1 warning)
 ```

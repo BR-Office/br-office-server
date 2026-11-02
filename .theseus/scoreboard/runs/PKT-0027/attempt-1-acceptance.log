@@ -3,22 +3,76 @@
 > eslint .
 
 
-<--- Last few GCs --->
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/client-breakdown.js
+   20:13  error  'window' is not defined                 no-undef
+   21:3   error  'window' is not defined                 no-undef
+   24:65  error  'window' is not defined                 no-undef
+   26:77  error  'window' is not defined                 no-undef
+   38:53  error  'window' is not defined                 no-undef
+   38:71  error  'window' is not defined                 no-undef
+   38:85  error  'Asc' is not defined                    no-undef
+   91:38  error  'editor' is not defined                 no-undef
+   96:35  error  'editor' is not defined                 no-undef
+   97:46  error  'requestAnimationFrame' is not defined  no-undef
+  103:31  error  'window' is not defined                 no-undef
+  103:85  error  'window' is not defined                 no-undef
+  108:35  error  'editor' is not defined                 no-undef
+  111:42  error  'window' is not defined                 no-undef
+  112:42  error  'window' is not defined                 no-undef
 
-[14483:0x26175000]   108804 ms: Scavenge 2041.1 (2083.2) -> 2039.5 (2087.4) MB, pooled: 0 MB, 2.22 / 0.00 ms  (average mu = 0.222, current mu = 0.212) allocation failure; 
-[14483:0x26175000]   110192 ms: Mark-Compact (reduce) 2043.3 (2087.4) -> 2035.0 (2079.1) MB, pooled: 0 MB, 943.44 / 0.00 ms  (+ 414.6 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 1388 ms) (average mu = 0.164, 
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/client-perf.js
+  17:44  error  'window' is not defined                 no-undef
+  17:61  error  'editor' is not defined                 no-undef
+  17:94  error  'editor' is not defined                 no-undef
+  24:39  error  'editor' is not defined                 no-undef
+  24:85  error  'editor' is not defined                 no-undef
+  49:37  error  'editor' is not defined                 no-undef
+  50:48  error  'requestAnimationFrame' is not defined  no-undef
+  58:37  error  'editor' is not defined                 no-undef
 
-<--- JS stacktrace --->
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/coedit-split.js
+  22:13  error  'window' is not defined                                                       no-undef
+  23:3   error  'window' is not defined                                                       no-undef
+  26:67  error  'window' is not defined                                                       no-undef
+  28:79  error  'window' is not defined                                                       no-undef
+  37:40  error  'window' is not defined                                                       no-undef
+  37:57  error  'editor' is not defined                                                       no-undef
+  37:90  error  'editor' is not defined                                                       no-undef
+  42:50  error  'editor' is not defined                                                       no-undef
+  43:49  error  'window' is not defined                                                       no-undef
+  43:68  error  'window' is not defined                                                       no-undef
+  66:14  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  66:17  error  Empty block statement                                                         no-empty
 
-FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
------ Native stack trace -----
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/convert-large.js
+  27:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  46:157  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
 
- 1: 0xe48bbe node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
- 2: 0x1248d00 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 3: 0x1248fd7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
- 4: 0x1477ee5  [node]
- 5: 0x1477f13  [node]
- 6: 0x1490fea  [node]
- 7: 0x14941b8  [node]
- 8: 0x1cfcc61  [node]
-Aborted
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-coedit.js
+  21:40  error  'window' is not defined  no-undef
+  21:57  error  'editor' is not defined  no-undef
+  21:90  error  'editor' is not defined  no-undef
+  26:59  error  'editor' is not defined  no-undef
+
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/e2e-convert.js
+  24:103  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/.theseus/oracle/perf/load-coedit.js
+   63:204  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+   63:207  error  Empty block statement                                                         no-empty
+   81:41   error  'k' is defined but never used. Allowed unused args must match /^_/u           no-unused-vars
+  120:12   error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  120:15   error  Empty block statement                                                         no-empty
+  138:69   error  'window' is not defined                                                       no-undef
+  139:105  error  'window' is not defined                                                       no-undef
+  142:40   error  'window' is not defined                                                       no-undef
+  142:57   error  'editor' is not defined                                                       no-undef
+  145:43   error  'window' is not defined                                                       no-undef
+  158:130  error  'e' is defined but never used. Allowed unused caught errors must match /^_/u  no-unused-vars
+  158:133  error  Empty block statement                                                         no-empty
+
+/home/claude/euro-office-server.theseus-worktrees/PKT-0027/AdminPanel/client/src/pages/AiIntegration/hooks/useAiPlugin.js
+  185:6  warning  React Hook useEffect has missing dependencies: 'handleResetAiSettings' and 'handleResetAiTasks'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 55 problems (54 errors, 1 warning)
+
