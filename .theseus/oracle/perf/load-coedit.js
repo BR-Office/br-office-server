@@ -58,9 +58,13 @@ async function main() {
     cl.push(client(key, 0, url, FILE)); await cl[0].ready;  // first opener triggers the x2t open conversion
     for (let u = 1; u < N; u++) cl.push(client(key, u, url, FILE));
     await Promise.all(cl.map(c => c.ready));
+    // Release the auth lock taken when the 2nd editor joins, as the real editor does (PKT-0021). Without it the
+    // server drops the lock holder after expire.lockDoc (30 s) and, when the sequential open phase lasts longer
+    // than that (e.g. 200 docs), later saveLock waits never return.
+    cl[0].s.emit('message', { type: 'unLockDocument', unlock: true, isSave: false });
     docs.push(cl);
   }
-  const open = docs.flat().map(c => c.opened), ack = [], bcast = [], errs = { lockBusy: 0, missing: 0 };
+  const open = docs.flat().map(c => c.opened), ack = [], bcast = [], errs = { lockBusy: 0, noLockReply: 0, missing: 0 };
   const cpu0 = procCpu(), w0 = Date.now(), tEnd = Date.now() + SECS * 1000;
   let sent = 0;
   await Promise.all(docs.map(async (cl, k) => {
@@ -69,8 +73,9 @@ async function main() {
     while (Date.now() < tEnd) {
       const next = Date.now() + 1000 / RATE, w = cl[turn++ % N];
       w.s.emit('message', { type: 'isSaveLock', syncChangesIndex: sync });
-      const lk = await once(w, m => m.type === 'saveLock');
-      if (lk.saveLock) { errs.lockBusy++; } else {
+      // Timed out (PKT-0021): an unanswered isSaveLock used to hang the whole run.
+      const lk = await Promise.race([once(w, m => m.type === 'saveLock'), new Promise(r => setTimeout(() => r(null), 10000))]);
+      if (!lk) { errs.noLockReply++; } else if (lk.saveLock) { errs.lockBusy++; } else {
         const t = Date.now();
         const got = cl.filter(c => c !== w).map(c => Promise.race([once(c, m => m.type === 'saveChanges').then(() => Date.now() - t), new Promise(r => setTimeout(() => r(NaN), 10000))]));
         w.s.emit('message', { type: 'saveChanges', changes: JSON.stringify([CHANGE]), startSaveChanges: true, endSaveChanges: true, isCoAuthoring: N > 1,

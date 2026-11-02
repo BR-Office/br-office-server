@@ -292,11 +292,20 @@ more than one batch.
 | 10 × 5 | 20 | 79 | 3 / 7 / 10 | 3 / 7 / 10 | 131 | 0.04 |
 | 50 × 5 | 98 | 393 | 3 / 12 / 41 | 3 / 12 / 41 | 160 | 0.13 |
 | 100 × 10 (port 8000, no nginx) | 197 | 1 771 | 3 / 12 / 32 | 2 / 11 / 32 | 149 | 0.28 |
+| 200 × 5 (port 8000, PKT-0021) | 393 | 1 574 | 4 / 28 / 109 | 4 / 27 / 109 | 177 | 0.40 |
+| 200 × 10 (port 8000, PKT-0021) | 393 | 3 541 | 5 / 28 / 88 | 5 / 28 / 88 | 159 | 0.54 |
 
 - Latency is flat up to 1 000 sockets and ≈ 1 800 broadcasts/s; DocService used 0.28 of a core, PostgreSQL 0.09.
 - 100 × 10 **through nginx** failed with Socket.IO `TransportError`: stock `worker_connections 768` caps the
   proxy at ≈ 700 sockets. A deployment config limit, not a server limit.
-- 200 × 5 (direct) produced no result within the 300 s timeout (not diagnosed).
+- 200 × 5 first hung (PKT-0018); PKT-0021 found **a harness bug, not a server limit**: when a 2nd editor joins,
+  DocsCoServer takes an auth lock with a timer (`expire.lockDoc` = 30 s, `setLockDocumentTimer`); the real editor
+  releases it with `unLockDocument`, the script did not. Docs are opened one after another, so once the open phase
+  passed 30 s the lock holders were dropped and the untimed `saveLock` wait hung. `load-coedit.js` now sends
+  `unLockDocument` from the first client after each doc opens and times out `saveLock` waits (10 s, `noLockReply`).
+- After the fix (PKT-0021, 2 changes/s/doc, medium-10p.docx): 200 × 5 and 200 × 10 run with no errors and no lost
+  broadcasts; PostgreSQL 0.25 core. No ceiling at 2 000 sockets / 3 500 broadcasts/s; p99 rises 12 → 28 ms with the
+  doubled change rate. Not pushed higher: the load generator shares the 2 CPUs.
 - Save after all clients leave: every save returned callback status 3 (the replayed change does not fit the
   document, so assembly fails); the time `saveAllMs` (6 s for 1 doc, 67 s for 100) is therefore indicative only.
 
@@ -311,7 +320,12 @@ more than one batch.
 
 - The open conversion stays ≈ 0.1–0.3 s even on large files: open time is the client, as PKT-0016 found.
 - PDF export dominates (1.3–6.5 s, all x2t rendering; DocService overhead ≈ 0.1 s).
-- One pptx → pdf took 124 s (one in three runs): an outlier not explained here (converter timeout/retry?).
+- The 124 s pptx → pdf (one in three runs) is explained (PKT-0021): queueing, not x2t. FileConverter
+  `maxprocesscount` = 1 and conversions share one RabbitMQ queue with save assembly; this run followed the load test,
+  whose 100 failing saves (with retries) were still queued, and deck-50.pptx → pdf were the first conversions. On an
+  idle server 10 runs took 1 966–2 789 ms; started right after a 100 × 2 load test: 2 187, 2 386, then 68 662 ms.
+  `convert-large.js` now waits for the queue to drain (small probe conversion < 3 s) before timing; run it on an idle
+  server or before the load tests.
 
 ## Quality: what can be measured here today
 
@@ -330,7 +344,7 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 
 | Gap | Why | Follow-up |
 |---|---|---|
-| End-to-end server under load beyond 1 000 sockets; save under load; pptx→pdf 124 s outlier | PKT-0018 measured split, load to 100×10 and large files (above); 200×5 timed out, replayed changes make saves fail (status 3), outlier seen once | spawn requested by PKT-0018 |
+| Valid saves under load; load beyond 2 000 sockets | PKT-0021 reached 200×10 and explained the 124 s outlier (above); replayed single changes make every save fail (status 3, x2t `CChangesRunAddItem.Load`), so save time under load is indicative only | PKT-0023 (replay a browser-captured change sequence) |
 | Client latency: x2t share of open, real network, low-end clients | PKT-0016 split open and remote apply (section above), but the server's open + x2t is not isolated from the client's lazy script loads, all timings are on localhost, and 2 CPUs host server and browsers | server-side timestamps per open (DocService log: open request → Editor.bin ready) |
 | x2t conversion time per format | measured on realistic files in PKT-0018 (above) | — |
 | Crash rate seen by users | upstream fix and issue rates measured (PKT-0017, above); no production crash telemetry; issue counts for ONLYOFFICE cover the whole product, not only the server | production telemetry, if a deployment exists |
