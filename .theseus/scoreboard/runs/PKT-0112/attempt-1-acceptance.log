@@ -1,0 +1,167 @@
+differential: building web-apps documenteditor from /home/claude/euro-office-server.theseus-worktrees/PKT-0112/external/web-apps (628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b)
+  deploy-sprites: word (369 icons)
+  deploy-sprites: cell (344 icons)
+  deploy-sprites: slide (362 icons)
+  deploy-sprites: pdf (299 icons)
+  deploy-sprites: draw (249 icons)
+  deploy-sprites: common (639 icons)
+  deploy-sprites: docformats (56 icons)
+  deploy-sprites: done
+assets by status 14.2 MiB [big] 35 assets
+asset locale/tr.json 241 KiB [emitted] [from: ../apps/documenteditor/main/locale/tr.json] [copied]
+asset locale/id.json 238 KiB [emitted] [from: ../apps/documenteditor/main/locale/id.json] [copied]
+asset locale/pt-pt.json 234 KiB [emitted] [from: ../apps/documenteditor/main/locale/pt-pt.json] [copied]
+asset locale/sv.json 233 KiB [emitted] [from: ../apps/documenteditor/main/locale/sv.json] [copied]
+asset locale/lv.json 233 KiB [emitted] [from: ../apps/documenteditor/main/locale/lv.json] [copied]
+asset locale/gl.json 203 KiB [emitted] [from: ../apps/documenteditor/main/locale/gl.json] [copied]
+asset locale/bg.json 198 KiB [emitted] [from: ../apps/documenteditor/main/locale/bg.json] [copied]
+asset locale/ms.json 196 KiB [emitted] [from: ../apps/documenteditor/main/locale/ms.json] [copied]
+asset locale/az.json 191 KiB [emitted] [from: ../apps/documenteditor/main/locale/az.json] [copied]
+asset locale/sk.json 190 KiB [emitted] [from: ../apps/documenteditor/main/locale/sk.json] [copied]
+asset locale/sl.json 146 KiB [emitted] [from: ../apps/documenteditor/main/locale/sl.json] [copied]
+asset locale/vi.json 126 KiB [emitted] [from: ../apps/documenteditor/main/locale/vi.json] [copied]
+asset locale/no.json 74.5 KiB [emitted] [from: ../apps/documenteditor/main/locale/no.json] [copied]
+Entrypoint app [big] 2.93 MiB = app.css 560 KiB app.js 2.39 MiB
+Entrypoint code [big] 1.37 MiB = code.js
+orphan modules 563 KiB (javascript) 883 bytes (runtime) [orphan] 7 modules
+runtime modules 221 bytes 1 module
+javascript modules 5.79 MiB
+  modules by path ../apps/common/ 2.63 MiB 147 modules
+  modules by path ../apps/documenteditor/main/ 3.11 MiB 88 modules
+  modules by path ../vendor/ 51.3 KiB 3 modules
+  + 3 modules
+asset modules 192 KiB
+  modules by path ../apps/documenteditor/main/ 154 KiB
+    ../apps/documenteditor/main/app/template/ParagraphSettingsAdvanced.template 12.6 KiB [built] [code generated]
+    + 23 modules
+  modules by path ../apps/common/main/lib/ 38.1 KiB
+    ../apps/common/main/lib/template/AutoCorrectDialog.template 6.55 KiB [built] [code generated]
+    + 9 modules
+css ../../../node_modules/8add5fe1d7ed/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../../../node_modules/8add5fe1d7ed/node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../apps/documenteditor/main/resources/less/app.less 560 KiB [built] [code generated]
+
+LOG from ../../../node_modules/8add5fe1d7ed/node_modules/less-loader/dist/cjs.js less-loader ../../../node_modules/8add5fe1d7ed/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!../../../node_modules/8add5fe1d7ed/node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!../apps/documenteditor/main/resources/less/app.less
+<w> DEPRECATED WARNING: Variable names beginning with a number are deprecated and will be removed in Less 5.x. Rename the variable to start with a valid identifier character. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/asc-mixins.less on line 229, column 6:
+<w> 229     @1d5ximage: replace(@imagepath, '\.png$', '@1.5x.png');
+<w> 
+<w> DEPRECATED WARNING: Variable names beginning with a number are deprecated and will be removed in Less 5.x. Rename the variable to start with a valid identifier character. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/asc-mixins.less on line 230, column 6:
+<w> 230     @1d75ximage: replace(@imagepath, '\.png$', '@1.75x.png');
+<w> 
+<w> DEPRECATED WARNING: Variable names beginning with a number are deprecated and will be removed in Less 5.x. Rename the variable to start with a valid identifier character. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/asc-mixins.less on line 231, column 6:
+<w> 231     @1d25ximage: replace(@imagepath, '\.png$', '@1.25x.png');
+<w> 
+<w> DEPRECATED WARNING: Variable names beginning with a number are deprecated and will be removed in Less 5.x. Rename the variable to start with a valid identifier character. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/asc-mixins.less on line 232, column 6:
+<w> 232     @2ximage: replace(@imagepath, '\.png$', '@2x.png');
+<w> 
+<w> DEPRECATED WARNING: Variable names beginning with a number are deprecated and will be removed in Less 5.x. Rename the variable to start with a valid identifier character. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/asc-mixins.less on line 260, column 6:
+<w> 260     @1d5ximage: replace(@imagepath, '\.png$', '@1.5x.png');
+<w> 
+<w> DEPRECATED WARNING: Calling a mixin without parentheses is deprecated in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/buttons.less on line 456, column 15:
+<w> 456     .btn.small;
+<w> 
+<w> WARNING: Targeting complex selectors can have unexpected behavior, and this behavior may change in the future. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/common.less on line 340, column 17:
+<w> 340                 &:extend(.dropdown-menu > li > a);
+<w> 
+<w> WARNING: Targeting complex selectors can have unexpected behavior, and this behavior may change in the future. in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/common/main/resources/less/common.less on line 340, column 17:
+<w> 340                 &:extend(.dropdown-menu > li > a);
+<w> 
+<w> DEPRECATED WARNING: Calling a mixin without parentheses is deprecated in /home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/src/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b/apps/documenteditor/main/resources/less/filemenu.less on line 502, column 19:
+<w> 502     .margin-left-4;
+<w> 
+<w> Skipped data-uri embedding of ../../resources/img/iconshuge.png because file not found
+<w> Skipped data-uri embedding of ../../resources/img/iconshuge@2x.png because file not found
+<w> Skipped data-uri embedding of ../../resources/img/iconshuge.png because file not found
+<w> Skipped data-uri embedding of ../../resources/img/iconshuge@2x.png because file not found
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  app.css (560 KiB)
+  app.js (2.39 MiB)
+  code.js (1.37 MiB)
+    Largest modules: ../apps/documenteditor/main/app/view/FileMenuPanels.js (162 KiB), ../apps/documenteditor/main/app/view/ImageSettingsAdvanced.js (161 KiB), ../apps/documenteditor/main/app/controller/DocumentHolderExt.js (156 KiB)
+  locale/ar.json (292 KiB)
+  locale/be.json (284 KiB)
+  locale/ca.json (247 KiB)
+  locale/cs.json (314 KiB)
+  locale/da.json (295 KiB)
+  locale/de.json (322 KiB)
+  locale/el.json (412 KiB)
+  locale/en.json (303 KiB)
+  locale/es.json (320 KiB)
+  locale/eu.json (245 KiB)
+  locale/fi.json (250 KiB)
+  locale/fr.json (326 KiB)
+  locale/he.json (338 KiB)
+  locale/hu.json (318 KiB)
+  locale/hy.json (391 KiB)
+  locale/it.json (318 KiB)
+  locale/ja.json (332 KiB)
+  locale/ko.json (314 KiB)
+  locale/lo.json (262 KiB)
+  locale/nl.json (312 KiB)
+  locale/pl.json (314 KiB)
+  locale/pt.json (316 KiB)
+  locale/ro.json (320 KiB)
+  locale/ru.json (397 KiB)
+  locale/si.json (376 KiB)
+  locale/sq.json (323 KiB)
+  locale/sr-cyrl.json (348 KiB)
+  locale/sr.json (307 KiB)
+  locale/uk.json (275 KiB)
+  locale/ur.json (372 KiB)
+  locale/zh-tw.json (266 KiB)
+  locale/zh.json (289 KiB)
+
+WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  app (2.93 MiB)
+      app.css
+      app.js
+  code (1.37 MiB)
+      code.js
+
+WARNING in webpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+
+webpack 5.112.2 compiled with 3 warnings in 11253 ms
+differential: built web-apps documenteditor in 13 s
+differential: original d238e526 (/home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/out/dd7510be8ba281bc543b18b0f6b3bb63f7ca968b-da39a3ee5e6b)
+differential: new      f1da4f89 (/home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/out/628416b8e4c2377990d00e202ed0759a6902d671-da39a3ee5e6b)
+timing web-apps-documenteditor text.docx | original open=3069 join=3170 edit=3470 save=277 convert=227 reopen=3019 | new open=3262 join=3011 edit=3242 save=252 convert=186 reopen=2978
+same text.docx dialogs
+same text.docx model
+same text.docx sentA
+same text.docx sentB
+same text.docx shown
+same text.docx ui
+same text.docx reopened
+same text.docx converted
+timing web-apps-documenteditor styles.docx | original open=3165 join=3422 edit=3287 save=345 convert=243 reopen=2986 | new open=3170 join=3228 edit=3076 save=289 convert=216 reopen=2822
+same styles.docx dialogs
+same styles.docx model
+same styles.docx sentA
+same styles.docx sentB
+same styles.docx shown
+same styles.docx ui
+same styles.docx reopened
+same styles.docx converted
+timing web-apps-documenteditor plain.txt | original open=3077 join=2374 edit=3084 save=172 convert=124 reopen=2461 | new open=2983 join=2685 edit=3193 save=189 convert=169 reopen=2337
+same plain.txt dialogs
+same plain.txt model
+same plain.txt sentA
+same plain.txt sentB
+same plain.txt shown
+same plain.txt ui
+same plain.txt reopened
+same plain.txt converted
+timing web-apps-documenteditor simple.rtf | original open=2707 join=2669 edit=3179 save=211 convert=128 reopen=2443 | new open=3026 join=2688 edit=3209 save=190 convert=172 reopen=2450
+same simple.rtf dialogs
+same simple.rtf model
+same simple.rtf sentA
+same simple.rtf sentB
+same simple.rtf shown
+same simple.rtf ui
+same simple.rtf reopened
+same simple.rtf converted
+differential web-apps-documenteditor: PASS (4 cases)
