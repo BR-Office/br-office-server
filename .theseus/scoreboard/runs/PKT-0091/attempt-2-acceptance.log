@@ -1,0 +1,2365 @@
+PASS ../tests/unit/request.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-03T01:16:29.855] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:29.996] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.002] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.006] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.008] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.268] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.286] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.292] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.323] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.592] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.636] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.644] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.649] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.657] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.701] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.811] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.816] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.820] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.864] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.872] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.879] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.908] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.912] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.916] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:30.939] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/docsCoServerCrashPaths.tests.js
+  ● Console
+
+    console.log
+      [32m[2026-11-03T01:16:32.982] [INFO] [localhost] [crashdoc1] [userId] nodeJS -[39m io.use start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.069] [INFO] [localhost] [crashdoc1] [userId] nodeJS -[39m io.use end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.074] [INFO] [localhost] [crashdoc2] [userId] nodeJS -[39m io.use start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.075] [INFO] [localhost] [crashdoc2] [userId] nodeJS -[39m io.use end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.079] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m sendData: type = disconnectReason
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.094] [DEBUG] [localhost] [crashdoc4] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.095] [INFO] [localhost] [crashdoc4] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.095] [DEBUG] [localhost] [crashdoc4] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.096] [INFO] [localhost] [crashdoc4] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.097] [DEBUG] [localhost] [crashdoc5] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.101] [INFO] [localhost] [crashdoc5] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.102] [DEBUG] [localhost] [crashdoc5] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.102] [INFO] [localhost] [crashdoc5] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.103] [INFO] [localhost] [crashdoc5] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.104] [DEBUG] [localhost] [crashdoc5] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.105] [DEBUG] [localhost] [crashdoc6] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.108] [INFO] [localhost] [crashdoc6] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.109] [DEBUG] [localhost] [crashdoc6] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.109] [INFO] [localhost] [crashdoc6] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.110] [INFO] [localhost] [crashdoc6] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.110] [DEBUG] [localhost] [crashdoc6] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.111] [DEBUG] [localhost] [crashdoc7] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.111] [INFO] [localhost] [crashdoc7] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.112] [DEBUG] [localhost] [crashdoc7] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.112] [INFO] [localhost] [crashdoc7] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.112] [INFO] [localhost] [crashdoc7] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.113] [DEBUG] [localhost] [crashdoc7] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.113] [DEBUG] [localhost] [crashdoc7] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.114] [DEBUG] [localhost] [crashdoc7] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.118] [DEBUG] [localhost] [crashdoc7] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.131] [INFO] [localhost] [crashdoc7] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.133] [DEBUG] [localhost] [crashdoc7] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.133] [DEBUG] [localhost] [crashdoc7] [u11] nodeJS -[39m closeDocument edit session time:22
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.134] [DEBUG] [localhost] [crashdoc8] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.135] [INFO] [localhost] [crashdoc8] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.135] [DEBUG] [localhost] [crashdoc8] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.135] [INFO] [localhost] [crashdoc8] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.135] [INFO] [localhost] [crashdoc8] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.136] [DEBUG] [localhost] [crashdoc8] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.136] [DEBUG] [localhost] [crashdoc8] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.136] [DEBUG] [localhost] [crashdoc8] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.137] [DEBUG] [localhost] [crashdoc8] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.138] [INFO] [localhost] [crashdoc8] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.138] [DEBUG] [localhost] [crashdoc8] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.139] [DEBUG] [localhost] [crashdoc8] [u11] nodeJS -[39m closeDocument edit session time:4
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.139] [DEBUG] [localhost] [crashdoc9] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.140] [INFO] [localhost] [crashdoc9] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.140] [DEBUG] [localhost] [crashdoc9] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.140] [INFO] [localhost] [crashdoc9] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.140] [INFO] [localhost] [crashdoc9] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.141] [DEBUG] [localhost] [crashdoc9] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.141] [DEBUG] [localhost] [crashdoc9] [null] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.141] [DEBUG] [localhost] [crashdoc9] [null] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.142] [DEBUG] [localhost] [crashdoc9] [null] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.143] [INFO] [localhost] [crashdoc9] [undefined1] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.143] [DEBUG] [localhost] [crashdoc9] [undefined1] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.143] [DEBUG] [localhost] [crashdoc9] [undefined1] nodeJS -[39m closeDocument edit session time:3
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.144] [DEBUG] [localhost] [crashdoc10] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.144] [INFO] [localhost] [crashdoc10] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.144] [DEBUG] [localhost] [crashdoc10] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.145] [INFO] [localhost] [crashdoc10] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.145] [INFO] [localhost] [crashdoc10] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.146] [DEBUG] [localhost] [crashdoc10] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.146] [DEBUG] [localhost] [crashdoc10] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.153] [DEBUG] [localhost] [crashdoc10] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.154] [DEBUG] [localhost] [crashdoc10] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.155] [INFO] [localhost] [crashdoc10] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.155] [DEBUG] [localhost] [crashdoc10] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.156] [DEBUG] [localhost] [crashdoc10] [u11] nodeJS -[39m closeDocument edit session time:12
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.173] [DEBUG] [localhost] [crashdoc11] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.174] [INFO] [localhost] [crashdoc11] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.174] [DEBUG] [localhost] [crashdoc11] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.174] [INFO] [localhost] [crashdoc11] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.175] [INFO] [localhost] [crashdoc11] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.175] [DEBUG] [localhost] [crashdoc11] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.175] [DEBUG] [localhost] [crashdoc11] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.194] [DEBUG] [localhost] [crashdoc11] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.195] [INFO] [localhost] [crashdoc11] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.195] [DEBUG] [localhost] [crashdoc11] [u11] nodeJS -[39m closeDocument view session time:21
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.196] [DEBUG] [localhost] [crashdoc12] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.196] [INFO] [localhost] [crashdoc12] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.197] [DEBUG] [localhost] [crashdoc12] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.197] [INFO] [localhost] [crashdoc12] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.201] [INFO] [localhost] [crashdoc12] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.201] [DEBUG] [localhost] [crashdoc12] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.202] [DEBUG] [localhost] [crashdoc12] [u1] nodeJS -[39m sendData: type = disconnectReason
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at Generator.throw (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.203] [DEBUG] [localhost] [crashdoc13] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.203] [INFO] [localhost] [crashdoc13] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.203] [DEBUG] [localhost] [crashdoc13] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.204] [INFO] [localhost] [crashdoc13] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.215] [INFO] [localhost] [crashdoc13] [userId] nodeJS -[39m data.type = unLockDocument
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.220] [DEBUG] [localhost] [crashdoc14] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.220] [INFO] [localhost] [crashdoc14] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.220] [DEBUG] [localhost] [crashdoc14] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.221] [INFO] [localhost] [crashdoc14] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.221] [INFO] [localhost] [crashdoc14] [userId] nodeJS -[39m data.type = saveChanges
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.223] [DEBUG] [localhost] [crashdoc15] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.223] [INFO] [localhost] [crashdoc15] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.225] [DEBUG] [localhost] [crashdoc15] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.225] [INFO] [localhost] [crashdoc15] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.226] [INFO] [localhost] [crashdoc15] [userId] nodeJS -[39m data.type = forceSaveStart
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.226] [DEBUG] [localhost] [crashdoc15] [userId] nodeJS -[39m sendData: type = forceSaveStart
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.227] [DEBUG] [localhost] [crashdoc16] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.227] [INFO] [localhost] [crashdoc16] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.227] [DEBUG] [localhost] [crashdoc16] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.227] [INFO] [localhost] [crashdoc16] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.228] [INFO] [localhost] [crashdoc16] [userId] nodeJS -[39m data.type = close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.228] [INFO] [localhost] [crashdoc16] [userId] nodeJS -[39m Connection closed or timed out: reason = undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.228] [INFO] [localhost] [crashdoc16] [userId] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.229] [DEBUG] [localhost] [crashdoc17] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.229] [INFO] [localhost] [crashdoc17] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.230] [DEBUG] [localhost] [crashdoc17] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.230] [INFO] [localhost] [crashdoc17] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.230] [INFO] [localhost] [crashdoc17] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.230] [DEBUG] [localhost] [crashdoc17] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.230] [DEBUG] [localhost] [crashdoc17] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.231] [INFO] [localhost] [crashdoc17] [userId] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.232] [DEBUG] [localhost] [crashdoc18] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.233] [INFO] [localhost] [crashdoc18] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.233] [DEBUG] [localhost] [crashdoc18] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.233] [INFO] [localhost] [crashdoc18] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.234] [INFO] [localhost] [crashdoc18] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.234] [DEBUG] [localhost] [crashdoc18] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.234] [DEBUG] [localhost] [crashdoc18] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.234] [DEBUG] [localhost] [crashdoc18] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.235] [DEBUG] [localhost] [crashdoc18] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.236] [INFO] [localhost] [crashdoc18] [u11] nodeJS -[39m data.type = saveChanges
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.236] [INFO] [localhost] [crashdoc18] [u11] nodeJS -[39m Start saveChanges: reSave: undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at saveChanges.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.237] [INFO] [localhost] [crashdoc18] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.237] [DEBUG] [localhost] [crashdoc18] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.238] [DEBUG] [localhost] [crashdoc18] [u11] nodeJS -[39m closeDocument edit session time:5
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.242] [DEBUG] [localhost] [crashdoc19] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.242] [INFO] [localhost] [crashdoc19] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.242] [DEBUG] [localhost] [crashdoc19] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.242] [INFO] [localhost] [crashdoc19] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.243] [INFO] [localhost] [crashdoc19] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.243] [DEBUG] [localhost] [crashdoc19] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.243] [DEBUG] [localhost] [crashdoc19] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.244] [DEBUG] [localhost] [crashdoc19] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.244] [DEBUG] [localhost] [crashdoc19] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.245] [INFO] [localhost] [crashdoc19] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.249] [DEBUG] [localhost] [crashdoc19] [u11] nodeJS -[39m closeDocument edit session time:7
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.259] [DEBUG] [localhost] [crashdoc20] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.260] [INFO] [localhost] [crashdoc20] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.260] [DEBUG] [localhost] [crashdoc20] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.260] [INFO] [localhost] [crashdoc20] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.275] [INFO] [localhost] [crashdoc20] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.275] [DEBUG] [localhost] [crashdoc20] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.275] [DEBUG] [localhost] [crashdoc20] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.276] [DEBUG] [localhost] [crashdoc20] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.276] [DEBUG] [localhost] [crashdoc20] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.277] [INFO] [localhost] [crashdoc20] [u11] nodeJS -[39m data.type = close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.277] [INFO] [localhost] [crashdoc20] [u11] nodeJS -[39m Connection closed or timed out: reason = undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.284] [DEBUG] [localhost] [crashdoc20] [u11] nodeJS -[39m sendData: type = refreshToken
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.284] [DEBUG] [localhost] [crashdoc20] [u11] nodeJS -[39m closeDocument edit session time:24
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.285] [INFO] [localhost] [crashdoc20] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.301] [DEBUG] [localhost] [crashdoc21] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.301] [INFO] [localhost] [crashdoc21] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.302] [DEBUG] [localhost] [crashdoc21] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.302] [INFO] [localhost] [crashdoc21] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.302] [INFO] [localhost] [crashdoc21] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.302] [DEBUG] [localhost] [crashdoc21] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.302] [DEBUG] [localhost] [crashdoc21] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.303] [DEBUG] [localhost] [crashdoc21] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.303] [DEBUG] [localhost] [crashdoc21] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.306] [INFO] [localhost] [crashdoc21] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.307] [DEBUG] [localhost] [crashdoc21] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.307] [DEBUG] [localhost] [crashdoc21] [u11] nodeJS -[39m closeDocument edit session time:6
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.308] [DEBUG] [localhost] [crashdoc22] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.308] [INFO] [localhost] [crashdoc22] [userId] nodeJS -[39m _checkLicense start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.308] [DEBUG] [localhost] [crashdoc22] [userId] nodeJS -[39m sendData: type = license
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.309] [INFO] [localhost] [crashdoc22] [userId] nodeJS -[39m _checkLicense end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.309] [INFO] [localhost] [crashdoc22] [userId] nodeJS -[39m data.type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.309] [DEBUG] [localhost] [crashdoc22] [userId] nodeJS -[39m auth time: NaN
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.310] [DEBUG] [localhost] [crashdoc22] [u1] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.310] [DEBUG] [localhost] [crashdoc22] [u1] nodeJS -[39m endAuth hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.311] [DEBUG] [localhost] [crashdoc22] [u1] nodeJS -[39m sendData: type = auth
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at sendAuthInfo.next (<anonymous>)
+          at endAuth.next (<anonymous>)
+          at auth.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.311] [INFO] [localhost] [crashdoc22] [u11] nodeJS -[39m data.type = close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.311] [INFO] [localhost] [crashdoc22] [u11] nodeJS -[39m Connection closed or timed out: reason = undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.311] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m sendData: type = refreshToken
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.312] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m closeDocument hasForgotten false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.312] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m closeDocument edit session time:4
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.312] [INFO] [localhost] [crashdoc22] [u11] nodeJS -[39m data.type = forceSaveStart
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.313] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m startForceSave start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.314] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.314] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m startForceSave canStart: hasEncrypted = false; applyCacheRes = {"code":4,"time":null,"inProgress":false}; startedForceSave = null
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.314] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m startForceSave end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.314] [DEBUG] [localhost] [crashdoc22] [u11] nodeJS -[39m sendData: type = forceSaveStart
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:33.315] [INFO] [localhost] [crashdoc22] [u11] nodeJS -[39m Connection closed or timed out: reason = transport close
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at closeDocument.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.316] [DEBUG] [localhost] [crashdoc23] [userId] nodeJS -[39m startForceSave start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.316] [DEBUG] [localhost] [crashdoc23] [userId] nodeJS -[39m getBaseUrlByConnection host=localhost x-forwarded-host=undefined x-forwarded-proto=undefined x-forwarded-prefix=undefined cloudfront-forwarded-proto=undefined
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.318] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.318] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave canStart: hasEncrypted = false; applyCacheRes = {"code":1,"time":null,"inProgress":false}; startedForceSave = null
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.319] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.319] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.320] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave canStart: hasEncrypted = false; applyCacheRes = {"code":4,"time":null,"inProgress":false}; startedForceSave = null
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:33.320] [DEBUG] [localhost] [crashdoc24] [userId] nodeJS -[39m startForceSave end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/pdfSigning.tests.js
+PASS ../tests/unit/utilsDocService.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-03T01:16:34.305] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to jpeg with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.352] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to png with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.404] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting tiff to jpeg with rotation
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.436] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: applying EXIF rotation to jpeg
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.461] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to png
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.467] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input buffer contains unsupported image format
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.468] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input buffer contains unsupported image format
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.500] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal error: Error: Input Buffer is empty
+          at Sharp._createInputDescriptor (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/DocService/node_modules/sharp/lib/input.js:51:13)
+          at new Sharp (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/DocService/node_modules/sharp/lib/constructor.js:351:29)
+          at Sharp (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/DocService/node_modules/sharp/lib/constructor.js:173:12)
+          at Object.sharp [as processImageOptimal] (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/DocService/sources/utilsDocService.js:163:24)
+          at Object.processImageOptimal (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/tests/unit/utilsDocService.tests.js:236:44)
+          at Promise.then.completed (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:121:9)
+          at run (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-runner/build/runTest.js:444:34)
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.542] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting webp to jpeg
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.579] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m processImageOptimal: converting tiff to png
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/converterService.tests.js
+  ● Console
+
+    console.log
+      [32m[2026-11-03T01:16:34.855] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.861] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.863] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.863] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.866] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.866] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.866] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.867] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.868] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [33m[2026-11-03T01:16:34.868] [WARN] [localhost] [doc1] [userId] nodeJS -[39m convertRequest set async=false. Pass query string parameter "shardkey" to correctly process request in sharded cluster
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.868] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.869] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end true status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.870] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m convertRequest: url = http://base/conv_doc1_513/output.pdf
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.870] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.871] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.871] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.872] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.872] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.873] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.873] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.873] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end true status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.873] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m convertRequest: url = http://base/conv_doc1_513/output.pdf
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.874] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.875] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.875] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.875] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status -83
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.881] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.884] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.884] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.885] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status -4
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.885] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.886] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.886] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.886] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status -5
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.887] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.887] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.893] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.894] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status -1
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.894] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.895] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.895] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.895] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status -1
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.896] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.896] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.896] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.897] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end true status -83
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.897] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m convertRequest: url = http://base/conv_doc1_513/output.pdf
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.898] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.899] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.900] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.900] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end true status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.900] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m convertRequest: url = http://base/conv_doc1_513/output.pdf
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.900] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.901] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.901] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.902] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end true status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.902] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m convertRequest: url = http://base/conv_doc1_513/output.pdf
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.902] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.903] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [33m[2026-11-03T01:16:34.903] [WARN] [localhost] [doc1] [userId] nodeJS -[39m convertRequest unexpected outputtype = nope
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.903] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.909] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [33m[2026-11-03T01:16:34.910] [WARN] [localhost] [docId] [userId] nodeJS -[39m convertRequest auth failed {"code":-120}
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.910] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.911] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.911] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [91m[2026-11-03T01:16:34.929] [ERROR] [localhost] [doc1] [userId] nodeJS -[39m convertRequest error: Error: db down
+          at Object.<anonymous> (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/tests/unit/converterService.tests.js:231:41)
+          at Promise.then.completed (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:121:9)
+          at run (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/home/claude/euro-office-server.theseus-worktrees/PKT-0091/node_modules/jest-runner/build/runTest.js:444:34)
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at Generator.throw (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.929] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at Generator.throw (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.930] [INFO] [localhost] [docId] [userId] nodeJS -[39m convertRequest start
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.930] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m Start convert request
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:34.930] [DEBUG] [localhost] [doc1] [userId] nodeJS -[39m End convert request end false status 0
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+          at convertByCmd.next (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:34.930] [INFO] [localhost] [doc1] [userId] nodeJS -[39m convertRequest end
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/requestSSRF.tests.js
+  ● Console
+
+    console.log
+      [36m[2026-11-03T01:16:35.041] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:35.053] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [36m[2026-11-03T01:16:35.141] [DEBUG] [localhost] [docId] [userId] nodeJS -[39m isAllowDirectRequest url in jwt token res=false
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+    console.log
+      [32m[2026-11-03T01:16:35.143] [INFO] [null] [null] [null] nodeJS -[39m Received request for: /
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/utils.tests.js
+PASS ../tests/unit/watchWithFallback.tests.js
+PASS ../tests/unit/runtimeConfigManager.tests.js
+  ● Console
+
+    console.log
+      [32m[2026-11-03T01:16:35.776] [INFO] [localhost] [docId] [userId] nodeJS -[39m handleConfigFileChange reloading config: runtime.json
+
+      at ../Common/node_modules/log4js/lib/appenders/console.js:6:5
+          at Array.forEach (<anonymous>)
+          at Array.forEach (<anonymous>)
+
+PASS ../tests/unit/operationContext.tests.js
+PASS ../tests/unit/sentryReporter.tests.js
+PASS ../tests/unit/sample.tests.js
+
+Test Suites: 12 passed, 12 total
+Tests:       1 skipped, 178 passed, 179 total
+Snapshots:   0 total
+Time:        6.918 s
+Ran all test suites matching /unit/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
