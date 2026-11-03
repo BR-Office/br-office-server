@@ -44,8 +44,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -58,6 +59,7 @@ PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.23.3, work kept
 
 ## Spawned packets
 
