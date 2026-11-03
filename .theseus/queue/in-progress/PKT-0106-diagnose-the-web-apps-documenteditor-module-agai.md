@@ -57,6 +57,10 @@ Round 2 of the `web-apps-documenteditor` module. Read `.theseus/diagnosis/DIAG-w
 ## Suggested plan
 
 ## Executor log
+- 2026-11-03, claude-opus-5-5. Ran both oracles (PASS) and `perf/open-window.js` (5 runs, medium-10p / large-100p) on the native stack; numbers in `.theseus/oracle/rounds/web-apps-documenteditor-r2.md`.
+- Decision: verdict stays **refactor**, now unconditional (confidence medium): round 1's condition was met (≈ 0.9 s web-apps busy before LoadDoc, > 200 ms threshold) and re-measured the same. Plan: P1 lazy hidden toolbar tabs, P2 defer Comments build, P3 (wave 1) caption measuring in Button.js; each gated by both oracles and a multi-run open-window.js before/after.
+- Surprise: round 1 changed no code; original and new web-apps are the same commit (d238e526), so the differential only shows noise (up to ±0.7 s per open on identical code). LoadDoc ≈ 0.2 s lower than PKT-0047 with identical code: VM noise.
+- No `-b` diagnosis existed, nothing to `git rm`. Did not read other modules' diagnoses. No code changed.
 
 ## Spawned packets
 
