@@ -40,7 +40,7 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
 ---
 
@@ -58,6 +58,7 @@ Factory provisions external/sdkjs.base in packet worktrees.
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.21.9
 
 ## Spawned packets
 
