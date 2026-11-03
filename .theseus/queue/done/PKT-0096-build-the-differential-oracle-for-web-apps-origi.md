@@ -37,7 +37,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -61,5 +61,6 @@ Write `.theseus/oracle/differential/web-apps-documenteditor.sh`: each compares t
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: oracle covers open/local+remote edits/save/reopen/convert with an intended-differences list, timing lines and cached builds; web-apps code untouched; flaky layout read fixed rather than listed as intended
 
 ## Lessons for the Atlas
