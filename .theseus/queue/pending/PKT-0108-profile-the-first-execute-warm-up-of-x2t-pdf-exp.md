@@ -40,7 +40,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -61,6 +61,7 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - Result: no in-process option >= 0.2 s; corpus equal for the eager snapshot and --no-lazy-feedback-allocation. Verdict in .theseus/diagnosis/PKT-x2t-r2-warmup.md: P3 should not implement an in-process cut; persistent converter is the remaining lever.
 - Not done: no fork build (nothing to build: no core change); xlsx was not CPU-profiled (laps and timing only).
 - block: the reviewer found an external blocker: Goal requires a post-warm-up snapshot built on the core fork, but target.files lists no external/core files (doctrenderer.cpp, v8_base.cpp); the planner must add them or decide the profile-based upper bound is enough for P3 (also add the missing xlsx profile)
+- release: Theseus 0.23.3: an investigation may prototype in external/core (not in the scope check, never merged); prototype the post-warm-up snapshot there and add the missing xlsx profile, as the reviewer asked
 
 ## Spawned packets
 
