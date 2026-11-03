@@ -42,7 +42,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -67,5 +67,6 @@ Round 2 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: round-2 diagnosis complete, in scope, honest about round-1 delivery, with a sound measurement-first plan
 
 ## Lessons for the Atlas
