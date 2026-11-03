@@ -1,0 +1,35 @@
+
+Structure
+  ✔ AGENTS.md points to .theseus/
+  ✔ CLAUDE.md imports AGENTS.md
+  ✔ queue with all 6 states
+  ✔ specifications present in .theseus/spec/
+
+Adapter
+  ✔ adapter.yaml loaded
+  ✔ goal stated
+  ⚠ pilot mode: review.allow_same_family is on, so rule R4 only requires a different model, not a different family
+  ✔ any target language: write the interop file when a migration is decided
+
+Packets
+  ✔ 106 of 106 packets without errors
+
+Atlas
+  ⚠ sdkjs-common.md: 879 words in the body (max 800, rule A2)
+  ✔ 9 of 9 cards without errors
+
+Diagnosis
+  ✔ 6 of 6 verdicts without errors
+
+Scoreboard
+  ✔ packets.jsonl: 119 records
+  ✔ escapes.jsonl: 0 records
+  ✔ friction.jsonl: 122 records
+
+Integration
+  ✔ files delivered by 78 merged packets checked
+
+Method version
+  ✔ 0.5.0
+
+15 ok · 2 warnings · 0 errors
