@@ -62,6 +62,7 @@ remote changes on the 100 p docx (≈ 4.7 ms per change, ≈ 6 % of B's busy tim
 
 ## Executor log
 - return: factory restarted on Theseus 0.19.1 (TEP-0006/0007/0008)
+- attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 
