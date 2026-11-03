@@ -52,6 +52,11 @@ Write `.theseus/oracle/differential/web-apps-documenteditor.sh`: each compares t
 
 ## Executor log
 - return: factory process stopped by the session's 2-hour limit; restarted on Theseus 0.21.3, work kept (TEP-0010)
+- Resumed attempt (claude-opus-5-5, 2026-11-03): the oracle files from the first attempt were already committed (web-apps-documenteditor.sh, web-apps-build.sh, web-apps-run.cjs, .intended). First full run failed: `styles.docx reopened` gave 5 pages on the original side and 4 on the new, with identical content and identical code (both sides are commit d238e526).
+- Decision: the reopened model was dumped right after open, while layout recalculation was still running. web-apps-run.cjs now dumps it after the canvas hash settles and polls until two dumps 500 ms apart agree. Not an intended difference, so nothing added to the .intended file.
+- Result: `web-apps-documenteditor.sh` PASS (4 cases: text.docx, styles.docx, plain.txt, simple.rtf; one timing line per case for both sides); `documenteditor-open.sh` PASS.
+- Surprise: the fork has no merged changes yet (original and new are the same commit), so the oracle currently proves only that it is stable on identical code; timing noise between sides is ±1-2 s per step on this 2-CPU VM.
+- Not done: no conversion to formats other than TXT, and no perf/ script (create_in allows it; not needed for acceptance).
 
 ## Spawned packets
 
