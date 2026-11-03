@@ -54,6 +54,13 @@ Map the user journey `open-docx-100p` (Select a 100-page Word document and wait 
 
 ## Executor log
 - attempt 1: the spawn request PKT-0127-profile-the-open-docx-100p-client-window-per-mod.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- Attempt after rejection (R6): filled target, contract, acceptance and `requires: [documentserver, browser]` of the spawn request `PKT-0127-profile-the-open-docx-100p-client-window-per-mod.md`. Journey measurement of the previous attempt (total_ms 4628) kept unchanged.
+- Wrote `oracle/journeys/open-docx-100p.sh` + `-run.cjs` as a parametrized copy of the PKT-0126 10p runner (sample, timeout 240 s); `serve-integrated.sh` already existed.
+- Sample: `large-100p.docx` of PKT-0016, copied from the example store (89 KB). Surprise: it lays out as 86 pages in this build.
+- Result: total_ms=4628 (min 4493, max 5671, 5 runs + warm-up), load ~3. x2t p50 243 ms from converter log.
+- Decision: client window split by PKT-0043 profile shares (estimate), as in the 10p map; spawned a request to profile it.
+- Surprise: 100p total < 10p total (8 340) because PKT-0126 ran under load 6; size-dependent stages (layout after load, Editor.bin) do grow.
+- Not done: no per-run CPU profile.
 
 ## Spawned packets
 
