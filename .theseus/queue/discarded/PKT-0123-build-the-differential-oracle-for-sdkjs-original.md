@@ -54,6 +54,7 @@ Write `.theseus/oracle/differential/sdkjs-cell.sh`, `.theseus/oracle/differentia
 
 ## Executor log
 - return: factory paused to focus on the document editor
+- discard: Rafael, 2026-11-03: finish one application (the document editor) before spreadsheets, presentations and PDF
 
 ## Spawned packets
 
