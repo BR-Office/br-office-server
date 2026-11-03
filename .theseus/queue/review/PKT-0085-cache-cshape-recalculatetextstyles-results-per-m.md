@@ -74,6 +74,7 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 - Acceptance (rework 2): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions; external/sdkjs tree clean.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
+- fork: pkt/PKT-0085 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (fe4e220)
 
 ## Spawned packets
 
