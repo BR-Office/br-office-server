@@ -43,16 +43,19 @@ modules:
     repository: https://github.com/Euro-Office/sdkjs
     fork: https://github.com/BR-Office/br-office-sdkjs
     path: external/sdkjs/word
+    oracle: ["bash .theseus/oracle/sdkjs-word.sh"]
     description: "The document editor's model and layout in the browser. After Editor.bin arrives, 1.5-2.4 s of parse, layout and first render on open; applying remote co-edit changes (p90 105-187 ms)."
   - id: sdkjs-common
     repository: https://github.com/Euro-Office/sdkjs
     fork: https://github.com/BR-Office/br-office-sdkjs
     path: external/sdkjs/common
+    oracle: ["bash .theseus/oracle/sdkjs-common.sh"]
     description: "Shared browser engine of the editors (fonts, drawing, serialization, co-editing client). 14-25 font files per open."
   - id: web-apps-documenteditor
     repository: https://github.com/Euro-Office/web-apps
     fork: https://github.com/BR-Office/br-office-web-apps
     path: external/web-apps/apps/documenteditor
+    oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
     description: "The document editor application shell: what loads before the document (about 1.5 s of scripts and ~500 KB per open)."
 
 languages:
