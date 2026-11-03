@@ -38,8 +38,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5-b
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -52,6 +53,7 @@ Map the user journey `open-docx-10p` (Select a 10-page Word document and wait un
 ## Suggested plan
 
 ## Executor log
+- return: container restarted; work kept (TEP-0010)
 
 ## Spawned packets
 
