@@ -58,6 +58,42 @@ modules:
     oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
     description: "The document editor application shell: what loads before the document (about 1.5 s of scripts and ~500 KB per open)."
 
+  # Rafael, 2026-11-03: "tudo sem limitação": every editor of the client joins (spreadsheets,
+  # presentations, PDF), changed through the same BR-Office forks.
+  - id: sdkjs-cell
+    repository: https://github.com/Euro-Office/sdkjs
+    fork: https://github.com/BR-Office/br-office-sdkjs
+    path: external/sdkjs/cell
+    description: "The spreadsheet editor's model, layout and rendering in the browser (and in x2t's xlsx to pdf). Per-cell text shaping is 79% of a large xlsx to pdf; remote changes re-shape cells, about 200-250 ms per 20 changes."
+  - id: sdkjs-slide
+    repository: https://github.com/Euro-Office/sdkjs
+    fork: https://github.com/BR-Office/br-office-sdkjs
+    path: external/sdkjs/slide
+    description: "The presentation editor's model, layout and rendering in the browser."
+  - id: sdkjs-pdf
+    repository: https://github.com/Euro-Office/sdkjs
+    fork: https://github.com/BR-Office/br-office-sdkjs
+    path: external/sdkjs/pdf
+    description: "The PDF editor and viewer in the browser."
+  - id: web-apps-spreadsheeteditor
+    repository: https://github.com/Euro-Office/web-apps
+    fork: https://github.com/BR-Office/br-office-web-apps
+    path: external/web-apps/apps/spreadsheeteditor
+    oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
+    description: "The spreadsheet editor application shell: what loads before the spreadsheet."
+  - id: web-apps-presentationeditor
+    repository: https://github.com/Euro-Office/web-apps
+    fork: https://github.com/BR-Office/br-office-web-apps
+    path: external/web-apps/apps/presentationeditor
+    oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
+    description: "The presentation editor application shell: what loads before the presentation."
+  - id: web-apps-pdfeditor
+    repository: https://github.com/Euro-Office/web-apps
+    fork: https://github.com/BR-Office/br-office-web-apps
+    path: external/web-apps/apps/pdfeditor
+    oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
+    description: "The PDF editor application shell."
+
 languages:
   present: [javascript, cpp]
   allowed_targets: any           # Rafael: any language the diagnosis justifies; preferably goals.preferred_languages
