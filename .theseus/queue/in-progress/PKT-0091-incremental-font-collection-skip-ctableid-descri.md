@@ -67,6 +67,11 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
   font names and the walk falls back to full, which is safe (superset contract holds).
 - Not done: the browser re-measure (baseline.md is outside the target). Requested as a spawn with `requires: [documentserver, browser]`.
 - Acceptance: sdkjs-word.sh 42/42 suites, 6195/6195 assertions; unit.sh passes.
+- Attempt 2 (claude-opus-5-5, 2026-11-03): rejected for R2 because the factory committed `.theseus-addons/sdkjs-forms`
+  (a gitlink created by `sdkjs-word.sh`, which clones the forms addon into the sdkjs checkout) as "uncommitted changes".
+  Fix: `git rm --cached` that gitlink in a new sdkjs commit and add `.theseus-addons/` to sdkjs's local `info/exclude`
+  so later oracle runs leave the tree clean. Net sdkjs diff vs 3d51031 is now only CollaborativeEditing.js (+4).
+  Acceptance re-run: 42/42 suites, 6195/6195; unit.sh passes; `git status` clean afterwards.
 
 ## Spawned packets
 - Re-measure PKT-0066 A/B after PKT-0091 (spawn request in .theseus/spawn/).
@@ -74,5 +79,6 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
 ## Review
 
 ## Lessons for the Atlas
+- The sdkjs-word oracle clones the forms addon into `external/sdkjs/.theseus-addons/`; it must be excluded there, or the factory's auto-commit puts it in scope (R2).
 - Every remote batch in Word starts with a `CChangesTableIdDescription` (Type 131071) record on CTableId; any per-change
   filter on remote changes must skip it, or it will see CTableId in every batch.
