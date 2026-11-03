@@ -11,10 +11,14 @@ origin:
 
 depends_on: []
 
+requires: [documentserver, browser]
+
 target:
   files:
-    - "[FILE]"
-  create_in: []
+    - ".theseus/oracle/journeys/open-docx-100p-run.cjs"
+    - ".theseus/journeys/open-docx-100p.md"
+  create_in:
+    - ".theseus/oracle/journeys"
 
 context:
   cards: [project]
@@ -22,12 +26,15 @@ context:
 
 contract:
   preserve:
-    - "[WHAT MUST NOT CHANGE]"
+    - "No change to the code of the project or of its forks"
+    - "The total_ms measure of open-docx-100p.sh (profiling runs are separate from the timed runs)"
   forbidden: []
 
 acceptance:
   commands:
-    - "[ORACLE COMMAND]"
+    - "grep -q 'self-time' .theseus/journeys/open-docx-100p.md"
+    - "bash .theseus/oracle/journeys/open-docx-100p.sh"
+    - "theseus validate"
 
 budget:
   max_files_changed: 6

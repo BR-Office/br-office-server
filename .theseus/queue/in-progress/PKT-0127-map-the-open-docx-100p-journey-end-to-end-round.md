@@ -53,6 +53,8 @@ Map the user journey `open-docx-100p` (Select a 100-page Word document and wait 
 ## Suggested plan
 
 ## Executor log
+
+- Attempt after rejection (R6): filled target, contract, acceptance and `requires: [documentserver, browser]` of the spawn request `PKT-0127-profile-the-open-docx-100p-client-window-per-mod.md`. Journey measurement of the previous attempt (total_ms 4628) kept unchanged.
 - Wrote `oracle/journeys/open-docx-100p.sh` + `-run.cjs` as a parametrized copy of the PKT-0126 10p runner (sample, timeout 240 s); `serve-integrated.sh` already existed.
 - Sample: `large-100p.docx` of PKT-0016, copied from the example store (89 KB). Surprise: it lays out as 86 pages in this build.
 - Result: total_ms=4628 (min 4493, max 5671, 5 runs + warm-up), load ~3. x2t p50 243 ms from converter log.
