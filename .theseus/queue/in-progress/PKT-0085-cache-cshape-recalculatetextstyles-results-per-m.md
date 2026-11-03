@@ -73,9 +73,13 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 - Acceptance (rework 2): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions; external/sdkjs tree clean.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
+- attempt 4 (after 0.20.0 release): the branch pkt/PKT-0085 was back at base 3d51031; the earlier Shape.js change was gone, so I re-implemented it. Same design: recalculateTextStyles -> cache lookup + computeTextStyles (the original body, unchanged). Key: level, presentation/master/theme/layout Ids, placeholder type+idx, hierarchy Ids, autofit (bodyPr or tmp values when bCheckAutoFitFlag). Cache only for placeholders in the presentation editor (not PDF, GraphicFrame, smartArt, fontRef, own lstStyle level), only while History is empty; the first history point clears and disables it; at most 5000 entries. A hit returns a new wrapper that shares the cached CStyles/lastId.
+- Risk / not done: remote co-editing changes without local history points are not detected; no benchmark on deck-50 (hit rate and ms saved not measured).
+- Acceptance: bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites, 10066/10323 assertions.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- CShape text styles: Styles consumers read through Get_Pr copies, so a compiled CStyles can be shared between shapes; History.Index === -1 is a cheap 'just opened' guard.
