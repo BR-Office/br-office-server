@@ -88,6 +88,7 @@ sdkjs fork: land hb_get_script_horizontal_direction table (PKT-0080 patch), unit
   The A/B script was kept in the session scratchpad (create_in empty, no place for it in target).
 
 ## Spawned packets
+- PKT-0097: Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong cwd)
 
 ## Review
 
