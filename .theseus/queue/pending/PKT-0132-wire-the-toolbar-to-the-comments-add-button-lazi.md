@@ -43,9 +43,10 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
+resume: true
 ---
 
 ## Goal
@@ -63,6 +64,7 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.24.2 (quiet journey measurement)
 
 ## Spawned packets
 
