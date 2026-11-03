@@ -58,6 +58,7 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
 ## Suggested plan
 
 ## Executor log
+- attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 
