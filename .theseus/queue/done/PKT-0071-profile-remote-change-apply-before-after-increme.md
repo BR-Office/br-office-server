@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -69,5 +69,6 @@ PKT-0066 changed sdkjs only in the local git-excluded clone external/sdkjs (bran
 - PKT-0087: Incremental font collection: treat CTableId (new object) changes so remote typing takes the incremental path
 
 ## Review
+- Approved by claude-opus-5-5-b: measurement recorded in baseline.md with root cause (CTableId fallback) and follow-up spawned; contract respected
 
 ## Lessons for the Atlas
