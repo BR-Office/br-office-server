@@ -44,10 +44,10 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -61,6 +61,7 @@ PKT-0047 Comments 116/96 ms, ≈ 90-100 ms inside onLaunch. Comments.js is in ap
 
 ## Executor log
 - return: factory stopped by the session's 2-hour limit; restarted on Theseus 0.24.0 (journeys), work kept
+- return: container restarted; work kept (TEP-0010)
 
 ## Spawned packets
 
