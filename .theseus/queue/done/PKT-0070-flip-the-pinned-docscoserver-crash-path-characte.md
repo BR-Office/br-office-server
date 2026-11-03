@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -95,5 +95,6 @@ Not done: nothing pending in scope.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: all six pinned crash paths are guarded at the entry, the tagged tests check the new behaviour with strong assertions, and the protocol for authenticated clients is unchanged
 
 ## Lessons for the Atlas
