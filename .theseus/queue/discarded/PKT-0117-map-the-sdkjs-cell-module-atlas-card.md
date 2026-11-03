@@ -46,6 +46,7 @@ Map the module `sdkjs-cell` (`external/sdkjs/cell`) into the Atlas card `.theseu
 ## Suggested plan
 
 ## Executor log
+- discard: Rafael, 2026-11-03: finish one application (the document editor) before spreadsheets, presentations and PDF
 
 ## Spawned packets
 
