@@ -56,6 +56,11 @@ Map the user journey `typing` (Type in an open Word document: key press to the c
 
 ## Executor log
 - return: factory restarted on Theseus 0.24.2 (quiet journey measurement)
+- claude-opus-5-5-b (round 3): reused typing.sh / typing-run.cjs and serve-integrated.sh left by the interrupted attempt (a84c496); they ran unchanged: total_ms=51 min_ms=34 max_ms=83 runs=90, load ~1.
+- Decision: layout is counted inside the handler stage: Recalculate_Page is never called while typing (nrc=0), the fast paragraph recalc runs inside EnterText.
+- Decision: browser stages (input, frame) use module `project`; the 40 ms PaintMessageLoop wait is sdkjs-common.
+- Surprise: 75% of the latency is scheduling (paint timer wait + frame), not editing work (3.4 ms).
+- Not done: no per-function profile inside OnPaint (12.5 ms); a later sdkjs-word diagnosis should profile it. No earlier typing map to compare with.
 
 ## Spawned packets
 
