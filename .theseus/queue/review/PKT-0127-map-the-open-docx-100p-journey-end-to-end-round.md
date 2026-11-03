@@ -63,6 +63,7 @@ Map the user journey `open-docx-100p` (Select a 100-page Word document and wait 
 - Not done: no per-run CPU profile.
 
 ## Spawned packets
+- PKT-0134: Profile the open-docx-100p client window per module (CPU profile of the journey)
 
 ## Review
 
