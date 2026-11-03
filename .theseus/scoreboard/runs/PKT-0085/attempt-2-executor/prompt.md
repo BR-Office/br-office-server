@@ -18,7 +18,7 @@ Acceptance commands (pre-approved: run them exactly as written, from the reposit
 - `bash .theseus/oracle/sdkjs-common.sh`
 
 Previous attempts were rejected. Fix these problems:
-- changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- cache key uses only Ids and the only switch-off is a local history point, so a co-editor with an empty History gets stale styles after a remote change (breaks contract.preserve); turn the cache off when co-editing is active or remote changes arrive, or file the version-counter follow-up in .theseus/spawn/
 
 Environments that are up right now (the factory just ran these checks and they passed; .theseus/adapter/environment.md says how to use them):
 - `documentserver`: `curl -sf http://127.0.0.1/healthcheck`
