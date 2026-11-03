@@ -2,7 +2,7 @@
 id: PKT-0112
 title: Defer the Comments build until after document load
 type: refactor
-priority: medium
+priority: high
 module: web-apps-documenteditor
 origin:
   type: plan

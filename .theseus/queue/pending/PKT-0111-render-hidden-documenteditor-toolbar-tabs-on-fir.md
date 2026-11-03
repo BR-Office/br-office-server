@@ -2,7 +2,7 @@
 id: PKT-0111
 title: Render hidden documenteditor toolbar tabs on first activation
 type: refactor
-priority: medium
+priority: high
 module: web-apps-documenteditor
 origin:
   type: plan
