@@ -64,6 +64,7 @@ PKT-0087 (sdkjs pkt/PKT-0087) makes private_CollectFontCheckClasses replace CTab
 - Text case only; style case not re-run (PKT-0087 does not touch it). Absolute numbers higher than PKT-0071's (busier VM).
 
 ## Spawned packets
+- PKT-0091: Incremental font collection: skip CTableId Description changes so remote typing takes the incremental path
 
 ## Review
 
