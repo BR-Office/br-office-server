@@ -40,6 +40,7 @@ budget:
 roles:
   executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -56,6 +57,7 @@ Note: PKT-0087's TableId_Add branch (e5fd187) was not in PKT-0091's base (sdkjs 
 ## Suggested plan
 
 ## Executor log
+- return: factory process stopped by the session's 2-hour limit; restarted on Theseus 0.21.3, work kept (TEP-0010)
 
 ## Spawned packets
 
