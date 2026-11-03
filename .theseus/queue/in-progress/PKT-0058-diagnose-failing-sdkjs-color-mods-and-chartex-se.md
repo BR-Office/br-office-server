@@ -64,6 +64,7 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 - Attempt 3 (second R2 rejection): pkt/PKT-0058 = theseus = fork branch = 3d51031, clean tree. `git log origin/main..theseus -- word/Drawing/DrawingDocument.js` shows 3d51031 "Merge pkt/PKT-0078": the 27-line DrawingDocument.js difference is between origin/main and the `theseus` base branch (PKT-0078's merge), so a scope check diffing against origin/main instead of `theseus` attributes it to this packet. Not fixable from here without touching that file (forbidden); the factory's R2 base for external/sdkjs should be `theseus`. Acceptance re-run: 6/6, 10066/10323, 29 s.
 
 ## Spawned packets
+- PKT-0090: Repair sdkjs color-mods and chartEx-serialize test pages so they join the common oracle
 
 ## Review
 
