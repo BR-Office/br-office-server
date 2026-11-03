@@ -26,9 +26,9 @@ A well-written packet answers five questions:
 | R5 | **No oracle, characterize first.** If the module lacks tests or a reference, the first packet is of type `characterize`. | You cannot refactor what you cannot measure. |
 | R6 | **The packet is self-contained.** Nothing essential may live only in a conversation with a model. | Any agent can take over at any time. |
 
-A packet must be executable as written (TEP-0007): `theseus validate` reports, and the factory blocks before any agent runs, a packet whose target, contract or acceptance still has a placeholder (`[UPPER CASE]` or `<lower-case>`), or that has no acceptance commands and is not of type `investigate`, or whose target changes another packet's file (to fix a packet, discard it and request a replacement); `theseus validate` warns when a repository file named in the Goal is outside `target.files` and `target.create_in`.
+A packet must be executable as written (TEP-0007): `theseus validate` reports, and the factory blocks before any agent runs, a packet whose target, contract or acceptance still has a placeholder (`[UPPER CASE]` or `<lower-case>`), or that has no acceptance commands and is not of type `investigate`, or whose target changes another packet's file (to fix a packet, discard it and request a replacement), or that says `TODO`/`TBD`; spawn requests get the same checks before they reach review (TEP-0009); `theseus validate` warns when a repository file named in the Goal is outside `target.files` and `target.create_in`.
 
-Every packet that creates an oracle, a script or a data file has at least one acceptance command that runs or reads that file, not only `test -s` (TEP-0008). `theseus validate` fails when a file a done packet delivered is gone from the main branch and no later commit removed it: it was lost in a merge.
+Every packet that creates an oracle, a script or a data file has at least one acceptance command that runs or reads that file, not only `test -s` (TEP-0008). `theseus validate` fails when a file a done packet delivered is gone from the main branch and no later commit removed it: it was lost in a merge. When an acceptance command fails twice in a row with the same output, the factory blocks the packet at once (`cause: method`, `ref: oracle#deterministic`) instead of trying again (TEP-0009).
 
 ## 3. File format
 
@@ -168,7 +168,7 @@ The CLI implements the lifecycle: `theseus packet new`, `theseus claim` and `the
 
 `theseus claim --model <id> --push --worktree <dir>` does all four steps.
 
-A packet released from `blocked/` starts over on a new branch. `theseus move PKT-0042 pending --reason "..." --resume` keeps the previous branch instead: the next claim merges the claim commit into it, and the executor continues from the previous attempt (if the merge conflicts, the packet starts over). Use it when the work was sound and the block came from the method or a missing permission.
+A packet released from `blocked/` starts over on a new branch. `theseus move PKT-0042 pending --reason "..." --resume` keeps the previous branch instead: the next claim merges the claim commit into it, and the executor continues from the previous attempt (if the merge conflicts, the packet starts over). Use it when the work was sound and the block came from the method or a missing permission. `--resume` also applies to a packet returned from `in-progress/` (an interrupted factory): what its agent left is committed first, and in fork checkouts committed and pushed, so nothing is lost (TEP-0010). Work in a fork travels as `pkt/<id>` with its base `pkt/<id>-base`; a resumed claim applies it on top of the current fork branch. Packets refer to branches, never to bare commit ids, which a resume can rewrite.
 
 ### Abandonment
 

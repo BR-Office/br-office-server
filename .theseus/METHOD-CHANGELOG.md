@@ -2,6 +2,13 @@
 
 Each version lists the Theseus Enhancement Proposals (TEPs) it incorporated and each one's hypothesis. See `.theseus/spec/method-measurement.md`.
 
+## 0.4.0
+
+Approved by Rafael on 2026-11-03 from AUD-4 (Theseus 0.20.0).
+
+- TEP-0009: lint every placeholder form and spawn requests; block when the acceptance fails twice with the same output. Hypothesis: "Blocked records whose reason is a placeholder or a repeated identical acceptance failure fall from 4 of 20 (AUD-4) to at most 1 of the next 20, and R6 rejections of spawn requests from 5 to at most 1, with no drop in done packets."
+- TEP-0010: preserve every attempt's work, including fork checkouts, across retries and restarts. Hypothesis: "Friction lines reporting lost attempt work fall from 5 packets (AUD-4) to at most 1 in the next 20 records, and median duration of multi-attempt done packets falls by 30%, with no increase in R2 rejections."
+
 ## 0.3.0
 
 Approved by Rafael on 2026-11-03 from AUD-3 (Theseus 0.19.0 and 0.19.1). TEP-0005 rejected as superseded.
