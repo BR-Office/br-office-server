@@ -77,6 +77,20 @@ first run (PKT-0056) into `external/sdkjs/.theseus-addons/sdkjs-forms` (inside t
 `external/sdkjs`, so it is never committed) and builds `develop` with
 `SDK_ADDONS=../.theseus-addons/sdkjs-forms`, as upstream CI does with `../../sdkjs-forms` (stamp `external/sdkjs/develop/.theseus-addons-forms`).
 
+### `external/sdkjs.base` (differential oracle baseline, PKT-0098)
+
+`.theseus/oracle/differential/build.sh` (via `differential/sdkjs-common.sh`) compares `external/sdkjs`
+against `external/sdkjs.base`: a checkout of upstream `main` of the sdkjs mirror. The factory does not
+create it yet; if it is missing in a packet worktree, create it from the repository root with
+
+```sh
+M=$(git -C external/sdkjs remote get-url origin)   # the shallow mirror under ../.external/
+git clone --depth 1 -b main "file://$M" external/sdkjs.base
+```
+
+(gave `9cea536` in PKT-0097 and PKT-0098). `git clone --shared` of `external/sdkjs` does not work: that clone
+is shallow and has no `main`. `external/sdkjs.base` is excluded by `.git/info/exclude` and must never be committed.
+
 ## Browser
 
 Chromium and Playwright are installed (`require('playwright')` works from any directory; `chromium.launch()`
