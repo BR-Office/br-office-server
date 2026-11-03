@@ -74,6 +74,11 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
 - fork: pkt/PKT-0090 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (e32ad16)
+- Attempt after release (0.20.0): the sdkjs branch was back at 3d51031 and the oracle edit was gone, so all changes were redone from this log: color-mods ±1 on R,G,B,A in one assertion per case (10023/10023); chartEx html loads slide scripts only plus `g_fonts_selection_bin = ""`; "Page boots" test + "Compare 1xml" skipped with reason (3/3); `known = {}`; card rows updated. Oracle: 6/6, 10326/10326, 16 s. `git -C external/sdkjs status` shows only the 3 target files after the run.
+- Still not done: header comment of `.theseus/oracle/sdkjs-common.sh` (outside target) still calls the two suites known-broken. The earlier spawn request file is not in `.theseus/spawn/` any more; the R2 bug was fixed in 0.20.0, so not re-filed.
+- Attempt after review rejection: "Page boots" now also pins the surprise with `assert.throws` on the same toXml path the skipped test uses (XmlWriterContext + `OpenXmlPackage.getXmlBytes` on a `new CChartSpace(api)`). A bare `toXml(new CMemory(), name)` does NOT throw (the generic stub writes an empty node), so the throw is specific to the getXmlBytes/writer-context path; comment updated accordingly. Suite 4/4.
+- Filed the follow-up for the stale header comment of `.theseus/oracle/sdkjs-common.sh` in `.theseus/spawn/` (requires: [browser]).
+- Attempt after 2nd review rejection: fixed the stale skip comment (throw only via getXmlBytes, bare toXml does not throw), reworded the `assert.throws` message, added a matcher (`err instanceof TypeError`, verified green). Atlas chartEx row now 4/4 with the getXmlBytes-only throw, total 10327/10327 (~19 s). Oracle: 6/6, 10327/10327.
 
 ## Spawned packets
 - (not queued, unfinished request: PKT-0090-scope-check-r2-for-external-sdkjs-must-diff-agai.md)
