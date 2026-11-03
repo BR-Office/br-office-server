@@ -65,6 +65,7 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 - Attempt 3 (second R2 rejection): pkt/PKT-0058 = theseus = fork branch = 3d51031, clean tree. `git log origin/main..theseus -- word/Drawing/DrawingDocument.js` shows 3d51031 "Merge pkt/PKT-0078": the 27-line DrawingDocument.js difference is between origin/main and the `theseus` base branch (PKT-0078's merge), so a scope check diffing against origin/main instead of `theseus` attributes it to this packet. Not fixable from here without touching that file (forbidden); the factory's R2 base for external/sdkjs should be `theseus`. Acceptance re-run: 6/6, 10066/10323, 29 s.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
+- Attempt 4 (after release, Theseus 0.20.0): the earlier oracle and card edits were not on this branch (base reset), so re-applied them: chartEx `known` gets `ms: 20000`, the runner uses `k.ms` as timeout; card records the diagnosis and the 20 s / ~30 s timings. PKT-0090 already exists as the repair follow-up, so no new spawn. external/sdkjs untouched. Acceptance: 6/6, 10066/10323, 33 s.
 
 ## Spawned packets
 - PKT-0090: Repair sdkjs color-mods and chartEx-serialize test pages so they join the common oracle
@@ -72,3 +73,5 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 ## Review
 
 ## Lessons for the Atlas
+- A QUnit page with autostart=false that throws in its ready handler looks like a slow run (timeout); hook page errors before blaming the environment.
+- color-mods expectations are Office fixed-point; ±1 channel diffs are precision, not defects.

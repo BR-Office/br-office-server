@@ -22,7 +22,8 @@ const COLOR_MODS = ['Check colors with mods', 'Check colors with satMod', 'Test 
 	.map(n => 'Test applying color mods > ' + n);
 const known = {
 	'common/color-mods/color-mods.html': { passed: 9766, total: 10023, failing: COLOR_MODS },
-	'common/charts/chartEx-serialize.html': { timeout: true },
+	// chartEx hangs at load (PKT-0058: no AllFonts.js, asc_docs_api throws, QUnit never starts): wait 20 s, not 120 s.
+	'common/charts/chartEx-serialize.html': { timeout: true, ms: 20000 },
 };
 const sameSet = (a, b) => a.length === b.length && [...a].sort().every((x, i) => x === [...b].sort()[i]);
 const { runQunitPuppeteer } = require(path.join(sdk, 'node_modules/node-qunit-puppeteer'));
@@ -41,7 +42,7 @@ const conc = parseInt(process.env.TESTS_CONCURRENCY, 10) || 2;
 			const k = known[t];
 			let ok, line, names = [];
 			try {
-				const r = await runQunitPuppeteer({ targetUrl: 'file://' + path.join(sdk, 'tests', t), timeout: 120000,
+				const r = await runQunitPuppeteer({ targetUrl: 'file://' + path.join(sdk, 'tests', t), timeout: (k && k.ms) || 120000,
 					puppeteerArgs: ['--no-sandbox', '--disable-setuid-sandbox'] });
 				total += r.stats.total; passed += r.stats.passed;
 				for (const [mod, tests] of Object.entries(r.modules || {}))
