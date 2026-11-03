@@ -37,8 +37,9 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -50,6 +51,7 @@ PKT-0090 could not fix it: the file was outside its target.
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.21.0 (original against new)
 
 ## Spawned packets
 
