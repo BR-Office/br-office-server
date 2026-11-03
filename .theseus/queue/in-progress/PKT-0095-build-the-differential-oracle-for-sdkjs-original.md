@@ -53,6 +53,7 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
+- attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 
