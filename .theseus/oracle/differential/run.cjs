@@ -48,28 +48,46 @@ const DUMP = {
 const EDITS = {
 	word: {
 		A: [{ js: () => editor.WordControl.m_oLogicDocument.MoveCursorToStartPos() },
-			{ type: 'Local edit ' }, { press: 'Control+b' }, { type: 'bold' }, { press: 'Control+b' }, { press: 'Enter' },
+			{ type: 'Local edit ' }, { bold: true }, { type: 'bold' }, { bold: false }, { press: 'Enter' },
 			{ type: 'second line' }, { press: 'Backspace' }, { press: 'Enter' }],
 		B: [{ js: () => editor.WordControl.m_oLogicDocument.MoveCursorToEndPos() }, { press: 'Enter' },
 			{ type: 'Remote edit by B' }, { press: 'Enter' }, { type: 'more' }],
-		save: 'DOCX', convert: 'TXT', ext: 'docx',
+		save: 'DOCX', convert: 'TXT', ext: 'docx', expect: ['Local edit bold', 'Remote edit by B'],
 	},
 	slide: {
 		A: [{ js: () => { const d = editor.WordControl.m_oLogicDocument, c = d.GetCurrentController();
-			c.resetSelection(); c.selectObject(d.Slides[0].cSld.spTree[d.Slides[0].cSld.spTree.length > 1 ? 1 : 0], 0); } },
+			const sp = d.Slides[0].cSld.spTree, txt = sp.filter(o => o.txBody);  // a text shape, the body if any
+			c.resetSelection(); c.selectObject(txt.find(o => o !== sp[0]) || txt[0], 0); } },
 			{ type: ' local edit' }, { press: 'Enter' }, { type: 'new paragraph' }, { press: 'Backspace' }],
-		B: [{ js: () => { const d = editor.WordControl.m_oLogicDocument, c = d.GetCurrentController();
-			const sl = d.Slides[d.Slides.length - 1]; editor.WordControl.GoToPage(d.Slides.length - 1);
-			c.resetSelection(); c.selectObject(sl.cSld.spTree[0], 0); } },
+		B: [{ js: () => { const d = editor.WordControl.m_oLogicDocument; editor.WordControl.GoToPage(d.Slides.length - 1); } },
+			{ js: () => { const d = editor.WordControl.m_oLogicDocument, c = d.GetCurrentController();
+			c.resetSelection(); c.selectObject(d.Slides[d.Slides.length - 1].cSld.spTree[0], d.Slides.length - 1); } },
 			{ type: ' remote edit by B' }],
-		save: 'PPTX', convert: 'ODP', ext: 'pptx',
+		save: 'PPTX', convert: 'ODP', ext: 'pptx', expect: ['local edit', 'remote edit by B'],
 	},
 };
 const CANVAS = () => [...document.querySelectorAll('#id_viewer, #id_main_view canvas, #id_main canvas')]
 	.filter((c, i, a) => !/overlay/i.test(c.id) && a.indexOf(c) === i && c.width > 0).map(c => c.toDataURL()).join('|');
 
+let userSeed = 0;
+// What is shown: hash of the document canvases once rendering is stable (two equal reads), cursor hidden.
+async function shownHash(u) {
+	await u.f.evaluate(() => { try { editor.WordControl.m_oDrawingDocument.TargetEnd(); } catch (e) {} });
+	let prev = '';
+	for (let i = 0; i < 50; i++) {
+		await u.page.waitForTimeout(300);
+		const h = sha(await u.f.evaluate(CANVAS));
+		if (h === prev) return h;
+		prev = h;
+	}
+	return prev;
+}
+
 async function newUser(browser, bundle, editorKind, url) {
 	const ctx = await browser.newContext({ acceptDownloads: true, viewport: { width: 1280, height: 900 } });
+	// Seeded Math.random per user (ParaIds and other durable ids are random): same ids on both sides.
+	await ctx.addInitScript(seed => { let x = seed >>> 0 || 1;
+		Math.random = () => { x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; }; }, ++userSeed);
 	const re = new RegExp(`/sdkjs/${editorKind}/sdk-all(-min)?\\.(js|bin|cache)(\\?|$)`);
 	await ctx.route(re, r => {
 		const m = r.request().url().match(re);
@@ -94,11 +112,16 @@ async function newUser(browser, bundle, editorKind, url) {
 
 async function play(u, steps) {
 	for (const s of steps) {
+		await u.f.waitForFunction(() => !AscCommon.CollaborativeEditing.Get_GlobalLock(), null, { timeout: 30000 });
 		if (s.js) await u.f.evaluate(s.js);
 		await u.f.evaluate(() => { const a = document.querySelector('#area_id'); if (a) a.focus(); });
-		if (s.type) await u.page.keyboard.type(s.type, { delay: 30 });
+		// Text and formatting through the API (typed keystrokes raced with autocorrect and shortcuts).
+		if (s.type) await u.f.evaluate(t => editor.asc_enterText([...t].map(c => c.codePointAt(0))), s.type);
+		if (s.bold !== undefined) await u.f.evaluate(v => editor.put_TextPrBold(v), s.bold);
 		if (s.press) await u.page.keyboard.press(s.press);
 		await u.page.waitForTimeout(150);
+		// Co-editing: an action waits for the server's lock answer; input sent meanwhile is dropped. Wait for it.
+		await u.f.waitForFunction(() => !AscCommon.CollaborativeEditing.Get_GlobalLock(), null, { timeout: 30000 });
 	}
 }
 
@@ -122,7 +145,7 @@ async function download(u, type, out) {
 }
 
 // Changes sent by one user, normalized: drop the TableId description record (class "1", type 131071),
-// which carries a time-based checksum; keep everything else byte for byte.
+// which carries a time-based checksum, and mask the random ParaId of new objects; keep everything else byte for byte.
 function normSent(msgs) {
 	return msgs.map(m => {
 		const o = JSON.parse(m.replace(/^\d+/, ''))[1];
@@ -130,24 +153,37 @@ function normSent(msgs) {
 			const b = Buffer.from(c.slice(c.indexOf(';') + 1), 'base64');
 			const n = b.readInt32LE(0), id = b.toString('utf16le', 4, 4 + n);
 			return !(id === '1' && b.readInt32LE(4 + n) === 131071);
+		}).map(c => {  // TableId registration of a new object: its last 4 bytes are the random ParaId: masked
+			const b = Buffer.from(c.slice(c.indexOf(';') + 1), 'base64');
+			const n = b.readInt32LE(0);
+			if (b.toString('utf16le', 4, 4 + n) !== '1') return c;
+			b.fill(0, b.length - 4); return c.slice(0, c.indexOf(';') + 1) + b.toString('base64');
 		});
-	}).filter(x => x.length);
+	}).flat();  // flattened: how changes are batched into messages depends on timing
 }
 
 async function runSide(browser, side, bundle, file, tmp) {
 	const kind = file.endsWith('.pptx') ? 'slide' : 'word', E = EDITS[kind], dump = DUMP[kind];
+	userSeed = 0;  // same seeds for the same user on both sides
 	const name = await upload(file, `diff-${side}-${path.basename(file)}`);
 	const url = BASE + 'editor?fileName=' + encodeURIComponent(name);
 	const a = await newUser(browser, bundle, kind, url), b = await newUser(browser, bundle, kind, url);
 	const t = { open: a.openMs, join: b.openMs };
 	let t0 = Date.now(); await play(a, E.A); await play(b, E.B);
 	const model = await settle(a, b, dump); t.edit = Date.now() - t0;
-	const shown = sha(await a.f.evaluate(CANVAS));
+	for (const m of E.expect)  // the scripted edits must have landed, or "same" would prove nothing
+		if (!model.includes(m)) throw new Error(`${side} ${path.basename(file)}: edit "${m}" missing from the model: ${model.slice(0, 1500)}`);
+	// Leave text editing on both sides (a held edit lock blocked the download in slides), then B leaves.
+	for (const u of [a, b]) await play(u, [{ js: kind === 'slide'
+		? () => editor.WordControl.m_oLogicDocument.GetCurrentController().resetSelection() : () => 0 }]);
+	await settle(a, b, dump);
+	const sentB = JSON.stringify(normSent(b.sent)); await b.ctx.close();
+	const shown = await shownHash(a);
 	t0 = Date.now(); const saved = await download(a, E.save, path.join(tmp, `${side}.${E.ext}`)); t.save = Date.now() - t0;
 	t0 = Date.now(); const conv = await download(a, E.convert, path.join(tmp, `${side}.${E.convert.toLowerCase()}`)); t.convert = Date.now() - t0;
-	const r = { model, sentA: JSON.stringify(normSent(a.sent)), sentB: JSON.stringify(normSent(b.sent)), shown,
+	const r = { model, sentA: JSON.stringify(normSent(a.sent)), sentB, shown,
 		converted: E.convert === 'TXT' ? sha(conv) : null };
-	await a.ctx.close(); await b.ctx.close();
+	await a.ctx.close();
 	const rn = await upload(path.join(tmp, `${side}.${E.ext}`), `diff-${side}-reopen-${path.basename(file)}`);
 	const c = await newUser(browser, bundle, kind, BASE + 'editor?fileName=' + encodeURIComponent(rn));
 	t.reopen = c.openMs; r.reopened = JSON.stringify(await c.f.evaluate(dump));
@@ -175,7 +211,13 @@ async function runSide(browser, side, bundle, file, tmp) {
 			if (o.r[k] === n.r[k]) { console.log(`same ${cs} ${k}`); continue; }
 			const ok = intended.has(`${cs} ${k}`);
 			if (!ok) fail++;
-			console.log(`${ok ? 'INTENDED' : 'DIFF'} ${cs} ${k}\n  original: ${String(o.r[k]).slice(0, 400)}\n  new:      ${String(n.r[k]).slice(0, 400)}`);
+			let os = String(o.r[k]), ns = String(n.r[k]);
+			if (/^sent/.test(k)) {  // show from the first differing change
+				const oa = JSON.parse(os), na = JSON.parse(ns); let i = 0;
+				while (i < oa.length && oa[i] === na[i]) i++;
+				os = `#${i}/${oa.length} ` + oa.slice(i, i + 3).join(' '); ns = `#${i}/${na.length} ` + na.slice(i, i + 3).join(' ');
+			}
+			console.log(`${ok ? 'INTENDED' : 'DIFF'} ${cs} ${k}\n  original: ${os.slice(0, 400)}\n  new:      ${ns.slice(0, 400)}`);
 		}
 	}
 	await browser.close();

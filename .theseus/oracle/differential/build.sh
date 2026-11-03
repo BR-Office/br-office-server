@@ -29,8 +29,16 @@ for m in "$@"; do
   ln -s "$NM/node_modules" "$W/build/node_modules"
   echo "differential: building $m from $SRC ($KEY)" >&2
   T0=$(date +%s)
-  (cd "$W/build" && BUILD_ROOT="$W/deploy-root" WEBPACK_CACHE_DIR="$W/.wp" npx webpack --config "webpack.$m.mjs" >&2)
-  mkdir -p "$OUT/$m"; cp "$W/deploy-root/sdkjs/$m"/sdk-all*.js "$OUT/$m/"
+  # One chunk config at a time (min, then all): together in one process the slide build passed the
+  # ~4 GB memory cgroup of an agent's shell and was OOM-killed.
+  # If terser still does not fit (other agents share the cgroup), build that chunk once more without minimizing:
+  # same code, only not minified; recorded in $OUT/$m/unminified and printed by the oracle.
+  mkdir -p "$OUT/$m"; rm -f "$OUT/$m/unminified"
+  wp() { (cd "$W/build" && NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=3072}" BUILD_ROOT="$W/deploy-root" WEBPACK_CACHE_DIR="$W/.wp-$ch" npx webpack --config "webpack.$m.mjs" --config-name "$m:$ch" "$@" >&2); }
+  for ch in min all; do
+    wp || { echo "differential: $m:$ch minified build failed (memory?), building it unminified" >&2; echo "$m:$ch" >> "$OUT/$m/unminified"; wp --no-optimization-minimize; }
+  done
+  cp "$W/deploy-root/sdkjs/$m"/sdk-all*.js "$OUT/$m/"
   echo "differential: built $m in $(( $(date +%s) - T0 )) s" >&2
   rm -rf "$W"
 done
