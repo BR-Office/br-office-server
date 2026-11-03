@@ -51,9 +51,24 @@ PKT-0087 (sdkjs pkt/PKT-0087) makes private_CollectFontCheckClasses replace CTab
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-03. Reused PKT-0071's scratch harness (ab.js/an.js, still in its scratchpad) and its *before* build;
+  added a per-batch log of `TakeFontCheckClasses` and of `GetFontNamesFromClasses(...) !== null`.
+- Decision: PKT-0087 is not in this sdkjs branch (3d51031); its commit e5fd187 (fork pkt/PKT-0087) was applied to the tree only for
+  `npm run build:word` and reverted right after (`git status` clean) — contract "No sdkjs source changes" kept.
+- Surprise: webpack's persistent cache (`build/.webpack-cache`) made the second build byte-identical to the first in 1.6 s; cleared it
+  and rebuilt. Recorded in baseline.md.
+- Result: 0/131 batches incremental (expected 30/30), gain ≈ 0 (expected ≈ 140 ms). Recorded under the PKT-0089 heading (mentions PKT-0087).
+- Surprise (cause): the CTableId change in each batch is `CChangesTableIdDescription` (Type 131071), not `TableId_Add` (65537):
+  PKT-0071's diagnosis named the wrong change type, so PKT-0087 fixed a path remote typing never uses.
+- Spawned a follow-up to skip TableId_Description changes (.theseus/spawn/).
+- Text case only; style case not re-run (PKT-0087 does not touch it). Absolute numbers higher than PKT-0071's (busier VM).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- In sdkjs co-editing, every incoming batch starts with a `CChangesTableIdDescription` (class CTableId) record; filters over
+  applied change classes must skip it, not only `TableId_Add`.
+- When building sdkjs variants for A/B, clear `build/.webpack-cache` between builds and check the bundles differ.
+- Verify a diagnosis by dumping the change Type, not only the class name, before spawning the fix.
