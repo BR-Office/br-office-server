@@ -57,6 +57,11 @@ Round 2 of the `common` module. Read `.theseus/diagnosis/DIAG-common.md` (round 
 ## Suggested plan
 
 ## Executor log
+- Decision: verdict stays **keep**, now unconditional (`conditional_on: null`, confidence high). PKT-0026 met the round 1 condition (Common 3–4 % self, 15–25 % inclusive of DocService CPU, ≈ 1 % of wall).
+- Decision: differential oracle is trivially equal: `git log 5ad1b11..HEAD -- Common/` is empty. Ran the unit oracle, `bench-hotpaths.js` and `load-coedit.js 50 5 60 2` instead; did not re-profile Common's share (no code changed). Numbers in `.theseus/oracle/rounds/common-r2.md`.
+- Decision: round 2 plan is empty (`packets: []`).
+- Surprise: `mailService.tests.js` fails with `ENOTFOUND api.nodemailer.com` (needs internet DNS); environmental. log4js still at DEBUG on the VM (docservice 0.19 core under load); left as is.
+- `DIAG-common-b.md` did not exist, nothing to `git rm`. No follow-up spawned.
 
 ## Spawned packets
 
