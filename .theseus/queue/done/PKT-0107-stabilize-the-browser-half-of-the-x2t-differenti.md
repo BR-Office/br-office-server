@@ -61,6 +61,7 @@ PKT-0103 run 1 in .theseus/oracle/rounds/x2t-r2.md. PKT-0094 already fixed a sim
 - No x2t.intended entries were added. No test assertions were changed.
 - Proof: two consecutive runs of `bash .theseus/oracle/differential/x2t.sh` both ended in `x2t-browser: PASS (3 cases, 2 repeat(s) per side)` / `differential x2t: PASS`, with no "original side itself unstable" lines.
 - Surprise: one full x2t.sh run takes about 5-6 min on this VM, so two runs do not fit in a single 600 s command.
+- integration: the integration check failed once and passed on the rerun of the same tree (flaky oracle)
 
 ## Spawned packets
 
