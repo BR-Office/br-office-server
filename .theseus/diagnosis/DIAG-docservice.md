@@ -1,6 +1,7 @@
 ---
 id: DIAG-docservice
 module: docservice
+round: 2
 verdict: refactor
 target_language: null
 confidence: medium
@@ -9,111 +10,110 @@ diagnosed_by: [claude-opus-5-5]
 agreement: full
 decided_by: null
 goals_hash: dcb03039
-base_commit: bd13c27
+base_commit: bdff618
 wave: 0
 ---
 
 ## Summary
-**Refactor, in JavaScript.** Measured end to end, DocService is a small share of every user-visible
-time: the server segment of a co-edit round trip is 4 ms p50 of ~100–126 ms, open is ~3–4 s in the client,
-conversion is 70–90 % x2t. A language change (Rust/Go/TypeScript) would therefore gain nothing users feel.
-What DocService does own is (a) a fixed 1 s polling sleep that adds up to ~900 ms to every synchronous
-ConvertService call, and (b) a quarter of all upstream fix commits and most crash fixes, concentrated in
-`DocsCoServer.js` and `canvasservice.js`, which have no tests. Both are fixed in place.
+**Refactor, in JavaScript (unchanged verdict).** Round 1 delivered the one speed gain this module owns:
+synchronous ConvertService now answers 0.44-1.56 s sooner per request (p50, original installed server
+against the worktree code, `.theseus/oracle/rounds/docservice-r2.md`). The quality half delivered only
+part: the pinned DocsCoServer crash paths are guarded (PKT-0070), but the `editorStat` fallback bug is
+still on `main`, and the two upstream crash/hang fixes (81132, 81576) were assessed but not ported.
+DocService remains a small share of open, co-edit and conversion time, so a language change still gains
+nothing users feel. Round 2 finishes the crash work and checks the DB cost of the faster polling.
+
+## What round 1 proved and what it did not
+| Round 1 row | Packet(s) | Status | Evidence |
+|---|---|---|---|
+| P1 characterize convert | PKT-0027 | delivered (oracle) | `tests/unit/converterService.tests.js` |
+| P2 characterize crash paths | PKT-0028, PKT-0079 (flake fix) | delivered (oracle) | `tests/unit/docsCoServerCrashPaths.tests.js`, 15/15 runs green |
+| P3 shorter sync poll | PKT-0063 (blocked: contract), PKT-0068 | **delivered, user-felt** | docx->odt p50 1265 -> 164 ms, pdf->docx 1022 -> 161 ms (r2 file); PKT-0068 1018 -> 166 ms |
+| P4 guard crash paths | PKT-0064 (blocked), PKT-0070 | **partly**: guards for no-handshake, unauthenticated unLock/save, forcesave without user, id-less user, auth without token/user are on `main` (862c11b). The `editorStat` fallback fix and `editorStatProxy` fallback were written in PKT-0064 but never merged: `DocsCoServer.js:155` still `new editorDataStorage()`. | `grep -n` on line 155 |
+| P5 upstream 81132/81576 | PKT-0029, PKT-0050 | **not delivered** to users: assessment and patches only (`.theseus/diagnosis/PKT-0029-*`); `routes/static.js:141` still `res.sendStatus(400)` without a `headersSent` check | diagnosis file, static.js |
+| e2e-convert script fix | PKT-0076 | delivered (tooling) | script ran here with JWT, 0 errors |
+
+Not proved: crash reduction itself (no crash telemetry; gain inferred from upstream history); DB load of
+the extra polls; that users get any of it (the installed package still runs the original code).
 
 ## Against the goal
 | Question | Finding | Evidence |
 |---|---|---|
-| Goal: speed, co-edit | Server receive → broadcast is 4 ms p50 / ≤ 69 ms p99 and does not grow with clients; the tail is the browsers (CPU starvation). Load test: flat latency to 1 000 sockets / 1 800 broadcasts/s at 0.28 core. Nothing to win here by a new language. | baseline.md "Co-edit tail split, load test" (PKT-0018) |
-| Goal: speed, open | Open 3.4–4.4 s; ~1.5–2.3 s editor scripts + 1.5–2.4 s after Editor.bin, both client; x2t open conversion 0.1–0.3 s; DocService part not isolated but a few %. | baseline.md PKT-0016, PKT-0018 large files |
-| Goal: speed, convert | x2t is 70–90 % of PDF conversions; service overhead ≈ 55–95 ms (≈ 0.1 s on large files). **But sync mode answers in whole seconds**: `CONVERT_ASYNC_DELAY = 1000` + `utils.sleep` loop, so a 140 ms ODF conversion is returned after ≥ 1 s (+ up to 900 ms per request). This is in this module and is a direct user-felt gain. | `DocService/sources/converterservice.js:49,163`; baseline.md PKT-0015 |
-| Goal: speed, save | Save ≈ 6 s is mostly `savetimeoutdelay` = 5 000 ms (configuration in `Common/config/default.json`, a product choice, not code) + ~1 s x2t assembly. | baseline.md PKT-0015 |
-| Goal: in-process hot paths | JSON of a 50-change batch 60 µs; locks 4.5 µs: < 0.1 % of the round trip. | baseline.md micro-benchmarks |
-| Quality and security risk | `DocService/` has 421 fix / 1 115 commits and 13 of 21 crash fixes; `DocsCoServer.js` alone 197 fix / 562 commits, 7 crash; `canvasservice.js` 131/318, 5 crash; `wopiClient.js` 64/130. Crash fixes are null/undefined guards and unhandled errors (user, tenant, connection, forcesave after close, socket error on disconnect). Two upstream crash/hang fixes (bugs 81132, 81576) are missing from Euro-Office `main`. | baseline.md "Upstream defect / crash rate" (PKT-0017) |
-| Quality: structure | `DocsCoServer.js` 4 736 lines with global module state (`editorData`, `editorStat`, queue, shutdown flags); `DocsCoServer.js:155` falls back to `new editorDataStorage()` for `editorStat` (likely copy-paste bug); `co`/generator mixed with async/await. | `wc -l DocService/sources/*.js`; card Pitfalls; `DocsCoServer.js:155` |
-| Oracle (D1) | `partial`: unit tests cover `utilsDocService`, request/SSRF, utils; **no tests** for `DocsCoServer.js`, `canvasservice.js`, `converterservice.js`, `wopiClient.js`. Refactors of those must be preceded by characterization. | `ls tests/unit`; card "Available oracle" |
-| Coupling and interop | Depends on Common (config, storage, queues, DB connectors in four SQL dialects) and talks to FileConverter via RabbitMQ and to clients via Socket.IO; a refactor keeps every external contract unchanged, so no interop bridge is needed. | card Entry points, Pitfalls |
-| Target language | None. Rust/Go would cut µs from paths that are < 0.1 % of user time and add an interop boundary inside the busiest, least-tested file. Gradual type checking (`// @ts-check`/JSDoc) on touched files is the cheap part of the TypeScript benefit and fits a refactor. | measurements above |
+| Speed, convert | Done in this module: sync answers now track x2t time; what is left is x2t (PDF 0.77-1.57 s). | r2 file; DIAG-x2t |
+| Speed, co-edit / open / save | Unchanged from round 1: server segment 4 ms p50, open and save dominated by client and `savetimeoutdelay`. No new measurement points at DocService. | baseline.md PKT-0015/0018 |
+| Quality | Remaining known defects in this module: 81132 (client abort mid-stream crashes, `static.js`, `aiProxyHandler.js`), 81576 (SaveVersion not released, shutdown hangs), editorStat fallback. | PKT-0029 diagnosis; DocsCoServer.js:155 |
+| Cost of the gain | Backoff adds up to ~6 `taskResult.select` per sync request in the first 1.5 s; not measured under load. | PKT-0068 log |
+| Oracle (D1) | Unit oracle 178 passed / 1 skipped; convert and crash-path characterization exist. No differential oracle script for DocService (round 2 used installed vs source by hand). | r2 file |
+| Target language | None, same reasons as round 1. | baseline |
 
 ## Discarded alternatives
-- **keep**: leaves the sync-convert second and the crash-prone, untested co-edit code as they are; both are measured, user-felt costs.
-- **migrate (rust/go/typescript)**: no measured speed gain (server segment 4 ms of the round trip, x2t and client dominate); the quality gain of TypeScript comes mainly from tests and guards, obtainable in place. Would also need D3 double diagnosis; not the reason for rejecting it.
-- **rewrite**: the external contract is large (Socket.IO protocol with sdkjs, ConvertService/Command APIs, WOPI, four SQL dialects) and the oracle is partial; nothing measured shows the design itself costs users time.
+- **keep**: leaves two known upstream crash/hang bugs and a storage bug in place.
+- **migrate / rewrite**: no measured time in this module worth a new language; the round 1 gain came from one constant.
 - **retire**: the module is the server.
 
 ## Path of change
-Not applicable (no language change). Order: characterize first, then small refactors behind the same
-contracts; every refactor packet runs the unit oracle plus its characterization tests.
+Not applicable. Each row runs the unit oracle; the port rows add a test for the crash they fix.
 
-## Initial packet plan
+## Packet plan (round 2)
 | Key | Wave | Type | What | Gain toward the goal |
 |---|---|---|---|---|
-| P1 | 0 | characterize | Tests for `converterservice` sync/async convert flow | oracle for P3 |
-| P2 | 0 | characterize | Tests for `DocsCoServer` crash-prone paths (connection/auth with missing user/tenant, disconnect during save, forcesave after close) | oracle for P4 |
-| P3 | 1 | refactor | Replace the fixed 1 s sync-convert poll with short/backoff polling | up to −900 ms per sync convert |
-| P4 | 1 | refactor | Guard the crash-prone paths found by P2; fix `editorStat` fallback at `DocsCoServer.js:155` | fewer crashes |
-| P5 | 0 | investigate | Port of upstream fixes for bugs 81132 and 81576 (decision for humans) | fewer crashes/hangs |
+| P1 | 0 | refactor | Merge the editorStat / editorStatProxy fallback fix from PKT-0064 | correct stats storage on legacy module |
+| P2 | 0 | refactor | Port upstream 81132 (client abort during streaming) | one fewer process crash |
+| P3 | 0 | investigate | Test plan and decision for 81576 (SaveVersion release) | shutdown/save hang |
+| P4 | 0 | investigate | DB load of backoff polling under 4-parallel sync converts | confirms P3-r1 gain has no hidden cost |
 
 ```yaml
 packets:
   - key: P1
     wave: 0
-    type: characterize
-    title: Characterize ConvertService sync and async flow in converterservice.js
-    files: []
-    create_in: [tests/unit]
-    depends_on: []
-    goal: Pin the behaviour of convertJson/convertXml in sync (async=false) and async mode, including the polling loop, timeout (CONVERT_TIMEOUT) and error statuses, with taskResult and the queue mocked.
-    context: The loop is at DocService/sources/converterservice.js:156-170 with CONVERT_ASYNC_DELAY=1000 (line 49). Baseline PKT-0015 shows sync answers in whole seconds.
-  - key: P2
-    wave: 0
-    type: characterize
-    title: Characterize DocsCoServer crash-prone connection and save paths
-    files: []
-    create_in: [tests/unit]
-    depends_on: []
-    goal: Pin, with editorDataMemory and mocked sockets/queues, the behaviour of auth with missing user name/permissions/tenant, client disconnect during save or file streaming, and forcesave after close.
-    context: These are the paths of the upstream crash fixes listed in .theseus/oracle/baseline.md (PKT-0017). DocsCoServer.js has no tests today and 4 736 lines of global state.
-  - key: P3
-    wave: 1
     type: refactor
-    title: Shorten the synchronous ConvertService polling delay
-    files: [DocService/sources/converterservice.js]
-    create_in: []
-    depends_on: [P1]
-    goal: Return synchronous conversions as soon as the task ends (short or backoff polling, e.g. 50 ms growing to 1 s) without changing the API or the timeout, and measure sync docx->odt latency before and after with .theseus/oracle/perf/e2e-convert.js.
-    context: Baseline PKT-0015 - sync mode adds up to 900 ms per request. Keep DB load reasonable (taskResult.select per poll).
-  - key: P4
-    wave: 1
-    type: refactor
-    title: Guard DocsCoServer crash-prone paths
+    title: Fix editorStat and editorStatProxy storage fallbacks in DocsCoServer
     files: [DocService/sources/DocsCoServer.js]
     create_in: [tests/unit]
-    depends_on: [P2]
-    goal: Add the missing null/undefined guards and error handling found by P2 and fix the editorStat fallback at DocsCoServer.js:155 (new editorDataStorage() used for editorStat), with tests.
-    context: Crash fixes upstream are almost all such guards in DocsCoServer.js, canvasservice.js and converter.js (baseline PKT-0017).
-  - key: P5
+    depends_on: []
+    estimate: {files: 2, diff_lines: 90}
+    goal: Make editorStat fall back to the legacy constructor of its own module (editorStatStorage) instead of editorDataStorage, give editorStatProxy the same fallback, and test the three instances, re-applying the design PKT-0064 wrote (createStorageInstance helper) on current main.
+    context: DocsCoServer.js:155 still uses new editorDataStorage() for editorStat; PKT-0064 implemented the fix with tests/unit/docsCoServerGuards.tests.js but was blocked and never merged. Do not change tests/unit/docsCoServerCrashPaths.tests.js.
+  - key: P2
+    wave: 0
+    type: refactor
+    title: Port upstream fix 81132 for client abort during file streaming
+    files: [DocService/sources/routes/static.js, DocService/sources/ai/aiProxyHandler.js]
+    create_in: [tests/unit]
+    depends_on: []
+    estimate: {files: 3, diff_lines: 160}
+    goal: Apply the logic hunks of ONLYOFFICE commit 12ba395e (.theseus/diagnosis/PKT-0029-upstream-81132.patch) so an aborted client during streaming no longer sends a status after headers are sent, with a unit test that aborts a stream mid-way.
+    context: PKT-0029 checked the logic hunks apply with git apply --check -C1; static.js:141 still calls res.sendStatus(400) without a headersSent check. Recommended low risk.
+  - key: P3
     wave: 0
     type: investigate
-    title: Assess porting upstream crash fixes 81132 and 81576
+    title: Decide the port of upstream fix 81576 with a test plan
     files: []
     create_in: [.theseus/diagnosis]
     depends_on: []
-    goal: Locate the ONLYOFFICE commits for bug 81132 (client disconnect during file streaming crashes the process) and 81576 (SaveVersion not released after failed final assembly, prepare4shutdown hangs), describe the diff and whether it applies to Euro-Office main, for a human decision.
-    context: Found by PKT-0017; 81132 is only on Euro-Office side branches such as release/v9.4.0, 81576 is absent from every Euro-Office ref.
+    estimate: {files: 1, diff_lines: 120}
+    acceptance: ['test -s .theseus/diagnosis/PKT-81576-test-plan.md']
+    goal: Write .theseus/diagnosis/PKT-81576-test-plan.md describing how SaveVersion is released after a failed final assembly in commit 8585bcf4, which save-state semantics it changes, and the characterization tests needed before porting, for a human decision.
+    context: PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-81576.patch; shutdown.js waits for SaveVersion rows to reach 0.
+  - key: P4
+    wave: 0
+    type: investigate
+    title: Measure DB load of backoff sync-convert polling
+    files: []
+    create_in: [.theseus/oracle/rounds]
+    depends_on: []
+    requires: [documentserver]
+    estimate: {files: 1, diff_lines: 60}
+    acceptance: ['grep -q "taskResult" .theseus/oracle/rounds/docservice-r2-dbload.md']
+    goal: Run SYNC=1 .theseus/oracle/perf/e2e-convert.js 10 4 against the installed server (original) and the worktree DocService on :8099 (new), count taskResult selects per request (PostgreSQL pg_stat_statements or log_statement) and record latency and select counts in .theseus/oracle/rounds/docservice-r2-dbload.md.
+    context: PKT-0068 expects up to ~6 extra selects per sync request in the first 1.5 s; .theseus/oracle/rounds/docservice-r2.md shows how to run the worktree server on :8099.
 ```
 
 ## Risks
-- Shorter sync polling raises `taskResult.select` load on the database; P3 must measure it under the
-  4-parallel convert run, and a regression shows there.
-- Guards in `DocsCoServer.js` may change protocol behaviour sdkjs relies on; P2 characterization and the
-  e2e co-edit script (`perf/e2e-coedit.js`) catch it.
-- The baseline has no production crash telemetry; the quality gain is inferred from fixed-defect history.
+- The 81132 port touches HTTP streaming used by every file download; the test and the e2e scripts catch a regression.
+- Users see none of round 1 until a package is built from `main`; that is outside this module's code.
 
 ## What would change this verdict
-- If a server-side open split (DocService open request → Editor.bin ready) shows DocService ≥ 10 % of open
-  time, or a load test beyond 1 000 sockets shows DocService CPU-bound with latency rising, reassess
-  **migrate** of the co-edit hot path (Go or Rust) with a D3 double diagnosis.
-- If P2/P4 show the crash paths cannot be made safe without breaking the global-state design of
-  `DocsCoServer.js`, reassess **rewrite** of the co-edit coordinator behind the Socket.IO contract.
-- If production telemetry shows crashes concentrated outside DocService, lower P4's priority.
+- If P4 shows the backoff polling loads the DB enough to slow parallel converts, tune the backoff (still refactor).
+- If a server-side open split shows DocService >= 10 % of open time, reassess migrate of that path with D3.
+- If no crash/hang remains open after P1-P3, the next round should be **keep**.

@@ -57,6 +57,11 @@ Round 2 of the `docservice` module. Read `.theseus/diagnosis/DIAG-docservice.md`
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-03. Differential by hand: installed DocService (:80, original code) vs worktree `sources/server.js` on :8099 (NODE_CONFIG port override, same DB/RabbitMQ/x2t), `SYNC=1 e2e-convert.js 5 1`. Sync convert p50 gain 0.44-1.56 s on all 7 pairs, 0 errors. Numbers in `.theseus/oracle/rounds/docservice-r2.md`. Unit oracle 178 passed / 1 skipped.
+- Decision: verdict stays **refactor**. Round 1 delivered the convert gain (PKT-0068) and PKT-0070 guards; not delivered: editorStat fallback (PKT-0064 blocked, never merged; DocsCoServer.js:155 unchanged), upstream 81132/81576 ports (assessment only).
+- Round 2 plan: P1 editorStat fix, P2 port 81132, P3 test plan for 81576, P4 DB-load of backoff polling. Used `type: investigate` for P4 (no `measure` type in the queue).
+- Surprise: there is no DocService differential oracle script (others have `.theseus/oracle/differential/*.sh`); the r2 file documents the manual recipe. Not requested as a packet; P4 reuses the recipe.
+- No DIAG-docservice-b.md existed, nothing to `git rm`. Not done: co-edit differential (round 1 changed no hot path).
 
 ## Spawned packets
 
