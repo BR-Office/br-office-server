@@ -58,9 +58,21 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-03. In `private_CollectFontCheckClasses`, changes with `Type === AscDFH.historyitem_TableId_Description`
+  are skipped (`continue`) before the class lookup: they carry no fonts and must not add CTableId to the class list.
+  The null fallback (unknown object -> full walk) is unchanged. Open/save/image paths untouched (no pending classes).
+- Surprise: the base (sdkjs `theseus` 3d51031) does not contain PKT-0087's `TableId_Add` branch (e5fd187 lives only on fork
+  `pkt/PKT-0087`; PKT-0089 applied it for a build and reverted). So there was no TableId_Add branch to "keep". I did not
+  re-implement it (out of this packet's goal); a TableId_Add change still reaches the class path, where CTableId gives no
+  font names and the walk falls back to full, which is safe (superset contract holds).
+- Not done: the browser re-measure (baseline.md is outside the target). Requested as a spawn with `requires: [documentserver, browser]`.
+- Acceptance: sdkjs-word.sh 42/42 suites, 6195/6195 assertions; unit.sh passes.
 
 ## Spawned packets
+- Re-measure PKT-0066 A/B after PKT-0091 (spawn request in .theseus/spawn/).
 
 ## Review
 
 ## Lessons for the Atlas
+- Every remote batch in Word starts with a `CChangesTableIdDescription` (Type 131071) record on CTableId; any per-change
+  filter on remote changes must skip it, or it will see CTableId in every batch.
