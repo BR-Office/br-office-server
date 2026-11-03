@@ -66,6 +66,7 @@ Provision external/sdkjs.base in packet worktrees and document it in environment
 - Acceptance `bash .theseus/oracle/differential/sdkjs-common.sh`: PASS (3 cases).
 
 ## Spawned packets
+- PKT-0099: Factory provisions external/sdkjs.base in packet worktrees
 
 ## Review
 
