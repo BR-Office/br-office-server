@@ -4,6 +4,7 @@ title: Map the save journey end to end (round 3)
 type: measure
 role: diagnostician
 priority: critical
+exclusive: true
 module: project
 origin:
   type: plan

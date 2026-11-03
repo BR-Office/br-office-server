@@ -4,6 +4,7 @@ title: Map the typing journey end to end (round 3)
 type: measure
 role: diagnostician
 priority: critical
+exclusive: true
 module: project
 origin:
   type: plan
@@ -41,6 +42,7 @@ budget:
 roles:
   executor: claude-opus-5-5-b
   reviewer: null
+resume: false
 ---
 
 ## Goal
@@ -53,6 +55,7 @@ Map the user journey `typing` (Type in an open Word document: key press to the c
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.24.2 (quiet journey measurement)
 
 ## Spawned packets
 
