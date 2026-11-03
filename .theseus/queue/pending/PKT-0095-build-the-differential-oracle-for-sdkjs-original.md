@@ -37,8 +37,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -51,6 +52,7 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 ## Suggested plan
 
 ## Executor log
+- return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
 
 ## Spawned packets
 
