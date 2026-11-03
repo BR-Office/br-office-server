@@ -52,6 +52,9 @@ PKT-0090 could not fix it: the file was outside its target.
 
 ## Executor log
 - return: factory restarted on Theseus 0.21.0 (original against new)
+- Rewrote header lines 4-5 only: every suite must pass; `known` in sdkjs-common-run.cjs stays as a mechanism (empty since PKT-0090) for future recorded failures. No code line changed.
+- Surprise: the runner's own header comment (sdkjs-common-run.cjs lines 2-3) still mentions known-broken suites generically; it is accurate as a mechanism description, so left alone (outside target anyway).
+- All 5 acceptance commands pass (common 6/6, word 42/42, both differentials PASS).
 
 ## Spawned packets
 
