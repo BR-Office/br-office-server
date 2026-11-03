@@ -85,6 +85,9 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
 - attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 - fork: pkt/PKT-0087 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (967ac51)
+- Attempt 4 (after release on 0.20.0): the sdkjs branch was back at base 3d51031, so the change was re-applied: in `private_CollectFontCheckClasses`, a `historyitem_TableId_Add` change is replaced by its `NewClass` (else `g_oTableId.Get_ById(Id)`), else null → full walk. Document.js unchanged (Paragraph already accepted via CDocumentContentElementBase). Single commit in external/sdkjs touching only CollaborativeEditing.js. A/B re-measure stays with PKT-0089 (already spawned).
+- Attempt 5 (rejection R2 on .theseus-addons/sdkjs-forms): the factory auto-commit e456c77 re-added the addon gitlink. Dropped it with `git reset --soft e5fd187` + unstaging, and added `/.theseus-addons/` to sdkjs `info/exclude` so the dir stays untracked and ignored. Branch diff vs 3d51031 is only word/Editor/CollaborativeEditing.js; sdkjs tree clean. Acceptance re-run: sdkjs-word 42/42 (6195/6195); unit pass (exit 0).
+- Surprise: the factory should exclude `.theseus-addons/` in fork checkouts itself; the local exclude is a workaround (previous exclude was lost with the re-checkout).
 
 ## Spawned packets
 - PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
