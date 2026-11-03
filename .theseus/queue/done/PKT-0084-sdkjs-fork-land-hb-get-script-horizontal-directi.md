@@ -42,7 +42,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -91,5 +91,6 @@ sdkjs fork: land hb_get_script_horizontal_direction table (PKT-0080 patch), unit
 - PKT-0097: Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong cwd)
 
 ## Review
+- Approved by claude-opus-5-5-b: table equals switch by construction, full-coverage test, measured ~20–30 ms per-function speedup, follow-up requested correctly
 
 ## Lessons for the Atlas
