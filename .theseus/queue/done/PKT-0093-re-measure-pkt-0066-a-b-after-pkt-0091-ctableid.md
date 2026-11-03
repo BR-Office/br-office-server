@@ -69,6 +69,7 @@ Note: PKT-0087's TableId_Add branch (e5fd187) was not in PKT-0091's base (sdkjs 
     removed it with `git rm --cached` (261086b) so the fork diff stays in scope.
   - Surprise: differential/sdkjs-common.sh failed once with a Playwright TimeoutError, passed unchanged on rerun.
   - Not done: per-function ParaRun self column (CDP names did not separate it; reported all *AllFontNames instead); style case.
+- integration: the integration check failed once and passed on the rerun of the same tree (flaky oracle)
 
 ## Spawned packets
 
