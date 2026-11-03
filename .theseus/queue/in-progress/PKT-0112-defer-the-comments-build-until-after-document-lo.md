@@ -45,7 +45,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -62,5 +63,6 @@ PKT-0047 Comments 116/96 ms, ≈ 90-100 ms inside onLaunch. Comments.js is in ap
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Rerun perf/open-window-build.js on an idle VM, alternating base and new builds, and put a LoadDoc before/after in baseline.md that beats the run-to-run spread (or adjust the change until it does); the current numbers show no wall-clock gain, which the plan's rule counts as not delivered.
 
 ## Lessons for the Atlas
