@@ -59,6 +59,7 @@ Factory provisions external/sdkjs.base in packet worktrees.
 
 ## Executor log
 - return: factory restarted on Theseus 0.21.9
+- discard: already done in the product: Theseus 0.21.9 puts <checkout>.base next to every checkout of a forked repository; a project packet cannot change the factory
 
 ## Spawned packets
 
