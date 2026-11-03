@@ -55,6 +55,15 @@ Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong
 ## Suggested plan
 
 ## Executor log
+- Change: in build.sh the untracked-file hash now runs `(cd "$SRC" && xargs -0r sha1sum)`, like the copy step; one line.
+- Verified: with an untracked file in the checkout the key computation exits 0 and the key changes (…-b919861e8ce4);
+  without it the key is the same as before (…-da39a3ee5e6b, empty-input hash), so clean-checkout output dirs are unchanged.
+- Surprise: `external/sdkjs.base` was missing from this worktree, so the acceptance oracle failed at build.sh line 9.
+  I created it (git-ignored, not committed) as `git clone --depth 1 -b main file://<sdkjs mirror>` -> 9cea536, the base
+  PKT-0093 used. `git clone --shared` of external/sdkjs could not reach main (shallow). The factory should provision it.
+- Acceptance: `bash .theseus/oracle/differential/sdkjs-common.sh` -> PASS (3 cases).
+- Attempt 2 (after rejection): created the follow-up request with `theseus packet new` (type `chore` is not valid, used
+  `refactor`), filled target/contract/acceptance/context, listed it under "Spawned packets". build.sh unchanged.
 
 ## Spawned packets
 
