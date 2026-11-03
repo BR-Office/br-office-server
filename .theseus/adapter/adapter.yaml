@@ -24,6 +24,27 @@ goals:
   # Rafael (2026-11-02, explicit): agents get every privilege they need in this disposable VM;
   # without it the VM cannot run the stack to measure. Measurement packets only.
   baseline_commands: ["*"]        # every privilege for measurement packets (Theseus 0.13.4)
+  # Rafael, 2026-11-03 (TEP-0013): optimize the whole application by what users do, end to end,
+  # measured against the integrated build (main branch + the forks' theseus branches).
+  journeys:
+    - id: open-docx-10p
+      description: "Select a 10-page Word document and wait until it is fully rendered in the browser (first open)"
+      measure: bash .theseus/oracle/journeys/open-docx-10p.sh
+    - id: open-docx-100p
+      description: "Select a 100-page Word document and wait until it is fully rendered in the browser (first open)"
+      measure: bash .theseus/oracle/journeys/open-docx-100p.sh
+    - id: typing
+      description: "Type in an open Word document: key press to the character drawn on screen"
+      measure: bash .theseus/oracle/journeys/typing.sh
+    - id: coedit-remote
+      description: "Two users in the same Word document: a change by one until it is drawn on the other's screen"
+      measure: bash .theseus/oracle/journeys/coedit-remote.sh
+    - id: save
+      description: "Close an edited Word document until the saved file is available"
+      measure: bash .theseus/oracle/journeys/save.sh
+    - id: convert-docx-pdf
+      description: "Convert a Word document to PDF through the server until the PDF is returned"
+      measure: bash .theseus/oracle/journeys/convert-docx-pdf.sh
 
 modules:
   - id: common
