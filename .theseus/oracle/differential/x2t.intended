@@ -1,0 +1,4 @@
+# Intended differences between the original core (external/core.base) and the new core (external/core),
+# one "<case> <check>" per line, followed by the packet that intends it.
+# Direct checks (x2t-direct.py): open save own pdf odf. Browser checks (x2t-run.cjs): model sentA sentB shown
+# saved converted.pdf converted.odt|.ods|.odp reopened. Cases are input file names (e.g. text-10p.docx, new.xlsx).
