@@ -55,6 +55,10 @@ Write `.theseus/oracle/differential/x2t.sh`: each compares the original code of 
 - return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
 - block: agent `claude-opus-5-5` timed out after 90 min
 - release: timed out at 90 min while building x2t from source (85% done); the build is cached by tree in THESEUS_CACHE_DIR, so a resumed attempt continues it
+- resume (claude-opus-5-5): the x2t build was already cached (one tree, 83b890f3: core and core.base are at the same commit 59458e06, so one build serves both sides; proved to run, 54 libraries replaced). The review's points (browser-driven local + remote edits and combined save, run proof, core.base tie, content comparison, repeated timing) were already in the WIP scripts.
+- surprise: the first full run failed on `text-10p.docx shown` with the ORIGINAL side unstable across its own repeats. Dumping both canvases and diffing pixel by pixel showed a red spell-check squiggle on one run only: the spellchecker service answers asynchronously, sometimes after the capture. Not x2t output.
+- decision: `shown` is now read by `stableShown()`: spell check off (`asc_setSpellCheck(false)`), selection removed, focus blurred, then the canvas hash is sampled every 500 ms until 3 equal reads in a row. Checked 4 single-side docx runs (identical hash) and 3 repeats per side; then the acceptance command passed (direct PASS, browser PASS 3 cases x 2 repeats).
+- not done: no intended differences exist yet (x2t.intended empty), so the FAIL path is only proven by the noise found above, not by a real core change.
 
 ## Spawned packets
 
