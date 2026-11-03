@@ -41,7 +41,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -65,5 +65,6 @@ PKT-0103 run 1 in .theseus/oracle/rounds/x2t-r2.md. PKT-0094 already fixed a sim
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: bold toggled via editor API and edits gated by a model check before capture; contract kept, log complete
 
 ## Lessons for the Atlas
