@@ -10,8 +10,8 @@ curl -sf http://127.0.0.1/healthcheck >/dev/null || { echo "differential: Docume
 ORIG=$(bash "$HERE/build.sh" "$ROOT/external/sdkjs.base" word)
 NEW=$(bash "$HERE/build.sh" "$ROOT/external/sdkjs" word)
 IN=$C/inputs/$(sha1sum < "$HERE/gen-inputs.py" | cut -c1-12)
-[ -s "$IN/chart.pptx" ] || python3 "$HERE/gen-inputs.py" "$IN"
+[ -s "$IN/large.docx" ] || python3 "$HERE/gen-inputs.py" "$IN"
 echo "differential: original $(git -C "$ROOT/external/sdkjs.base" rev-parse --short HEAD) ($ORIG)"
 echo "differential: new      $(git -C "$ROOT/external/sdkjs" rev-parse --short HEAD) ($NEW)"
 for d in "$ORIG" "$NEW"; do for u in "$d"/*/unminified; do [ -e "$u" ] && echo "differential: $u: $(tr '\n' ' ' < "$u")(unminified, memory)"; done; done
-exec node "$HERE/run.cjs" sdkjs-word "$ORIG" "$NEW" "$IN" "$HERE/sdkjs-word.intended" ${DIFF_CASES:-text.docx styles.docx}
+exec node "$HERE/run.cjs" sdkjs-word "$ORIG" "$NEW" "$IN" "$HERE/sdkjs-word.intended" ${DIFF_CASES:-text.docx styles.docx large.docx}

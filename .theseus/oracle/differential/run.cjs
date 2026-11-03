@@ -10,6 +10,8 @@
 // Compared between the sides: A's and B's model dumps after co-editing, what A and B sent (saveChanges,
 // with the per-point description records dropped: they carry a time-based checksum), what is shown (hash of
 // the editor's document canvases), the reopened saved document's dump and the converted file.
+// Case "large*.docx" (PKT-0110): A types 30 characters over ~100 pages instead of the scripted edits, shown is
+// B's canvases on the pages typed on, and the timing (B's receive busy time, typing latency) is a median of 3 runs.
 // A difference fails unless "<case> <check>" is listed in the intended file. One timing line per case.
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
@@ -88,6 +90,16 @@ async function newUser(browser, bundle, editorKind, url) {
 	// Seeded Math.random per user (ParaIds and other durable ids are random): same ids on both sides.
 	await ctx.addInitScript(seed => { let x = seed >>> 0 || 1;
 		Math.random = () => { x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; }; }, ++userSeed);
+	// Receiver busy time (PKT-0110): time spent in incoming WebSocket message handlers, and long tasks.
+	await ctx.addInitScript(() => { const W = window.WebSocket; if (!W) return; window.__busy = { recv: 0, long: 0 };
+		const wrap = h => function (...a) { const t = performance.now(); try { return h.apply(this, a); } finally { window.__busy.recv += performance.now() - t; } };
+		const ael = W.prototype.addEventListener;
+		W.prototype.addEventListener = function (k, h, ...r) { return ael.call(this, k, k === 'message' && typeof h === 'function' ? wrap(h) : h, ...r); };
+		const d = Object.getOwnPropertyDescriptor(W.prototype, 'onmessage');
+		Object.defineProperty(W.prototype, 'onmessage', { configurable: true, get() { return d.get.call(this); },
+			set(h) { d.set.call(this, typeof h === 'function' ? wrap(h) : h); } });
+		try { new PerformanceObserver(l => { for (const e of l.getEntries()) window.__busy.long += e.duration; }).observe({ type: 'longtask', buffered: true }); } catch (e) {}
+	});
 	const re = new RegExp(`/sdkjs/${editorKind}/sdk-all(-min)?\\.(js|bin|cache)(\\?|$)`);
 	await ctx.route(re, r => {
 		const m = r.request().url().match(re);
@@ -110,16 +122,16 @@ async function newUser(browser, bundle, editorKind, url) {
 	return { ctx, page, f, sent, openMs: Date.now() - t0 };
 }
 
-async function play(u, steps) {
+async function play(u, steps, pause = 150) {
 	for (const s of steps) {
 		await u.f.waitForFunction(() => !AscCommon.CollaborativeEditing.Get_GlobalLock(), null, { timeout: 30000 });
-		if (s.js) await u.f.evaluate(s.js);
+		if (s.js) await u.f.evaluate(s.js, s.arg);
 		await u.f.evaluate(() => { const a = document.querySelector('#area_id'); if (a) a.focus(); });
 		// Text and formatting through the API (typed keystrokes raced with autocorrect and shortcuts).
 		if (s.type) await u.f.evaluate(t => editor.asc_enterText([...t].map(c => c.codePointAt(0))), s.type);
 		if (s.bold !== undefined) await u.f.evaluate(v => editor.put_TextPrBold(v), s.bold);
 		if (s.press) await u.page.keyboard.press(s.press);
-		await u.page.waitForTimeout(150);
+		if (pause) await u.page.waitForTimeout(pause);
 		// Co-editing: an action waits for the server's lock answer; input sent meanwhile is dropped. Wait for it.
 		await u.f.waitForFunction(() => !AscCommon.CollaborativeEditing.Get_GlobalLock(), null, { timeout: 30000 });
 	}
@@ -162,23 +174,83 @@ function normSent(msgs) {
 	}).flat();  // flattened: how changes are batched into messages depends on timing
 }
 
+// Large-document remote typing (PKT-0110, cases "large*.docx"): A types TYPE_CHARS characters, one at a time,
+// at the start of paragraphs spread over the document; B receives them. Latency of a character: from A's
+// input to the character in B's model. B's busy time: incoming-message handlers and long tasks during typing.
+const TYPE_AT = [0.1, 0.3, 0.5, 0.7, 0.9], TYPE_TEXT = 'abcdef';  // 5 places x 6 characters = 30
+async function typeRemote(a, b) {
+	const n = await a.f.evaluate(() => editor.WordControl.m_oLogicDocument.Content.length);
+	const at = TYPE_AT.map(x => Math.floor(n * x));
+	await b.f.evaluate(() => { window.__busy.recv = 0; window.__busy.long = 0; });
+	const lat = [], t0 = Date.now();
+	for (const k of at) {
+		await play(a, [{ js: k => { const d = editor.WordControl.m_oLogicDocument; d.RemoveSelection();
+			d.Set_CurrentElement(k, true); d.Content[k].MoveCursorToStartPos(); d.UpdateSelection(); }, arg: k }]);
+		let typed = '';
+		for (const c of TYPE_TEXT) {
+			typed += c;
+			const s = Date.now();
+			await play(a, [{ type: c }], 0);
+			await b.f.waitForFunction(([k, t]) => editor.WordControl.m_oLogicDocument.Content[k].GetText().startsWith(t),
+				[k, typed], { timeout: 30000, polling: 5 });
+			lat.push(Date.now() - s);
+		}
+	}
+	const busy = await b.f.evaluate(() => window.__busy);
+	const pages = await b.f.evaluate(at => at.map(k => editor.WordControl.m_oLogicDocument.Content[k].GetAbsolutePage(0)), at);
+	lat.sort((x, y) => x - y);
+	return { at, pages, t: { type: Date.now() - t0, lat: lat[lat.length >> 1], latMax: lat[lat.length - 1],
+		recv: Math.round(busy.recv), long: Math.round(busy.long) } };
+}
+// What B shows on the given pages: B scrolls to each one and hashes its canvases once stable.
+async function shownPages(u, pages) {
+	const h = [];
+	for (const p of [...new Set(pages)]) { await u.f.evaluate(p => editor.goToPage(p), p); h.push(`${p}:${await shownHash(u)}`); }
+	return h.join(' ');
+}
+async function openPair(browser, bundle, kind, file, side, run) {
+	userSeed = 0;  // same seeds for the same user on both sides
+	const name = await upload(file, `diff-${side}${run ? '-run' + run : ''}-${path.basename(file)}`);
+	const url = BASE + 'editor?fileName=' + encodeURIComponent(name);
+	return [await newUser(browser, bundle, kind, url), await newUser(browser, bundle, kind, url)];
+}
+const RUNS = +(process.env.DIFF_RUNS || 3);
+const median = xs => xs.slice().sort((x, y) => x - y)[xs.length >> 1];
+
 async function runSide(browser, side, bundle, file, tmp) {
 	const kind = file.endsWith('.pptx') ? 'slide' : 'word', E = EDITS[kind], dump = DUMP[kind];
-	userSeed = 0;  // same seeds for the same user on both sides
-	const name = await upload(file, `diff-${side}-${path.basename(file)}`);
-	const url = BASE + 'editor?fileName=' + encodeURIComponent(name);
-	const a = await newUser(browser, bundle, kind, url), b = await newUser(browser, bundle, kind, url);
+	const large = /^large/.test(path.basename(file));
+	const [a, b] = await openPair(browser, bundle, kind, file, side, 0);
 	const t = { open: a.openMs, join: b.openMs };
-	let t0 = Date.now(); await play(a, E.A); await play(b, E.B);
-	const model = await settle(a, b, dump); t.edit = Date.now() - t0;
-	for (const m of E.expect)  // the scripted edits must have landed, or "same" would prove nothing
+	let t0 = Date.now(), typing = null, model;
+	if (large) {  // typing by A only; timing is the median over RUNS runs (later runs: fresh upload, typing only)
+		typing = await typeRemote(a, b);
+		model = await settle(a, b, dump);
+		const runs = [typing.t];
+		for (let i = 1; i < RUNS; i++) {
+			const [a2, b2] = await openPair(browser, bundle, kind, file, side, i);
+			runs.push((await typeRemote(a2, b2)).t); await a2.ctx.close(); await b2.ctx.close();
+		}
+		for (const k of Object.keys(typing.t)) t[k] = median(runs.map(r => r[k]));
+		t.runs = runs.length;
+		const pg = JSON.parse(model).pages;
+		if (pg < 90) throw new Error(`${side} ${path.basename(file)}: ${pg} pages, expected about 100`);
+		for (const k of typing.at) if (!JSON.parse(model).content[k].text.startsWith(TYPE_TEXT))
+			throw new Error(`${side} ${path.basename(file)}: typing missing at paragraph ${k}`);
+	} else {
+		await play(a, E.A); await play(b, E.B);
+		model = await settle(a, b, dump); t.edit = Date.now() - t0;
+	}
+	for (const m of large ? [] : E.expect)  // the scripted edits must have landed, or "same" would prove nothing
 		if (!model.includes(m)) throw new Error(`${side} ${path.basename(file)}: edit "${m}" missing from the model: ${model.slice(0, 1500)}`);
 	// Leave text editing on both sides (a held edit lock blocked the download in slides), then B leaves.
 	for (const u of [a, b]) await play(u, [{ js: kind === 'slide'
 		? () => editor.WordControl.m_oLogicDocument.GetCurrentController().resetSelection() : () => 0 }]);
 	await settle(a, b, dump);
-	const sentB = JSON.stringify(normSent(b.sent)); await b.ctx.close();
-	const shown = await shownHash(a);
+	const sentB = JSON.stringify(normSent(b.sent));
+	// Shown: A's canvases; for the typing case B's, on every page typed on (stale pixels beyond the first page).
+	const shown = large ? await shownPages(b, typing.pages) : await shownHash(a);
+	await b.ctx.close();
 	t0 = Date.now(); const saved = await download(a, E.save, path.join(tmp, `${side}.${E.ext}`)); t.save = Date.now() - t0;
 	t0 = Date.now(); const conv = await download(a, E.convert, path.join(tmp, `${side}.${E.convert.toLowerCase()}`)); t.convert = Date.now() - t0;
 	const r = { model, sentA: JSON.stringify(normSent(a.sent)), sentB, shown,
