@@ -49,8 +49,11 @@ const DUMP = {
 const EDITS = {
 	word: {
 		A: [{ js: () => editor.WordControl.m_oLogicDocument.MoveCursorToStartPos() },
-			{ type: 'Local edit ' }, { press: 'Control+b' }, { type: 'bold' }, { press: 'Control+b' }, { press: 'Enter' },
-			{ type: 'Second line' }, { press: 'Backspace' }, { press: 'Enter' }],
+			{ type: 'Local edit ' }, { js: () => editor.put_TextPrBold(true) }, { type: 'bold' }, { js: () => editor.put_TextPrBold(false) },
+			{ expect: () => editor.WordControl.m_oLogicDocument.Content[0].GetText().startsWith('Local edit bold') },
+			{ press: 'Enter' }, { type: 'Second line' }, { press: 'Backspace' }, { press: 'Enter' },
+			{ expect: () => { const c = editor.WordControl.m_oLogicDocument.Content;
+				return c[0].GetText().startsWith('Local edit bold') && c[1].GetText().startsWith('Second lin'); } }],
 		B: [{ js: () => editor.WordControl.m_oLogicDocument.MoveCursorToEndPos() }, { press: 'Enter' },
 			{ type: 'Remote edit by B' }, { press: 'Enter' }, { type: 'More' }],
 		save: 'DOCX', convert: ['PDF', 'ODT'], ext: 'docx',
@@ -105,6 +108,13 @@ async function play(u, steps) {
 		await u.f.evaluate(() => { const a = document.querySelector('#area_id'); if (a && document.activeElement !== a) a.focus(); });
 		if (s.type) await u.page.keyboard.type(s.type, { delay: 60 });
 		if (s.press) await u.page.keyboard.press(s.press);
+		// a step that must hold before going on: the editor applies typed keys asynchronously, so wait for the
+		// model to show the edit (a lost or late key would otherwise surface as a random "unstable" side)
+		if (s.expect) {
+			let ok = false;
+			for (let i = 0; i < 50 && !ok; i++) { ok = await u.f.evaluate(s.expect).catch(() => false); if (!ok) await u.page.waitForTimeout(200); }
+			if (!ok) throw new Error('scripted edit not applied: ' + s.expect.toString().slice(0, 160));
+		}
 		await u.page.waitForTimeout(400);
 	}
 }
