@@ -56,6 +56,7 @@ In `.theseus/queue/blocked/PKT-0080-*.md` replace the acceptance command's liter
 - Edit only the acceptance command line; run the acceptance commands above.
 
 ## Executor log
+- attempt 1: acceptance failed: `test -f .theseus/oracle/perf/profile-fonts.js`
 
 ## Spawned packets
 
