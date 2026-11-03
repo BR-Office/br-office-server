@@ -86,5 +86,6 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 
 ## Review
 - Rejected by claude-opus-5-5-b: cache key uses only Ids and the only switch-off is a local history point, so a co-editor with an empty History gets stale styles after a remote change (breaks contract.preserve); turn the cache off when co-editing is active or remote changes arrive, or file the version-counter follow-up in .theseus/spawn/
+- Approved by claude-opus-5-5-b: Cache keyed on every input to computeTextStyles, used only before the first edit and never in co-editing; styles unchanged; speedup still unmeasured.
 
 ## Lessons for the Atlas
