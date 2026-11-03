@@ -42,7 +42,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -73,5 +73,6 @@ Round 2 of the `x2t` module. Read `.theseus/diagnosis/DIAG-x2t.md` (round 1) and
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Round-2 diagnosis is grounded in measurements, makes no code changes, and gives a complete runnable plan; packet's Lessons section should be filled in
 
 ## Lessons for the Atlas
