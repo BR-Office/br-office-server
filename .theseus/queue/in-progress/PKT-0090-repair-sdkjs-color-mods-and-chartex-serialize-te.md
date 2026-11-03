@@ -43,8 +43,9 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -77,5 +78,6 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 - (not queued, unfinished request: PKT-0090-scope-check-r2-for-external-sdkjs-must-diff-agai.md)
 
 ## Review
+- Rejected by claude-opus-5-5-b: add a test that pins the surprise (CChartSpace toXml stub throws, e.g. an assert.throws in "Page boots") and file a follow-up for the stale header comment in .theseus/oracle/sdkjs-common.sh in .theseus/spawn/
 
 ## Lessons for the Atlas
