@@ -46,6 +46,7 @@ Map the module `web-apps-presentationeditor` (`external/web-apps/apps/presentati
 ## Suggested plan
 
 ## Executor log
+- discard: Rafael, 2026-11-03: finish one application (the document editor) before spreadsheets, presentations and PDF
 
 ## Spawned packets
 
