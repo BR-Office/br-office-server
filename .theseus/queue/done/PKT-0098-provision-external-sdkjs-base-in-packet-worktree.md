@@ -40,7 +40,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -69,5 +69,6 @@ Provision external/sdkjs.base in packet worktrees and document it in environment
 - PKT-0099: Factory provisions external/sdkjs.base in packet worktrees
 
 ## Review
+- Approved by claude-opus-5-5-b: Recipe documented with the reason the obvious approach fails, contract kept, automatic setup correctly requested in a new packet
 
 ## Lessons for the Atlas
