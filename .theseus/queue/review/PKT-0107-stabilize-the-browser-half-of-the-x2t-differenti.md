@@ -56,6 +56,11 @@ PKT-0103 run 1 in .theseus/oracle/rounds/x2t-r2.md. PKT-0094 already fixed a sim
 
 ## Executor log
 - return: factory restarted on Theseus 0.23.2, work kept
+- Decision: bold is toggled with `editor.put_TextPrBold(true/false)` instead of Control+b. The key shortcut raced with typing, so "b" was sometimes lost ("Local edit old").
+- Decision: added an `expect` step to `play()`. It polls a model predicate (up to 50 x 200 ms) and throws "scripted edit not applied" when it never holds, so a lost key now fails loudly instead of showing up as a random unstable side. Two expects on text-10p.docx: after "bold", and after the second line.
+- No x2t.intended entries were added. No test assertions were changed.
+- Proof: two consecutive runs of `bash .theseus/oracle/differential/x2t.sh` both ended in `x2t-browser: PASS (3 cases, 2 repeat(s) per side)` / `differential x2t: PASS`, with no "original side itself unstable" lines.
+- Surprise: one full x2t.sh run takes about 5-6 min on this VM, so two runs do not fit in a single 600 s command.
 
 ## Spawned packets
 
