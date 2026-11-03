@@ -40,8 +40,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -54,6 +55,7 @@ PKT-0103 run 1 in .theseus/oracle/rounds/x2t-r2.md. PKT-0094 already fixed a sim
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.23.2, work kept
 
 ## Spawned packets
 
