@@ -94,6 +94,7 @@ packets:
     depends_on: []              # keys of this plan
     acceptance: []              # optional; default: the adapter's oracle commands
     allowed_commands: []        # optional
+    estimate: {files: 2, diff_lines: 300}   # your own estimate of the change (TEP-0006)
     goal: Pin the reader's behavior on the corpus, including truncated archives.
     context: The fuzz corpus is in tests/corpus/zip.
 ```

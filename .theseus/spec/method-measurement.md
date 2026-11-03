@@ -161,6 +161,8 @@ What may get worse and which indicator will show it.
 
 Cycle: `proposed → approved (human) → testing (new version) → confirmed or refuted (next audit)`. A refuted TEP is reverted in the next version, and the record stays in history as learning.
 
+When a TEP moves to `testing`, the method version (`.theseus/VERSION`) is bumped and METHOD-CHANGELOG gets an entry listing the TEP and its hypothesis; the factory writes that version on every record, and `theseus validate` fails when a TEP in testing is missing from the changelog (TEP-0006). The planner writes its own estimate on every packet it plans (`estimate: {files, diff_lines}` in the plan row, `estimated` with `source: planner` in the packet); `source: budget` is only for packets written by hand, and the audit leaves those out of the deviation indicator.
+
 ## 7. Base prompt for the audit session
 
 The auditor prompt is in `.theseus/prompts/auditor.md` (installed by `theseus init`). In short: read the specifications, the previous audit, the TEPs under test and the Scoreboard; compute the indicators in pairs; give a verdict on each TEP with numbers; list findings only with evidence; propose at most five TEPs; say what must not change; and be critical, because the goal is to improve the method, not to defend it.
