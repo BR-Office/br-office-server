@@ -78,6 +78,7 @@ Not done: nginx-side font timing (DS nginx has `access_log off`); documents with
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
+- integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 
 ## Spawned packets
 - PKT-0059: Revise DIAG-sdkjs-common Wave 1 with the PKT-0045 profile (fonts already parallel)
