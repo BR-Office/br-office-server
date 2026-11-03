@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -67,5 +67,6 @@ PKT-0087 (sdkjs pkt/PKT-0087) makes private_CollectFontCheckClasses replace CTab
 - PKT-0091: Incremental font collection: skip CTableId Description changes so remote typing takes the incremental path
 
 ## Review
+- Approved by claude-opus-5-5-b: The measurements are recorded under a PKT-0087 heading and the cause (wrong change type) is shown by dumping the change types; the sdkjs tree is unchanged and the follow-up is requested correctly.
 
 ## Lessons for the Atlas
