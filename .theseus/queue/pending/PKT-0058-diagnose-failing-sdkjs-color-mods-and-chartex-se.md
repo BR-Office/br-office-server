@@ -40,6 +40,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -63,6 +64,7 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 - Attempt after R2 rejection (DrawingDocument.js): external/sdkjs on pkt/PKT-0058 has no commits or working changes (HEAD = theseus = fork/pkt/PKT-0058 = 3d51031) and stays clean after running the oracle, so this packet never touched that file. The same rejection blocked PKT-0085, which suggests the change came from another packet's leftover state in the shared checkout, not from here. Re-ran acceptance: 6/6, 10066/10323, 29 s. No further code change.
 - Attempt 3 (second R2 rejection): pkt/PKT-0058 = theseus = fork branch = 3d51031, clean tree. `git log origin/main..theseus -- word/Drawing/DrawingDocument.js` shows 3d51031 "Merge pkt/PKT-0078": the 27-line DrawingDocument.js difference is between origin/main and the `theseus` base branch (PKT-0078's merge), so a scope check diffing against origin/main instead of `theseus` attributes it to this packet. Not fixable from here without touching that file (forbidden); the factory's R2 base for external/sdkjs should be `theseus`. Acceptance re-run: 6/6, 10066/10323, 29 s.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
 
 ## Spawned packets
 - PKT-0090: Repair sdkjs color-mods and chartEx-serialize test pages so they join the common oracle
