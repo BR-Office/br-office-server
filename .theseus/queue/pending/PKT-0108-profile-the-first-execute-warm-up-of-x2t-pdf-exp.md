@@ -38,9 +38,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -62,6 +62,7 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - Not done: no fork build (nothing to build: no core change); xlsx was not CPU-profiled (laps and timing only).
 - block: the reviewer found an external blocker: Goal requires a post-warm-up snapshot built on the core fork, but target.files lists no external/core files (doctrenderer.cpp, v8_base.cpp); the planner must add them or decide the profile-based upper bound is enough for P3 (also add the missing xlsx profile)
 - release: Theseus 0.23.3: an investigation may prototype in external/core (not in the scope check, never merged); prototype the post-warm-up snapshot there and add the missing xlsx profile, as the reviewer asked
+- return: factory stopped by the session's 2-hour limit; restarted on Theseus 0.24.0 (journeys), work kept
 
 ## Spawned packets
 
