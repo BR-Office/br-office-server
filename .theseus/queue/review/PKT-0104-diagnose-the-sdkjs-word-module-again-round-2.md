@@ -57,6 +57,12 @@ Round 2 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 ## Suggested plan
 
 ## Executor log
+- 2026-11-03 claude-opus-5-5. Ran all four oracles on the fork build (0f61ccc): QUnit word 42/42, common 7/7, differential word PASS (2 cases), common PASS (3); ran `perf/client-perf.js 3 http://127.0.0.1/example/` on the installed bundle. Numbers in `.theseus/oracle/rounds/sdkjs-word-r2.md`.
+- Decision: verdict stays refactor, confidence low → medium (hotspot now located). Only PKT-0091 delivered (≈ −7 % B busy, PKT-0093); PKT-0066 and PKT-0087 were correct but gained 0 and are counted as not delivered.
+- Decision: round 2 wave 0 = measure repaint scope (P1) + a large-doc remote typing case in the differential oracle (P2); wave 1 refactors not guessed before P1.
+- Surprise: the differential timing lines are noise (±2–3 s) and its small inputs never exercise remote apply, so the oracle cannot show round 1's gain; `client-perf.js` measures the installed (original) bundle only.
+- Surprise: `/usr/bin/time` is not installed on the VM (first oracle loop produced nothing).
+- DIAG-sdkjs-word-b.md did not exist; nothing to `git rm`.
 
 ## Spawned packets
 
