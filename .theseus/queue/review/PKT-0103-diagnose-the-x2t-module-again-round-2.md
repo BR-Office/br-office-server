@@ -57,6 +57,18 @@ Round 2 of the `x2t` module. Read `.theseus/diagnosis/DIAG-x2t.md` (round 1) and
 ## Suggested plan
 
 ## Executor log
+- Read round 1 (DIAG-x2t.md) and the logs of PKT-0041/0051/0054/0065/0069/0075/0077/0082/0094.
+- Surprise: `external/core` == `core.base` (59458e06, same tree): round 1 changed no x2t code. Its gains were a
+  deployment step (snapshots, −0.1 s, patch only, PKT-0075) and an sdkjs patch (shape cache, not merged). Counted as not delivered.
+- Ran `bash .theseus/oracle/differential/x2t.sh` twice: run 1 FAIL (7 browser diffs on text-10p.docx, all
+  "original side itself unstable": the scripted edit races, "Local edit old" vs "bold"); run 2 PASS. Numbers in
+  `.theseus/oracle/rounds/x2t-r2.md`. Did not edit the oracle (outside target): planned as P1 of round 2.
+- Decision: verdict refactor (C++, doctrenderer), plan P1 stabilize browser oracle, P2 profile first-Execute
+  warm-up with snapshots and prototype warmed snapshot / V8 flags in the core fork, P3 implement. Persistent
+  converter deferred unless in-process levers gain < 0.2 s.
+- Decision: no separate perf script run beyond the oracle's direct timing; the VM was contended (timings ±2×
+  between runs), so absolute numbers are noted as such.
+- `DIAG-x2t-b.md` did not exist; nothing to `git rm`.
 
 ## Spawned packets
 
