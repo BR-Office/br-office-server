@@ -54,6 +54,18 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
 - attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
+- attempt 2 (claude-opus-5-5): the kept work (build.sh, run.cjs, gen-inputs.py, two scripts, two .intended files) existed but FAILED: 12 differences in sdkjs-word, all noise, because the sdkjs changes (font-check of remote changes, style cache, shape cache) do not change results. Fixes:
+  - Text and bold go through the API (`asc_enterText`, `put_TextPrBold`) instead of `keyboard.type` + Ctrl+B. Typed keys raced with shortcuts and autocorrect ("bold" lost, "Second" capitalized on one side).
+  - Each step waits for `AscCommon.CollaborativeEditing.Get_GlobalLock()` to clear. In co-editing every action waits for the server's lock answer, and input sent meanwhile is dropped silently. This was the main source of the lost text.
+  - Sent changes are flattened across messages (how they are batched depends on timing). The last 4 bytes of TableId registration records (the random ParaId, `CreateDurableId`) are masked. `Math.random` is also seeded per user, but the number of calls depends on timing, so the seed alone was not enough.
+  - The `shown` hash waits for two equal reads with the cursor hidden (`TargetEnd`).
+  - Slides: B's page switch and its selection are separate steps (in one tick the selection missed). Both users leave text editing and B closes before A saves: a held edit lock blocked A's download for 60 s.
+  - New guard: the expected edit strings must be in the settled model on each side, or the case errors. It found that chart.pptx had been passing with no local edit (A selected the chart, not a text shape) and that B's slide edit had not landed. Both are fixed.
+  - build.sh builds the `min` and `all` chunk configs one at a time (`--config-name`) with `--max-old-space-size=3072`. If a minified chunk is still OOM-killed, it rebuilds that chunk with `--no-optimization-minimize` and records it in `<out>/<module>/unminified`, which the scripts print. Reason: the shell's memory cgroup (6.27 GB) is shared with the other agents' shells; the slide build was killed 5 times while another packet compiled x2t. In the final runs everything was minified and no fallback was used.
+- Proof: both differential scripts PASS twice in a row, and `.theseus/oracle/sdkjs-word.sh` (42/42) and `.theseus/oracle/sdkjs-common.sh` (6/6) pass. Mutation check: a bundle copy where asc_enterText turns 'n' into 'N' gives DIFF in model, sentA, shown, reopened and converted (sentB same, since B types no 'n'); exit 1.
+- Not done: no remote-change case on a chart object itself (charts are opened, shown, saved, converted and reopened, but only text is edited). `.intended` files are empty: no intended difference yet.
+- Timing: the timing lines show no measurable gain on these small inputs (open about 4.3 s, edit about 3 s on both sides); the noise is of the same order.
+- attempt 3 (claude-opus-5-5): rejected for R2: `external/sdkjs/.theseus-addons/sdkjs-forms` had been committed in the fork as a gitlink (the base oracle `.theseus/oracle/sdkjs-word.sh` clones sdkjs-forms there; the factory's commit of leftovers picked up the nested repo). Fix: reverted that commit in external/sdkjs (net diff of the fork branch for this packet is now empty), added `/.theseus-addons/` to the checkout's local `info/exclude`, and build.sh now adds that exclude itself on every run so it cannot recur. All four acceptance commands pass (differential word 2 cases, common 3 cases; 42/42 and 6/6 suites).
 
 ## Spawned packets
 
