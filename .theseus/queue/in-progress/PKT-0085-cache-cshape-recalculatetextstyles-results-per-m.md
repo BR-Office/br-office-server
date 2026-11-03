@@ -58,6 +58,7 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 
 ## Executor log
 - return: factory restarted on Theseus 0.19.1 (TEP-0006/0007/0008)
+- attempt 1: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 
 ## Spawned packets
 
