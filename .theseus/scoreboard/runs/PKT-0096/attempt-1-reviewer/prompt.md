@@ -1,0 +1,39 @@
+You are the Reviewer in a Theseus project. Read AGENTS.md and .theseus/prompts/reviewer.md, then review work packet PKT-0096, described in .theseus/queue/ (search for PKT-0096). The changes to review are `git diff cb35329d0b42212a3005b56fc4251e320c5cdf43..HEAD` in this worktree. The factory chose you as reviewer according to rule R4 and the adapter's review settings (pilot mode may allow a reviewer of the same model family), so do not refuse on that ground. The factory has already checked the scope (rule R2) and run every acceptance command successfully (rule R3) on this exact commit, so you do not need to rerun them. Check the diff against the goal, the contract and the budget, and look for what the oracle does not catch: wrong or weak assertions, edge cases, error handling, behavior that was changed instead of characterized. Do not change any file.
+Follow-up packets the executor requested are files in .theseus/spawn/ in the diff; the factory turns them into packets after approval.
+Reject the packet (TEP-0004) if: the Executor log section of the packet is empty; the packet asked for follow-ups and neither the Spawned packets section nor .theseus/spawn/ lists them; or, for a characterize packet, a surprising behavior mentioned in the log is not kept in a test.
+
+The executor's final report follows. If it says that something the packet's goal or context requires was not done or could not be done, reject and say what is missing.
+<executor-report>
+PKT-0096 is finished: the web-apps differential oracle now passes, and both acceptance commands pass.
+
+- **`web-apps-documenteditor.sh`:** PASS on all 4 cases (text.docx, styles.docx, plain.txt, simple.rtf). It prints one timing line per case for the original and the new side.
+- **`documenteditor-open.sh`:** PASS.
+- **`theseus validate`:** 0 errors. The 2 warnings were already there before this run.
+
+**What I did:** The oracle was already written and committed by the earlier attempt. On the first full run it failed: in `styles.docx`, the reopened document had 5 pages on one side and 4 on the other, with the same content. Both sides are the same commit (d238e526), so this was the check being flaky, not a real difference.
+
+**Fix:** The script read the reopened document's layout right after opening, while the editor was still laying out pages. `web-apps-run.cjs` now waits for the page image to settle, then reads the layout repeatedly until two reads 500 ms apart agree. I added nothing to the `.intended` file because this is not an intended difference.
+
+**Caveat:** The fork has no changes merged yet, so original and new are the same code. For now the oracle only shows it gives stable results on identical code. It has not yet compared real changes. Timings vary by 1–2 s per step between sides on this VM, so a small gain won't show reliably.
+
+**Not done:** Conversion is checked to TXT only. I didn't write a `perf/` script; the packet allows one, but the acceptance doesn't need it.
+
+The Executor log, the Atlas lesson and the friction line are in the packet. Work is committed in two commits on the current branch (`1802ee0`, `d45ed98`). Nothing changed in `external/web-apps`. No permission refusals.
+
+**Lesson for the Atlas:** reading the editor's document layout right after a document opens is unreliable, because the page count changes while layout is still running. Wait until it is stable before comparing.
+</executor-report>
+
+End your answer with exactly one line, the last one:
+VERDICT: APPROVE <short reason>
+or
+VERDICT: REJECT <what must be fixed>
+or, when the goal cannot be met because something outside the agents' control is missing (an environment, a permission, a file outside the target), so that retrying cannot help:
+VERDICT: BLOCK <what is needed, and who can provide it>
+
+Environments that are up right now (the factory just ran these checks and they passed; .theseus/adapter/environment.md says how to use them):
+- `documentserver`: `curl -sf http://127.0.0.1/healthcheck`
+- `browser`: `node -e "require('playwright')"`
+Do not report one of these as missing: use it, and if a script points elsewhere (another port, a container), point it here. If you still cannot reach it, say exactly what you ran and what came back.
+
+Part of this packet changes another repository, checked out (and git-excluded) in this worktree; review those changes too:
+- `git -C external/web-apps diff refs/theseus/base..HEAD` (branch pkt/PKT-0096 of the fork https://github.com/BR-Office/br-office-web-apps)
