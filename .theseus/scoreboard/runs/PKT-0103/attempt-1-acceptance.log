@@ -1,0 +1,71 @@
+differential: original core.base 59458e06 tree 83b890f3 -> /home/claude/euro-office-server.theseus-worktrees/.external/cache/x2t/mirror/83b890f3f5c3c20fdc60d59297db87028ee55a39-da39a3ee5e6b
+differential: new      core      59458e06 tree 83b890f3 -> /home/claude/euro-office-server.theseus-worktrees/.external/cache/x2t/mirror/83b890f3f5c3c20fdc60d59297db87028ee55a39-da39a3ee5e6b
+differential: both trees are equal: one build serves both sides (expected while core has no merged change)
+differential: build runs: /home/claude/euro-office-server.theseus-worktrees/.external/cache/x2t/mirror/83b890f3f5c3c20fdc60d59297db87028ee55a39-da39a3ee5e6b x2t 3f529b2ba429, libraries replaced: 54, Editor.bin 190656 bytes
+differential: build runs: /home/claude/euro-office-server.theseus-worktrees/.external/cache/x2t/mirror/83b890f3f5c3c20fdc60d59297db87028ee55a39-da39a3ee5e6b x2t 3f529b2ba429, libraries replaced: 54, Editor.bin 190656 bytes
+same new.docx open (exit=0 e7e48387a274)
+same new.docx save (exit=0 [Content_Types].xml:8dfe8fdbcbd6 _rels/.rels:a30d3338)
+same new.docx own (exit=0 [Content_Types].xml:2ea433fc9e0f _rels/.rels:268c6f2d)
+same new.docx pdf (exit=0 pages=1 text=da39a3ee5e6b chars=0)
+same new.docx odf (exit=0 META-INF/manifest.xml:537ee2e0fab5 content.xml:ad5115)
+timing x2t-direct new.docx (median of 3 ms) | original open=118 save=119 own=229 pdf=886 odf=119 | new open=117 save=175 own=189 pdf=859 odf=117
+same new.xlsx open (exit=0 6c859c8ad3f7)
+same new.xlsx save (exit=0 [Content_Types].xml:cd73d873c716 _rels/.rels:51e89a3e)
+same new.xlsx own (exit=0 [Content_Types].xml:4feb14841a8e _rels/.rels:255a73c9)
+same new.xlsx pdf (exit=0 pages=1 text=da39a3ee5e6b chars=0)
+same new.xlsx odf (exit=0 META-INF/manifest.xml:d78a4733465f content.xml:8d9412)
+timing x2t-direct new.xlsx (median of 3 ms) | original open=119 save=141 own=175 pdf=743 odf=166 | new open=119 save=127 own=123 pdf=919 odf=187
+same new.pptx open (exit=0 6566ab237883)
+same new.pptx save (exit=0 [Content_Types].xml:cef6e3f3adcc _rels/.rels:d1a75180)
+same new.pptx own (exit=0 [Content_Types].xml:beee75e009cd _rels/.rels:68508e0a)
+same new.pptx pdf (exit=0 pages=1 text=da39a3ee5e6b chars=0)
+same new.pptx odf (exit=0 META-INF/manifest.xml:ce9e5d3460d5 content.xml:76b01d)
+timing x2t-direct new.pptx (median of 3 ms) | original open=238 save=170 own=169 pdf=2332 odf=259 | new open=177 save=235 own=136 pdf=1611 odf=167
+same text-10p.docx open (exit=0 c66556a75d5b)
+same text-10p.docx save (exit=0 [Content_Types].xml:2d9492447df6 _rels/.rels:a30d3338)
+same text-10p.docx own (exit=0 [Content_Types].xml:0ac5b3920c8a _rels/.rels:0bd90401)
+same text-10p.docx pdf (exit=0 pages=11 text=4922c0195dc7 chars=16418)
+same text-10p.docx odf (exit=0 META-INF/manifest.xml:537ee2e0fab5 content.xml:9d16aa)
+timing x2t-direct text-10p.docx (median of 3 ms) | original open=121 save=184 own=118 pdf=2694 odf=170 | new open=168 save=166 own=170 pdf=2432 odf=170
+same rows-500.xlsx open (exit=0 26e5e98c7d6f)
+same rows-500.xlsx save (exit=0 [Content_Types].xml:6ad1bbd5626b _rels/.rels:51e89a3e)
+same rows-500.xlsx own (exit=0 [Content_Types].xml:a404994af7ac _rels/.rels:ef20857d)
+same rows-500.xlsx pdf (exit=0 pages=11 text=a9a04b930357 chars=12526)
+same rows-500.xlsx odf (exit=0 META-INF/manifest.xml:d78a4733465f content.xml:8aa47c)
+timing x2t-direct rows-500.xlsx (median of 3 ms) | original open=117 save=208 own=170 pdf=2682 odf=315 | new open=175 save=117 own=118 pdf=2642 odf=269
+same slides-12.pptx open (exit=0 6d13d32afd2c)
+same slides-12.pptx save (exit=0 [Content_Types].xml:d1aebc1dcb1d _rels/.rels:d1a75180)
+same slides-12.pptx own (exit=0 [Content_Types].xml:86e5db192ed2 _rels/.rels:a78b9781)
+same slides-12.pptx pdf (exit=0 pages=12 text=1b207749d355 chars=2678)
+same slides-12.pptx odf (exit=0 META-INF/manifest.xml:ce9e5d3460d5 content.xml:acf204)
+timing x2t-direct slides-12.pptx (median of 3 ms) | original open=165 save=166 own=115 pdf=2132 odf=165 | new open=165 save=116 own=184 pdf=1981 odf=166
+x2t-direct: PASS
+timing x2t-browser text-10p.docx (median of 2 ms) | original open=3989 join=4166 edit=9990 save=283 topdf=192 toodt=338 reopen=3820 | new open=5439 join=6468 edit=11989 save=702 topdf=453 toodt=701 reopen=6847
+same text-10p.docx model
+same text-10p.docx sentA
+same text-10p.docx sentB
+same text-10p.docx shown
+same text-10p.docx saved
+same text-10p.docx converted.pdf
+same text-10p.docx converted.odt
+same text-10p.docx reopened
+timing x2t-browser rows-500.xlsx (median of 2 ms) | original open=3838 join=4848 edit=9007 save=167 topdf=506 toods=471 reopen=5774 | new open=5697 join=5996 edit=8728 save=201 topdf=1286 toods=255 reopen=5402
+same rows-500.xlsx model
+same rows-500.xlsx sentA
+same rows-500.xlsx sentB
+same rows-500.xlsx shown
+same rows-500.xlsx saved
+same rows-500.xlsx converted.pdf
+same rows-500.xlsx converted.ods
+same rows-500.xlsx reopened
+timing x2t-browser slides-12.pptx (median of 2 ms) | original open=6692 join=5738 edit=10242 save=210 topdf=202 toodp=284 reopen=6548 | new open=6611 join=6770 edit=9527 save=446 topdf=397 toodp=487 reopen=5637
+same slides-12.pptx model
+same slides-12.pptx sentA
+same slides-12.pptx sentB
+same slides-12.pptx shown
+same slides-12.pptx saved
+same slides-12.pptx converted.pdf
+same slides-12.pptx converted.odp
+same slides-12.pptx reopened
+x2t-browser: PASS (3 cases, 2 repeat(s) per side)
+differential x2t: PASS
