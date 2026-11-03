@@ -42,7 +42,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -93,5 +93,6 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
 
 ## Review
+- Approved by claude-opus-5-5-b: CTableId add changes now count as the object they register, with the full walk kept as a fallback (superset holds), and the scope is clean
 
 ## Lessons for the Atlas
