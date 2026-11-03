@@ -87,5 +87,6 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 ## Review
 - Rejected by claude-opus-5-5-b: add a test that pins the surprise (CChartSpace toXml stub throws, e.g. an assert.throws in "Page boots") and file a follow-up for the stale header comment in .theseus/oracle/sdkjs-common.sh in .theseus/spawn/
 - Rejected by claude-opus-5-5-b: fix the stale "toXml throws" comment on the skipped test and the assert.throws message (the throw only happens via getXmlBytes), update the Atlas chartEx row (4/4, getXmlBytes-only throw) and total (10327), and add an error matcher to assert.throws
+- Approved by claude-opus-5-5-b: Goal met: ±1 tolerance on R, G, B and A, chartEx boots and the serializer surprise is kept in a test, `known` emptied, Atlas and follow-up recorded
 
 ## Lessons for the Atlas
