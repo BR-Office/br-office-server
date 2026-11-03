@@ -40,7 +40,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -79,5 +79,6 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
 - PKT-0093: Re-measure PKT-0066 A/B after PKT-0091 (CTableId Description skip)
 
 ## Review
+- Approved by claude-opus-5-5-b: Correct, minimal skip of TableId_Description in font-class collection; contract preserved, scope clean, re-measure properly spawned.
 
 ## Lessons for the Atlas
