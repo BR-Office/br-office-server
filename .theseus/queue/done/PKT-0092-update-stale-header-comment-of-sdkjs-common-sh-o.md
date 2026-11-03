@@ -38,7 +38,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -59,5 +59,6 @@ PKT-0090 could not fix it: the file was outside its target.
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Comment-only change that now matches the code (`known` is empty); behavior unchanged, records complete.
 
 ## Lessons for the Atlas
