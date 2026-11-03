@@ -41,6 +41,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -71,6 +72,7 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 - Rework 2 (R2 rejection, DrawingDocument.js again): root cause found. `git -C external/sdkjs diff --stat origin/main HEAD` lists 6 files (DrawingDocument.js, CollaborativeEditing.js, Document.js, style-cache.js, api.js, Shape.js); `diff --stat theseus HEAD` and `diff origin/theseus HEAD` list only Shape.js. The five extra files come from the already merged base (3d51031 "Merge pkt/PKT-0078"), so the scope check is diffing against origin/main instead of the packet base `theseus`. Decision: no revert. Reverting DrawingDocument.js would undo approved work from another packet and is outside the target too. Branch left as is, with Shape.js the only change. The factory/reviewer should compute R2 against `theseus` (merge-base). Recorded as friction.
 - Acceptance (rework 2): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions; external/sdkjs tree clean.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
 
 ## Spawned packets
 
