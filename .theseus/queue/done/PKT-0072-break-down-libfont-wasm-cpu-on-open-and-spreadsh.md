@@ -77,6 +77,7 @@ PKT-0045 found fonts are already fetched in parallel (poll tail 6-71 ms), so the
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 - integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
+- integration: merge conflict in .theseus/oracle/baseline.md, .theseus/scoreboard/friction.jsonl
 
 ## Spawned packets
 - PKT-0080: libfont: table lookup for hb_get_script_horizontal_direction / isRtlScript
