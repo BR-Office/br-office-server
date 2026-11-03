@@ -76,6 +76,7 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
   Acceptance re-run: 42/42 suites, 6195/6195; unit.sh passes; `git status` clean afterwards.
 
 ## Spawned packets
+- PKT-0093: Re-measure PKT-0066 A/B after PKT-0091 (CTableId Description skip)
 
 ## Review
 
