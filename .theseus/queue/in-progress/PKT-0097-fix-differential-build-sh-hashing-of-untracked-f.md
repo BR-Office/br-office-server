@@ -61,8 +61,12 @@ Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong
   I created it (git-ignored, not committed) as `git clone --depth 1 -b main file://<sdkjs mirror>` -> 9cea536, the base
   PKT-0093 used. `git clone --shared` of external/sdkjs could not reach main (shallow). The factory should provision it.
 - Acceptance: `bash .theseus/oracle/differential/sdkjs-common.sh` -> PASS (3 cases).
+- Attempt 2 (after rejection): created the follow-up request with `theseus packet new` (type `chore` is not valid, used
+  `refactor`), filled target/contract/acceptance/context, listed it under "Spawned packets". build.sh unchanged.
 
 ## Spawned packets
+- Request `.theseus/spawn/PKT-0097-provision-external-sdkjs-base-in-packet-worktree.md`: provision `external/sdkjs.base`
+  in packet worktrees and document it in `environment.md` (id assigned by the factory).
 
 ## Review
 
