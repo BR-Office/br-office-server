@@ -1,8 +1,8 @@
 #!/bin/sh
 # Theseus oracle for the sdkjs-common module (PKT-0046): the external/sdkjs/tests/common QUnit
 # suites, headless: the common entries (and skips) of upstream tests/runAll.js, then every other
-# tests/common/**/*.html except *-compiled.html. color-mods and chartEx-serialize are known broken and pass
-# only if they still fail exactly as recorded (see sdkjs-common-run.cjs). Fails if no suite runs.
+# tests/common/**/*.html except *-compiled.html. Every suite must pass; the `known` map in sdkjs-common-run.cjs
+# (empty since PKT-0090) can record a failure that must then recur exactly. Fails if no suite runs.
 # Setup is done once per worktree (npm ci in build, npm run develop, node-qunit-puppeteer).
 # Uses the preinstalled Playwright Chromium instead of downloading one for puppeteer.
 # Usage: .theseus/oracle/sdkjs-common.sh [suite-filter-substring]
