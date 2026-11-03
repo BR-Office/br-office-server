@@ -54,9 +54,23 @@ Map the user journey `open-docx-10p` (Select a 10-page Word document and wait un
 
 ## Executor log
 - return: container restarted; work kept (TEP-0010)
+- Resumed the kept work (serve-integrated.sh, open-docx-10p.sh/-run.cjs, sample docx). Surprise: the runner hung forever.
+  The sample lays out as **9 pages** in this build, and the runner waited for >= 10. It also never closed the browser on
+  error, so a failed run hung the script. Fix: wait until `CDocument.FullRecalc.Id == null` (layout finished), then 2 rAF;
+  record `pages`; close the browser in `finally`. `PAGES` is now 0, not 10.
+- Measured: `total_ms=8340 min_ms=5699 max_ms=8547 runs=5` (integrated: sdkjs 0f61ccce overlaid; core and web-apps
+  theseus == main). The load average was about 6 (another agent's differential oracle was running), so read shares, not ms.
+- Decision: the stages are telescoping p50 marks, so unattributed_ms is 0. x2t ms comes from the converter log
+  (Start Task→ExitCode, p50 299 ms); DocService gets the rest of loadDoc→Editor.bin request. The client window after
+  Editor.bin is split with the PKT-0043 profile shares. That split is an estimate, labelled as such in the map.
+  Spawned a profiling follow-up to replace it.
+- Not done: no CPU profile in this round. There was no earlier journey map to compare with, so the comparison is
+  against the baseline and the round-2 shares.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- open-docx-10p.docx is 9 pages in the Euro-Office layout. Wait on layout state (FullRecalc), never on a fixed page count.
+- The example service's /example/editor page is the largest single stage (1.9 s p50) and the noisiest.

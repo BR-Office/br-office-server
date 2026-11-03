@@ -8,17 +8,22 @@
 //   api     api.js of the Document Server loaded (frame created)
 //   sdk     sdk-all-min.js request sent (web-apps shell has booted up to loading the SDK)
 //   loadDoc first asc_LoadDocument call          binReq/binEnd  Editor.bin requested / finished
-//   complete isDocumentLoadComplete              painted  10 pages laid out + 2 rAF
+//   complete isDocumentLoadComplete              painted  layout recalculation finished (FullRecalc.Id null,
+//            page count stable) + 2 rAF. The "10-page" sample lays out as 9 pages in this build: the runner
+//            no longer waits for a fixed count (it hung forever on 10), it records the count in `pages`.
 // Prints one JSON line per run on stderr and the summary line on stdout.
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const BASE = process.env.JOURNEY_BASE || 'http://127.0.0.1';
 const RUNS = +(process.env.RUNS || 5);
 const FILE = path.join(__dirname, 'open-docx-10p.docx');
-const PAGES = 10, T = 90000;
+const PAGES = 0, T = 90000;
 
 async function run(i) {
   const browser = await chromium.launch();
+  try { return await run1(i, browser); } finally { await browser.close().catch(() => {}); }
+}
+async function run1(i, browser) {
   const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 } });
   await ctx.addInitScript(() => {
     window.__m = {};
@@ -53,8 +58,10 @@ async function run(i) {
   }
   m.complete = Date.now() - t0;
   const r = await f.evaluate(n => new Promise(res => {
-    const t = () => { const c = editor.WordControl && editor.WordControl.m_oLogicDocument ? editor.WordControl.m_oLogicDocument.GetPagesCount() : editor.getCountPages();
-      if (c >= n) requestAnimationFrame(() => requestAnimationFrame(() => res({ at: performance.timeOrigin + performance.now(), pages: c, loadDoc: window.__m.loadDoc })));
+    const t = () => { const d = editor.WordControl && editor.WordControl.m_oLogicDocument;
+      const c = d ? d.GetPagesCount() : editor.getCountPages();
+      const busy = d && d.FullRecalc && d.FullRecalc.Id != null;
+      if (!busy && c >= n && c > 0) requestAnimationFrame(() => requestAnimationFrame(() => res({ at: performance.timeOrigin + performance.now(), pages: c, loadDoc: window.__m.loadDoc })));
       else setTimeout(t, 5); };
     t();
   }), PAGES);
@@ -62,7 +69,6 @@ async function run(i) {
   m.loadDoc = r.loadDoc ? Math.round(r.loadDoc - t0) : null;
   for (const k of Object.keys(net)) m[k] = net[k] - t0;
   m.pages = r.pages;
-  await browser.close();
   process.stderr.write(JSON.stringify({ run: i, ...m }) + '\n');
   return m;
 }
@@ -72,7 +78,7 @@ async function run(i) {
   if (process.env.WARMUP !== '0') await run('warmup'); // server-side caches (font list, JIT of docservice) as after a day of use; the browser is still cold
   for (let i = 0; i < RUNS; i++) all.push(await run(i));
   const med = k => { const v = all.map(x => x[k]).filter(x => x != null).sort((a, b) => a - b); return v[(v.length - 1) >> 1]; };
-  const keys = Object.keys(all[0]).filter(k => k !== 'pages');
+  const keys = Object.keys(all[0]);
   if (process.env.JOURNEY_JSON) fs.writeFileSync(process.env.JOURNEY_JSON, JSON.stringify({ runs: all, p50: Object.fromEntries(keys.map(k => [k, med(k)])) }, null, 1));
   const tot = all.map(x => x.painted).sort((a, b) => a - b);
   console.log(`total_ms=${med('painted')} min_ms=${tot[0]} max_ms=${tot[tot.length - 1]} runs=${all.length}`);
