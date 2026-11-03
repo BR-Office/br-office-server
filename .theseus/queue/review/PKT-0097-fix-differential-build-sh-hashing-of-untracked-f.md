@@ -66,6 +66,7 @@ Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong
   `refactor`), filled target/contract/acceptance/context, listed it under "Spawned packets". build.sh unchanged.
 
 ## Spawned packets
+- PKT-0098: Provision external/sdkjs.base in packet worktrees and document it in environment.md
 
 ## Review
 - Rejected by claude-opus-5-5-b: fix is correct, but the requested follow-up (set up `external/sdkjs.base` in packet worktrees and document it in `environment.md`) has no `.theseus/spawn/` request and no "Spawned packets" entry; create it with `theseus packet new` and list it
