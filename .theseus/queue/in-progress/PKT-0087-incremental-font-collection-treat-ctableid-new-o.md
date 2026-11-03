@@ -83,6 +83,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - Acceptance re-run: sdkjs-word 42/42 suites, 6195/6195 assertions; unit pass; working tree of external/sdkjs clean afterwards.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
+- Attempt 4 (after release on 0.20.0): the sdkjs branch was back at base 3d51031, so the change was re-applied: in `private_CollectFontCheckClasses`, a `historyitem_TableId_Add` change is replaced by its `NewClass` (else `g_oTableId.Get_ById(Id)`), else null → full walk. Document.js unchanged (Paragraph already accepted via CDocumentContentElementBase). Single commit in external/sdkjs touching only CollaborativeEditing.js. A/B re-measure stays with PKT-0089 (already spawned).
 
 ## Spawned packets
 - PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
@@ -90,3 +91,4 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ## Review
 
 ## Lessons for the Atlas
+- Remote typing batches always carry a CTableId add next to the run change; any per-class incremental logic must resolve TableId adds to the registered object.
