@@ -59,6 +59,11 @@ In `.theseus/queue/blocked/PKT-0080-*.md` replace the acceptance command's liter
 - attempt 1: acceptance failed: `test -f .theseus/oracle/perf/profile-fonts.js`
 - attempt 2: acceptance failed: `test -f .theseus/oracle/perf/profile-fonts.js`
 - attempt 3: acceptance failed: `test -f .theseus/oracle/perf/profile-fonts.js`
+- Replaced only the acceptance command in blocked/PKT-0080 with `python3 .theseus/oracle/perf/make-samples.py /tmp/eo-samples && node .theseus/oracle/perf/profile-fonts.js /tmp/eo-samples external/sdkjs 3`; kept the trailing comment, Goal and Executor log unchanged.
+- Acceptance 1 and 2 pass. **Acceptance 3 fails**: `.theseus/oracle/perf/profile-fonts.js` is not on this base. It exists only in commit 7565b86 (PKT-0083), which is not an ancestor of this branch (PKT-0083 not merged yet). Creating it is outside target (create_in empty), so I did not restore it. This packet should be delivered after PKT-0083 is merged, or rebased onto it.
+- No sdkjs changes.
+- Attempt 2: re-checked. profile-fonts.js still absent; commit 7565b86 is only on `pkt/PKT-0083`, and PKT-0083 sits in `queue/blocked/` (not merged). Restoring the file is outside target (create_in empty), so not done. Acceptance 1–2 pass, 3 fails until PKT-0083's profile-fonts.js lands on the base. Factory decision needed: merge PKT-0083 (or just its profile-fonts.js) first, or drop acceptance 3 / add `.theseus/oracle/perf/` to create_in.
+- Attempt 3: unchanged situation. `git log --all` shows profile-fonts.js only in 7565b86 (pkt/PKT-0083, unmerged) and 75204fd (PKT-0072, later deleted). Not restored: outside target (create_in empty). Acceptance 1–2 pass; 3 cannot pass on this base without a factory action (merge PKT-0083 or widen create_in). Further attempts by the executor cannot change this.
 
 ## Spawned packets
 
