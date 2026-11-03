@@ -40,6 +40,7 @@ budget:
 roles:
   executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -52,6 +53,7 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.23.2, work kept
 
 ## Spawned packets
 
