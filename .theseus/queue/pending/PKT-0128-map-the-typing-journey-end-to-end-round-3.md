@@ -39,8 +39,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: claude-opus-5-5-b
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -53,6 +54,7 @@ Map the user journey `typing` (Type in an open Word document: key press to the c
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.24.2 (quiet journey measurement)
 
 ## Spawned packets
 
