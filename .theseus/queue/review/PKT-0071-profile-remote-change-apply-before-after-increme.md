@@ -51,6 +51,19 @@ PKT-0066 changed sdkjs only in the local git-excluded clone external/sdkjs (bran
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-03. d46dde8 does not exist anymore; fetched `fork/pkt/PKT-0066` (b152f87, same 4 files).
+- Decision: build *both* variants with `npm run build:word` (before = main 9cea536, after = main + the 4 PKT-0066 files
+  checked out temporarily, then restored; sdkjs tree left clean) and inject them with Playwright routing, rather than
+  comparing with the installed upstream bundle: same build path on both sides. Harness and analyser live in the
+  scratchpad (create_in is empty), the recipe is in baseline.md.
+- Decision: fallback case = default paragraph style font size change via the model API on A (styles class).
+- Surprise: the after build never takes the incremental path. Each remote typing batch carries a `CTableId` change
+  besides `ParaRun`, so `GetFontNamesFromClasses` returns null → full walk. Measured gain is 0 (differences are noise).
+  Requested a follow-up (spawn) to handle CTableId.
+- Surprise: the maximum achievable gain is ~4.7 ms per change (~6 % of B busy) on 100 p.
+- Not done: profile-word.js/attribute-word.js were not used as-is (they cannot swap the bundle and are outside target);
+  same method (CDP Profiler 100 µs, evaluate/predicate excluded) reimplemented in the scratch harness.
+- unit.sh passes.
 
 ## Spawned packets
 
