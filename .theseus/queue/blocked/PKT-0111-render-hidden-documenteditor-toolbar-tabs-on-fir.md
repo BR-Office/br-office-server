@@ -121,6 +121,7 @@ PKT-0047 measured Toolbar 252 ms self, ≈ 500 ms inclusive, before asc_LoadDocu
 - **Needs a decision outside the executor:** the planner/reviewer either restates the bar as "paired-median LoadDoc
   drop with IQR below 0" (met on medium: −60 [−127, −19]; not on large: [−182, +31]), or closes this packet as
   partial and folds the target into the spawned template-render follow-up. The executor cannot change the Goal.
+- block: the reviewer found an external blocker: Goal's "LoadDoc drop > run spread" bar is unreachable within target (Toolbar's total pre-LoadDoc cost ≈ spread; remaining cost is in Toolbar.template, outside target) and attempts are exhausted — planner must restate the bar (e.g. paired-median drop) or widen the target via the spawned template follow-up.
 
 ## Spawned packets
 - PKT-0125: Defer the documenteditor Toolbar view's own hidden panels (Insert, Layout, References) past asc_LoadDocument
