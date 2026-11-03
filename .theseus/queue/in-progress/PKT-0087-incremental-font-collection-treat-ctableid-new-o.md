@@ -72,6 +72,14 @@ hint: its remote counterpart. If you want to integrate the remote changes,
 hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - attempt 3: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- Decision: in `private_CollectFontCheckClasses`, a change of type `historyitem_TableId_Add` is replaced by the object it registers (`NewClass`, else `g_oTableId.Get_ById(Id)`); if neither resolves, `null` is pushed (full walk). Unknown registered objects (not run / content element) still make `GetFontNamesFromClasses` return null → full walk, so the superset contract holds.
+- Checked: `Paragraph` inherits `CDocumentContentElementBase` (Paragraph.js:175) and has `GetAllFontNames`, so it is accepted; Document.js needed no change.
+- Acceptance: sdkjs-word 42/42 suites, 6195 assertions; unit 178 passed, 1 skipped.
+- Not done: the A/B re-measurement in the browser (baseline.md "PKT-0066 A/B (PKT-0071)"); requested as a spawned packet so baseline.md is updated in its own scope.
+- Attempt 2 (rejection R2): the factory's auto-commit 2aeb92c in external/sdkjs had added a gitlink `.theseus-addons/sdkjs-forms` (an addon checkout dropped into the tree). Removed it from the index with `git rm --cached` in a new commit and added `.theseus-addons/` to the sdkjs local `info/exclude` so it is not re-committed. Branch diff vs base 3d51031 is now only word/Editor/CollaborativeEditing.js. Acceptance re-run: sdkjs-word 42/42 (6195), unit pass.
+- Surprise: the factory's "commit what you leave" step picks up untracked setup dirs in external/sdkjs; this is an environment issue, not a code issue.
+- Attempt 3 (rejection R2 on .theseus-addons/sdkjs-forms and word/Drawing/DrawingDocument.js): the add-then-remove commits still showed the addon path in the branch history. Squashed the sdkjs branch to one commit on base 3d51031 (`git reset --soft` + recommit, local only, no push); `git diff --stat 3d51031 HEAD` and every commit now touch only word/Editor/CollaborativeEditing.js. DrawingDocument.js is not in the branch diff nor modified in the tree after acceptance runs; it most likely came from an earlier factory auto-commit that is now gone.
+- Acceptance re-run: sdkjs-word 42/42 suites, 6195/6195 assertions; unit pass; working tree of external/sdkjs clean afterwards.
 
 ## Spawned packets
 
