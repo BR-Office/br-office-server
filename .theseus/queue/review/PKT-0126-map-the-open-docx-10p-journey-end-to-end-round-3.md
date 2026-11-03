@@ -68,6 +68,7 @@ Map the user journey `open-docx-10p` (Select a 10-page Word document and wait un
   against the baseline and the round-2 shares.
 
 ## Spawned packets
+- PKT-0133: Profile the open-docx-10p client window per module (replace the PKT-0043 share estimate)
 
 ## Review
 
