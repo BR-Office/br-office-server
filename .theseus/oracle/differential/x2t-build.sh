@@ -6,7 +6,7 @@
 # (original and new share one build when their trees are equal). Sources are exported with `git archive`
 # into $C/src/<key> (stable path and mtimes: make stays incremental across runs); third-party projects
 # (V8, ICU, boost...) are built once in $C/third_party and shared by every key.
-# Env: X2T_JOBS (default nproc).
+# Env: X2T_JOBS (default nproc; falls back to 1 on failure).
 set -euo pipefail
 SRC=$(cd "$1" && pwd)
 C=${THESEUS_CACHE_DIR:-$HOME/.cache/theseus}/x2t
@@ -27,7 +27,9 @@ if [ ! -x "$M/server/FileConverter/bin/x2t" ]; then
   T0=$(date +%s)
   [ -f "$B/CMakeCache.txt" ] || cmake -S "$W" -B "$B" -DCMAKE_BUILD_TYPE=Release \
       -DEO_CORE_3RD_PARTY_DIR="$C/third_party" >&2
-  cmake --build "$B" --target x2t -j "${X2T_JOBS:-$(nproc)}" >&2
+  # Some units (OdfFormatLib/odf_writer.cpp) need >3 GB to compile: parallel jobs can be OOM-killed on the
+  # 7 GB VM, so a failed parallel build is resumed (incrementally) with one job.
+  cmake --build "$B" --target x2t -j "${X2T_JOBS:-$(nproc)}" >&2 || cmake --build "$B" --target x2t -j 1 >&2
   echo "differential: built x2t in $(( $(date +%s) - T0 )) s" >&2
   # Mirror: installed layout (sdkjs, fonts, DoctRenderer.config's ../../../sdkjs) with the built binaries.
   rm -rf "$M"; mkdir -p "$M/server/FileConverter"
