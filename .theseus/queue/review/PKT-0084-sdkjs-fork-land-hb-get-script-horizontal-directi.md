@@ -60,6 +60,7 @@ sdkjs fork: land hb_get_script_horizontal_direction table (PKT-0080 patch), unit
 ## Suggested plan
 
 ## Executor log
+- fork: pkt/PKT-0084 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (0f61ccc)
 
 ## Spawned packets
 
