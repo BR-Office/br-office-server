@@ -121,6 +121,23 @@ async function settle(a, b, dump, kind) {
 	throw new Error('co-editing did not converge');
 }
 
+// What is shown: the canvas hash once the drawing has stopped changing (the editor repaints asynchronously and
+// the other user's cursor label fades on a timer), read with A's own cursor out of the text and the spell
+// checker off: its red underlines arrive from the spellchecker service at random times (not x2t's output).
+async function stableShown(u) {
+	await u.f.evaluate(() => { try { editor.asc_setSpellCheck && editor.asc_setSpellCheck(false); } catch (e) {}
+		try { const d = editor.WordControl && editor.WordControl.m_oLogicDocument;
+		if (d && d.RemoveSelection) d.RemoveSelection(); } catch (e) {} document.activeElement && document.activeElement.blur(); });
+	let prev = '', same = 0;
+	for (let i = 0; i < 60; i++) {
+		await u.page.waitForTimeout(500);
+		const h = sha(await u.f.evaluate(CANVAS));
+		same = h === prev ? same + 1 : 0; prev = h;
+		if (same >= 3) return h;
+	}
+	return prev;
+}
+
 async function download(u, type, out) {
 	const dl = u.page.waitForEvent('download', { timeout: 120000 });
 	await u.f.evaluate(t => editor.asc_DownloadAs(new Asc.asc_CDownloadOptions(Asc.c_oAscFileType[t])), type);
@@ -156,7 +173,7 @@ async function runCase(browser, file, tmp, tag) {
 	const t = { open: a.openMs, join: b.openMs };
 	let t0 = Date.now(); await play(a, E.A); await play(b, E.B);
 	const model = await settle(a, b, dump, kind); t.edit = Date.now() - t0;
-	const shown = sha(await a.f.evaluate(CANVAS));
+	const shown = await stableShown(a);
 	const savedF = path.join(tmp, `${tag}-saved.${E.ext}`);
 	t0 = Date.now(); await download(a, E.save, savedF); t.save = Date.now() - t0;
 	const r = { model, sentA: JSON.stringify(normSent(a.sent)), sentB: JSON.stringify(normSent(b.sent)), shown,
