@@ -187,10 +187,19 @@ async function runSide(browser, side, build, file, tmp) {
 	await a.ctx.close();
 	const rn = await upload(path.join(tmp, `${side}.docx`), `diff-${side}-reopen-${path.basename(file)}.docx`);
 	const c = await newUser(browser, build, BASE + 'editor?fileName=' + encodeURIComponent(rn));
-	t.reopen = c.openMs; r.reopened = JSON.stringify(await c.f.evaluate(DUMP));
+	t.reopen = c.openMs;
 	// What is shown: the reopened document, single user (A's canvas after co-editing carried B's collaborator
 	// marks for a timing-dependent while: identical code gave different hashes).
 	r.shown = await shownHash(c);
+	// The model after layout settles: dumped right after open, styles.docx gave 5 pages on one side and 4 on the
+	// other (recalculation still running), so poll until two dumps 500 ms apart agree.
+	let dump = '';
+	for (let i = 0; i < 40; i++) {
+		const d = JSON.stringify(await c.f.evaluate(DUMP));
+		if (d === dump) break;
+		dump = d; await c.page.waitForTimeout(500);
+	}
+	r.reopened = dump;
 	await c.ctx.close();
 	r.savedBytes = saved.length;
 	return { r, t };
