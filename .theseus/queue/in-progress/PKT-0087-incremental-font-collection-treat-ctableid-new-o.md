@@ -83,6 +83,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - Acceptance re-run: sdkjs-word 42/42 suites, 6195/6195 assertions; unit pass; working tree of external/sdkjs clean afterwards.
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
+- attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
 
 ## Spawned packets
 - PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
