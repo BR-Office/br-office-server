@@ -58,6 +58,7 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 ## Suggested plan
 
 ## Executor log
+- attempt 1: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 
 ## Spawned packets
 
