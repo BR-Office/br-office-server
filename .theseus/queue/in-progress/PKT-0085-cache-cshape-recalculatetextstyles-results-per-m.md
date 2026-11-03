@@ -61,6 +61,15 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 - attempt 1: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - attempt 2: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - attempt 3: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- Decision: module-level cache in Shape.js keyed by level, presentation/master/theme/layout Ids, placeholder type+idx, hierarchy shape Ids and autofit values (bodyPr or tmp when bCheckAutoFitFlag). Hit returns a fresh wrapper sharing the cached CStyles/lastId with shape/slide/layout/notes of the caller.
+- Decision (safety over hit rate): cache only for placeholders in the presentation editor (not PDF, not GraphicFrame, not smartArt, no fontRef, no own lstStyle level) and only while History has no points (Index -1), i.e. right after open; the first history point clears and disables it. Size capped at 5000 entries.
+- Checked consumer: Paragraph.Internal_CompiledParaPrPresentation only reads styles via Styles.Get_Pr (returns copies), so sharing CStyles is safe.
+- Risk / not done: remote co-editing changes applied without local history points are not detected; they would need a version counter (follow-up candidate). Inputs assumed immutable while history is empty. No benchmark on deck-50.pptx was run in this attempt (oracle only); hit rate and ms saved are unmeasured.
+- Acceptance: bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed.
+- Rework (R2 rejection): checked external/sdkjs on pkt/PKT-0085: `git diff --stat theseus HEAD` and `git diff fork/pkt/PKT-0085` show only common/Drawings/Format/Shape.js (+60); word/Drawing/DrawingDocument.js has no change, and the working tree is clean before and after running the oracle. The out-of-scope change seen by the previous review is not in the branch now; no code change was needed in this attempt.
+- Acceptance (rework): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions (chartEx-serialize known-broken as recorded).
+- Rework 2 (R2 rejection, DrawingDocument.js again): root cause found. `git -C external/sdkjs diff --stat origin/main HEAD` lists 6 files (DrawingDocument.js, CollaborativeEditing.js, Document.js, style-cache.js, api.js, Shape.js); `diff --stat theseus HEAD` and `diff origin/theseus HEAD` list only Shape.js. The five extra files come from the already merged base (3d51031 "Merge pkt/PKT-0078"), so the scope check is diffing against origin/main instead of the packet base `theseus`. Decision: no revert. Reverting DrawingDocument.js would undo approved work from another packet and is outside the target too. Branch left as is, with Shape.js the only change. The factory/reviewer should compute R2 against `theseus` (merge-base). Recorded as friction.
+- Acceptance (rework 2): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions; external/sdkjs tree clean.
 
 ## Spawned packets
 
