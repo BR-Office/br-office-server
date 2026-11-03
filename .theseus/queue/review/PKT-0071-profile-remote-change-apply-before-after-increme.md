@@ -66,6 +66,7 @@ PKT-0066 changed sdkjs only in the local git-excluded clone external/sdkjs (bran
 - unit.sh passes.
 
 ## Spawned packets
+- PKT-0087: Incremental font collection: treat CTableId (new object) changes so remote typing takes the incremental path
 
 ## Review
 
