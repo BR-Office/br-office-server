@@ -70,6 +70,7 @@ PKT-0047 Comments 116/96 ms, ≈ 90-100 ms inside onLaunch. Comments.js is in ap
 - Acceptance: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
 
 ## Spawned packets
+- PKT-0132: Wire the Toolbar to the Comments add button lazily so the deferred Comments build leaves the open window
 
 ## Review
 - Rejected by claude-opus-5-5-b: Rerun perf/open-window-build.js on an idle VM, alternating base and new builds, and put a LoadDoc before/after in baseline.md that beats the run-to-run spread (or adjust the change until it does); the current numbers show no wall-clock gain, which the plan's rule counts as not delivered.
