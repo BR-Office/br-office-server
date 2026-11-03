@@ -57,9 +57,17 @@ Provision external/sdkjs.base in packet worktrees and document it in environment
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-03. `external/sdkjs.base` was missing here too; created it with
+  `git clone --depth 1 -b main file://$(git -C external/sdkjs remote get-url origin) external/sdkjs.base` -> 9cea536.
+  It is excluded via the main repo's `.git/info/exclude` (`/external/sdkjs.base/`), so contract holds.
+- Documented the recipe in environment.md (new subsection under "Other Euro-Office repositories").
+- Decision: automatic provisioning is factory/worktree-setup work outside target.files, so requested it as a spawn
+  (`.theseus/spawn/PKT-0098-factory-provisions-external-sdkjs-base-in-packet.md`), with an in-repo fallback in its context.
+- Acceptance `bash .theseus/oracle/differential/sdkjs-common.sh`: PASS (3 cases).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- The differential oracle needs `external/sdkjs.base`; recipe in environment.md until the factory provisions it.
