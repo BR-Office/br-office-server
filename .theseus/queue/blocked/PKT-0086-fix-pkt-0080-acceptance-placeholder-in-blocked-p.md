@@ -64,6 +64,10 @@ In `.theseus/queue/blocked/PKT-0080-*.md` replace the acceptance command's liter
 - No sdkjs changes.
 - Attempt 2: re-checked. profile-fonts.js still absent; commit 7565b86 is only on `pkt/PKT-0083`, and PKT-0083 sits in `queue/blocked/` (not merged). Restoring the file is outside target (create_in empty), so not done. Acceptance 1–2 pass, 3 fails until PKT-0083's profile-fonts.js lands on the base. Factory decision needed: merge PKT-0083 (or just its profile-fonts.js) first, or drop acceptance 3 / add `.theseus/oracle/perf/` to create_in.
 - Attempt 3: unchanged situation. `git log --all` shows profile-fonts.js only in 7565b86 (pkt/PKT-0083, unmerged) and 75204fd (PKT-0072, later deleted). Not restored: outside target (create_in empty). Acceptance 1–2 pass; 3 cannot pass on this base without a factory action (merge PKT-0083 or widen create_in). Further attempts by the executor cannot change this.
+- block: 3 attempts failed; last: acceptance failed: `test -f .theseus/oracle/perf/profile-fonts.js`. Output:
+```
+
+```
 
 ## Spawned packets
 
