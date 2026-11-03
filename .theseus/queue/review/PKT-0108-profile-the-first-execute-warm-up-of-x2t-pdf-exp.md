@@ -54,6 +54,12 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 
 ## Executor log
 - return: factory restarted on Theseus 0.23.2, work kept
+- Decision: target.files is empty, so no core file was changed; every prototype runs on the installed x2t. V8 flags go in through an LD_PRELOAD shim (`oracle/perf/x2t-v8flags-shim.c`) calling the `v8::V8::SetFlagsFromString` exported by libdoctrenderer.so; the "warm snapshot" is approximated by snapshots made under `--no-lazy` (kKeep keeps all bytecode). A real post-open snapshot was not built (needs native embeds in the snapshot creator) and is sized in the note instead.
+- Decision: side layouts (bin copy + sdkjs symlink farm with own sdk-all.bin) in the scratch dir, so the live server and other worktrees are untouched (`oracle/perf/x2t-warmup.sh`).
+- Surprise: VM shared with other sessions (load 3.3-4.7 on 2 CPUs): wall medians moved up to 60 % between runs, so the timing script also records child CPU time; only deltas >= 0.15 s in both columns would count. None reached it.
+- Surprise: the eager snapshot is slower (blobs 2.2x larger), and `--max-lazy` crashes docx -> pdf (exit -4). The CPU profile shows the warm-up is mostly real JS execution (fonts, default styles, reading, layout), not compile.
+- Result: no in-process option >= 0.2 s; corpus equal for the eager snapshot and --no-lazy-feedback-allocation. Verdict in .theseus/diagnosis/PKT-x2t-r2-warmup.md: P3 should not implement an in-process cut; persistent converter is the remaining lever.
+- Not done: no fork build (nothing to build: no core change); xlsx was not CPU-profiled (laps and timing only).
 
 ## Spawned packets
 
