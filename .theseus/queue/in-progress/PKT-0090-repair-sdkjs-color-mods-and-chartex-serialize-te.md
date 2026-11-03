@@ -71,6 +71,7 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 - Attempt 3, root cause of the R2 rejections: `git -C external/sdkjs diff --stat origin/main HEAD` lists `word/Drawing/DrawingDocument.js` (+27) and 4 other word files, all from commit 3d51031 "Merge pkt/PKT-0078 (Theseus)", which is already on the `theseus` base branch (theseus == origin/theseus == 3d51031 == merge-base of HEAD). Against `theseus`, this branch changes only the 3 target test files. The scope check seems to diff against `origin/main` instead of the packet's base branch `theseus`; that cannot be fixed inside this target (no rebase/history rewrite of other branches allowed). Spawned a factory follow-up asking the scope check to use the merge-base with `theseus`. Oracle rerun: 6/6, 10326/10326.
 
 ## Spawned packets
+- (not queued, unfinished request: PKT-0090-scope-check-r2-for-external-sdkjs-must-diff-agai.md)
 
 ## Review
 
