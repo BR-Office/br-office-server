@@ -57,6 +57,12 @@ Round 2 of the `sdkjs-common` module. Read `.theseus/diagnosis/DIAG-sdkjs-common
 ## Suggested plan
 
 ## Executor log
+- Measured: unit oracle 7/7, 10341/10341; differential sdkjs-common PASS (3 cases), run twice; timings in .theseus/oracle/rounds/sdkjs-common-r2.md.
+- Decision: verdict **keep** (was refactor). Round 1 refactors (PKT-0078, 0084, 0085) are correct but no end-to-end gain is visible: differential timings swing 20-40 % between runs of the same build and change sign; round 1's own downgrade condition (no group > 50 ms) is met.
+- Decision: did not re-run profile-client.js: it attributes the installed bundles, which lack the fork changes, so it cannot compare original vs new.
+- Surprise: PKT-0085's gain was never measured; PKT-0080 is still blocked (its candidate landed via PKT-0084).
+- No DIAG-sdkjs-common-b.md existed, nothing to git rm. No follow-ups spawned (keep = no packets); the remaining xlsx shaping cost belongs to sdkjs-cell.
+
 
 ## Spawned packets
 
