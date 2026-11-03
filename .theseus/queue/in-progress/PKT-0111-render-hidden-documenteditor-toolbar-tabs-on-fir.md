@@ -46,7 +46,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 1
+rejected_reviews: 2
 ---
 
 ## Goal
@@ -64,5 +64,6 @@ PKT-0047 measured Toolbar 252 ms self, ≈ 500 ms inclusive, before asc_LoadDocu
 
 ## Review
 - Rejected by claude-opus-5-5-b: LoadDoc does not drop by more than the run spread (1264→1191 ms against a ≈300–600 ms spread, medium-10p unchanged) and the hidden tabs are still built at startup; the real cost is in view/Toolbar.js panel drawing, so retarget or rely on the spawned follow-up
+- Rejected by claude-opus-5-5-b: Goal's bar (LoadDoc drop > run spread) not met (−60/−100 ms vs ≈300–500 ms spread); planner must restate the bar as paired-median drop or fold the target into the spawned template-render follow-up
 
 ## Lessons for the Atlas
