@@ -37,7 +37,9 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
+resume: false
 ---
 
 ## Goal
@@ -50,9 +52,11 @@ Write `.theseus/oracle/differential/x2t.sh`: each compares the original code of 
 ## Suggested plan
 
 ## Executor log
+- return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
 
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: add browser-driven scripted local and remote edits plus the save that combines them; prove the new-side build runs; tie the original side to core.base; compare saved outputs by content, not only size; repeat timing runs to reduce noise
 
 ## Lessons for the Atlas
