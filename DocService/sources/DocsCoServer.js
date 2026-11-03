@@ -1034,6 +1034,11 @@ async function startForceSave(
     cfgForceSaveUsingButtonWithoutChanges
   );
   ctx.logger.debug('startForceSave start');
+  if (opt_conn && !opt_conn.user) {
+    //same reply as forceSaveStart before auth: getExternalChangeInfo needs an authenticated user
+    ctx.logger.warn('startForceSave ignored: connection is not authenticated');
+    return {code: commonDefines.c_oAscServerCommandErrors.UnknownError, time: null, inProgress: false};
+  }
   const res = {code: commonDefines.c_oAscServerCommandErrors.NoError, time: null, inProgress: false};
   let startedForceSave;
   let hasEncrypted = false;
@@ -1854,6 +1859,12 @@ exports.install = function (server, app, callbackFunction) {
         operationContext.global.logger.error('null == conn');
         return;
       }
+      if (!conn.handshake) {
+        operationContext.global.logger.error('io.on connection dropped: connection without handshake data, id = %s', conn.id);
+        sendDataDisconnectReason(ctx, conn, constants.DROP_CODE, constants.DROP_REASON);
+        conn.disconnect(true);
+        return;
+      }
       ctx.initFromConnection(conn);
       await ctx.initTenantCache();
       if (constants.DEFAULT_DOC_ID === ctx.docId) {
@@ -1922,6 +1933,10 @@ exports.install = function (server, app, callbackFunction) {
                 yield getLock(ctx, conn, data, false);
                 break;
               case 'saveChanges':
+                if (!conn.user) {
+                  ctx.logger.warn('saveChanges ignored: connection is not authenticated');
+                  break;
+                }
                 yield* saveChanges(ctx, conn, data);
                 break;
               case 'isSaveLock':
@@ -1934,6 +1949,10 @@ exports.install = function (server, app, callbackFunction) {
                 yield* getMessages(ctx, conn, data);
                 break;
               case 'unLockDocument':
+                if (!conn.user) {
+                  ctx.logger.warn('unLockDocument ignored: connection is not authenticated');
+                  break;
+                }
                 yield* checkEndAuthLock(ctx, data.unlock, data.isSave, docId, conn.user.id, data.releaseLocks, data.deleteIndex, conn);
                 break;
               case 'close':
@@ -2843,6 +2862,11 @@ exports.install = function (server, app, callbackFunction) {
           return;
         }
       }
+      if (null === data.user.id || undefined === data.user.id || '' === data.user.id) {
+        //same pattern web-apps uses when the integrator gives no user id; unique so users are not merged
+        data.user.id = 'uid-' + Date.now() + '-' + crypto.randomBytes(4).toString('hex');
+        ctx.logger.warn('auth: user without id, generated id = %s', data.user.id);
+      }
       ctx.setUserId(data.user.id);
 
       const docId = data.docid;
@@ -3166,6 +3190,10 @@ exports.install = function (server, app, callbackFunction) {
           yield canvasService.openDocument(ctx, conn, cmd, upsertRes, bIsRestore);
         }
       }
+    } else {
+      ctx.logger.warn('auth rejected: missing %s', data.token ? 'user' : 'token');
+      sendDataDisconnectReason(ctx, conn, constants.ACCESS_DENIED_CODE, constants.ACCESS_DENIED_REASON);
+      conn.disconnect(true);
     }
   }
 

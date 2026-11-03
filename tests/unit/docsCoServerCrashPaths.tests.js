@@ -260,12 +260,13 @@ describe('io.use handshake auth', () => {
 });
 
 describe('connection without tenant/handshake data', () => {
-  test('conn without handshake: TypeError caught, DROP reason sent and disconnected', async () => {
-    // crash-prone: P4 target (initFromConnection dereferences conn.handshake.url)
+  test('conn without handshake: guarded, DROP reason sent and disconnected with a clear log', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: TypeError from initFromConnection)
     const conn = await connect(uniqueDocId(), true);
     expect(sentOfType(conn, 'disconnectReason')).toEqual([expect.objectContaining({code: constants.DROP_CODE})]);
     expect(conn.disconnect).toHaveBeenCalledWith(true);
-    expect(logged(/connection error: TypeError/)).toBe(true);
+    expect(logged(/connection without handshake data/)).toBe(true);
+    expect(logged(/TypeError/)).toBe(false);
   });
   test('normal conn gets a license message and stays open', async () => {
     const conn = await connect(uniqueDocId());
@@ -275,13 +276,15 @@ describe('connection without tenant/handshake data', () => {
 });
 
 describe('auth with missing user name / permissions / user', () => {
-  test('auth without data.user: silently ignored, no reply, connection left open', async () => {
-    // crash-prone: P4 target (dangling unauthenticated connection)
+  test('auth without data.user: ACCESS_DENIED and disconnect, no auth reply', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: dangling unauthenticated connection)
     const docId = uniqueDocId();
     const conn = await connect(docId);
     await fire(conn, 'message', {type: 'auth', token: 'legacy', docid: docId});
     expect(sentOfType(conn, 'auth')).toHaveLength(0);
-    expect(conn.disconnect).not.toHaveBeenCalled();
+    expect(sentOfType(conn, 'disconnectReason')).toEqual([expect.objectContaining({code: constants.ACCESS_DENIED_CODE})]);
+    expect(conn.disconnect).toHaveBeenCalledWith(true);
+    expect(logged(/auth rejected: missing user/)).toBe(true);
     expect(conn.user).toBeUndefined();
     expect(findConnection(conn)).toBeUndefined();
   });
@@ -308,13 +311,14 @@ describe('auth with missing user name / permissions / user', () => {
     expect(conn.user.username).toBe('Anonymous');
     await fire(conn, 'disconnect', 'transport close');
   });
-  test('user without id: idOriginal is the string "undefined"', async () => {
-    // crash-prone: P4 target (no guard on user.id)
+  test('user without id: a unique "uid-" id is generated (as web-apps does)', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: idOriginal the string "undefined")
     const docId = uniqueDocId();
     const conn = await connect(docId);
     await fire(conn, 'message', authMessage(docId, {username: 'NoId'}));
-    expect(conn.user.idOriginal).toBe('undefined');
-    expect(conn.user.id).toBe('undefined1');
+    expect(conn.user.idOriginal).toMatch(/^uid-\d+-[0-9a-f]{8}$/);
+    expect(conn.user.id).toBe(conn.user.idOriginal + '1');
+    expect(logged(/auth: user without id, generated id/)).toBe(true);
     expect(sentOfType(conn, 'auth')).toHaveLength(1);
     await fire(conn, 'disconnect', 'transport close');
   });
@@ -344,18 +348,22 @@ describe('auth with missing user name / permissions / user', () => {
 });
 
 describe('messages before auth (conn.user undefined)', () => {
-  test('unLockDocument: TypeError caught and logged, no reply, no disconnect', async () => {
-    // crash-prone: P4 target (conn.user.id dereference)
+  test('unLockDocument: guarded, ignored with a warning, no reply, no disconnect', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: TypeError on conn.user.id)
     const conn = await connect(uniqueDocId());
     await fire(conn, 'message', {type: 'unLockDocument', unlock: true, isSave: false});
-    expect(logged(/error receiving response: type = unLockDocument TypeError/)).toBe(true);
+    expect(logged(/unLockDocument ignored: connection is not authenticated/)).toBe(true);
+    expect(logged(/error receiving response/)).toBe(false);
+    expect(conn.sent.filter(m => m && m.type !== 'license')).toHaveLength(0);
     expect(conn.disconnect).not.toHaveBeenCalled();
   });
-  test('saveChanges: TypeError caught and logged', async () => {
-    // crash-prone: P4 target (conn.user.id dereference in saveChanges)
+  test('saveChanges: guarded, ignored with a warning', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: TypeError on conn.user.id in saveChanges)
     const conn = await connect(uniqueDocId());
     await fire(conn, 'message', {type: 'saveChanges', changes: '[]'});
-    expect(logged(/error receiving response: type = saveChanges TypeError/)).toBe(true);
+    expect(logged(/saveChanges ignored: connection is not authenticated/)).toBe(true);
+    expect(logged(/error receiving response/)).toBe(false);
+    expect(sqlBase.insertChangesPromise).not.toHaveBeenCalled();
     expect(conn.disconnect).not.toHaveBeenCalled();
   });
   test('forceSaveStart: guarded, replies UnknownError', async () => {
@@ -477,8 +485,8 @@ describe('forcesave after close', () => {
     expect(replies[0].messages.code).toBe(commonDefines.c_oAscServerCommandErrors.NotModified);
     await fire(conn, 'disconnect', 'transport close');
   });
-  test('startForceSave(Form) with a closed connection that has no user: rejects with TypeError', async () => {
-    // crash-prone: P4 target (getExternalChangeInfo dereferences opt_conn.user)
+  test('startForceSave(Form) with a connection that has no user: guarded, resolves without TypeError', async () => {
+    // crash-prone: P4 target, guarded by PKT-0070 (was: rejected TypeError in getExternalChangeInfo)
     const docId = uniqueDocId();
     const conn = createConn(docId);
     const ctx = new operationContext.Context();
@@ -500,7 +508,8 @@ describe('forcesave after close', () => {
         undefined,
         conn
       )
-    ).rejects.toThrow(TypeError);
+    ).resolves.toEqual({code: commonDefines.c_oAscServerCommandErrors.UnknownError, time: null, inProgress: false});
+    expect(logged(/startForceSave ignored: connection is not authenticated/)).toBe(true);
   });
   test('startForceSave(Command) after every user left (no presence, no forcesave data): NotModified/DocumentIdError', async () => {
     const docId = uniqueDocId();
