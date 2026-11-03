@@ -701,3 +701,33 @@ Reading:
   (spawn from PKT-0089): skip `historyitem_TableId_Description` changes (they carry no fonts) in `private_CollectFontCheckClasses`,
   then re-measure with this recipe.
 - The ceiling stays as PKT-0071 found: font collection is ≈ 5–7 % of B's busy time on 100 p.
+
+## Client: PKT-0066 A/B re-measured after PKT-0091 (PKT-0093)
+
+Same recipe, harness shape and sample as "PKT-0066 A/B re-measured after PKT-0087 (PKT-0089)" above: native package 9.3.7-1
+server, self-built word bundles injected by Playwright routing (`sdkjs/word/sdk-all{,-min}.js`, 404 on `sdk-all.{bin,cache}`),
+`large-100p.docx`, A types 30 markers, CDP Profiler on B at 100 µs, 3 runs per variant, *text* case only. Bundles are the
+differential oracle's cached builds (`.theseus/oracle/differential/build.sh`, fresh webpack cache per build):
+*before* = sdkjs `main` 9cea536 (no incremental code, as in PKT-0071/PKT-0089),
+*PKT-0091* = sdkjs fork `theseus` at the PKT-0091 merge 88df302 (tree `0cad68e`). That build **includes PKT-0087's
+`TableId_Add` branch** (e5fd187's code is in `private_CollectFontCheckClasses` at 88df302, next to PKT-0091's
+`historyitem_TableId_Description` skip); the *before* build has neither. No separate PKT-0066-only / PKT-0087-only row this time
+(PKT-0089 already showed both at 0 batches incremental). B wraps `TakeFontCheckClasses`, `CheckFontNeedsIncremental` and
+`CheckFontNeeds` and records, per take, the classes returned and whether the incremental path succeeded. Self ms over the whole window.
+
+| Variant | B busy ms | font collection inclusive ms | all `*AllFontNames` self | incremental fns self | full `CheckFontNeeds` walks | batches on incremental path |
+|---|---|---|---|---|---|---|
+| before | 3 737 | 271 | 267 | — | 136 (45/43/48) | — |
+| PKT-0091 | 3 459 | 0.5 | 0.1 | 0.4 | **0** | **143 / 143** (49/48/46) |
+
+Per-run font collection inclusive: before 317 / 211 / 286 ms; PKT-0091 0.8 / 0.8 / 0.0 ms (wrapper wall time 1.6 / 1.6 / 1.1 ms).
+Every take on B returned exactly one class, `ParaRun` (Type 39): the `CTableId` description change is now skipped.
+
+Reading:
+- **PKT-0091 works: 143 of 143 batches take the incremental path (expected 30/30; > 30 because pre_Save runs 46–49 times per
+  30 markers), no full walk during remote typing.** Font collection on B drops from ≈ 270 ms to < 1 ms per 30 remote changes on
+  100 p, about 2× the ≈ 140 ms PKT-0071 expected; this VM was busier (PKT-0089's *before* was 237 ms, PKT-0071's 140 ms), and the
+  gain is the whole full-walk cost, which scales with machine load and document size.
+- B busy time falls by ≈ 280 ms (≈ 7 %), consistent with the ceiling PKT-0071/PKT-0089 found (5–7 %); repaint and recalc remain
+  the remote-apply cost.
+- Not measured: the style case (full-walk fallback by design), the installed upstream bundle.
