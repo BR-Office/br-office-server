@@ -67,9 +67,36 @@ Pinned expectations to flip (one guard each):
 ## Suggested plan
 
 ## Executor log
+Decisions (one guard per pinned expectation, each with a clear log line):
+- No handshake: checked before `ctx.initFromConnection` in `io.on('connection')`; error log
+  "connection without handshake data", DROP reason, disconnect (same outcome as before, no TypeError).
+- `unLockDocument` / `saveChanges` before auth: ignored with a warn ("... ignored: connection is not
+  authenticated"), no reply, no disconnect. Chose ignore over an error reply so no new message type or
+  shape reaches sdkjs (Socket.IO protocol contract).
+- `startForceSave` with a conn without user: early return `{code: UnknownError, time: null, inProgress: false}`
+  plus warn, the same reply `forceSaveStart` already gives before auth. Surprise: guarding only
+  `getExternalChangeInfo` (`opt_conn?.user`) moved the crash downstream to
+  `converterservice.js:209` (`externalChangeInfo.lang` on undefined), outside the target, so the guard
+  sits at the top of `startForceSave` instead.
+- User without id: generate `uid-<Date.now()>-<8 hex>` and warn. Checked the installed web-apps
+  (`/var/www/euro-office/documentserver/web-apps/apps/*/main/app.js`): when the integrator gives no
+  user, web-apps itself uses `{id: "uid-" + Date.now()}`; so a generated id matches what clients
+  expect, while the random suffix keeps two id-less users from being merged under "undefined".
+  Rejecting auth would break integrators that omit the id.
+- Auth without `data.token` or `data.user`: now ACCESS_DENIED + disconnect (log "auth rejected: missing
+  user|token"). The untagged "auth without data.token" test still passes unchanged.
+Surprises: PKT-0064's "auth ignored: missing ..." warn log is not on this branch (PKT-0064 was blocked,
+not merged), so the else branch in `auth` is new here.
+Oracle: one run of `.theseus/oracle/unit.sh` failed 2 timing tests in `tests/unit/request.tests.js`
+(axios 300 ms timeouts, unrelated to this change); the next two runs passed fully (178 passed, 1 skipped).
+`npm run lint:check` exits 0 (one pre-existing react-hooks warning).
+Not done: nothing pending in scope.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- docservice: a guard on a deep dereference can just move the crash; guard at the entry
+  (`startForceSave` with an unauthenticated conn) and re-run the characterization to confirm.
+- docservice: web-apps generates `uid-<timestamp>` when no user id is given; the server now does the same for auth without user.id.
