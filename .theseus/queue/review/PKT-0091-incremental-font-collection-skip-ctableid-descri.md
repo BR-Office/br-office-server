@@ -59,6 +59,7 @@ measure packet with `requires: [documentserver, browser]`, since baseline.md is 
 
 ## Executor log
 - attempt 1: changed external/sdkjs/.theseus-addons/sdkjs-forms, outside the target (rule R2)
+- fork: pkt/PKT-0091 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (88df302)
 
 ## Spawned packets
 
