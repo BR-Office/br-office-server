@@ -39,7 +39,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -71,5 +71,6 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 - PKT-0090: Repair sdkjs color-mods and chartEx-serialize test pages so they join the common oracle
 
 ## Review
+- Approved by claude-opus-5-5-b: both suites correctly diagnosed as test-side issues, the timeout cut stays in scope, preserve clause holds, follow-up PKT-0090 recorded
 
 ## Lessons for the Atlas
