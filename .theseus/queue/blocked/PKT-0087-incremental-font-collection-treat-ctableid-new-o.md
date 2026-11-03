@@ -80,6 +80,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - Surprise: the factory's "commit what you leave" step picks up untracked setup dirs in external/sdkjs; this is an environment issue, not a code issue.
 - Attempt 3 (rejection R2 on .theseus-addons/sdkjs-forms and word/Drawing/DrawingDocument.js): the add-then-remove commits still showed the addon path in the branch history. Squashed the sdkjs branch to one commit on base 3d51031 (`git reset --soft` + recommit, local only, no push); `git diff --stat 3d51031 HEAD` and every commit now touch only word/Editor/CollaborativeEditing.js. DrawingDocument.js is not in the branch diff nor modified in the tree after acceptance runs; it most likely came from an earlier factory auto-commit that is now gone.
 - Acceptance re-run: sdkjs-word 42/42 suites, 6195/6195 assertions; unit pass; working tree of external/sdkjs clean afterwards.
+- block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 
 ## Spawned packets
 - PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
