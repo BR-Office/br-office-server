@@ -69,6 +69,7 @@ Round 2 of the `x2t` module. Read `.theseus/diagnosis/DIAG-x2t.md` (round 1) and
 - Decision: no separate perf script run beyond the oracle's direct timing; the VM was contended (timings ±2×
   between runs), so absolute numbers are noted as such.
 - `DIAG-x2t-b.md` did not exist; nothing to `git rm`.
+- integration: the integration check failed once and passed on the rerun of the same tree (flaky oracle)
 
 ## Spawned packets
 
