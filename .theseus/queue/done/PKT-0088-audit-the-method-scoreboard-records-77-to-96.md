@@ -36,7 +36,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -60,5 +60,6 @@ Audit the method over scoreboard records 77 to 96, following `.theseus/prompts/a
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Complete AUD-4 with the comparison to AUD-3, hypothesis verdicts, a "what not to change" section and two well-formed TEPs; scope, contract and TEP-0004 conditions met
 
 ## Lessons for the Atlas
