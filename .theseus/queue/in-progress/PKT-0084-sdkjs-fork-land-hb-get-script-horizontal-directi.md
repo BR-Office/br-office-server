@@ -60,9 +60,38 @@ sdkjs fork: land hb_get_script_horizontal_direction table (PKT-0080 patch), unit
 ## Suggested plan
 
 ## Executor log
+- Landed the PKT-0080 patch in `external/sdkjs/common/libfont/common.js` (commit on sdkjs branch pkt/PKT-0084).
+  Surprise: `git apply` of the patch from the PKT-0080 log failed (whitespace of the logged diff no longer matched);
+  applied the same change by hand, content identical to the logged diff.
+- Unit test: `tests/common/libfont/script-direction.{html,js}` (QUnit, same harness as color-mods): table ==
+  `hb_get_script_horizontal_direction_switch` for every `AscFonts.HB_SCRIPT` value (>100 checked, >20 RTL), plus
+  Latin/Common/Arabic/Hebrew and non-members 0, 1, -1, 12345, 2^32-1, undefined, null. The sdkjs-common oracle picks
+  it up automatically: 7/7 suites, 10341/10341 assertions (script-direction 14/14).
+- Acceptance: sdkjs-common 7/7 PASS; sdkjs-word 42/42 PASS (6195 assertions); differential sdkjs-word PASS (2 cases),
+  differential sdkjs-common PASS (3 cases).
+- Surprise (oracle bug, outside target, not fixed): `differential/build.sh` hashes untracked files with `sha1sum`
+  from the caller's cwd while `git ls-files -o` paths are relative to the sdkjs checkout, so new untracked files make
+  it exit 123 (`sha1sum: tests/common/libfont/...: No such file`). Committing in external/sdkjs first avoids it.
+  Requested a follow-up packet (spawn request).
+- In-browser measurement (decision: did not use `profile-fonts.js`/a /var/www mirror; it is only on pkt/PKT-0072 and
+  measures the installed bundle). Instead a Playwright A/B against the running Document Server (native package):
+  opening large-100p.docx, routing `/sdkjs/word/sdk-all{,-min}.js` to the differential builds of base
+  (ce3476f) vs this branch (02ce87d), CDP CPU profile at 200 us, window goto -> isDocumentLoadComplete, 3 runs each:
+  | | fn self ms (hb_get_script_horizontal_direction) | busy ms | open ms |
+  |---|---|---|---|
+  | ORIG | 22.2 / 20.4 / 36.1 | 4169 / 4102 / 3869 | 6377 / 5695 / 5704 |
+  | NEW  | 1.1 / 5.6 / 0.3 | 4146 / 3904 / 3546 | 5334 / 5098 / 4881 |
+  The function's own cost drops ~20-35 ms -> ~0-6 ms, consistent with PKT-0080's non-TurboFan estimate.
+  Caveat: the cached ORIG build is the unminified fallback (`unminified` marker, terser OOM) while NEW is minified, so
+  busy/open differences mix in parse cost and are NOT attributable to this change; only the function self time is.
+  The A/B script was kept in the session scratchpad (create_in empty, no place for it in target).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- An sdkjs change can be A/B-measured in the browser without a /var/www mirror: Playwright `context.route` on
+  `/sdkjs/word/sdk-all(-min)?.js` serving the differential build outputs (`differential/build.sh <checkout> word`).
+  Compare like with like: check the `unminified` marker of both builds.
+- Commit in external/sdkjs before running the differential oracles while untracked files exist (build.sh cwd bug).
