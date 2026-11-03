@@ -75,6 +75,12 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 - block: 3 attempts failed; last: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 - release: blocked by a Theseus bug (the fork checkout counted changes already merged into the collecting branch as this packet's); fixed in 0.20.0
 - fork: pkt/PKT-0085 merged into theseus of https://github.com/BR-Office/br-office-sdkjs (fe4e220)
+- attempt 4 (after 0.20.0 release): the branch pkt/PKT-0085 was back at base 3d51031; the earlier Shape.js change was gone, so I re-implemented it. Same design: recalculateTextStyles -> cache lookup + computeTextStyles (the original body, unchanged). Key: level, presentation/master/theme/layout Ids, placeholder type+idx, hierarchy Ids, autofit (bodyPr or tmp values when bCheckAutoFitFlag). Cache only for placeholders in the presentation editor (not PDF, GraphicFrame, smartArt, fontRef, own lstStyle level), only while History is empty; the first history point clears and disables it; at most 5000 entries. A hit returns a new wrapper that shares the cached CStyles/lastId.
+- Risk / not done: remote co-editing changes without local history points are not detected; no benchmark on deck-50 (hit rate and ms saved not measured).
+- Acceptance: bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites, 10066/10323 assertions.
+- attempt 5 (rework: co-editing staleness): getTextStylesCacheKey now also clears and disables the cache for good when CollaborativeEditing is missing, not single user (Is_SingleUser() false), or has received remote changes (m_aChanges non-empty). Remote changes do not create local history points, so the History guard alone was not enough. Decision: switch off rather than add a version counter (smaller, no change outside Shape.js). Cost: no cache hits in co-edited sessions where m_nUseType is not 1 at open.
+- Not done: benchmark on deck-50 (hit rate, ms saved) still unmeasured.
+- Acceptance (attempt 5): bash .theseus/oracle/sdkjs-common.sh -> 6/6 suites passed, 10066/10323 assertions.
 
 ## Spawned packets
 
