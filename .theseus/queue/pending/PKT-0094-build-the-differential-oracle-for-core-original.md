@@ -39,7 +39,7 @@ roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -54,6 +54,7 @@ Write `.theseus/oracle/differential/x2t.sh`: each compares the original code of 
 ## Executor log
 - return: container restarted; factory restarted on Theseus 0.21.2, work kept (TEP-0010)
 - block: agent `claude-opus-5-5` timed out after 90 min
+- release: timed out at 90 min while building x2t from source (85% done); the build is cached by tree in THESEUS_CACHE_DIR, so a resumed attempt continues it
 
 ## Spawned packets
 
