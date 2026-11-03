@@ -82,6 +82,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 - Acceptance re-run: sdkjs-word 42/42 suites, 6195/6195 assertions; unit pass; working tree of external/sdkjs clean afterwards.
 
 ## Spawned packets
+- PKT-0089: Re-measure PKT-0066 A/B after PKT-0087 (CTableId handled)
 
 ## Review
 
