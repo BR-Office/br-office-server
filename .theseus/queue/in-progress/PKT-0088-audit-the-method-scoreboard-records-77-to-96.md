@@ -51,6 +51,11 @@ Audit the method over scoreboard records 77 to 96, following `.theseus/prompts/a
 ## Suggested plan
 
 ## Executor log
+- Computed indicators over records 77-96 (20 records, 18 packets) with one script; wrote AUD-4, TEP-0009, TEP-0010.
+- Decision: no verdict on TEP-0006/0007/0008: all 20 records are tool <=0.18.0 and method_version 0.1.0; 0.3.0 ships with tool 0.19. TEP-0001..0004 judged on this period since the tool carried them from 0.16.
+- Surprise: one `<samples-dir>` placeholder (PKT-0080) cascaded into 4 blocked records ($4.36); TEP-0007's lint only matches `[UPPERCASE]`.
+- Surprise: approved_first_review is true on records with factory R6/R2 rejections (PKT-0068, 0069, 0075, 0066).
+- Not done: out_of_context_reads and acceptance run time are not recorded, so those indicators stay empty. No spawn requests needed.
 
 ## Spawned packets
 
