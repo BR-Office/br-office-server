@@ -53,6 +53,7 @@ Map the user journey `open-docx-100p` (Select a 100-page Word document and wait 
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the spawn request PKT-0127-profile-the-open-docx-100p-client-window-per-mod.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
