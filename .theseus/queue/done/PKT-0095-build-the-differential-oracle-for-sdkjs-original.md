@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -70,5 +70,6 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: Differential oracle meets the goal with a working edit-landed guard and a mutation check; the fork's net diff is empty again, so the scope violation is fixed.
 
 ## Lessons for the Atlas
