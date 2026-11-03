@@ -51,6 +51,9 @@ Audit the method over scoreboard records 97 to 118, following `.theseus/prompts/
 ## Suggested plan
 
 ## Executor log
+- Decisions: sample = packets.jsonl lines 97-118 (22 records). Counted the factory R2 rejections apart from reviewer verdicts, since `approved_first_review` ignores them. Marked TEP-0002 for refutation for non-use (third audit at 0 records), as AUD-4 asked. Split TEP-0006, 0009, 0010 verdicts into halves because the halves came out differently. Treated the R2/fork-clone problem as an observation (7 records, under 20) and turned it into TEP-0011; TEP-0012 for missing packet types.
+- Surprises: TEP-0010's preservation auto-commit itself produced most of the new R2 rejections (.theseus-addons gitlink). The "stop on repeated failure" rule from TEP-0009 does not cover gate rejections: 4 packets still burned 3 identical attempts.
+- Could not do: no computation of out_of_context_reads or estimate deviation (fields null/budget). Auditor is same family as executors (no other family available). No spawn request filed: O4 (harness in create_in) is planner guidance, O2 was already filed as PKT-0099 and discarded as factory work, now covered by TEP-0011.
 
 ## Spawned packets
 
