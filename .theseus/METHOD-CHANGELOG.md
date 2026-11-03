@@ -2,6 +2,13 @@
 
 Each version lists the Theseus Enhancement Proposals (TEPs) it incorporated and each one's hypothesis. See `.theseus/spec/method-measurement.md`.
 
+## 0.5.0
+
+Approved by Rafael on 2026-11-03 from AUD-5 (Theseus 0.22.0).
+
+- TEP-0011: scope-check fork checkouts against their base and stop on the same gate rejection twice; `theseus scope-check` for the executor. Hypothesis: "R2 rejections on nested clones fall from 7 of 22 records (AUD-5) to at most 1 in the next 20, and blocked cost falls from 22% to under 10% of period spend, with no file outside a target reaching done."
+- TEP-0012: `chore` and `measure` packet types. Hypothesis: "Friction lines about a missing packet type fall from 3 (AUD-5) to 0 in the next 20 records, and median acceptance time of comment-only packets falls below 1 minute, with first-review approval of the new types ≥ 75%."
+
 ## 0.4.0
 
 Approved by Rafael on 2026-11-03 from AUD-4 (Theseus 0.20.0).

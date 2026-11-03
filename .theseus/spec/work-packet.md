@@ -28,7 +28,7 @@ A well-written packet answers five questions:
 
 A packet must be executable as written (TEP-0007): `theseus validate` reports, and the factory blocks before any agent runs, a packet whose target, contract or acceptance still has a placeholder (`[UPPER CASE]` or `<lower-case>`), or that has no acceptance commands and is not of type `investigate`, or whose target changes another packet's file (to fix a packet, discard it and request a replacement), or that says `TODO`/`TBD`; spawn requests get the same checks before they reach review (TEP-0009); `theseus validate` warns when a repository file named in the Goal is outside `target.files` and `target.create_in`.
 
-Every packet that creates an oracle, a script or a data file has at least one acceptance command that runs or reads that file, not only `test -s` (TEP-0008). `theseus validate` fails when a file a done packet delivered is gone from the main branch and no later commit removed it: it was lost in a merge. When an acceptance command fails twice in a row with the same output, the factory blocks the packet at once (`cause: method`, `ref: oracle#deterministic`) instead of trying again (TEP-0009).
+Every packet that creates an oracle, a script or a data file has at least one acceptance command that runs or reads that file, not only `test -s` (TEP-0008). `theseus validate` fails when a file a done packet delivered is gone from the main branch and no later commit removed it: it was lost in a merge. When an acceptance command fails twice in a row with the same output, the factory blocks the packet at once (`cause: method`, `ref: oracle#deterministic`) instead of trying again (TEP-0009). The same holds for any other gate of the factory (scope, spawn request, friction): the same rejection twice in a row blocks the packet (TEP-0011). Before finishing, the executor runs `theseus scope-check`, which reports a change outside the target exactly as the factory will, also in fork checkouts.
 
 ## 3. File format
 
@@ -116,6 +116,8 @@ rejected_reviews: 0       # maintained by `theseus move`
 | `rewrite` | Replace the implementation with another approach, keeping the same external contract. |
 | `interop` | Create or adjust the bridge between old and new code (FFI, WASM, IPC). |
 | `port-upstream` | Bring a change from the original project into an already migrated module (moving-target mode). |
+| `chore` | Change nothing users see: comments, documentation, environment and tooling (TEP-0012). Its acceptance may be the module's fast oracle. |
+| `measure` | Produce numbers into the baseline or an Atlas card, changing no code (TEP-0012). Its acceptance checks the number, not only that the file exists. |
 
 ## 5. Packet body
 
