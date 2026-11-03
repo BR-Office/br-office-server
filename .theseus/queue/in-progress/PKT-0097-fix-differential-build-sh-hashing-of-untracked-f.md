@@ -39,7 +39,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -58,5 +59,6 @@ Fix differential/build.sh hashing of untracked files (sha1sum run from the wrong
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: fix is correct, but the requested follow-up (set up `external/sdkjs.base` in packet worktrees and document it in `environment.md`) has no `.theseus/spawn/` request and no "Spawned packets" entry; create it with `theseus packet new` and list it
 
 ## Lessons for the Atlas
