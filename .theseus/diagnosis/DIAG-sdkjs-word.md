@@ -3,76 +3,97 @@ id: DIAG-sdkjs-word
 module: sdkjs-word
 verdict: refactor
 target_language: null
-confidence: low
-conditional_on: "P1 (profile open and remote apply in the word editor) shows the time inside external/sdkjs/word, not in sdkjs/common, fonts or the browser"
+confidence: medium
+conditional_on: null
 diagnosed_by: [claude-opus-5-5]
 agreement: full
 decided_by: null
 goals_hash: dcb03039
 base_commit: 70173b0
+round: 2
 wave: 0
 ---
 
 ## Summary
-**Refactor (performance), conditional on profiling.** Unlike the server modules, this module is where users wait: after Editor.bin arrives the docx editor spends 1.9–2.4 s parsing, laying out and rendering, growing with document size, and the remote co-edit tail is the receiving client applying and recalculating. But nothing yet says which part of the ~428k lines owns that time, and the oracle is not established. The first packets profile the two paths and turn the existing QUnit suites into a runnable oracle; targeted refactors in JavaScript follow. A language change is not justified by the evidence.
+**Refactor (performance), same language, round 2.** Round 1 located the time (PKT-0043: open is word layout + fonts, typing and remote apply are repaint-dominated, no JS kernel > 4 %) and delivered one correct, measured gain: incremental font collection cuts receiver busy time on remote typing by ≈ 7 % (PKT-0093). The rest of the user-felt cost (typing p90 115 ms, remote apply p90 105–463 ms, open ≈ 2 s after Editor.bin) is untouched and still lives in this module's layout and draw paths. Round 2 targets repaint scope on typing/remote apply, and first makes the differential oracle able to show such a gain.
+
+## What round 1 proved and what it did not
+| Packet | Outcome | Delivered toward the goal? |
+|---|---|---|
+| PKT-0043 profile | Open: layout + fonts dominate, Serialize2 13–23 % inclusive. Typing/apply: canvas drawImage 17–27 % self, *Draw* frames 33–57 % on stack; collab apply code < 1 %. | Yes (knowledge): decided where to look; ruled out migration (no kernel > 4 %). |
+| PKT-0044 + PKT-0056 oracle | 42/42 QUnit suites incl. js-api-forms, run here today (rounds/sdkjs-word-r2.md). | Yes: oracle `partial`. |
+| PKT-0095 differential oracle | original vs new on text/styles docx, 6 outputs compared; PASS today. | Yes, but its inputs are small and have no remote-apply load, so it cannot show speed gains (timing noise ±2–3 s). |
+| PKT-0057 font walk (blocked) → PKT-0066 | Correct code, **gain 0** (PKT-0071: CTableId change forced full walk). | Not delivered alone. |
+| PKT-0087 | Correct code, **gain 0** (PKT-0089: wrong change type, TableId_Add vs Description). | Not delivered. |
+| PKT-0091 | 143/143 batches incremental, font collection 271 → 0.5 ms per 30 changes, B busy 3 737 → 3 459 ms (≈ −7 %) on 100 p (PKT-0093). | **Delivered**, ceiling reached (PKT-0071 estimated 5–7 %). |
+
+Not delivered at all: open time, typing latency, repaint and recalc on remote apply. The installed bundle (original code) still shows typing p50/p90 46/115 ms and remote apply p50/p90 147/463 ms (rounds/sdkjs-word-r2.md, busy VM), the same order as PKT-0016. The round 1 gain is in the fork, not in the installed package.
 
 ## Against the goal
 | Question | Finding | Evidence |
 |---|---|---|
-| Goal: speed, open | Open docx 3.4 s (10 p) → 4.2 s (100 p). After Editor.bin → load complete is the biggest part: 1 860 ms (10 p), 2 394 ms (100 p), +0.5 s with size. The x2t open conversion is only ≈ 0.1 s, script load ≈ 1.5 s. Parse (`Serialize2.js` `BinaryFileReader`), `CDocument.Recalculate` and first render are all in this module, but fonts and common drawing are not, and the split is unmeasured. | baseline.md PKT-0016 open table; PKT-0018 large files; card "How they relate" |
-| Goal: speed, co-edit | Remote apply (receiver event → marker in model) 47–73 ms p50, p90 105–143 ms, max 187 ms, larger on the 100-page doc; server segment 4 ms p50. Apply is `CWordCollaborativeEditing` + `*Changes` + recalculation (`Continue_FastCollaborativeEditing`). | baseline.md PKT-0016 co-edit split, PKT-0018 coedit-split |
-| Goal: speed, typing | Typing key → char in model → frame p50 75–80 ms, p90 119–156 ms on 10/100-page docs (31 ms on empty doc): above the ~50 ms threshold and growing with size, so local recalculation cost matters. | baseline.md PKT-0014, PKT-0016 |
-| Quality and security risk | Very large files: `Document.js` 29k lines, `Paragraph.js` 21k, `Table.js` 20k, `Styles.js` 18k, `Serialize2.js` 18k, `Run.js` 13k. Size concentrates defect risk; no word-specific defect history measured (PKT-0017 covered the server only; ONLYOFFICE/DocumentServer issues cover the whole product). | atlas card Hotspots; baseline.md PKT-0017 |
-| Oracle (D1) | Card says `none`, but `external/sdkjs/tests/word/` holds 21 QUnit suites (api, document-calculation, revisions, numbering, styles, merge-documents, js-api…) run headless by `tests/runAll.js` with `node-qunit-puppeteer`. Not yet run here, so treat as `none` until P2 establishes it; enough for refactor once green. | `external/sdkjs/tests/word/`, `tests/runAll.js`, `external/sdkjs/AGENTS.md` Tests |
-| Coupling and interop | Plain scripts concatenated by `configs/word.json`, globals on `window` (`AscWord`, `AscCommon`), deep dependency on `sdkjs/common` (History, TableId, collab) and shared drawing. Changes are referenced by object id in TableId; the change binary format is shared with x2t (save assembly). No module boundary to put WASM behind without a large interop surface. | `external/sdkjs/AGENTS.md` Architecture |
-| Target language | None now. Rust→WASM for layout would need the model on both sides of the boundary (copying or a shared heap) on every keystroke and remote change; TypeScript is a type-safety option, not a speed one. Reassess after P1 if one compute-bound kernel (e.g. text shaping, line breaking) dominates. | goals.preferred_languages; coupling row |
+| Goal: speed, co-edit | Remote apply p90 still > 100 ms; after the font fix, repaint and recalculation are what remains (*Draw* 33–57 % on stack). Limiting redraw to the changed lines/pages is the largest remaining lever in this module. | PKT-0043 table in baseline.md; PKT-0093; rounds/sdkjs-word-r2.md |
+| Goal: speed, typing | Typing p90 115 ms, max 214 ms (> 50 ms threshold); same repaint-dominated profile as apply. | client-perf today; PKT-0043 |
+| Goal: speed, open | ≈ 2 s after Editor.bin, layout + fonts; fonts partly in sdkjs/common. No refactor planned yet: needs a split of first-page vs whole-document recalc before guessing. | PKT-0016, PKT-0043 |
+| Quality | All oracles green on new; round 1 changes behavior-neutral on every compared output. | rounds/sdkjs-word-r2.md |
+| Oracle (D1) | QUnit `partial` + differential (6 outputs). Missing: a case with a large document and remote typing, and a render-level check of only-partially-redrawn pages (a repaint refactor can leave stale pixels the model hash will not see; `shown` hash helps). | PKT-0095 log |
+| Coupling | Draw path goes through `CDrawingDocument` / `CGraphics` shared with sdkjs/common; keep changes in word's invalidation (which rects/pages are marked dirty), not in common drawing. | PKT-0043, card |
+| Target language | None. No kernel > 4 % self; repaint is canvas (browser) work whose amount is decided by JS invalidation logic. | PKT-0043 |
 
 ## Discarded alternatives
-- **keep**: the module holds measured user-visible time (≈ 2 s of every open, the co-edit apply tail, typing p90 > 100 ms on medium docs). Doing nothing leaves the largest client cost untouched.
-- **migrate (Rust/WASM, TypeScript)**: oracle not established (D1), hotspot not located, and the model is coupled to sdkjs/common globals; a WASM boundary through the document model would add copies per edit. Could come back for an isolated kernel.
-- **rewrite**: no evidence the design itself is the problem; the contract (Editor.bin, change format, `asc_docs_api`) is shared with x2t, web-apps and the server.
+- **keep**: typing and remote apply p90 are still above 100 ms and the cost is in this module's draw/recalc path; one lever (fonts) is used up, others are untried.
+- **migrate / rewrite**: no compute kernel worth moving (PKT-0043), and the coupling to sdkjs/common globals is unchanged; the gain would be in canvas calls, which WASM does not reduce.
 - **retire**: live editor.
 
 ## Path of change
-Same language. P1 profiles open and remote apply with Chrome DevTools CPU profiles on the PKT-0016 samples and attributes self/inclusive time to word submodules (serialize, layout/paragraph, table, styles, collab, drawing) vs common/fonts. P2 makes the word QUnit suites run here and records pass/fail as the oracle. Then one refactor packet per hotspot P1 finds (planned in wave 1 after P1, not guessed now), each gated by P2 and a before/after on P1's script. Note: sdkjs is a separate repository (`external/sdkjs`), so its packets touch that checkout.
+Same language. P1 measures the repaint scope on typing and remote apply (how many pages/rects are redrawn per change, and the time of each) with the fork build injected, and names the invalidation call sites. P2 extends the differential oracle with a 100-page remote typing case whose timing and `shown` output can prove a repaint change both correct and faster. Wave 1 refactor packets are planned from P1's findings, each gated by P2 and the QUnit oracle. Lessons from round 1: verify on a live trace which change types and calls actually occur before writing the fix (PKT-0087 fixed a path never taken), and measure the ceiling first (PKT-0071).
 
 ## Initial packet plan
 | Key | Wave | Type | Title |
 |---|---|---|---|
-| P1 | 0 | investigate | Profile docx open and remote apply inside sdkjs word |
-| P2 | 0 | characterize | Run the sdkjs word QUnit suites as the module oracle |
+| P1 | 0 | investigate | Measure repaint scope per keystroke and per remote change in sdkjs word |
+| P2 | 0 | characterize | Add a large-document remote typing case to the sdkjs-word differential oracle |
 
 ```yaml
 packets:
   - key: P1
     wave: 0
     type: investigate
-    title: Profile docx open and remote apply inside sdkjs word
+    title: Measure repaint scope per keystroke and per remote change in sdkjs word
     files: [.theseus/oracle/baseline.md]
     create_in: [.theseus/oracle/perf]
     depends_on: []
     allowed_commands: ["*"]
     requires: [documentserver, browser]
-    goal: With the native stack and the PKT-0016 samples (docx 10 p and 100 p), record Chrome CPU profiles (Playwright + CDP Profiler) of open (Editor.bin received → load complete), typing, and receiver apply of remote changes. Attribute self and inclusive time to word submodules (Serialize2 reader, CDocument.Recalculate/paragraph/table layout, styles, collab apply, Drawing render) versus sdkjs/common, fonts and browser. Use the unminified develop bundle or source maps so frames are named. Add the table to baseline.md.
-    context: baseline.md PKT-0016 shows 1.9–2.4 s after Editor.bin and apply p90 105–143 ms, not split. The atlas card sdkjs-word lists the call path. This decides which refactors to plan and whether any kernel is a migration candidate.
+    estimate: {files: 3, diff_lines: 400}
+    acceptance:
+      - node --check .theseus/oracle/perf/word-repaint.js
+      - grep -q "word-repaint" .theseus/oracle/baseline.md
+    goal: Write .theseus/oracle/perf/word-repaint.js. With the fork build injected by Playwright routing (as PKT-0093, bundles from .theseus/oracle/differential/build.sh) on large-100p.docx, count per local keystroke and per remote change how many pages and rectangles are invalidated and redrawn (wrap the word DrawingDocument / CDocument redraw and OnRecalculatePage / UpdateTarget entry points), the canvas drawImage calls and the ms each takes, and the recalculation range (pages recalculated). Record the table in baseline.md and name the call sites that decide the redraw range, with the expected ceiling of limiting redraw to the changed page or lines.
+    context: PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self, Draw frames 33-57 % on stack). PKT-0093 shows the font fix took ≈ 7 % and repaint/recalc remain. Round 1 lesson - trace what actually runs before planning a fix (PKT-0087).
   - key: P2
     wave: 0
     type: characterize
-    title: Run the sdkjs word QUnit suites as the module oracle
-    files: [.theseus/atlas/sdkjs-word.md]
-    create_in: [.theseus/oracle]
+    title: Add a large-document remote typing case to the sdkjs-word differential oracle
+    files: [.theseus/oracle/differential/run.cjs, .theseus/oracle/differential/sdkjs-word.sh, .theseus/oracle/differential/gen-inputs.py]
+    create_in: [.theseus/oracle/differential]
     depends_on: []
     allowed_commands: ["*"]
-    goal: Run the external/sdkjs/tests/word suites headless (npm ci in build, npm run develop, node-qunit-puppeteer as in external/sdkjs/AGENTS.md), record pass/fail, duration and skipped suites, write a wrapper script under .theseus/oracle, and set the card's oracle level and sources.
-    context: The card says oracle none, but 21 word suites exist and tests/runAll.js runs them in upstream CI. Refactors in wave 1 are gated on this.
+    requires: [documentserver, browser]
+    estimate: {files: 3, diff_lines: 250}
+    acceptance:
+      - bash .theseus/oracle/differential/sdkjs-word.sh
+      - bash .theseus/oracle/differential/sdkjs-common.sh
+    goal: Add to the sdkjs-word differential a case on a 100-page docx where A types about 30 characters spread over several pages while B receives them, comparing model, sent, shown (rendered hash of the visible pages on B, after settle) and reopened as today, and printing B's receiver busy time and typing latency for original and new over 3 runs (median), so a repaint or recalc refactor can be shown both equal and faster. Keep both scripts passing.
+    context: PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's measured gain needed a separate A/B harness kept in scratchpads (PKT-0071/0089/0093). A repaint refactor can leave stale pixels the model hash cannot see, so B's shown hash must cover more than the first page.
 ```
 
 ## Risks
-- Profiling on a 2-CPU VM with headless Chromium may distort the split (font loading, GC); compare proportions, not absolutes.
-- Layout refactors can change pagination silently; QUnit coverage of rendering is thin, so P2 may need to be complemented by a pagination/render snapshot on the samples.
-- Upstream sync: sdkjs still pulls from ONLYOFFICE; large refactors of `Document.js`/`Paragraph.js` raise merge cost. Keep refactors local to the hotspot.
+- Repaint refactors can leave stale regions: P2's `shown` hash on B must cover the changed pages, and wave 1 should add a pixel check per changed page.
+- Measurements on a shared 2-CPU VM vary by 2× between packets (PKT-0089 vs PKT-0093 *before* 237 vs 271 ms); compare A/B within one packet only.
+- Round 1 gains are in the fork only; users get them once the fork build is shipped (outside this module).
 
 ## What would change this verdict
-- If P1 shows < 25 % of the post-Editor.bin open time and of remote apply inside `word/` (time in sdkjs/common, fonts or the browser), move to **keep** and redirect to sdkjs-common / fonts.
-- If P1 shows one self-contained compute kernel (e.g. text shaping or line breaking) above 40 % of open with a narrow data interface, consider **migrate** of that kernel to Rust/WASM (needs D3 double diagnosis and P2's oracle).
-- If P2 finds the suites cannot run or cover little of layout, the first refactor packet becomes a characterize packet for layout output.
+- If P1 shows the redraw is already limited to the changed page/lines (little to gain), move the focus to recalculation range, and if that is also tight, to **keep** for typing/apply and redirect to open (layout + fonts, partly sdkjs-common).
+- If P1 shows canvas cost dominated by sdkjs/common drawing (CGraphics, fonts rasterisation) rather than by how much word redraws, redirect to sdkjs-common.
+- If P2 cannot get stable timing (spread larger than the expected gain), the wave 1 refactors keep the PKT-0093-style A/B harness as their proof and P2 is limited to equality.
