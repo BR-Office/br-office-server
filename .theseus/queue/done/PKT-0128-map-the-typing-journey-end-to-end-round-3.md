@@ -41,7 +41,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
 resume: false
 ---
 
@@ -65,5 +65,6 @@ Map the user journey `typing` (Type in an open Word document: key press to the c
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5: typing map measured on the integrated build, stages add up to the 51 ms total, contract and budget respected
 
 ## Lessons for the Atlas
