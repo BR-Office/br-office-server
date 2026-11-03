@@ -18,8 +18,8 @@ Acceptance commands (pre-approved: run them exactly as written, from the reposit
 - `.theseus/oracle/sdkjs-common.sh`
 
 Previous attempts were rejected. Fix these problems:
-- changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
-- changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
+- add a test that pins the surprise (CChartSpace toXml stub throws, e.g. an assert.throws in "Page boots") and file a follow-up for the stale header comment in .theseus/oracle/sdkjs-common.sh in .theseus/spawn/
+- fix the stale "toXml throws" comment on the skipped test and the assert.throws message (the throw only happens via getXmlBytes), update the Atlas chartEx row (4/4, getXmlBytes-only throw) and total (10327), and add an error matcher to assert.throws
 
 Environments that are up right now (the factory just ran these checks and they passed; .theseus/adapter/environment.md says how to use them):
 - `documentserver`: `curl -sf http://127.0.0.1/healthcheck`

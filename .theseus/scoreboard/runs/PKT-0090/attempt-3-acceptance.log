@@ -1,0 +1,12 @@
+SKIP common/api/api-cell-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-slide-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-visio-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+SKIP common/api/api-word-compiled.html (local: loads deploy/ bundles, needs a full npm run build (not done by this oracle))
+PASS common/api/api.html 75/75 9.3s
+PASS common/api/api-cell.html 75/75 9.3s
+PASS common/api/api-visio.html 75/75 7.1s
+PASS common/api/api-slide.html 75/75 8.7s
+PASS common/charts/chartEx-serialize.html 4/4 11.4s
+PASS common/color-mods/color-mods.html 10023/10023 16.6s
+
+6/6 suites passed, 10327/10327 assertions, 35s
