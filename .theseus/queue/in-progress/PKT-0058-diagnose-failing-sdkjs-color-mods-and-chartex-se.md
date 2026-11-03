@@ -52,6 +52,7 @@ Find out why tests/common/color-mods/color-mods.html fails (9766/10023, 11 tests
 ## Suggested plan
 
 ## Executor log
+- attempt 1: changed external/sdkjs/word/Drawing/DrawingDocument.js, outside the target (rule R2)
 
 ## Spawned packets
 
