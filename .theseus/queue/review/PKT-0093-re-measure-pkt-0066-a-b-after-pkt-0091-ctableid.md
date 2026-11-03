@@ -58,6 +58,17 @@ Note: PKT-0087's TableId_Add branch (e5fd187) was not in PKT-0091's base (sdkjs 
 
 ## Executor log
 - return: factory process stopped by the session's 2-hour limit; restarted on Theseus 0.21.3, work kept (TEP-0010)
+- 2026-11-03 claude-opus-5-5: measured and recorded "Client: PKT-0066 A/B re-measured after PKT-0091 (PKT-0093)" in baseline.md.
+  - Decision: reused the differential oracle's cached builds (build.sh) as the two variants: before = sdkjs.base 9cea536,
+    PKT-0091 = fork theseus at merge 88df302, which already contains PKT-0087's TableId_Add branch (so no separate build).
+    Only two variants (PKT-0089 already covered PKT-0066/PKT-0087 at 0 incremental).
+  - Harness kept out of the repo (target allows baseline.md only): scratchpad ab.cjs, Playwright routing + CDP profiler +
+    wrappers on TakeFontCheckClasses / CheckFontNeedsIncremental / CheckFontNeeds.
+  - Result: 143/143 batches incremental, 0 full walks; font collection 271 ms -> 0.5 ms per 30 changes; B busy -7 %.
+  - Surprise: the factory's resume commit 1d3c084 in external/sdkjs recorded .theseus-addons/sdkjs-forms as a gitlink;
+    removed it with `git rm --cached` (261086b) so the fork diff stays in scope.
+  - Surprise: differential/sdkjs-common.sh failed once with a Playwright TimeoutError, passed unchanged on rerun.
+  - Not done: per-function ParaRun self column (CDP names did not separate it; reported all *AllFontNames instead); style case.
 
 ## Spawned packets
 
