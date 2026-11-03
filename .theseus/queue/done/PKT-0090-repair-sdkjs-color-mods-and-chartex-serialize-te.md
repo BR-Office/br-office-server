@@ -79,6 +79,7 @@ PKT-0058 found both suites fail from test bugs, not product defects. Repair the 
 - Attempt after review rejection: "Page boots" now also pins the surprise with `assert.throws` on the same toXml path the skipped test uses (XmlWriterContext + `OpenXmlPackage.getXmlBytes` on a `new CChartSpace(api)`). A bare `toXml(new CMemory(), name)` does NOT throw (the generic stub writes an empty node), so the throw is specific to the getXmlBytes/writer-context path; comment updated accordingly. Suite 4/4.
 - Filed the follow-up for the stale header comment of `.theseus/oracle/sdkjs-common.sh` in `.theseus/spawn/` (requires: [browser]).
 - Attempt after 2nd review rejection: fixed the stale skip comment (throw only via getXmlBytes, bare toXml does not throw), reworded the `assert.throws` message, added a matcher (`err instanceof TypeError`, verified green). Atlas chartEx row now 4/4 with the getXmlBytes-only throw, total 10327/10327 (~19 s). Oracle: 6/6, 10327/10327.
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh && npm run lint:check`
 
 ## Spawned packets
 - (not queued, unfinished request: PKT-0090-scope-check-r2-for-external-sdkjs-must-diff-agai.md)
