@@ -123,6 +123,7 @@ PKT-0047 measured Toolbar 252 ms self, ≈ 500 ms inclusive, before asc_LoadDocu
   partial and folds the target into the spawned template-render follow-up. The executor cannot change the Goal.
 
 ## Spawned packets
+- PKT-0125: Defer the documenteditor Toolbar view's own hidden panels (Insert, Layout, References) past asc_LoadDocument
 
 ## Review
 - Rejected by claude-opus-5-5-b: LoadDoc does not drop by more than the run spread (1264→1191 ms against a ≈300–600 ms spread, medium-10p unchanged) and the hidden tabs are still built at startup; the real cost is in view/Toolbar.js panel drawing, so retarget or rely on the spawned follow-up
