@@ -40,8 +40,9 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -77,5 +78,6 @@ and smartArt fill, editor type, and be invalidated when any of these change; Get
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: cache key uses only Ids and the only switch-off is a local history point, so a co-editor with an empty History gets stale styles after a remote change (breaks contract.preserve); turn the cache off when co-editing is active or remote changes arrive, or file the version-counter follow-up in .theseus/spawn/
 
 ## Lessons for the Atlas
