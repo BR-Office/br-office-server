@@ -17,14 +17,8 @@ for (const m of src.matchAll(/'(common\/[^']+\.html)'\s*:\s*'([^']*)'/g)) skippe
 for (const t of all) if (t.endsWith('-compiled.html')) skipped[t] = 'local: loads deploy/ bundles, needs a full npm run build (not done by this oracle)';
 // Known-broken suites (not in upstream runAll.js; PKT-0046 baseline). They run by default and pass only if
 // they still fail exactly as recorded, so a fix or a new regression both turn the oracle red.
-const COLOR_MODS = ['Check colors with mods', 'Check colors with satMod', 'Test lumOff mod', 'Test satOff mod',
-	'Test hueMod mod', 'Test sat mod', 'Test lum mod', 'Test alphaMod mod', 'Test alphaOff mod', 'Test hue mod', 'Test hueOff mod']
-	.map(n => 'Test applying color mods > ' + n);
-const known = {
-	'common/color-mods/color-mods.html': { passed: 9766, total: 10023, failing: COLOR_MODS },
-	// chartEx hangs at load (PKT-0058: no AllFonts.js, asc_docs_api throws, QUnit never starts): wait 20 s, not 120 s.
-	'common/charts/chartEx-serialize.html': { timeout: true, ms: 20000 },
-};
+// Empty since PKT-0090 repaired color-mods and chartEx-serialize; shape: { passed, total, failing } or { timeout, ms }.
+const known = {};
 const sameSet = (a, b) => a.length === b.length && [...a].sort().every((x, i) => x === [...b].sort()[i]);
 const { runQunitPuppeteer } = require(path.join(sdk, 'node_modules/node-qunit-puppeteer'));
 process.on('unhandledRejection', r => console.error('late rejection: ' + r));
