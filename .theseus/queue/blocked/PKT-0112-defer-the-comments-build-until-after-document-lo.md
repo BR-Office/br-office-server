@@ -68,6 +68,7 @@ PKT-0047 Comments 116/96 ms, ≈ 90-100 ms inside onLaunch. Comments.js is in ap
 - Decision: I did not iterate further on Comments.js. The remaining gain needs Toolbar.js (outside the target), so I spawned a request to wire the Toolbar to the add button lazily (`.theseus/spawn/PKT-0112-wire-…`). I am keeping the change because it preserves behaviour (differential PASS) and the follow-up needs it.
 - Build hash 082845… (attempt 1) vs 3128cb… (now): the Comments.js content is the same as the fork version; the hash covers more than this file.
 - Acceptance: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
+- block: the reviewer found an external blocker: goal needs Toolbar.js (outside target) to stop building Comments at app:ready; factory/planner must approve the spawned Toolbar packet or widen the target, then re-measure on an idle VM
 
 ## Spawned packets
 - PKT-0132: Wire the Toolbar to the Comments add button lazily so the deferred Comments build leaves the open window
