@@ -638,3 +638,36 @@ Script: `sh .theseus/oracle/perf/quality.sh` (from the repository root).
 | x2t conversion time per format | measured on realistic files in PKT-0018 (above) | — |
 | Crash rate seen by users | upstream fix and issue rates measured (PKT-0017, above); no production crash telemetry; issue counts for ONLYOFFICE cover the whole product, not only the server | production telemetry, if a deployment exists |
 | Unit oracle pass/fail and duration | command refused by permissions in this run | rerun `quality.sh` |
+
+## Client: PKT-0066 A/B — remote-apply font collection, before/after (PKT-0071)
+
+**Native package** 9.3.7-1 server, same VM; the client bundles are **self-built** with `npm run build:word` in
+`external/sdkjs/build` (webpack, terser with `mangle:false`, names kept): *before* = `main` (9cea536), *after* = the
+PKT-0066 files from fork branch `pkt/PKT-0066` (b152f87; the d46dde8 named in the packet was rebased away). Both are
+injected into the editor with Playwright `context.route` on `sdkjs/word/sdk-all{,-min}.js` (and 404 on
+`sdk-all.{bin,cache}`), so before and after are built and loaded the same way. Harness: user A and user B open
+`large-100p.docx` (PKT-0016 sample), CDP Profiler on B at 100 µs; *text* = A types 30 markers (as PKT-0043 *apply*),
+*style* = A changes the default paragraph style's font size 10 times (styles → documented full-walk fallback).
+Samples under Playwright `evaluate`/`predicate` excluded. 3 runs per variant, means; self ms over the whole window.
+
+| Case | Variant | B busy ms | font collection inclusive ms | `ParaRun.Get_AllFontNames` self | `Paragraph.Document_Get_AllFontNames` self | `CTextPr.Document_Get_AllFontNames` self | all `*AllFontNames` self | incremental fns self |
+|---|---|---|---|---|---|---|---|---|
+| text, 30 changes | before | 2 360 | 140 | 86 | 13 | 27 | 136 | — |
+| text, 30 changes | after | 2 842 | 195 | 132 | 17 | 26 | 189 | 0.1 |
+| style, 10 changes | before | 5 491 | 37 | 24 | 2.7 | 6.6 | 36 | — |
+| style, 10 changes | after | 7 185 | 68 | 47 | 6.8 | 11 | 67 | 0 |
+
+Per-run text inclusive: before 144 / 133 / 144, after 212 / 146 / 226; style after run 0 was 2× slower than all others
+(busy 10 083 ms) and drives that mean. The after/before difference is run-to-run noise: no part of it is the new code
+(0.1 ms).
+
+Reading:
+- **PKT-0066 gives no gain as delivered: the incremental path is never taken for remote typing.** Instrumenting
+  `TakeFontCheckClasses` on B shows every incoming batch is `[CTableId, ParaRun]`: typing registers a new run, whose
+  change class is `CTableId` (g_oTableId), not a text container, so `GetFontNamesFromClasses` returns null and
+  `pre_Save` does the full `CheckFontNeeds` walk (stack `pre_Save < SendImagesCallback < OnStart_Load_Objects <
+  Apply_Changes`), 30/30 batches. Follow-up requested (spawn from PKT-0071) to treat `CTableId` changes.
+- **The achievable gain is small.** Font-name collection is ≈ 140 ms per 30 remote changes on 100 p (≈ 4.7 ms per
+  change, ≈ 6 % of B's busy time); ParaRun is ~60 % of it. Repaint and recalc stay the remote-apply cost (PKT-0043).
+- Style edits recalc the whole document (≈ 0.5 s per change); font collection is < 1 % there.
+- Not measured: the installed (upstream-compiled) bundle; the self-built *before* stands in for it.
