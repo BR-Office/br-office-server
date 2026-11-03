@@ -38,6 +38,7 @@ budget:
 roles:
   executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -50,6 +51,7 @@ Write `.theseus/oracle/differential/web-apps-documenteditor.sh`: each compares t
 ## Suggested plan
 
 ## Executor log
+- return: factory process stopped by the session's 2-hour limit; restarted on Theseus 0.21.3, work kept (TEP-0010)
 
 ## Spawned packets
 

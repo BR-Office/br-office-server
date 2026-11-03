@@ -1,0 +1,2 @@
+# Intended differences between original and new sdkjs for sdkjs-common, one "<case> <check>" per line
+# (checks: model sentA sentB shown reopened converted), each with the packet that intends it.
