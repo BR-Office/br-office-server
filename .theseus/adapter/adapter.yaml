@@ -27,6 +27,11 @@ goals:
   # Rafael, 2026-11-03 (TEP-0013): optimize the whole application by what users do, end to end,
   # measured against the integrated build (main branch + the forks' theseus branches).
   journeys:
+    # Rafael, 2026-11-03: a real document that took more than 20 s to open the first time in
+    # his own Euro-Office installation (11 pages, 2.8 MB, 11 images, 9 tables, CJK fonts).
+    - id: open-docx-real
+      description: "Select .theseus/oracle/journeys/samples/aluno-moderno.docx (a real 11-page document with images, tables and CJK fonts) and wait until it is fully rendered in the browser, first open with a cold browser cache"
+      measure: bash .theseus/oracle/journeys/open-docx-real.sh
     - id: open-docx-10p
       description: "Select a 10-page Word document and wait until it is fully rendered in the browser (first open)"
       measure: bash .theseus/oracle/journeys/open-docx-10p.sh
