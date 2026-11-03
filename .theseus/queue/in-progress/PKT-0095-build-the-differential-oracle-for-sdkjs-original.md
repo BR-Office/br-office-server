@@ -64,6 +64,7 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 - Proof: both differential scripts PASS twice in a row, and `.theseus/oracle/sdkjs-word.sh` (42/42) and `.theseus/oracle/sdkjs-common.sh` (6/6) pass. Mutation check: a bundle copy where asc_enterText turns 'n' into 'N' gives DIFF in model, sentA, shown, reopened and converted (sentB same, since B types no 'n'); exit 1.
 - Not done: no remote-change case on a chart object itself (charts are opened, shown, saved, converted and reopened, but only text is edited). `.intended` files are empty: no intended difference yet.
 - Timing: the timing lines show no measurable gain on these small inputs (open about 4.3 s, edit about 3 s on both sides); the noise is of the same order.
+- attempt 3 (claude-opus-5-5): rejected for R2: `external/sdkjs/.theseus-addons/sdkjs-forms` had been committed in the fork as a gitlink (the base oracle `.theseus/oracle/sdkjs-word.sh` clones sdkjs-forms there; the factory's commit of leftovers picked up the nested repo). Fix: reverted that commit in external/sdkjs (net diff of the fork branch for this packet is now empty), added `/.theseus-addons/` to the checkout's local `info/exclude`, and build.sh now adds that exclude itself on every run so it cannot recur. All four acceptance commands pass (differential word 2 cases, common 3 cases; 42/42 and 6/6 suites).
 
 ## Spawned packets
 
@@ -73,4 +74,5 @@ Write `.theseus/oracle/differential/sdkjs-word.sh`, `.theseus/oracle/differentia
 - Driving the editor in co-editing: wait for `CollaborativeEditing.Get_GlobalLock()` to clear after every action, or input is dropped without an error. Use API calls, not timed keystrokes.
 - Paragraph ParaIds are random (`CreateDurableId`): change streams and saved files differ by those bytes between any two runs.
 - The bash memory cgroup is shared between concurrent agents: a full sdkjs slide webpack build (two chunk configs in one process) does not fit next to an x2t compile.
+- Oracles that clone nested repos inside a fork checkout must exclude them locally (info/exclude), or the factory commits them as gitlinks outside the target.
 - A differential oracle needs a check that its scripted edits landed. Without it, "same" passed with no edit on both sides.

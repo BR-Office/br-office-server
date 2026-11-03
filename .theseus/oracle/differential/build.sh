@@ -9,6 +9,10 @@ set -euo pipefail
 SRC=$(cd "$1" && pwd); shift
 C=${THESEUS_CACHE_DIR:-$HOME/.cache/theseus}/sdkjs-differential
 mkdir -p "$C"
+# The base oracle clones sdkjs-forms into <sdkjs>/.theseus-addons (a nested repo): keep it out of the fork's
+# commits via the checkout's local exclude, or a factory `git add -A` records it as a gitlink (rule R2).
+EX=$(git -C "$SRC" rev-parse --git-path info/exclude); case $EX in /*) ;; *) EX=$SRC/$EX;; esac
+mkdir -p "$(dirname "$EX")"; grep -qx '/.theseus-addons/' "$EX" 2>/dev/null || echo '/.theseus-addons/' >> "$EX"
 TREE=$(git -C "$SRC" rev-parse HEAD^{tree})
 DIFF=$( { git -C "$SRC" diff HEAD -- . ':!build/node_modules'; git -C "$SRC" ls-files -o --exclude-standard -z -- . ':!node_modules' ':!.theseus-addons' ':!develop' | xargs -0r sha1sum; } | sha1sum | cut -c1-12)
 KEY=$TREE-$DIFF
