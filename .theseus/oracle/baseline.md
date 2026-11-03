@@ -671,3 +671,33 @@ Reading:
   change, ≈ 6 % of B's busy time); ParaRun is ~60 % of it. Repaint and recalc stay the remote-apply cost (PKT-0043).
 - Style edits recalc the whole document (≈ 0.5 s per change); font collection is < 1 % there.
 - Not measured: the installed (upstream-compiled) bundle; the self-built *before* stands in for it.
+
+## Client: PKT-0066 A/B re-measured after PKT-0087 (PKT-0089)
+
+Same recipe, harness and sample as "PKT-0066 A/B (PKT-0071)" above: native package 9.3.7-1 server, self-built word
+bundles injected by Playwright routing, `large-100p.docx`, A types 30 markers, CDP Profiler on B at 100 µs, 3 runs per
+variant, *text* case only. Three variants, all `npm run build:word` (webpack cache cleared between builds: with the cache, a
+second build reused the first one's output):
+*before* = PKT-0071's main 9cea536 build (no incremental code), *PKT-0066* = sdkjs `theseus` 3d51031,
+*PKT-0087* = 3d51031 + e5fd187 (fork `pkt/PKT-0087`, CollaborativeEditing.js only, applied for the build and then reverted).
+B wraps `TakeFontCheckClasses` and records, per batch, the classes it returns and whether `GetFontNamesFromClasses` gives non-null
+(the incremental path).
+
+| Variant | B busy ms | font collection inclusive ms | `ParaRun.Get_AllFontNames` self | all `*AllFontNames` self | incremental fns self | batches on incremental path |
+|---|---|---|---|---|---|---|
+| before | 3 387 | 237 | 171 | 232 | — | — |
+| PKT-0066 | 3 791 | 214 | 127 | 207 | 3.2 | 0 / 133 |
+| PKT-0087 | 3 518 | 194 | 116 | 188 | 2.2 | **0 / 131** |
+
+(Batches > 30: `TakeFontCheckClasses` is called 39–49 times per run; every non-empty take was `[CTableId, ParaRun]`.)
+This run's machine was busier than PKT-0071's (before: 237 ms vs 140 ms inclusive); differences between rows are noise.
+
+Reading:
+- **PKT-0087 gives no gain: 0 of 131 batches take the incremental path (expected 30/30), self-time gain ≈ 0 (expected ≈ 140 ms).**
+- **Cause: PKT-0071 named the wrong change.** Dumping B's applied changes shows the `CTableId` entry of each batch is
+  `CChangesTableIdDescription` (Type 131071 = `historyitem_TableId_Description`, fields `FileCheckSum, FileSize, Description,
+  ItemsCount, PointIndex, …`: the per-point description record the sender adds), not `historyitem_TableId_Add` (65537).
+  Typing into an existing run adds no new object, so PKT-0087's `TableId_Add` branch is never reached. Follow-up requested
+  (spawn from PKT-0089): skip `historyitem_TableId_Description` changes (they carry no fonts) in `private_CollectFontCheckClasses`,
+  then re-measure with this recipe.
+- The ceiling stays as PKT-0071 found: font collection is ≈ 5–7 % of B's busy time on 100 p.
