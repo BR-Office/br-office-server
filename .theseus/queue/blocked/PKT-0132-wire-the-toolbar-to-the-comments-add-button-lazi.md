@@ -3,6 +3,7 @@ id: PKT-0132
 title: Wire the Toolbar to the Comments add button lazily so the deferred Comments build leaves the open window
 type: refactor
 priority: high
+exclusive: true
 module: web-apps-documenteditor
 
 origin:
