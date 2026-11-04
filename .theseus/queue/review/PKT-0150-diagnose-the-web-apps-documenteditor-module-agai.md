@@ -58,6 +58,12 @@ Round 3 of the `web-apps-documenteditor` module. Read `.theseus/diagnosis/DIAG-w
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-04. The fork is at upstream `d238e526`; no round 2 code landed (PKT-0111/0112 blocked, PKT-0132 discarded and reverted, PKT-0125 pending).
+- Measured: documenteditor-open PASS, differential PASS (4 cases), open-window.js 7 runs × 2 files. **The VM was loaded the whole time (load 9.9–13.8)**, so the absolute numbers are 1.5–2× round 2 on identical code.
+- Surprise: in the network trace LoadDoc coincides with the end of the sdk-all.js download (2 707 vs 2 710 ms; 2 181 vs 1 993 ms). Following that, I ran a critical-path test of my own: a session script that delays asc_LoadDocument by 500 ms, 7 alternating pairs per file. Ready did not follow the delay (+147 / −729 ms, spread ±1.2 s). The script is copied into the round file so that P1 can commit it; `.theseus/oracle/perf` is outside this packet's create_in.
+- Decision: verdict **keep**, following round 2's pre-registered rule (P1+P2 < 150 ms) and the critical-path reading. The plan has one investigate row that confirms the finding on a quiet VM. I recommend closing PKT-0111/0112 and discarding PKT-0125 without merging.
+- `DIAG-web-apps-documenteditor-b.md` does not exist, so there was nothing to `git rm`.
+- Not done: the critical-path test on an idle VM (no idle slot in this run). No prototype in external/web-apps.
 
 ## Spawned packets
 
