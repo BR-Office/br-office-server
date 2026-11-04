@@ -35,7 +35,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -52,5 +53,6 @@ PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-815
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Plan claims forgotten-file storage for non-corrupted errors (T4, §3 table/bullet, E4), but canvasservice.js:1306 only stores it when there is no error or the error is CONVERT_CORRUPTED; correct those pins and the §3 consequences.
 
 ## Lessons for the Atlas
