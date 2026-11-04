@@ -3,6 +3,7 @@ id: PKT-0133
 title: Profile the open-docx-10p client window per module (replace the PKT-0043 share estimate)
 type: measure
 priority: medium
+exclusive: true
 module: sdkjs-word
 
 origin:
@@ -45,6 +46,7 @@ budget:
 roles:
   executor: claude-opus-5-5-b
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -90,6 +92,7 @@ Attempt 3 (claude-opus-5-5-b):
 ```
 differential sdkjs-common: FAIL, 1 unintended difference(s)
 ```
+- release: operator: code identical to base, differential flaked under load; re-run as exclusive on a quiet VM
 
 ## Spawned packets
 - PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
