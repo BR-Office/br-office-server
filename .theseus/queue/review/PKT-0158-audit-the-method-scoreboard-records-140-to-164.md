@@ -61,6 +61,8 @@ Audit the method over scoreboard records 140 to 164, following `.theseus/prompts
 - `theseus validate`: 1 error (open-docx-100p stage `layout-finish-webapps` not covered by DIAG-web-apps-documenteditor.md), already there before this packet and outside its target; scope-check ok.
 
 ## Spawned packets
+- PKT-0159: Document the external/ mirrors and worktree checkout in environment.md
+- PKT-0160: Shared journey runner helper (upload, open, wait-loaded, per-request accounting)
 
 ## Review
 
