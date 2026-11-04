@@ -32,6 +32,12 @@ goals:
     - id: open-docx-real
       description: "Select .theseus/oracle/journeys/samples/aluno-moderno.docx (a real 11-page document with images, tables and CJK fonts) and wait until it is fully rendered in the browser, first open with a cold browser cache"
       measure: bash .theseus/oracle/journeys/open-docx-real.sh
+    # Rafael, 2026-11-03: his 20 s was with the server on another machine over the internet; the VM
+    # measures on localhost, which hides every download (fonts are 23-27 MB files). He also said
+    # 5 s on localhost is still too slow for this document. Target: under 2 s on localhost.
+    - id: open-docx-real-internet
+      description: "Same as open-docx-real (first open, cold browser cache, until fully rendered), but with the browser on an emulated home internet link (Chrome DevTools network emulation: 50 Mbps down, 10 Mbps up, 30 ms latency), so every byte the client downloads (fonts, scripts, editor bin, images) costs what it costs a real user; the map must attribute each download to the module that asks for it"
+      measure: bash .theseus/oracle/journeys/open-docx-real-internet.sh
     - id: open-docx-10p
       description: "Select a 10-page Word document and wait until it is fully rendered in the browser (first open)"
       measure: bash .theseus/oracle/journeys/open-docx-10p.sh
