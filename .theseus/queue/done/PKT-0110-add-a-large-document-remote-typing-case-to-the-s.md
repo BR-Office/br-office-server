@@ -45,7 +45,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -69,5 +69,6 @@ PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: large-document remote typing case meets the goal, multi-page shown hash on B, 3-run medians, existing checks unchanged
 
 ## Lessons for the Atlas
