@@ -94,6 +94,7 @@ Attempt 3:
   since tab close is `transport close` and no server code changed.
 
 ## Spawned packets
+- PKT-0140: Save immediately when the integrator closes the editor (requestClose/destroyEditor) and measure it
 
 ## Review
 
