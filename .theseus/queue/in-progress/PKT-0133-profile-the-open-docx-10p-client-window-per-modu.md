@@ -94,6 +94,7 @@ differential sdkjs-common: FAIL, 1 unintended difference(s)
 ```
 - release: operator: code identical to base, differential flaked under load; re-run as exclusive on a quiet VM
 - attempt 1: acceptance failed: `theseus validate`
+- attempt 2: acceptance failed: `theseus validate`
 
 ## Spawned packets
 - PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
