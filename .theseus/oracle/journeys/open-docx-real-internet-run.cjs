@@ -27,7 +27,7 @@ async function run(i) {
   try { return await run1(i, browser); } finally { await browser.close().catch(() => {}); }
 }
 async function run1(i, browser) {
-  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 } });
+  const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, serviceWorkers: 'block' });
   await ctx.addInitScript(() => {
     window.__m = {};
     const iv = setInterval(() => {
@@ -40,6 +40,10 @@ async function run1(i, browser) {
   const page = await ctx.newPage();
   const cdp = await ctx.newCDPSession(page);
   await cdp.send('Network.enable');
+  // web-apps registers docserviceworker.js, which fetches Editor.bin and /cache/files media itself: those requests
+  // left the page's emulated link (0 bytes, 15 ms in PKT-0141 attempt 1). The worker is blocked (first open: it is
+  // empty anyway; the HTTP cache stays on, the context is new) so every byte goes through the throttled page network and is counted.
+  await cdp.send('Network.setBypassServiceWorker', { bypass: true });
   await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 30, downloadThroughput: 50e6 / 8, uploadThroughput: 10e6 / 8 });
   const reqs = {};
   cdp.on('Network.requestWillBeSent', e => { reqs[e.requestId] = { url: e.request.url, t: e.timestamp }; });
@@ -86,7 +90,7 @@ async function run1(i, browser) {
   // downloads by requesting module (only requests sent after the user's action)
   const mod = u => /\/example\//.test(u) ? 'project(example)' : /\/web-apps\/apps\/api\//.test(u) ? 'web-apps-documenteditor(api.js)'
     : /\/web-apps\//.test(u) ? 'web-apps-documenteditor' : /\/sdkjs\/word\//.test(u) ? 'sdkjs-word' : /\/sdkjs\/common\/|\/fonts\//.test(u) ? 'sdkjs-common'
-    : /\/sdkjs\//.test(u) ? 'sdkjs-common' : /Editor\.bin/.test(u) ? 'docservice(Editor.bin)' : /\/cache\/files\//.test(u) ? 'docservice(media)'
+    : /Editor\.bin/.test(u) ? 'sdkjs-common(Editor.bin)' : /\/sdkjs\//.test(u) ? 'sdkjs-common' : /\/cache\/files\//.test(u) ? 'docservice(media)'
     : /\/doc\/|\/coauthoring|socket/.test(u) ? 'docservice' : /^data:|^blob:/.test(u) ? null : 'other';
   const dls = {};
   for (const q of Object.values(reqs)) { if (q.bytes == null || monoT0 == null || q.t < monoT0) continue; const k = mod(q.url); if (!k) continue;
