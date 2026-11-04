@@ -95,6 +95,27 @@ differential sdkjs-common: FAIL, 1 unintended difference(s)
 - release: operator: code identical to base, differential flaked under load; re-run as exclusive on a quiet VM
 - attempt 1: acceptance failed: `theseus validate`
 - attempt 2: acceptance failed: `theseus validate`
+Attempt 4 (claude-opus-5-5-b):
+- Rejection was `theseus validate`: its only error is stage `layout-finish-webapps` of open-docx-100p.md missing from
+  DIAG-web-apps-documenteditor.md. Neither file is in my target nor touched by this packet (diff since claim: open-docx-10p.md,
+  oracle/journeys/*, own packet, friction). It came from PKT-0134 and is already queued as PKT-0161 (pending). Fixing it here
+  would break R2, so I left it; validate will pass once PKT-0161 merges. All other acceptance commands pass again; scope ok.
+Attempt 4 (claude-opus-5-5-b, after release):
+- Surprise: the scripts of attempts 1-3 were never committed (only the sdkjs build output and the log were), so the claim
+  started without them. Rewrote `oracle/journeys/open-docx-10p-profile.sh` + `open-docx-10p-profile-run.cjs`: the
+  open-docx-10p journey with a CDP CPU profile of the page; marks mapped to the profile clock through
+  `Network.requestWillBeSent` (wallTime − timestamp); three windows (shell, client, recalc) each in a directory of
+  symlinked `open-<i>.cpuprofile` + marks.json, attributed by the unchanged `perf/attribute-word.js --json`.
+- Ran on a quiet VM (load average 0.5). Measured busy self shares: client window idle 18.2 %, browser 40.2 %, word
+  33.7 %, common 14.9 %, web-apps 11.1 %; shell boot web-apps 60 %, browser 34 %, common 6 %, no word code; recalc
+  web-apps 32 %, word 32 %, browser 26 %, common 10 %.
+- Decision: marks not re-measured; round-3 p50 window lengths kept and split by measured idle + busy shares, so stages
+  still add to 8 340. New stage ids for project/sdkjs-common modules; the recalc web-apps time (234 ms) is merged into
+  `client-open-webapps-ui` because `layout-finish-webapps` is not covered by DIAG-web-apps-documenteditor.md.
+- `theseus validate`: 1 error that is NOT mine and pre-exists on main: open-docx-100p.md stage `layout-finish-webapps`
+  (PKT-0134) — already queued as PKT-0161; outside my target, so not fixed. All other acceptance commands pass
+  (profile ok runs=5; word 42/42; common 7/7; both differentials PASS).
+- external/sdkjs: `/deploy-integrated/` re-added to its local .git/info/exclude; status stays clean after `up`.
 
 ## Spawned packets
 - PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
