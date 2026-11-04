@@ -49,7 +49,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 1
+rejected_reviews: 2
 resume: false
 ---
 
@@ -78,5 +78,6 @@ else on the VM (PKT-0111 saw a 1 s bimodal LoadDoc spread with 5 runs).
 
 ## Review
 - Rejected by claude-opus-5-5-b: re-run perf/open-window.js (medium-10p, large-100p, 15 runs) when no other packet is using the machine and show the ctlCode.LoadDoc.Toolbar drop is larger than its run spread in baseline.md; the current 51–93 ms drop is within 300–900 ms of noise
+- Rejected by claude-opus-5-5-b: ctlCode.LoadDoc.Toolbar drops only 39 ms on large-100p against a 51 ms spread (new build lower in 3/5 blocks), so the goal's "drop > run spread" bar isn't met, and the HeaderFooterTab/ViewTab buttons the goal names weren't deferred; button creation must be deferred too (the requested follow-up's scope) to get a drop above the spread on both files
 
 ## Lessons for the Atlas
