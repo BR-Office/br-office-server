@@ -6,3 +6,11 @@
 {"commit":"b2867b3","date":"2026-11-04","journey":"coedit-remote","max_ms":172.0,"min_ms":73.0,"packet":"PKT-0110","runs":60.0,"total_ms":112.0}
 {"commit":"b2867b3","date":"2026-11-04","journey":"save","max_ms":5825.0,"min_ms":5737.0,"packet":"PKT-0110","runs":5.0,"total_ms":5763.0}
 {"commit":"b2867b3","date":"2026-11-04","journey":"convert-docx-pdf","max_ms":1338.0,"min_ms":1021.0,"packet":"PKT-0110","runs":7.0,"total_ms":1118.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"open-docx-real","max_ms":6079.0,"min_ms":4906.0,"packet":"PKT-0125","runs":5.0,"total_ms":6053.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"open-docx-real-internet","max_ms":9721.0,"min_ms":7933.0,"packet":"PKT-0125","runs":5.0,"total_ms":9028.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"open-docx-10p","max_ms":5745.0,"min_ms":3601.0,"packet":"PKT-0125","runs":5.0,"total_ms":4245.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"open-docx-100p","max_ms":6656.0,"min_ms":5136.0,"packet":"PKT-0125","runs":5.0,"total_ms":5438.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"typing","max_ms":98.0,"min_ms":32.0,"packet":"PKT-0125","runs":90.0,"total_ms":55.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"coedit-remote","max_ms":198.0,"min_ms":74.0,"packet":"PKT-0125","runs":60.0,"total_ms":121.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"save","max_ms":5934.0,"min_ms":5795.0,"packet":"PKT-0125","runs":5.0,"total_ms":5821.0}
+{"commit":"3b83137","date":"2026-11-04","journey":"convert-docx-pdf","max_ms":1521.0,"min_ms":1236.0,"packet":"PKT-0125","runs":7.0,"total_ms":1332.0}
