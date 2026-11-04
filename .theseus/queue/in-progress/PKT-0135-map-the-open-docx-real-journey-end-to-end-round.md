@@ -40,7 +40,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -57,5 +58,6 @@ Map the user journey `open-docx-real` (Select .theseus/oracle/journeys/samples/a
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5: Editor.bin-received p50 is 3220 ms not 3339; recompute editor-bin-download (342 ms, 6.9 %), the 1283 ms client split, module totals and the comparison claim; also file the profiling follow-up in .theseus/spawn and fill in Lessons for the Atlas
 
 ## Lessons for the Atlas
