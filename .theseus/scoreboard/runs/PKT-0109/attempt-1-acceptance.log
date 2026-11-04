@@ -1,0 +1,20 @@
+differential: original 9cea536 (/home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/ce3476f599450dca016c61cc5d6d8268c2ea3e09-da39a3ee5e6b)
+differential: new      0f61ccc (/home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/02ce87d738a07167925e80b09f9f3e8c2616525a-da39a3ee5e6b)
+differential: /home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/ce3476f599450dca016c61cc5d6d8268c2ea3e09-da39a3ee5e6b/word/unminified: word:all (unminified, memory)
+timing sdkjs-word text.docx | original open=10289 join=8193 edit=7369 save=1397 convert=1177 reopen=10164 | new open=9354 join=6679 edit=5204 save=270 convert=254 reopen=4364
+same text.docx model
+same text.docx sentA
+same text.docx sentB
+same text.docx shown
+same text.docx reopened
+same text.docx converted
+timing sdkjs-word styles.docx | original open=3967 join=3834 edit=3018 save=226 convert=230 reopen=4420 | new open=5854 join=5479 edit=3814 save=420 convert=418 reopen=4421
+same styles.docx model
+same styles.docx sentA
+DIFF styles.docx sentB
+  original: #27/94 35;BgAAADIAXwA2AAEAHAABAAAAAAAAAAEAAABSAAAAAAMAAAA= 35;BgAAADIAXwA2AAEAHAABAAAAAQAAAAEAAABlAAAAAAMAAAA= 35;BgAAADIAXwA2AAEAHAABAAAAAgAAAAEAAABtAAAAAAMAAAA=
+  new:      #27/95 38;DgAAAG8AZgBmAF8AMwA1ADcAAQAcAAEAAAAAAAAABAAAAAMAAAA= 35;BgAAADIAXwA2AAEAHAABAAAAAAAAAAEAAABSAAAAAAMAAAA= 35;BgAAADIAXwA2AAEAHAABAAAAAQAAAAEAAABlAAAAAAMAAAA=
+same styles.docx shown
+same styles.docx reopened
+same styles.docx converted
+differential sdkjs-word: FAIL, 1 unintended difference(s)
