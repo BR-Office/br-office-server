@@ -82,6 +82,7 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 - attempt 5 (claude-opus-5-5): the review offered "make the open measurably faster or close the packet as having no effect". Decision: close as no effect. The deferred build is ~25 ms (PKT-0112), below the ~40 ms resolution of 30 quiet pairs; nothing in target.files offers a larger lever. Reverted the 3 web-apps commits (`git revert` → `2b0d9bae`; content equals upstream `d238e526`) so no behaviour-neutral, unproven code lands. Kept the A/B data and `perf/comments-addnew-locks.cjs` as the record; added an "Outcome" section to baseline.md. No new measurement run (nothing to measure: B == A).
 - Acceptance after the revert: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
 - For the operator: the packet's result is negative; it should be closed without merging code (the fork branch carries only revert commits).
+- block: the reviewer found an external blocker: The goal can't be met: the ~25 ms Comments build is below the ~40 ms this VM can measure, and the change is already reverted. The factory operator must close PKT-0132 as having no effect, without merging the fork branch.
 
 ## Spawned packets
 
