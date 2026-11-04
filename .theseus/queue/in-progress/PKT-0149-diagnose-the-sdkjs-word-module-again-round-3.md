@@ -58,6 +58,7 @@ Round 3 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 ## Suggested plan
 
 ## Executor log
+- attempt 1: acceptance failed: `bash .theseus/oracle/differential/sdkjs-word.sh`
 
 ## Spawned packets
 
