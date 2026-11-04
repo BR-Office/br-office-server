@@ -1,0 +1,51 @@
+You are the Diagnostician in a Theseus project (model id `claude-opus-5-5-b`). Read AGENTS.md and .theseus/prompts/diagnostician.md, then execute work packet PKT-0155 (Repair the packet plan of .theseus/diagnosis/DIAG-x2t.md (not valid YAML)), described in .theseus/queue/in-progress/PKT-0155-*.md.
+
+Rules for this run:
+- Change only the files in target.files and create files only under target.create_in.
+- Do not move packets and do not run `theseus claim` or `theseus move`: the factory manages the packet state. You may write notes in the Executor log section of your own packet.
+- Work outside the target, or a follow-up the packet asks for, is requested with `theseus packet new --title ... --type ... --module ...` run here: in this worktree it records a request in .theseus/spawn/ (edit its Goal and context), and the factory turns it into a packet after approval. Commit the request with your work.
+- If a command you need is refused by your permissions, do not work around it: say so in your final report.
+- Run the acceptance commands yourself before finishing.
+- Commit your work on the current branch with a Conventional Commits message.
+- Before finishing, append your friction line for this packet to .theseus/scoreboard/friction.jsonl (spec method-measurement §4.3: packet, role, model, date and {ref, text} answers); it is checked.
+- A follow-up that needs an environment (a running service, a tool) declares it with `requires: [<name>]`, using the names of `environment.checks` in the adapter.
+- Before finishing, run `theseus scope-check`: it reports any file you changed outside the target (rule R2), in this repository or in a fork checkout, as the factory will.
+- Before finishing, write in the Executor log section of your packet the decisions you took, the surprises you found and anything you could not do; the reviewer rejects an empty log.
+- Finish with a short summary of what you did, the decisions you took and the lessons for the Atlas.
+
+If .theseus/adapter/environment.md exists, read it first: it describes what is installed and running for this project (services, images, tools) and how to use it.
+
+Acceptance commands (pre-approved: run them exactly as written, from the repository root):
+- `theseus validate`
+- `bash .theseus/oracle/differential/x2t.sh`
+
+Previous attempts were rejected. Fix these problems:
+- the spawn request PKT-0155-add-stage-layout-finish-webapps-to-covers-not-co.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- acceptance failed: `theseus validate`. Output:
+```
+  ✔ 158 of 158 packets without errors
+Atlas
+  ⚠ sdkjs-common.md: 879 words in the body (max 800, rule A2)
+  ✔ 9 of 9 cards without errors
+Diagnosis
+  ✔ 6 of 6 verdicts without errors
+Scoreboard
+  ✔ packets.jsonl: 164 records
+  ✔ escapes.jsonl: 0 records
+  ✔ friction.jsonl: 161 records
+Integration
+  ✔ files delivered by 108 merged packets checked
+Method version
+  ✔ 0.6.0
+Journeys
+  ✖ open-docx-100p.md: stage `layout-finish-webapps` of module `web-apps-documenteditor` is not in `covers` or `not_covered` of DIAG-web-apps-documenteditor.md
+  ✔ 87 stages checked
+16 ok · 4 warnings · 1 errors
+```
+
+Environments that are up right now (the factory just ran these checks and they passed; .theseus/adapter/environment.md says how to use them):
+- `documentserver`: `curl -sf http://127.0.0.1/healthcheck`
+- `browser`: `node -e "require('playwright')"`
+Do not report one of these as missing: use it, and if a script points elsewhere (another port, a container), point it here. If you still cannot reach it, say exactly what you ran and what came back.
+
+`external/core` is a writable checkout of another repository (git-excluded here), on its branch pkt/PKT-0155. Change the files of your target under it there; commit in it with `git -C external/core commit` (the factory commits what you leave and pushes the branch to the fork after every attempt). Its changes count for the scope (rule R2) like any other file. Do not push and do not change its other branches.
