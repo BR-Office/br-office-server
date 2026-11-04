@@ -41,9 +41,9 @@ budget:
   max_cost_usd: 5.0
   max_attempts: 3
 roles:
-  executor: null
+  executor: claude-opus-5-5
   reviewer: null
-resume: true
+resume: false
 ---
 
 ## Goal
