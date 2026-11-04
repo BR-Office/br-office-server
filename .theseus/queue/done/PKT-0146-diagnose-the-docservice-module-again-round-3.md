@@ -43,7 +43,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -69,5 +69,6 @@ Round 3 of the `docservice` module. Read `.theseus/diagnosis/DIAG-docservice.md`
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: round 3 diagnosis is complete, its evidence matches the code, and the backoff regression is correctly found and planned
 
 ## Lessons for the Atlas
