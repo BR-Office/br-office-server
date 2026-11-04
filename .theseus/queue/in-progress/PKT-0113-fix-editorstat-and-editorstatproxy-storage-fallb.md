@@ -50,9 +50,15 @@ DocsCoServer.js:155 still uses new editorDataStorage() for editorStat; PKT-0064 
 ## Suggested plan
 
 ## Executor log
+- Re-applied PKT-0064's commit 8e5cf9e DocsCoServer.js diff verbatim (`git apply` was clean on current main): new `createStorageInstance(module, className, ...args)` helper, used for editorData, editorStat and editorStatProxy; exported for tests. editorStat's legacy fallback now uses editorStatStorage, editorStatProxy gains the same fallback (it previously crashed with "is not a constructor" on a legacy module), and a module with neither export throws a clear TypeError.
+- Created tests/unit/docsCoServerGuards.tests.js (PKT-0064's file) plus two editorStatProxy tests: null without REDIS_SERVER_DB_KEYS_NUM, and an EditorStat instance when it is set (loaded with `jest.isolateModules`, env restored in `finally`). All three instances are now covered.
+- docsCoServerCrashPaths.tests.js untouched; no existing assertion changed.
+- Acceptance: unit.sh 13 suites / 185 passed, 1 skipped; lint:check 0 errors (1 pre-existing warning in AdminPanel, outside target).
+- Surprise: none; the blocked packet's code still applied cleanly, so recovering work from blocked branches via `git show <sha>` was cheap.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- DocsCoServer storages are built via `createStorageInstance`; module-level instances depending on env vars (editorStatProxy) are testable with `jest.isolateModules` after setting the env var.

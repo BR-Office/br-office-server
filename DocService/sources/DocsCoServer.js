@@ -150,12 +150,30 @@ const EditorTypes = {
 
 const defaultHttpPort = 80,
   defaultHttpsPort = 443; // Default ports (for http and https)
-//todo remove editorDataStorage constructor usage after 8.1
-const editorData = editorDataStorage.EditorData ? new editorDataStorage.EditorData() : new editorDataStorage();
-const editorStat = editorStatStorage.EditorStat ? new editorStatStorage.EditorStat() : new editorDataStorage();
+/**
+ * Instantiates a storage class from a storage module. Modules export either named classes
+ * (`EditorData`, `EditorStat`) or, in the legacy layout, the constructor itself.
+ * todo remove the legacy constructor fallback after 8.1
+ * @param {Function|object} storageModule module loaded from `editorDataStorage`/`editorStatStorage`
+ * @param {string} className named export to prefer
+ * @param {...*} args constructor arguments
+ * @returns {object} storage instance
+ */
+function createStorageInstance(storageModule, className, ...args) {
+  if (storageModule && typeof storageModule[className] === 'function') {
+    return new storageModule[className](...args);
+  }
+  if (typeof storageModule === 'function') {
+    return new storageModule(...args);
+  }
+  throw new TypeError(`storage module exports neither ${className} nor a constructor`);
+}
+const editorData = createStorageInstance(editorDataStorage, 'EditorData');
+// the fallback used to build editorStat from editorDataStorage, ignoring a separate editorStatStorage
+const editorStat = createStorageInstance(editorStatStorage, 'EditorStat');
 let editorStatProxy = null;
 if (process.env.REDIS_SERVER_DB_KEYS_NUM) {
-  editorStatProxy = new editorStatStorage.EditorStat(process.env.REDIS_SERVER_DB_KEYS_NUM);
+  editorStatProxy = createStorageInstance(editorStatStorage, 'EditorStat', process.env.REDIS_SERVER_DB_KEYS_NUM);
 }
 const clientStatsD = statsDClient.getClient();
 let connections = []; // Active connections
@@ -1754,6 +1772,7 @@ exports.c_oAscServerStatus = c_oAscServerStatus;
 exports.editorData = editorData;
 exports.editorStat = editorStat;
 exports.editorStatProxy = editorStatProxy;
+exports.createStorageInstance = createStorageInstance;
 exports.sendData = sendData;
 exports.modifyConnectionForPassword = modifyConnectionForPassword;
 exports.parseUrl = parseUrl;
@@ -2811,6 +2830,10 @@ exports.install = function (server, app, callbackFunction) {
 
     //TODO: Do authorization etc. check md5 or query db
     ctx.logger.debug('auth time: %d', data.time);
+    if (!data.token || !data.user) {
+      // the connection stays open and unauthenticated; record why the auth message was ignored
+      ctx.logger.warn('auth ignored: missing %s', data.token ? 'user' : 'token');
+    }
     if (data.token && data.user) {
       ctx.setUserId(data.user.id);
       const [licenseInfo] = yield tenantManager.getTenantLicense(ctx);
