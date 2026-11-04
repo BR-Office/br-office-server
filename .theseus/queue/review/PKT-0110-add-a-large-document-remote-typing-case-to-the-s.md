@@ -60,6 +60,11 @@ PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's
 
 ## Executor log
 - return: factory restarted on Theseus 0.23.3, work kept
+- The previous attempt had left run.cjs and gen-inputs.py done (large.docx case: A types 'abcdef' at the start of paragraphs at 10/30/50/70/90% of the document, one char at a time, B waits for each in its model; latency per char, B busy time = WebSocket message handler time (`recv`) + longtask total (`long`); median of 3 runs, later runs on a fresh upload, typing only; shown = B's canvases after goToPage on each page typed on, hashed once stable; model/sent/reopened/converted compared as for other cases). sdkjs-word.sh already lists large.docx.
+- Surprise: 640 paragraphs gave 74 pages in the editor, so the 'about 100 pages' guard (>= 90) failed. Raised to 880 paragraphs (input dir key changes with the script hash, regenerated automatically).
+- Result: all four acceptance commands pass; large.docx all six checks same. Timing (native DS, 2 CPUs): original lat=124 latMax=693 long=509 | new lat=126 latMax=580 long=698 ms; between runs of the same build, `long` moved 485-698, so only differences well above ~200 ms are signal.
+- Surprise: `recv` is 2-3 ms: sdkjs's incoming-message handler only queues; the applying and repaint run later, so `long` (longtask observer) is the meaningful busy figure. Left `recv` printed, documented here.
+- No existing assertion changed. No tests/unit file needed.
 
 ## Spawned packets
 
