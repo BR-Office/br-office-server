@@ -54,6 +54,17 @@ Map the user journey `convert-docx-pdf` (Convert a Word document to PDF through 
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5-b, 2026-11-04. Wrote `oracle/journeys/convert-docx-pdf.sh` + `convert-docx-pdf-run.cjs` (ConvertService async,
+  re-post every 20 ms, then GET the PDF; stages from DocService/converter DEBUG logs filtered by key). `serve-integrated.sh`
+  already existed (PKT-0126) and was reused unchanged. Result: total_ms=1200 (min 1083, max 1251, 9 runs); x2t 97.8%.
+- Decision: the user is an integrator calling the API, so no browser; async mode with 20 ms polling (sync mode quantizes to ~1 s,
+  noted in the map). Sample = open-docx-10p.docx, so the number is comparable with the open journeys.
+- Split x2t with standalone runs (docx→bin, empty docx→pdf, 10p docx→pdf) and strace timestamps: ~75 ms OOXML read,
+  ~390 ms V8+snapshot start, ~585 ms layout+PDF drawing.
+- Surprise: x2t loads the V8 snapshot `sdkjs/word/sdk-all.bin`, which serve-integrated.sh leaves packaged, so x2t never runs the
+  integrated sdkjs (affects save too). Tested: moved it aside, x2t regenerated it (1451 ms then ~1 s), restored the original
+  byte-identical (cmp). Could not fix it here (serve-integrated.sh is not in target.files): spawned a request.
+- Round 3 but no earlier map of this journey; compared with baseline.md (PKT-0015) instead.
 
 ## Spawned packets
 
