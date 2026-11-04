@@ -86,6 +86,8 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
   not kept by the factory, so the check that differed is unknown. No code change made for the retry.
 
 ## Spawned packets
+- PKT-0144: Skip the all-pages lock redraw in Send_Changes when no lock changed (sdkjs word)
+- PKT-0145: Trace why some remote typing changes fall back to a full-document recalc in sdkjs word
 
 ## Review
 
