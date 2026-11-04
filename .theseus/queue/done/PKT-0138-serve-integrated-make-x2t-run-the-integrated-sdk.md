@@ -41,7 +41,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -85,5 +85,6 @@ Re-measure the save and convert-docx-pdf journeys afterwards and say whether the
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: x2t snapshot now rebuilt from the integrated word bundle, idempotent, restored by down, contract respected, outputs unchanged
 
 ## Lessons for the Atlas
