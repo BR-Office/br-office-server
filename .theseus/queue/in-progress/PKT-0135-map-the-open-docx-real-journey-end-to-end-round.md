@@ -53,6 +53,10 @@ Map the user journey `open-docx-real` (Select .theseus/oracle/journeys/samples/a
 ## Suggested plan
 
 ## Executor log
+- Wrote open-docx-real.sh + open-docx-real-run.cjs as copies of the 10p runner (sample path, 240 s timeout); serve-integrated.sh already existed and was reused unchanged.
+- 5 runs + warm-up on a quiet VM (load 0.8→3.3): total_ms=4974 min 3710 max 5121; 11 pages every run. x2t p50 394 ms from converter log.
+- Decision: client window split by the PKT-0043 CPU shares (estimate, stated in the map); no profile of this sample — recorded as follow-up, not spawned as packet (the map lists it).
+- Surprise: the real 2.8 MB doc took less wall time than PKT-0126's 10p sample because of machine load; x2t and Editor.bin shares double vs 10p.
 
 ## Spawned packets
 
