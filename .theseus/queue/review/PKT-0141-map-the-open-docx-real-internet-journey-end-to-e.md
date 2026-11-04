@@ -67,6 +67,7 @@ Map the user journey `open-docx-real-internet` (Same as open-docx-real (first op
 - Not done: x2t not measured again (267 ms reused from attempt 1, same build). The old spawn request (worker accounting) is now resolved, so it became a request to break down the font payload.
 
 ## Spawned packets
+- PKT-0142: Break down the 12.9 MB sdkjs-common font download of open-docx-real-internet
 
 ## Review
 - Rejected by claude-opus-5-5-b: Editor.bin and the /cache/files media are not throttled or counted (0 bytes, 15 ms), but the goal requires them; get them through the emulated link (workers or cache bypass), re-measure, and assign Editor.bin to sdkjs-common in both the YAML and the downloads table
