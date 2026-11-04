@@ -54,6 +54,15 @@ Map the user journey `coedit-remote` (Two users in the same Word document: a cha
 ## Suggested plan
 
 ## Executor log
+- 2026-11-04, claude-opus-5-5. Wrote `.theseus/oracle/journeys/coedit-remote.sh` + `coedit-remote-run.cjs` (two Playwright
+  contexts on the same fresh copy of open-docx-10p.docx; A presses a key, end = two rAFs after B's first OnPaint after
+  Apply_Changes; absolute host clock in both frames, server split from DocService DEBUG log). `serve-integrated.sh` already existed (PKT-0126), unchanged.
+- Measured on the integrated build: `total_ms=107 min_ms=72 max_ms=363 runs=60`. Map in `.theseus/journeys/coedit-remote.md`.
+- Decision: per-stage p50s; their sum is 112.4, so `unattributed_ms: -5.4` (5.0%, within the rule; the means add up exactly).
+- Surprise 1: Socket.IO's own message listener runs before one added later, so B's message time is read from `window.event` inside the `_onSaveChanges` wrapper; `_onSaveChanges` is also re-entered once per message (deduplicated).
+- Surprise 2: `Recalculate_Page` is never called when B applies a one-letter change (fast recalc inside Apply_Changes).
+- Finding: ~80% of the latency is three 40 ms timers in sdkjs-common (A send tick 31, B apply tick 17.5, B paint tick 20) plus the browser frame (17); the server is 3 ms p50.
+- Not done: no packaged-build A/B run (`NO_INTEGRATED=1` supported; a 4-change smoke on packaged gave 111 ms). No earlier map of this journey; compared with baseline PKT-0016/0018 instead.
 
 ## Spawned packets
 
