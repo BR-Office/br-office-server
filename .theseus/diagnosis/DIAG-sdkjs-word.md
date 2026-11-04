@@ -1,6 +1,7 @@
 ---
 id: DIAG-sdkjs-word
 module: sdkjs-word
+round: 3
 verdict: refactor
 target_language: null
 confidence: medium
@@ -9,91 +10,86 @@ diagnosed_by: [claude-opus-5-5]
 agreement: full
 decided_by: null
 goals_hash: dcb03039
-base_commit: 70173b0
-round: 2
+base_commit: fc6eb01
 wave: 0
+covers: [layout-finish-paint, client-open-word]
+not_covered:
+  - {stage: paint, reason: "12.5 ms p50 per key (typing 51 ms p50, under 100 ms); the one measured lever (all-pages lock redraw, OnPaint 30 -> 18 ms) is owned by PKT-0144, pending"}
+  - {stage: b-paint, reason: "15.5 ms p50 of co-edit 107 ms; same lock redraw as paint, owned by PKT-0144, pending"}
+  - {stage: b-apply, reason: "3.3 ms p50 (3.1 %); the tail (full-document fallback, 260-420 ms on 1 event in 10) is owned by PKT-0145, pending"}
+  - {stage: a-input, reason: "4.0 ms p50 (3.7 %) of co-edit; nothing to gain"}
+  - {stage: handler, reason: "3.4 ms p50 (6.7 %) of typing; fast paragraph recalc, 1 page; nothing to gain"}
 ---
 
 ## Summary
-**Refactor (performance), same language, round 2.** Round 1 located the time (PKT-0043: open is word layout + fonts, typing and remote apply are repaint-dominated, no JS kernel > 4 %) and delivered one correct, measured gain: incremental font collection cuts receiver busy time on remote typing by ≈ 7 % (PKT-0093). The rest of the user-felt cost (typing p90 115 ms, remote apply p90 105–463 ms, open ≈ 2 s after Editor.bin) is untouched and still lives in this module's layout and draw paths. Round 2 targets repaint scope on typing/remote apply, and first makes the differential oracle able to show such a gain.
+**Refactor (performance), same language, round 3, refocused on open.** Round 2 delivered knowledge and an oracle case,
+no speed: the fork is still at 0f61ccc. Its measurements (PKT-0109, reproduced today in rounds/sdkjs-word-r3.md) show
+typing and remote apply already invalidate one page per change; their two remaining levers are already queued
+(PKT-0144 lock redraw, PKT-0145 full-recalc fallback). The round 3 journey maps say where this module costs users time:
+**opening** — `layout-finish-paint` 1 250 ms (27 %) of open-docx-100p and 471–741 ms elsewhere, `client-open-word`
+473–1 057 ms — against 3–16 ms per key or change. Round 3 plans on open, ordered by that cost.
 
-## What round 1 proved and what it did not
+## What round 2 proved and what it did not
 | Packet | Outcome | Delivered toward the goal? |
 |---|---|---|
-| PKT-0043 profile | Open: layout + fonts dominate, Serialize2 13–23 % inclusive. Typing/apply: canvas drawImage 17–27 % self, *Draw* frames 33–57 % on stack; collab apply code < 1 %. | Yes (knowledge): decided where to look; ruled out migration (no kernel > 4 %). |
-| PKT-0044 + PKT-0056 oracle | 42/42 QUnit suites incl. js-api-forms, run here today (rounds/sdkjs-word-r2.md). | Yes: oracle `partial`. |
-| PKT-0095 differential oracle | original vs new on text/styles docx, 6 outputs compared; PASS today. | Yes, but its inputs are small and have no remote-apply load, so it cannot show speed gains (timing noise ±2–3 s). |
-| PKT-0057 font walk (blocked) → PKT-0066 | Correct code, **gain 0** (PKT-0071: CTableId change forced full walk). | Not delivered alone. |
-| PKT-0087 | Correct code, **gain 0** (PKT-0089: wrong change type, TableId_Add vs Description). | Not delivered. |
-| PKT-0091 | 143/143 batches incremental, font collection 271 → 0.5 ms per 30 changes, B busy 3 737 → 3 459 ms (≈ −7 %) on 100 p (PKT-0093). | **Delivered**, ceiling reached (PKT-0071 estimated 5–7 %). |
-
-Not delivered at all: open time, typing latency, repaint and recalc on remote apply. The installed bundle (original code) still shows typing p50/p90 46/115 ms and remote apply p50/p90 147/463 ms (rounds/sdkjs-word-r2.md, busy VM), the same order as PKT-0016. The round 1 gain is in the fork, not in the installed package.
+| PKT-0109 repaint scope | Invalidation unit is the page; fast paths already redraw only the changed page. Found `Send_Changes` clears all page caches on every send (ceiling OnPaint 30 → 18 ms/key local, none remote) and 4–5/40 remote events fall back to a 0–85 page recalc (260–420 ms). Reproduced today: same shape, 2/20 fallbacks. | Knowledge only; spawned PKT-0144/0145. **No gain delivered.** |
+| PKT-0110 large remote-typing case | large.docx in the differential: six outputs equal; timing median of 3. `long` varies 485–698 ms between runs of one build. | Oracle yes (equality on 100 p, `shown` on typed pages). Timing too noisy to prove gains < ~200 ms; A/B harnesses (word-repaint.js) remain the proof. |
+| Round 1 font fix (PKT-0091) | Still only in the fork; −7 % B busy (PKT-0093), invisible in today's differential noise. | Delivered in the fork, not yet to users. |
 
 ## Against the goal
 | Question | Finding | Evidence |
 |---|---|---|
-| Goal: speed, co-edit | Remote apply p90 still > 100 ms; after the font fix, repaint and recalculation are what remains (*Draw* 33–57 % on stack). Limiting redraw to the changed lines/pages is the largest remaining lever in this module. | PKT-0043 table in baseline.md; PKT-0093; rounds/sdkjs-word-r2.md |
-| Goal: speed, typing | Typing p90 115 ms, max 214 ms (> 50 ms threshold); same repaint-dominated profile as apply. | client-perf today; PKT-0043 |
-| Goal: speed, open | ≈ 2 s after Editor.bin, layout + fonts; fonts partly in sdkjs/common. No refactor planned yet: needs a split of first-page vs whole-document recalc before guessing. | PKT-0016, PKT-0043 |
-| Quality | All oracles green on new; round 1 changes behavior-neutral on every compared output. | rounds/sdkjs-word-r2.md |
-| Oracle (D1) | QUnit `partial` + differential (6 outputs). Missing: a case with a large document and remote typing, and a render-level check of only-partially-redrawn pages (a repaint refactor can leave stale pixels the model hash will not see; `shown` hash helps). | PKT-0095 log |
-| Coupling | Draw path goes through `CDrawingDocument` / `CGraphics` shared with sdkjs/common; keep changes in word's invalidation (which rects/pages are marked dirty), not in common drawing. | PKT-0043, card |
-| Target language | None. No kernel > 4 % self; repaint is canvas (browser) work whose amount is decided by JS invalidation logic. | PKT-0043 |
+| Speed, open (largest) | `layout-finish-paint` = recalculation of the remaining pages on the timer after load-complete plus paint: 1 250 ms of 4 628 on 100 p, 741 of 8 340 on 10 p. Not yet split into compute vs timer idle vs paint; unknown whether the loop yields idle gaps or recalcs pages never shown. | journeys/open-docx-100p.md, open-docx-10p.md |
+| Speed, open (read) | `client-open-word` (Serialize2 read + first-page recalc) 473–1 057 ms; PKT-0133 (pending) profiles it per module on 10 p. | journeys/open-docx-10p.md, PKT-0133 |
+| Speed, typing / co-edit | p50 51 / 107 ms, this module 16–23 ms of it; levers queued (PKT-0144, 0145). | journeys typing.md, coedit-remote.md; r3 repaint table |
+| Quality | All oracles green on new today (42/42, 7/7, differential 3+3 cases). | rounds/sdkjs-word-r3.md |
+| Oracle (D1) | Sufficient for a layout-loop refactor: QUnit + differential `model`/`shown`/`reopened` on large.docx detect layout changes; the open journey script measures. | PKT-0110, journeys |
+| Target language | None: layout is JS object-graph work across Paragraph/Run/Table, coupled to sdkjs-common text measurement; no isolated kernel (PKT-0043, no kernel > 4 %). | PKT-0043 |
 
 ## Discarded alternatives
-- **keep**: typing and remote apply p90 are still above 100 ms and the cost is in this module's draw/recalc path; one lever (fonts) is used up, others are untried.
-- **migrate / rewrite**: no compute kernel worth moving (PKT-0043), and the coupling to sdkjs/common globals is unchanged; the gain would be in canvas calls, which WASM does not reduce.
+- **keep**: 1.25 s of a 4.6 s open is this module's post-load layout and is not yet understood; levers are untried.
+- **migrate / rewrite**: no kernel to move; layout state is shared with sdkjs-common globals; unchanged from round 2.
 - **retire**: live editor.
+- **More typing/co-edit work now**: the remaining gains there (≤ 12 ms/key, the fallback tail) are already queued.
 
 ## Path of change
-Same language. P1 measures the repaint scope on typing and remote apply (how many pages/rects are redrawn per change, and the time of each) with the fork build injected, and names the invalidation call sites. P2 extends the differential oracle with a 100-page remote typing case whose timing and `shown` output can prove a repaint change both correct and faster. Wave 1 refactor packets are planned from P1's findings, each gated by P2 and the QUnit oracle. Lessons from round 1: verify on a live trace which change types and calls actually occur before writing the fix (PKT-0087 fixed a path never taken), and measure the ceiling first (PKT-0071).
+Same language. P1 splits `layout-finish-paint` on open-docx-100p into recalc compute per page, idle time between timer
+slices, paint, and whether pages are recalculated that the user has not reached, with the input latency a user would
+feel typing during it; it names the call sites (`ContinueRecalculationLoop`, the recalc timer interval and slice size in
+`word/Editor/Document.js`) and the ceiling of each lever (denser slices, no idle gaps, yielding to input). Refactor
+packets follow from P1, gated by the differential (large.docx) and the open journey measure. `client-open-word` waits on
+PKT-0133 for its split. Lesson from rounds 1–2: measure the ceiling before planning the fix, and trace what actually runs.
 
 ## Initial packet plan
 | Key | Wave | Type | Title |
 |---|---|---|---|
-| P1 | 0 | investigate | Measure repaint scope per keystroke and per remote change in sdkjs word |
-| P2 | 0 | characterize | Add a large-document remote typing case to the sdkjs-word differential oracle |
+| P1 | 0 | investigate | Split the post-load layout window of a 100-page docx open in sdkjs word |
 
 ```yaml
 packets:
   - key: P1
     wave: 0
     type: investigate
-    title: Measure repaint scope per keystroke and per remote change in sdkjs word
+    title: Split the post-load layout window of a 100-page docx open in sdkjs word
     files: [.theseus/oracle/baseline.md]
     create_in: [.theseus/oracle/perf]
     depends_on: []
     allowed_commands: ["*"]
     requires: [documentserver, browser]
-    estimate: {files: 3, diff_lines: 400}
+    estimate: {files: 2, diff_lines: 350}
     acceptance:
-      - node --check .theseus/oracle/perf/word-repaint.js
-      - grep -q "word-repaint" .theseus/oracle/baseline.md
-    goal: Write .theseus/oracle/perf/word-repaint.js. With the fork build injected by Playwright routing (as PKT-0093, bundles from .theseus/oracle/differential/build.sh) on large-100p.docx, count per local keystroke and per remote change how many pages and rectangles are invalidated and redrawn (wrap the word DrawingDocument / CDocument redraw and OnRecalculatePage / UpdateTarget entry points), the canvas drawImage calls and the ms each takes, and the recalculation range (pages recalculated). Record the table in baseline.md and name the call sites that decide the redraw range, with the expected ceiling of limiting redraw to the changed page or lines.
-    context: PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self, Draw frames 33-57 % on stack). PKT-0093 shows the font fix took ≈ 7 % and repaint/recalc remain. Round 1 lesson - trace what actually runs before planning a fix (PKT-0087).
-  - key: P2
-    wave: 0
-    type: characterize
-    title: Add a large-document remote typing case to the sdkjs-word differential oracle
-    files: [.theseus/oracle/differential/run.cjs, .theseus/oracle/differential/sdkjs-word.sh, .theseus/oracle/differential/gen-inputs.py]
-    create_in: [.theseus/oracle/differential]
-    depends_on: []
-    allowed_commands: ["*"]
-    requires: [documentserver, browser]
-    estimate: {files: 3, diff_lines: 250}
-    acceptance:
-      - bash .theseus/oracle/differential/sdkjs-word.sh
-      - bash .theseus/oracle/differential/sdkjs-common.sh
-    goal: Add to the sdkjs-word differential a case on a 100-page docx where A types about 30 characters spread over several pages while B receives them, comparing model, sent, shown (rendered hash of the visible pages on B, after settle) and reopened as today, and printing B's receiver busy time and typing latency for original and new over 3 runs (median), so a repaint or recalc refactor can be shown both equal and faster. Keep both scripts passing.
-    context: PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's measured gain needed a separate A/B harness kept in scratchpads (PKT-0071/0089/0093). A repaint refactor can leave stale pixels the model hash cannot see, so B's shown hash must cover more than the first page.
+      - node --check .theseus/oracle/perf/word-layout-window.js
+      - grep -q "word-layout-window" .theseus/oracle/baseline.md
+    goal: Write .theseus/oracle/perf/word-layout-window.js. On open-docx-100p (sample .theseus/oracle/journeys/open-docx-100p.docx, fork bundle injected as word-repaint.js does), from isDocumentLoadComplete to the end of layout, record each timer slice of CDocument.ContinueRecalculationLoop / Recalculate_Page (pages per slice, ms per slice, idle ms between slices and the timer interval used), the paint calls in the window, and the key-to-frame latency of a keystroke sent at 100 ms and 500 ms into the window. Report in baseline.md the split compute / idle / paint, the call sites deciding slice size and interval, and the ceiling of removing idle gaps, enlarging slices and yielding to input, each in ms of the 1 250 ms stage.
+    context: Round 3 journey open-docx-100p gives layout-finish-paint 1 250 ms (27 % of 4 628), the largest sdkjs-word stage; typing/co-edit levers are already queued (PKT-0144, PKT-0145) and client-open-word is profiled by PKT-0133. Lesson from rounds 1-2 - measure the ceiling and trace what actually runs before writing a fix.
 ```
 
 ## Risks
-- Repaint refactors can leave stale regions: P2's `shown` hash on B must cover the changed pages, and wave 1 should add a pixel check per changed page.
-- Measurements on a shared 2-CPU VM vary by 2× between packets (PKT-0089 vs PKT-0093 *before* 237 vs 271 ms); compare A/B within one packet only.
-- Round 1 gains are in the fork only; users get them once the fork build is shipped (outside this module).
+- The 2-CPU shared VM moves open times by seconds; P1 must compare within one run and report idle vs compute, not totals.
+- Making background layout greedier can hurt input during it: P1 measures typing latency in the window for that reason.
+- PKT-0144/0145 results and the round 1 font fix reach users only when the fork build is shipped.
 
 ## What would change this verdict
-- If P1 shows the redraw is already limited to the changed page/lines (little to gain), move the focus to recalculation range, and if that is also tight, to **keep** for typing/apply and redirect to open (layout + fonts, partly sdkjs-common).
-- If P1 shows canvas cost dominated by sdkjs/common drawing (CGraphics, fonts rasterisation) rather than by how much word redraws, redirect to sdkjs-common.
-- If P2 cannot get stable timing (spread larger than the expected gain), the wave 1 refactors keep the PKT-0093-style A/B harness as their proof and P2 is limited to equality.
+- If P1 shows the window is compute-bound in text measurement (sdkjs-common fonts/shaper), redirect the open work to sdkjs-common and move this module to **keep** for open.
+- If P1 shows the window is mostly idle timer gaps, the refactor is a small change to the loop pacing in `Document.js` (high value, low risk).
+- If PKT-0145 finds the fallback is triggered by a common change class, the co-edit tail becomes the next row here.

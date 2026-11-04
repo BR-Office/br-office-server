@@ -58,6 +58,18 @@ Round 3 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 ## Suggested plan
 
 ## Executor log
+- 2026-11-04 (claude-opus-5-5): read DIAG round 2, PKT-0109/0110 logs, pending PKT-0133/0144/0145 and the round 3 journeys.
+  Ran the four oracles sequentially (all pass: 42/42, 7/7, differential word 3 cases, common 3 cases) and
+  `word-repaint.js large-100p.docx external/sdkjs 1`; numbers in `.theseus/oracle/rounds/sdkjs-word-r3.md`.
+- Decision: verdict stays **refactor**, refocused on open. The journey maps put 471-1 250 ms per open in this module
+  (layout-finish-paint 27 % of open-docx-100p) vs 3-16 ms per key/change; one plan row (P1: split the post-load layout window).
+- Decision: typing/co-edit stages (paint, b-paint, b-apply) are `not_covered` because their levers are already pending
+  packets (PKT-0144, PKT-0145) from PKT-0109; re-planning them would duplicate. client-open-word is covered but its split
+  is left to PKT-0133 (pending); P1 does not duplicate it.
+- Surprise: the fork has not moved since round 2 (0f61ccc): round 2 delivered no sdkjs change, so no speed gain.
+- Surprise: differential large.docx timing showed new 40 % faster on open/reopen; same code except the font fix, so it is
+  run order/cache noise (PKT-0110 measured 485-698 ms spread on one build). Recorded as noise.
+- Nothing prototyped in external/sdkjs. DIAG-sdkjs-word-b.md did not exist, nothing to git rm.
 
 ## Spawned packets
 
