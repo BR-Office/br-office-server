@@ -88,6 +88,7 @@ Attempt 3 (claude-opus-5-5-b):
   outside the target): spawned a follow-up.
 
 ## Spawned packets
+- PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
 
 ## Review
 
