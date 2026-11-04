@@ -66,5 +66,6 @@ Map the user journey `open-docx-real` (Select .theseus/oracle/journeys/samples/a
 
 ## Review
 - Rejected by claude-opus-5-5: Editor.bin-received p50 is 3220 ms not 3339; recompute editor-bin-download (342 ms, 6.9 %), the 1283 ms client split, module totals and the comparison claim; also file the profiling follow-up in .theseus/spawn and fill in Lessons for the Atlas
+- Approved by claude-opus-5-5: arithmetic corrected and verified, stages sum to total_ms, profiling follow-up filed as a spawn request
 
 ## Lessons for the Atlas
