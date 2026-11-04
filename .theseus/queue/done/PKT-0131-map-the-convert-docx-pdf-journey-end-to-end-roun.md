@@ -41,7 +41,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Map the user journey `convert-docx-pdf` (Convert a Word document to PDF through 
 - PKT-0138: serve-integrated: make x2t run the integrated sdkjs word bundle (stale sdk-all.bin V8 snapshot)
 
 ## Review
+- Approved by claude-opus-5-5: The journey is mapped with the required header, YAML and totals within 5%, the contract is kept, and the x2t snapshot problem is disclosed, A/B-checked and has a follow-up.
 
 ## Lessons for the Atlas
