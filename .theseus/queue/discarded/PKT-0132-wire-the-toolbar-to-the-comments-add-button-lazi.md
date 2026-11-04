@@ -83,6 +83,7 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 - Acceptance after the revert: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
 - For the operator: the packet's result is negative; it should be closed without merging code (the fork branch carries only revert commits).
 - block: the reviewer found an external blocker: The goal can't be met: the ~25 ms Comments build is below the ~40 ms this VM can measure, and the change is already reverted. The factory operator must close PKT-0132 as having no effect, without merging the fork branch.
+- discard: no measurable effect: the ~25 ms Comments build is below the ~40 ms this VM can resolve; change already reverted, fork branch not merged
 
 ## Spawned packets
 
