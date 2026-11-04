@@ -62,6 +62,7 @@ PKT-0126 ran with load average ~6.
 
 ## Executor log
 - attempt 1: changed external/sdkjs/deploy-integrated/.rev, outside the target (rule R2)
+- attempt 2: the spawn request PKT-0133-keep-serve-integrated-build-output-out-of-the-sd.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
