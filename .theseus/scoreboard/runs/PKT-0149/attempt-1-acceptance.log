@@ -1,0 +1,29 @@
+differential: original 9cea536 (/home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/ce3476f599450dca016c61cc5d6d8268c2ea3e09-da39a3ee5e6b)
+differential: new      0f61ccc (/home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/02ce87d738a07167925e80b09f9f3e8c2616525a-da39a3ee5e6b)
+differential: /home/claude/euro-office-server.theseus-worktrees/.external/cache/sdkjs-differential/out/ce3476f599450dca016c61cc5d6d8268c2ea3e09-da39a3ee5e6b/word/unminified: word:all (unminified, memory)
+timing sdkjs-word text.docx | original open=6317 join=6161 edit=4854 save=423 convert=356 reopen=5311 | new open=5047 join=5428 edit=4355 save=793 convert=292 reopen=5306
+same text.docx model
+same text.docx sentA
+same text.docx sentB
+same text.docx shown
+same text.docx reopened
+same text.docx converted
+timing sdkjs-word styles.docx | original open=6590 join=6058 edit=4334 save=661 convert=312 reopen=5438 | new open=6099 join=4919 edit=4251 save=623 convert=695 reopen=5916
+same styles.docx model
+same styles.docx sentA
+same styles.docx sentB
+same styles.docx shown
+same styles.docx reopened
+same styles.docx converted
+timing sdkjs-word large.docx | original open=7368 join=7177 type=6919 lat=141 latMax=795 recv=2 long=1547 runs=3 save=2008 convert=1630 reopen=6010 | new open=5988 join=6528 type=6540 lat=111 latMax=856 recv=5 long=642 runs=3 save=411 convert=387 reopen=3779
+same large.docx model
+same large.docx sentA
+same large.docx sentB
+DIFF large.docx shown
+  original: 10:452a79b341ac7f9f 30:546b468077606177 50:979df47b8f526898 71:bafa8bd9ce6684ee 91:0942ecdc39d7f59c
+  new:      10:38c52977047bf338 30:546b468077606177 50:979df47b8f526898 71:bafa8bd9ce6684ee 91:0942ecdc39d7f59c
+DIFF large.docx reopened
+  original: {"pages":6,"content":[{"t":"Paragraph","text":"Part 1\r\n","lines":1,"runs":","},{"t":"Paragraph","text":"Elit sit consectetur sed sit ipsum incididunt elit eiusmod do ipsum adipiscing elit do adipiscing dolor labore labore do dolor elit elit sit labore ipsum do labore incididunt sit ut labore incididunt elit ipsum labore dolor elit tempor tempor ipsum eiusmod incididunt tempor lorem ut sed labore
+  new:      {"pages":6,"content":[{"t":"Paragraph","text":"Part 1\r\n","lines":1,"runs":","},{"t":"Paragraph","text":"Elit sit consectetur sed sit ipsum incididunt elit eiusmod do ipsum adipiscing elit do adipiscing dolor labore labore do dolor elit elit sit labore ipsum do labore incididunt sit ut labore incididunt elit ipsum labore dolor elit tempor tempor ipsum eiusmod incididunt tempor lorem ut sed labore
+same large.docx converted
+differential sdkjs-word: FAIL, 2 unintended difference(s)
