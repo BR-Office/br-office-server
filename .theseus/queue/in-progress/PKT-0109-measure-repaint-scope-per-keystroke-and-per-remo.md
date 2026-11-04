@@ -57,6 +57,7 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
 
 ## Executor log
 - return: factory restarted on Theseus 0.23.3, work kept
+- attempt 1: acceptance failed: `bash .theseus/oracle/differential/sdkjs-word.sh`
 
 ## Spawned packets
 
