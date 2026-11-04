@@ -67,6 +67,7 @@ Map the user journey `save` (Close an edited Word document until the saved file 
 - No earlier save map to compare with; cited rounds/x2t-r2.md (x2t part of save 0.2-0.65 s on smaller docs).
 
 ## Spawned packets
+- PKT-0137: Do not wait savetimeoutdelay (5 s) before saving an explicitly closed document
 
 ## Review
 
