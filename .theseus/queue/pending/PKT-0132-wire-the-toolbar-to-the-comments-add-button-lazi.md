@@ -72,6 +72,7 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 - Measurement: ABBA 16 pairs × 2 docs, paired B − A in baseline.md. Pooled Ready −84 ms (20/32 negative, IQR −252…+286), LoadDoc +2 ms. **No gain beyond the spread is shown.** The VM was NOT idle (load 3.4–6.0: other factory agents, e.g. the PKT-0136 auditor, were running); I could not get an idle window in this attempt.
 - Acceptance: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
 - block: the reviewer found an external blocker: the factory operator must give an idle VM slot so the open-window A/B runs can be repeated, because the code is correct but the measured gain (−84 ms, spread −252 to +286 ms) is within the noise from concurrent agents
+- release: operator: re-run as exclusive packet so the A/B timing runs on an idle VM
 
 ## Spawned packets
 
