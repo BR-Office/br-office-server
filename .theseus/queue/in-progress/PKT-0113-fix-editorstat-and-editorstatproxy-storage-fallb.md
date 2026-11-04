@@ -37,7 +37,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -54,5 +55,6 @@ DocsCoServer.js:155 still uses new editorDataStorage() for editorStat; PKT-0064 
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: remove the unrelated auth-ignored logger.warn hunk (DocsCoServer.js ~2833) carried over from 8e5cf9e; it is outside the goal, untested and missing from the log; spawn a separate packet if it is wanted
 
 ## Lessons for the Atlas
