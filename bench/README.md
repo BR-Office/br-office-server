@@ -44,6 +44,13 @@ node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net
 ```
 
 Network profiles: `home` (50/10 Mbps, 30 ms), `fast` (200/50 Mbps, 10 ms), `none` (localhost).
+
+**The browser cache.** A warm-up page helps a later page only through the browser cache, and two things switch
+that cache off: request interception (`--block` and `--serve` install it, for that side only) and an ignored
+certificate error. Over HTTPS with a self-signed certificate pass `--cert /etc/nginx/bench-ssl/cert.pem`, which
+makes Chromium trust the certificate by its public key instead of ignoring the error. Every run of 2026-11-04 up
+to the fonts work ran with the cache off on both sides: the paired differences hold, but the preloader's benefit
+was never measured before the run recorded in `results/2026-11-04-cache-on.md`.
 Rafael's 20 s was over a real home link with the server elsewhere; `home` is the closest we can
 emulate on one machine. Always report which profile a number comes from.
 
