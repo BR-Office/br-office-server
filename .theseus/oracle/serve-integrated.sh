@@ -21,6 +21,11 @@ up)
 			echo "WARN: $r theseus differs from main; overlay not implemented, packaged build used" >&2
 		fi
 	done
+	if [ ! -d "$SDK/build" ]; then
+		# PKT-0138: the factory checks out external/sdkjs only for sdkjs-module packets; clone the fork's
+		# collecting branch shallow (git-excluded, never committed) so `up` works from any worktree.
+		git clone -q --depth 1 -b theseus https://github.com/BR-Office/br-office-sdkjs "$SDK"
+	fi
 	OUT="$SDK/deploy-integrated"
 	if [ ! -f "$OUT/sdkjs/word/sdk-all-min.js" ] || [ "$(cat "$OUT/.rev" 2>/dev/null)" != "$(git -C "$SDK" rev-parse HEAD)" ]; then
 		# webpack.word.mjs runs two compilers (min, all) and terser in parallel: over the 3.5 GB the
@@ -35,8 +40,21 @@ up)
 		git -C "$SDK" rev-parse HEAD > "$OUT/.rev"
 	fi
 	if [ ! -d "$BAK/word" ]; then mkdir -p "$BAK/word"; cp -a "$DS/sdkjs/word/sdk-all"* "$BAK/word/"; fi
-	for f in sdk-all.js sdk-all-min.js; do cp "$OUT/sdkjs/word/$f" "$DS/sdkjs/word/$f"; done
+	for f in sdk-all.js sdk-all-min.js; do cmp -s "$OUT/sdkjs/word/$f" "$DS/sdkjs/word/$f" || cp "$OUT/sdkjs/word/$f" "$DS/sdkjs/word/$f"; done
 	rm -f "$DS/sdkjs/word/sdk-all.cache"   # stale V8 code cache of the packaged bundle
+	# PKT-0138: x2t (DoctRenderer, editors.cpp GetSnapshotPath) loads the V8 snapshot sdk-all.bin instead of
+	# sdk-all.js when it exists, so a snapshot older than the overlaid js means x2t runs the packaged code.
+	# A plain conversion does not rebuild it (it only writes sdk-all.cache); `x2t -create-js-snapshots`
+	# (X2tConverter main.cpp -> CDoctrenderer::CreateSnapshots) does, for every editor. Run as root (the
+	# sdkjs dirs are r-x for ds), then hand the snapshot to ds like the packaged one.
+	W="$DS/sdkjs/word"
+	if [ ! "$W/sdk-all.bin" -nt "$W/sdk-all.js" ]; then
+		rm -f "$W/sdk-all.bin"
+		BIN="$DS/server/FileConverter/bin"
+		(cd "$BIN" && LD_LIBRARY_PATH="$BIN" ./x2t -create-js-snapshots >/dev/null 2>&1) || true
+		chown ds:ds "$DS"/sdkjs/*/sdk-all.bin 2>/dev/null || true
+		[ "$W/sdk-all.bin" -nt "$W/sdk-all.js" ] || { echo "ERROR: x2t did not regenerate $W/sdk-all.bin" >&2; exit 1; }
+	fi
 	echo "integrated: sdkjs $(cat "$OUT/.rev" | cut -c1-8) overlaid"
 	;;
 down)

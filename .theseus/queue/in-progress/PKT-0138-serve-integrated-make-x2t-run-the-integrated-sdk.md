@@ -63,9 +63,28 @@ Re-measure the save and convert-docx-pdf journeys afterwards and say whether the
 ## Executor log
 - attempt 1: the spawn request PKT-0138-factory-check-out-external-sdkjs-in-worktrees-wh.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 - return: factory stopped by the 2-hour session limit
+- attempt 2 (claude-opus-5-5):
+  - Surprise 1: `external/sdkjs` is not checked out in this worktree (module x2t), so `up` failed at the webpack step.
+    Decision: `up` clones the fork's `theseus` branch shallow into the git-excluded `external/sdkjs` when missing
+    (same pattern as sdkjs-word.sh cloning the forms addon). Build then took ~1m40s.
+  - Surprise 2: PKT-0131's premise "x2t regenerates sdk-all.bin on the next run" does not hold here: a plain docx→pdf
+    run (as ds or root) only writes `sdk-all.cache`; `RunEditorWithSnapshot` (editors.cpp) only reads the .bin.
+    The .bin is written only by `x2t -create-js-snapshots` (X2tConverter main.cpp → CDoctrenderer::CreateSnapshots,
+    all five editors). Also `sdkjs/word` is `dr-xr-xr-x ds`, so ds cannot write there at all; root can.
+  - Decision: on `up`, when word/sdk-all.bin is not newer than sdk-all.js: delete it, run `x2t -create-js-snapshots`
+    as root (~15 s), chown the .bin files to ds, fail if it is still stale. The packaged .bin is already in the
+    backup (`cp sdk-all*`), so `down` restores it. js/min are now copied only when they differ (cmp), so a repeated
+    `up` is 0.06 s and does not regenerate the snapshot.
+  - Measured (native package, 2 CPUs, load avg ~2-3.6 from other worktrees, noisy): convert-docx-pdf p50 RUNS=11:
+    integrated 2003 / 1173 ms (two series), packaged (down, NO_INTEGRATED=1) 1853 ms; before the fix 1216 ms (RUNS=5).
+    save p50 RUNS=5: integrated 6736 / 5778 ms, packaged 5836 ms. Verdict: the numbers did not move beyond noise;
+    the fix is about correctness (x2t now runs the fork's word code), not speed.
+  - No change in external/core. Not done: x2t snapshots of the other editors are regenerated too (packaged code,
+    harmless), and the root-owned sdk-all.cache an x2t run as root leaves is removed by the next `up`.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t reads `sdkjs/<editor>/sdk-all.bin` (V8 snapshot) when present and never rebuilds it during a conversion; rebuild with `x2t -create-js-snapshots` (as root: the sdkjs dirs are read-only for ds) after replacing any sdk-all.js.
