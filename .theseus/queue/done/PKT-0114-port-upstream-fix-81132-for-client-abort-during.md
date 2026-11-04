@@ -38,7 +38,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5-b
-  reviewer: null
+  reviewer: claude-opus-5-5
 ---
 
 ## Goal
@@ -61,5 +61,6 @@ PKT-0029 checked the logic hunks apply with git apply --check -C1; static.js:141
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5: Logic hunks of upstream 81132 ported correctly, with a real abort test that fails without the fix and no change to the contract
 
 ## Lessons for the Atlas
