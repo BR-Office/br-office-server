@@ -40,7 +40,7 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -97,5 +97,6 @@ Attempt 3:
 - PKT-0140: Save immediately when the integrator closes the editor (requestClose/destroyEditor) and measure it
 
 ## Review
+- Approved by claude-opus-5-5-b: The server already skips the save delay on an explicit close; a tab close can't be told apart from a reload, so no change is correct and the follow-up is requested.
 
 ## Lessons for the Atlas
