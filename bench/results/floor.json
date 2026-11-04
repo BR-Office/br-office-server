@@ -1,0 +1,1284 @@
+{
+ "args": {
+  "file": "../bench-data/aluno-moderno.docx",
+  "pairs": "7",
+  "net": "home",
+  "out": "floor.json"
+ },
+ "rows": [
+  {
+   "side": "A",
+   "run": 0,
+   "net": "home",
+   "marks": {
+    "upload": 5245,
+    "goto": 5364,
+    "binEnd": 7503,
+    "complete": 11270,
+    "loadDoc": 6930,
+    "painted": 12088,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 68,
+     "bytes": 216682
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 20,
+     "bytes": 20531567
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 2.52
+  },
+  {
+   "side": "B",
+   "run": 0,
+   "net": "home",
+   "marks": {
+    "upload": 5015,
+    "goto": 5137,
+    "binEnd": 7304,
+    "complete": 10805,
+    "loadDoc": 6688,
+    "painted": 11560,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 218112
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 2.51
+  },
+  {
+   "side": "B",
+   "run": 1,
+   "net": "home",
+   "marks": {
+    "upload": 4985,
+    "goto": 5086,
+    "binEnd": 7349,
+    "complete": 10705,
+    "loadDoc": 6877,
+    "painted": 11590,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 218293
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 2.55
+  },
+  {
+   "side": "A",
+   "run": 1,
+   "net": "home",
+   "marks": {
+    "upload": 5341,
+    "goto": 5454,
+    "binEnd": 7509,
+    "complete": 11016,
+    "loadDoc": 6884,
+    "painted": 12052,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 218476
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 2.83
+  },
+  {
+   "side": "A",
+   "run": 2,
+   "net": "home",
+   "marks": {
+    "upload": 5469,
+    "goto": 5587,
+    "binEnd": 8854,
+    "complete": 11573,
+    "loadDoc": 7370,
+    "painted": 12270,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 218812
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 2.51
+  },
+  {
+   "side": "B",
+   "run": 2,
+   "net": "home",
+   "marks": {
+    "upload": 5660,
+    "goto": 5783,
+    "binEnd": 7920,
+    "complete": 11453,
+    "loadDoc": 7393,
+    "painted": 12235,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 218830
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 3.26
+  },
+  {
+   "side": "B",
+   "run": 3,
+   "net": "home",
+   "marks": {
+    "upload": 5097,
+    "goto": 5211,
+    "binEnd": 7376,
+    "complete": 10966,
+    "loadDoc": 6893,
+    "painted": 11758,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219034
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 20,
+     "bytes": 20531567
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 3.78
+  },
+  {
+   "side": "A",
+   "run": 3,
+   "net": "home",
+   "marks": {
+    "upload": 5561,
+    "goto": 5679,
+    "binEnd": 7828,
+    "complete": 11375,
+    "loadDoc": 7264,
+    "painted": 12141,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219209
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 3.96
+  },
+  {
+   "side": "A",
+   "run": 4,
+   "net": "home",
+   "marks": {
+    "upload": 5509,
+    "goto": 5634,
+    "binEnd": 7721,
+    "complete": 11715,
+    "loadDoc": 7180,
+    "painted": 12743,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219386
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 4.1
+  },
+  {
+   "side": "B",
+   "run": 4,
+   "net": "home",
+   "marks": {
+    "upload": 5215,
+    "goto": 5323,
+    "binEnd": 7439,
+    "complete": 10979,
+    "loadDoc": 6786,
+    "painted": 11805,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219564
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 4.78
+  },
+  {
+   "side": "B",
+   "run": 5,
+   "net": "home",
+   "marks": {
+    "upload": 5489,
+    "goto": 5599,
+    "binEnd": 7536,
+    "complete": 10896,
+    "loadDoc": 7059,
+    "painted": 11781,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219732
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 5.04
+  },
+  {
+   "side": "A",
+   "run": 5,
+   "net": "home",
+   "marks": {
+    "upload": 5668,
+    "goto": 5803,
+    "binEnd": 8186,
+    "complete": 11477,
+    "loadDoc": 7451,
+    "painted": 12498,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 219907
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649009
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 4.87
+  },
+  {
+   "side": "A",
+   "run": 6,
+   "net": "home",
+   "marks": {
+    "upload": 5549,
+    "goto": 5672,
+    "binEnd": 8041,
+    "complete": 11496,
+    "loadDoc": 7441,
+    "painted": 12614,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 220079
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 4.09
+  },
+  {
+   "side": "B",
+   "run": 6,
+   "net": "home",
+   "marks": {
+    "upload": 5723,
+    "goto": 5839,
+    "binEnd": 7940,
+    "complete": 11253,
+    "loadDoc": 7454,
+    "painted": 12000,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 220257
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "load": 4.44
+  }
+ ]
+}

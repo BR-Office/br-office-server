@@ -166,7 +166,9 @@ async function oneRun(sideDef, runIndex) {
 			dl[c].requests++; dl[c].bytes += q.bytes;
 		}
 		const biggest = [...reqs.values()].filter((q) => q.bytes).sort((a, b) => b.bytes - a.bytes).slice(0, 8).map((q) => ({ url: q.url.replace(BASE, ''), bytes: q.bytes }));
-		const row = { side: sideDef.name, run: runIndex, net: NET, marks: m, downloads: dl, headers, biggest, load: fs.existsSync('/proc/loadavg') ? +fs.readFileSync('/proc/loadavg', 'utf8').split(' ')[0] : null };
+		// every font and sdk file of the run, so the font families and styles can be named afterwards
+		const files = [...reqs.values()].filter((q) => q.bytes && ['fonts', 'sdk'].includes(category(q.url))).map((q) => ({ url: q.url.replace(BASE, ''), bytes: q.bytes, ms: Math.round((q.end - q.start) * 1000) }));
+		const row = { side: sideDef.name, run: runIndex, net: NET, marks: m, downloads: dl, headers, biggest, files, load: fs.existsSync('/proc/loadavg') ? +fs.readFileSync('/proc/loadavg', 'utf8').split(' ')[0] : null };
 		process.stderr.write(JSON.stringify(row) + '\n');
 		return row;
 	} finally {

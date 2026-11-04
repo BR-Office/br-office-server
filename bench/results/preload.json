@@ -1,0 +1,4983 @@
+{
+ "args": {
+  "file": "../bench-data/aluno-moderno.docx",
+  "pairs": "7",
+  "net": "home",
+  "b-block": [
+   "api/documents/preload\\.html"
+  ],
+  "out": "preload.json"
+ },
+ "rows": [
+  {
+   "side": "A",
+   "run": 0,
+   "net": "home",
+   "marks": {
+    "upload": 5483,
+    "goto": 5601,
+    "binEnd": 7558,
+    "complete": 11079,
+    "loadDoc": 7078,
+    "painted": 11783,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 220599
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49098,
+     "ms": 201
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 161
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 384
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 2433
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 832
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3046
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1390
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 3142
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 567
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 2637
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1925
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 126
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 186
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 261
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 262
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 295
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 287
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 293
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 402
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 406
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 435
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 449
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 468
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 647
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 644
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 631
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 661
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 699
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 836
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 851
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 973
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 38
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 59
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 149
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 210
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1177
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 451
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 172
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 603
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 130
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 146
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 135
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 141
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 231
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 254
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 299
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 310
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 287
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 349
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 436
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 467
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 515
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 572
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 585
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 621
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 694
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 598
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 633
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1745
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1777
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1105
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1114
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1168
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1183
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1336
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1332
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1381
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1396
+    }
+   ],
+   "load": 3.36
+  },
+  {
+   "side": "B",
+   "run": 0,
+   "net": "home",
+   "marks": {
+    "upload": 3215,
+    "goto": 3320,
+    "binEnd": 5397,
+    "complete": 8770,
+    "loadDoc": 4778,
+    "painted": 9520,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 210986
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__20_.docx1793799235948/media/image3.jpg/image3.jpg?md5=mGLK_8-j3A2PQ3PQ-Fa11w&expires=1796393830&shardkey=127.0.0.1aluno-moderno__20_.docx1793799235948&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 186
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 41
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 64
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 142
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 163
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1116
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 457
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 505
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 570
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 175
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 191
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 192
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 197
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 247
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 351
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 366
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 376
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 335
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 414
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 471
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 561
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 581
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 654
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 648
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 696
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 739
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 686
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 702
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1787
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1874
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1335
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 930
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1348
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 970
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1138
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1198
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1354
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1395
+    }
+   ],
+   "load": 3.33
+  },
+  {
+   "side": "B",
+   "run": 1,
+   "net": "home",
+   "marks": {
+    "upload": 3236,
+    "goto": 3359,
+    "binEnd": 5530,
+    "complete": 8912,
+    "loadDoc": 4943,
+    "painted": 9867,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 211161
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__21_.docx1793799246212/media/image3.jpg/image3.jpg?md5=oH_Ql0EXp8-I1c1xVymREQ&expires=1796393840&shardkey=127.0.0.1aluno-moderno__21_.docx1793799246212&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 194
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 47
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 59
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 151
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 231
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1123
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 545
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 590
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 568
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 132
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 144
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 134
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 152
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 213
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 295
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 315
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 309
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 293
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 369
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 420
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 514
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 509
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 585
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 604
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 640
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 688
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 639
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 645
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1729
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1817
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1258
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1250
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 834
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1272
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1019
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1253
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1420
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1426
+    }
+   ],
+   "load": 3.14
+  },
+  {
+   "side": "A",
+   "run": 1,
+   "net": "home",
+   "marks": {
+    "upload": 4751,
+    "goto": 4923,
+    "binEnd": 6986,
+    "complete": 10663,
+    "loadDoc": 6428,
+    "painted": 11464,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 55,
+     "bytes": 213717
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 42,
+     "bytes": 12277726
+    },
+    "sdk": {
+     "requests": 20,
+     "bytes": 20531567
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 45
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 20
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 201
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 513
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 2699
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 512
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3087
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 549
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 2673
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 972
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 2936
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1096
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 70
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 144
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 232
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 231
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 227
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 251
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 252
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 377
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 368
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 381
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 396
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 405
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 542
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 565
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 41
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 62
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 155
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 229
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1115
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 113
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 481
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 679
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 152
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 167
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 161
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 164
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 203
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 295
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 328
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 352
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 337
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 378
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 415
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 501
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 546
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 604
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 634
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 655
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 708
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 634
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 666
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1758
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1840
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 910
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 899
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1321
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1337
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1112
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1102
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1332
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1349
+    }
+   ],
+   "load": 4.06
+  },
+  {
+   "side": "A",
+   "run": 2,
+   "net": "home",
+   "marks": {
+    "upload": 5465,
+    "goto": 5579,
+    "binEnd": 7723,
+    "complete": 11231,
+    "loadDoc": 7195,
+    "painted": 12128,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 221282
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649010
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49098,
+     "ms": 210
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 218
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 489
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 2668
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 999
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 2923
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1063
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 3178
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 1808
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 3073
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1842
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 117
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 184
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 279
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 268
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 289
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 303
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 286
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 429
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 411
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 449
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 452
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 466
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 565
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 590
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 634
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 680
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 703
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 768
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 793
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 766
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 54
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 63
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 150
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 214
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1254
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 472
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 197
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 615
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 127
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 142
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 139
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 147
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 209
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 303
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 310
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 316
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 283
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 359
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 407
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 529
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 573
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 601
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 630
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 686
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 603
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 649
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1728
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1801
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 916
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 928
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1032
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1245
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1154
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1169
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1243
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1318
+    }
+   ],
+   "load": 4.46
+  },
+  {
+   "side": "B",
+   "run": 2,
+   "net": "home",
+   "marks": {
+    "upload": 3224,
+    "goto": 3325,
+    "binEnd": 5255,
+    "complete": 8787,
+    "loadDoc": 4808,
+    "painted": 9435,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 211665
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__24_.docx1793799282384/media/image3.jpg/image3.jpg?md5=juxMrMN7En7yUI-L4RY8yA&expires=1796393877&shardkey=127.0.0.1aluno-moderno__24_.docx1793799282384&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 184
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 40
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 55
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 147
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 212
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1128
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 128
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 508
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 706
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 114
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 125
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 119
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 137
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 241
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 284
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 298
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 297
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 273
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 333
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 435
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 484
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 508
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 573
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 576
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 617
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 679
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 609
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 629
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1719
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1820
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1250
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1234
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 825
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1257
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1026
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1254
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1395
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1425
+    }
+   ],
+   "load": 3.86
+  },
+  {
+   "side": "B",
+   "run": 3,
+   "net": "home",
+   "marks": {
+    "upload": 3276,
+    "goto": 3375,
+    "binEnd": 5270,
+    "complete": 8803,
+    "loadDoc": 4790,
+    "painted": 9516,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 211830
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__25_.docx1793799292500/media/image3.jpg/image3.jpg?md5=ttkvZktkp5A_tQ9aFRxydQ&expires=1796393887&shardkey=127.0.0.1aluno-moderno__25_.docx1793799292500&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 168
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 42
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 58
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 146
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 175
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1075
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 554
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 142
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 549
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 137
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 144
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 132
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 142
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 180
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 307
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 325
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 324
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 285
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 351
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 394
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 495
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 531
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 596
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 602
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 630
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 679
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 623
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 652
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1760
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1794
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1175
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 975
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1204
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1216
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1209
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1373
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1392
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1406
+    }
+   ],
+   "load": 3.42
+  },
+  {
+   "side": "A",
+   "run": 3,
+   "net": "home",
+   "marks": {
+    "upload": 5203,
+    "goto": 5312,
+    "binEnd": 7157,
+    "complete": 10516,
+    "loadDoc": 6766,
+    "painted": 11229,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 221776
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 202
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 155
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 361
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 2382
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 801
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3032
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1351
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 3240
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 535
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 2610
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1920
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 93
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 134
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 256
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 270
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 286
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 324
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 353
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 418
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 419
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 444
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 461
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 625
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 620
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 631
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 649
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 872
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 874
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 884
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 992
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 46
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 62
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 213
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1097
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 109
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 718
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 137
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 157
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 138
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 156
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 234
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 306
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 318
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 326
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 306
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 353
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 433
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 522
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 528
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 593
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 615
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 625
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 696
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 649
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 656
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1737
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1815
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1241
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1227
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 855
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1252
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1070
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1287
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1400
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1417
+    }
+   ],
+   "load": 3.37
+  },
+  {
+   "side": "A",
+   "run": 4,
+   "net": "home",
+   "marks": {
+    "upload": 5439,
+    "goto": 5540,
+    "binEnd": 7416,
+    "complete": 10728,
+    "loadDoc": 6915,
+    "painted": 11447,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 221942
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 192
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 152
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 356
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1742
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 763
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3028
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1244
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 3400
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 1698
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 3501
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1988
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 124
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 187
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 320
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 367
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 505
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 558
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 619
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 648
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 703
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 782
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 811
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 903
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 960
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1006
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1029
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 1169
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 1186
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 1203
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 1245
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 1372
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 43
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 58
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 145
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 178
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1121
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 469
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 502
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 598
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 121
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 130
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 115
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 128
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 176
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 286
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 298
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 299
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 274
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 330
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 379
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 506
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 566
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 582
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 605
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 646
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 609
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 625
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1662
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1795
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1219
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1222
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1259
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1269
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1442
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1441
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1479
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1485
+    }
+   ],
+   "load": 3.77
+  },
+  {
+   "side": "B",
+   "run": 4,
+   "net": "home",
+   "marks": {
+    "upload": 3230,
+    "goto": 3344,
+    "binEnd": 5190,
+    "complete": 8622,
+    "loadDoc": 4770,
+    "painted": 9322,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 212333
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978051
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__28_.docx1793799326980/media/image3.jpg/image3.jpg?md5=Mhqc_ZP6-ybr-tlajpSCqQ&expires=1796393921&shardkey=127.0.0.1aluno-moderno__28_.docx1793799326980&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49098,
+     "ms": 187
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 46
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 58
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 145
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 168
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1128
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 113
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 153
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 747
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 140
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 137
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 179
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 315
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 335
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 324
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 295
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 346
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 383
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 517
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 602
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 616
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 627
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 675
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 640
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 653
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1726
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1798
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 939
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1200
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 945
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 966
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1172
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1177
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1191
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1321
+    }
+   ],
+   "load": 3.43
+  },
+  {
+   "side": "B",
+   "run": 5,
+   "net": "home",
+   "marks": {
+    "upload": 3271,
+    "goto": 3378,
+    "binEnd": 5431,
+    "complete": 8651,
+    "loadDoc": 4893,
+    "painted": 9353,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 212497
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__29_.docx1793799337028/media/image3.jpg/image3.jpg?md5=mEh7pTzUljwW3QImUCW07Q&expires=1796393931&shardkey=127.0.0.1aluno-moderno__29_.docx1793799337028&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 186
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 43
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 53
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 187
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1154
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 466
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 508
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 545
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 83
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 138
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 135
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 144
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 231
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 245
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 253
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 296
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 271
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 341
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 462
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 473
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 532
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 577
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 608
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 676
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 597
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 609
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1688
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1792
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1199
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1201
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1239
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1245
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1426
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1412
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1463
+    }
+   ],
+   "load": 3.3
+  },
+  {
+   "side": "A",
+   "run": 5,
+   "net": "home",
+   "marks": {
+    "upload": 5529,
+    "goto": 5647,
+    "binEnd": 7746,
+    "complete": 11025,
+    "loadDoc": 7079,
+    "painted": 12098,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 70,
+     "bytes": 222440
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 21,
+     "bytes": 21934041
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 189
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 155
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 369
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1623
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 778
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3076
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1367
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 3587
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 1776
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 3698
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 2053
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 1489
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 1560
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 395
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 493
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 583
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 688
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 708
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 843
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 863
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 940
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 1005
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1063
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1122
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1200
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1273
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 1408
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 1443
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 1483
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 1503
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 381
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 39
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 63
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 140
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 214
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1090
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 454
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 494
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 578
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 113
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 128
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 120
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 127
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 173
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 283
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 299
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 300
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 273
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 326
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 363
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 497
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 562
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 589
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 615
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 647
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 606
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 626
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1688
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1790
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1194
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1202
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1258
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1255
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1428
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1424
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1455
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1474
+    }
+   ],
+   "load": 3.45
+  },
+  {
+   "side": "A",
+   "run": 6,
+   "net": "home",
+   "marks": {
+    "upload": 5014,
+    "goto": 5150,
+    "binEnd": 7107,
+    "complete": 10620,
+    "loadDoc": 6573,
+    "painted": 11458,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 66,
+     "bytes": 220416
+    },
+    "app": {
+     "requests": 30,
+     "bytes": 2966180
+    },
+    "fonts": {
+     "requests": 47,
+     "bytes": 13649011
+    },
+    "sdk": {
+     "requests": 20,
+     "bytes": 20531567
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 46
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 21
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "- | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 17,
+     "public, max-age=31536000, immutable | identity": 7,
+     "no-store, no-cache, must-revalidate | gzip": 2
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 181
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 148
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 516
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 2703
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all-min.js",
+     "bytes": 426782,
+     "ms": 473
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/cell/sdk-all.js",
+     "bytes": 3787478,
+     "ms": 3054
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all-min.js",
+     "bytes": 420252,
+     "ms": 1421
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/slide/sdk-all.js",
+     "bytes": 3333453,
+     "ms": 2681
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all-min.js",
+     "bytes": 367158,
+     "ms": 836
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/visio/sdk-all.js",
+     "bytes": 2758612,
+     "ms": 2977
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 1465
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 141
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 242
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 319
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 326
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 328
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 309
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 319
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 459
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 467
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 471
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 487
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 619
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 654
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 664
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 703
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 729
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 821
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 852
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 38
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 66
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 144
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 180
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1146
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 437
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 480
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 586
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 125
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 143
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 146
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 153
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 229
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 289
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 311
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 315
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 286
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 356
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 425
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 509
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 502
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 588
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 594
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 624
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 708
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 625
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 643
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1769
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1796
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 935
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1103
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1134
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1150
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1158
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1304
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1322
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1342
+    }
+   ],
+   "load": 3.84
+  },
+  {
+   "side": "B",
+   "run": 6,
+   "net": "home",
+   "marks": {
+    "upload": 3196,
+    "goto": 3314,
+    "binEnd": 5238,
+    "complete": 8574,
+    "loadDoc": 4758,
+    "painted": 9338,
+    "pages": 11
+   },
+   "downloads": {
+    "other": {
+     "requests": 52,
+     "bytes": 212988
+    },
+    "app": {
+     "requests": 22,
+     "bytes": 1146735
+    },
+    "fonts": {
+     "requests": 30,
+     "bytes": 9978052
+    },
+    "sdk": {
+     "requests": 8,
+     "bytes": 5420857
+    },
+    "bin": {
+     "requests": 1,
+     "bytes": 25579
+    },
+    "media": {
+     "requests": 7,
+     "bytes": 1065072
+    }
+   },
+   "headers": {
+    "fonts": {
+     "public, max-age=31536000 | identity": 1,
+     "public, max-age=31536000, immutable | gzip": 29
+    },
+    "sdk": {
+     "public, max-age=31536000, immutable | gzip": 8
+    },
+    "app": {
+     "public, max-age=0 | gzip": 8,
+     "no-store, no-cache, must-revalidate | gzip": 2,
+     "public, max-age=31536000, immutable | gzip": 9,
+     "public, max-age=31536000, immutable | identity": 3
+    }
+   },
+   "biggest": [
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/web-apps/apps/documenteditor/main/app.js",
+     "bytes": 507518
+    },
+    {
+     "url": "/cache/files/data/127.0.0.1aluno-moderno__32_.docx1793799372328/media/image3.jpg/image3.jpg?md5=hBY_iqae5PeXB2hr7DezPQ&expires=1796393966&shardkey=127.0.0.1aluno-moderno__32_.docx1793799372328&filename=image3.jpg",
+     "bytes": 482003
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763
+    }
+   ],
+   "files": [
+    {
+     "url": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
+     "bytes": 49099,
+     "ms": 194
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/device_scale.js?__inline=true",
+     "bytes": 1408,
+     "ms": 42
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/AllFonts.js",
+     "bytes": 29722,
+     "ms": 59
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all-min.js",
+     "bytes": 479541,
+     "ms": 152
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Images/cursors/svg.json",
+     "bytes": 6387,
+     "ms": 172
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/word/sdk-all.js",
+     "bytes": 3379741,
+     "ms": 1103
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.js",
+     "bytes": 15669,
+     "ms": 436
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/Charts/ChartStyles.js",
+     "bytes": 105915,
+     "ms": 477
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/sdkjs/common/libfont/engine/fonts.wasm",
+     "bytes": 1402474,
+     "ms": 563
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/127",
+     "bytes": 67584,
+     "ms": 122
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/126",
+     "bytes": 78112,
+     "ms": 130
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/124",
+     "bytes": 66190,
+     "ms": 112
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/125",
+     "bytes": 76527,
+     "ms": 136
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/063",
+     "bytes": 180477,
+     "ms": 197
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/062",
+     "bytes": 165178,
+     "ms": 286
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/060",
+     "bytes": 175725,
+     "ms": 298
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/061",
+     "bytes": 167687,
+     "ms": 302
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/072",
+     "bytes": 123986,
+     "ms": 276
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/067",
+     "bytes": 212176,
+     "ms": 327
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/066",
+     "bytes": 218742,
+     "ms": 397
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/064",
+     "bytes": 213579,
+     "ms": 488
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/065",
+     "bytes": 215358,
+     "ms": 505
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/026",
+     "bytes": 269908,
+     "ms": 560
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/025",
+     "bytes": 282834,
+     "ms": 585
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/023",
+     "bytes": 281414,
+     "ms": 603
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/024",
+     "bytes": 324360,
+     "ms": 656
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/194",
+     "bytes": 114501,
+     "ms": 613
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/191",
+     "bytes": 117140,
+     "ms": 624
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/139",
+     "bytes": 2106540,
+     "ms": 1674
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/140",
+     "bytes": 2236397,
+     "ms": 1810
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/083",
+     "bytes": 381763,
+     "ms": 1255
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/082",
+     "bytes": 327927,
+     "ms": 1251
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/027",
+     "bytes": 354567,
+     "ms": 1303
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/080",
+     "bytes": 330746,
+     "ms": 1298
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/071",
+     "bytes": 212674,
+     "ms": 1477
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/070",
+     "bytes": 211397,
+     "ms": 1471
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/068",
+     "bytes": 202695,
+     "ms": 1512
+    },
+    {
+     "url": "/9.3.7-4828136cf8426105c71be8aec88a8141/fonts/069",
+     "bytes": 212769,
+     "ms": 1519
+    }
+   ],
+   "load": 3.25
+  }
+ ]
+}
