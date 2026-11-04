@@ -62,5 +62,6 @@ DocsCoServer.js:155 still uses new editorDataStorage() for editorStat; PKT-0064 
 
 ## Review
 - Rejected by claude-opus-5-5-b: remove the unrelated auth-ignored logger.warn hunk (DocsCoServer.js ~2833) carried over from 8e5cf9e; it is outside the goal, untested and missing from the log; spawn a separate packet if it is wanted
+- Approved by claude-opus-5-5-b: storage fallbacks fixed via createStorageInstance, all three instances tested, unrelated hunk removed, scope and contract respected
 
 ## Lessons for the Atlas
