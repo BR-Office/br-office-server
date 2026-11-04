@@ -58,6 +58,32 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
 ## Executor log
 - return: factory restarted on Theseus 0.23.3, work kept
 - attempt 1: acceptance failed: `bash .theseus/oracle/differential/sdkjs-word.sh`
+- 2026-11-04 (claude-opus-5-5): wrote `.theseus/oracle/perf/word-repaint.js`. It builds the fork with
+  `differential/build.sh` (cached, key 02ce87d…; fork `theseus` 0f61ccc, no local change), routes the word bundles as
+  PKT-0093, opens large-100p.docx as A and B, wraps on the live instances CDocument `private_Recalculate`,
+  `Recalculate_Page`, `Redraw`, `private_Redraw`, `DrawPage`; DrawingDocument `OnRecalculatePage`, `OnRepaintPage`,
+  `FirePaint`, `ClearCachePages`, `StartRenderingPage`, `UpdateTarget`; CEditorPage `OnPaint`, `OnScroll`,
+  `OnUpdateOverlay`; and `CanvasRenderingContext2D.prototype.drawImage` (count, ms, px, target canvas), with call-site
+  stacks. Results and call sites in baseline.md "repaint scope per keystroke … (PKT-0109)". 2 runs × 20 events per side.
+- Decision: "rectangles" = page rectangles. sdkjs word has no sub-page invalidation: the unit is the page cache image;
+  `drawImage` counts are split into offscreen (glyphs into the page cache, ~2 000 per page) and on-screen blits.
+- Surprise 1: `CDocument.Redraw/private_Redraw/OnRepaintPage` are never used by typing; `OnRecalculatePage` itself marks
+  the page dirty (`SetRepaint`), so the fast paths already invalidate only the changed page.
+- Surprise 2: `CWordCollaborativeEditing.Send_Changes` clears ALL page caches + FirePaint on every send while co-editing
+  (`m_nUseType !== 1`), "to redraw locks": a second whole-page re-raster per keystroke. Ceiling measured with an in-page
+  no-op of that call (env `NOCLEAR=1`, not a fix): local re-raster 1.8 → 1 page, OnPaint 30 → 18 ms per keystroke.
+  Remote: no gain (B re-rasters twice from its own recalc passes). Refactor requested (spawn: skip the lock redraw).
+- Surprise 3: 4–5 of 40 remote events leave the fast path and recalc pages 0–85 in the timer loop (260–420 ms each).
+  Not traced; investigation requested (spawn: trace the full-document fallback).
+- Gap: the remote fast path (`RecalculateByChanges → private_RecalculateFastParagraph`) is not timed (not wrapped), so
+  remote recalc ms p50 0 means "not measured", said in baseline.md. Line-level redraw ceiling is an estimate, not prototyped.
+- Nothing prototyped in external/sdkjs (the ceiling used a runtime wrapper); per-event JSON not committed (budget), the
+  script's `--json` reproduces it.
+- 2026-11-04 retry (claude-opus-5-5): rejected on `differential/sdkjs-word.sh` (1 unintended difference). The fork
+  has no change (still `theseus` 0f61ccc, same build key 02ce87d… as base comparisons), so the packet cannot cause a
+  difference. Re-ran it twice: PASS (2 cases, all checks `same`) both times; all six acceptance commands pass. Likely
+  a flaky co-editing check (timing-sensitive sentA/sentB/shown) or load from a concurrent run; the failing output was
+  not kept by the factory, so the check that differed is unknown. No code change made for the retry.
 
 ## Spawned packets
 
