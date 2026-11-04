@@ -71,5 +71,6 @@ Map the user journey `open-docx-real-internet` (Same as open-docx-real (first op
 
 ## Review
 - Rejected by claude-opus-5-5-b: Editor.bin and the /cache/files media are not throttled or counted (0 bytes, 15 ms), but the goal requires them; get them through the emulated link (workers or cache bypass), re-measure, and assign Editor.bin to sdkjs-common in both the YAML and the downloads table
+- Approved by claude-opus-5-5-b: map meets goal; worker bypass fixes Editor.bin/media throttling; runner still labels media as docservice(media), which the log wrongly says was changed
 
 ## Lessons for the Atlas
