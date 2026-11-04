@@ -51,6 +51,11 @@ Audit the method over scoreboard records 119 to 139, following `.theseus/prompts
 ## Suggested plan
 
 ## Executor log
+- claude-opus-5-5, 2026-11-04. Report in `.theseus/audits/AUD-6.md`; proposals TEP-0014 (numeric bars need protocol + reachable target) and TEP-0015 (pre-claim discards excluded from audit count).
+- Decision: records 119–139 = PKT-0100…0127; 8 of 21 are human discards never run, so the analysis uses 13 run records and keeps most items as observations (<20 rule).
+- Decision: counted PKT-0127 as not approved first time despite `approved_first_review: true` (R6 rejection present).
+- Surprise: blocked PKT-0108/0111/0112 have no friction lines; `.theseus/scoreboard/journeys.jsonl` named by TEP-0013 does not exist.
+- Not done: no spawn requests; project gaps (O4) are already in friction lines planners read.
 
 ## Spawned packets
 
