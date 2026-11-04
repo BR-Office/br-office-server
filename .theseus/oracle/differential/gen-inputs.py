@@ -42,7 +42,7 @@ sl = pr.slides.add_slide(pr.slide_layouts[1]); sl.shapes.title.text = 'Notes'; s
 pr.save(os.path.join(out, 'chart.pptx'))
 
 d = docx.Document()  # large (PKT-0110): ~100 pages of plain paragraphs, a heading every 20, for remote typing timing
-for i in range(640):
+for i in range(880):
     if i % 20 == 0: d.add_heading(f'Part {i // 20 + 1}', 1)
     d.add_paragraph(para(55))
 d.save(os.path.join(out, 'large.docx'))
