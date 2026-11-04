@@ -40,8 +40,9 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -61,6 +62,7 @@ Re-measure the save and convert-docx-pdf journeys afterwards and say whether the
 
 ## Executor log
 - attempt 1: the spawn request PKT-0138-factory-check-out-external-sdkjs-in-worktrees-wh.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- return: factory stopped by the 2-hour session limit
 
 ## Spawned packets
 
