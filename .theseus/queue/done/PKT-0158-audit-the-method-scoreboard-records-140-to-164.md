@@ -36,7 +36,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -65,5 +65,6 @@ Audit the method over scoreboard records 140 to 164, following `.theseus/prompts
 - PKT-0160: Shared journey runner helper (upload, open, wait-loaded, per-request accounting)
 
 ## Review
+- Approved by claude-opus-5-5-b: audit meets goal and contract, figures checked against scoreboard, proposals testable, follow-ups listed
 
 ## Lessons for the Atlas
