@@ -62,7 +62,7 @@ Map the user journey `coedit-remote` (Two users in the same Word document: a cha
 - Surprise 1: Socket.IO's own message listener runs before one added later, so B's message time is read from `window.event` inside the `_onSaveChanges` wrapper; `_onSaveChanges` is also re-entered once per message (deduplicated).
 - Surprise 2: `Recalculate_Page` is never called when B applies a one-letter change (fast recalc inside Apply_Changes).
 - Finding: ~80% of the latency is three 40 ms timers in sdkjs-common (A send tick 31, B apply tick 17.5, B paint tick 20) plus the browser frame (17); the server is 3 ms p50.
-- Not done: no packaged-build A/B run (`NO_INTEGRATED=1` supported; a 4-change smoke on packaged gave 111 ms). No earlier map of this journey; compared with baseline PKT-0016/0018 instead.
+- Not done: no packaged-build A/B run (`NO_INTEGRATED=1` supported; the 4-change smoke runs used NO_INTEGRATED=1 but the overlay was already up, so they were integrated too (111 ms)). No earlier map of this journey; compared with baseline PKT-0016/0018 instead.
 
 ## Spawned packets
 
