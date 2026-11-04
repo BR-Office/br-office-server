@@ -1,6 +1,6 @@
 # PKT-0125: summarise toolbar-ab.sh output: per file and side, median / min-max / p25-p75 over all runs of
 # ctlCode.LoadDoc.Toolbar (profiled opens) and the unprofiled LoadDoc and Ready marks; plus median of per-block
-# paired differences (new - base) and how many blocks moved the same way.
+# paired differences; Busy = all non-idle CPU before LoadDoc (profiled opens); (new - base) and how many blocks moved the same way.
 # Usage: python3 toolbar-ab-summary.py <out-dir>
 import json, glob, os, statistics as st, sys
 D = sys.argv[1]
@@ -11,12 +11,13 @@ for fn in sorted(glob.glob(os.path.join(D, '*-*.json'))):
     for f, v in json.load(open(fn))['files'].items():
         for r, rn in zip(v['raw'], v['rawNoProfiler']):
             data.setdefault(f, {}).setdefault(side, {}).setdefault(int(blk), []).append(
-                {'Toolbar': r['ctlCode']['LoadDoc'].get('Toolbar', 0), 'LoadDoc': rn['marks']['LoadDoc'], 'Ready': rn['marks']['Ready']})
+                {'Toolbar': r['ctlCode']['LoadDoc'].get('Toolbar', 0),
+                 'Busy': sum(v for k, v in r['cpu']['LoadDoc'].items() if k != 'idle'), 'LoadDoc': rn['marks']['LoadDoc'], 'Ready': rn['marks']['Ready']})
 for f, sides in data.items():
     print(f'\n{f}')
     print('| metric | base median (p25–p75, min–max) | new median (p25–p75, min–max) | Δ median | per-block Δ (median; blocks new<base) |')
     print('|---|---|---|---|---|')
-    for m in ('Toolbar', 'LoadDoc', 'Ready'):
+    for m in ('Toolbar', 'Busy', 'LoadDoc', 'Ready'):
         cell = {}
         for s in ('base', 'new'):
             xs = [r[m] for b in sides[s].values() for r in b]

@@ -100,6 +100,34 @@ else on the VM (PKT-0111 saw a 1 s bimodal LoadDoc spread with 5 runs).
 - Acceptance: differential PASS (4 cases). documenteditor-open PASS on the installed build, and PASS again with the
   new app.js swapped in temporarily (the installed app.js was restored and checked with cmp).
 
+- attempt 3 (claude-opus-5-5, 2026-11-04): construction deferred too, as the review asked. view/Toolbar.js wraps
+  the four Insert/Layout construction blocks of applyLayout in place in `deferControls(names, factory)` (no
+  re-indent, to stay in budget). Each name is a getter until `buildDeferredControls` runs, so an early reader still
+  gets the component. That function runs the factories, pushes the new controls into lockControls and LayoutManager,
+  fires `controls:deferred`, and replays the `lockToolbar` calls made before the build (`_lockLog`; e.g.
+  disableOnStart). rendererComponents passes deferred components by name and queues their slots. The page-break
+  buttons are deferred as well. The mnuInsertTable/mnuPageSize/mnuColorSchema aliases and the image-button pushes
+  move into their blocks.
+- HeaderFooterTab.getPanel builds its buttons for the Toolbar's Insert slots on `controls:deferred`. Ids keep the
+  base order (Toolbar slot -0, own slot -1). The order inside the ButtonSet changes (own first).
+- ViewTab.js not changed: in this base it injects nothing into Toolbar slots (only its own panel). controller/Toolbar.js
+  not changed: attachUIEvents already runs in createDelayedElements, after load.
+- Surprises: (1) render's `setTab('home')` fires tab:active:before; reacting to it ran the whole build before
+  LoadDoc, and the first A/B (aborted) showed no Toolbar drop. Fixed: the handler ignores 'home'.
+  (2) render calls onUpdateLastCustomMargins, which reads btnPageMargins and forced the build through the getter;
+  it is now queued as a deferred step. A getter warning only showed (2), and only after console capture was
+  replaced by a window array. Production builds swallow console.warn from the editor frame in my probe.
+- Verified: a probe shows the build is triggered by the timer 10–20 ms after the asc_LoadDocument call. A Playwright
+  pass on base vs new shows identical visible-control and disabled counts and identical non-generated ids per tab
+  (home, ins, layout, links, view). No page errors.
+- Result (baseline.md, attempt 3 table): Toolbar −50 ms medium, −72 ms large, above the p25–p75 spread on both and
+  5/5 blocks each. Busy CPU −46/−53 ms is not above its spread. The load was 3.4–4.8 during the run (another
+  executor session was alive); I did not wait for a fully idle VM.
+- Acceptance: differential PASS (4 cases), documenteditor-open PASS on the installed build and with the new
+  app.js swapped in (restored, checked with cmp).
+- Spawn request rewritten: the HeaderFooterTab and ViewTab panels after LoadDoc. The Insert/Layout construction
+  part of the attempt-2 request is done here.
+
 ## Spawned packets
 
 ## Review

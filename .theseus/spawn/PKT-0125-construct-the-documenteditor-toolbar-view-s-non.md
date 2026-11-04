@@ -1,6 +1,6 @@
 ---
 id: SPAWN
-title: Construct the documenteditor Toolbar view's non-Home buttons lazily instead of in initialize
+title: Build the documenteditor HeaderFooterTab and ViewTab panels after asc_LoadDocument
 type: refactor
 priority: medium
 module: web-apps-documenteditor
@@ -15,9 +15,9 @@ requires: [documentserver, browser]
 
 target:
   files:
-    - external/web-apps/apps/documenteditor/main/app/view/Toolbar.js
     - external/web-apps/apps/documenteditor/main/app/controller/Toolbar.js
-    - external/web-apps/apps/documenteditor/main/app/controller/Main.js
+    - external/web-apps/apps/documenteditor/main/app/view/HeaderFooterTab.js
+    - external/web-apps/apps/documenteditor/main/app/view/ViewTab.js
     - .theseus/oracle/baseline.md
   create_in:
     - .theseus/oracle/perf
@@ -51,20 +51,22 @@ roles:
 ---
 
 ## Goal
-Construct the Insert, Layout and References buttons and pickers of view/Toolbar.js (built in `initialize`,
-before render) on first need: after asc_LoadDocument is issued, on first activation of their tab, or at app:ready,
-whichever comes first. Measure with perf/toolbar-ab.sh (medium-10p and large-100p, 5x3 runs per side, on an idle VM)
-and add the table to baseline.md; ctlCode.LoadDoc.Toolbar and busy CPU before LoadDoc must drop by more than their
-p25-p75 spread.
+Build the Header & Footer and View tab panels (HeaderFooterTab.getPanel, ViewTab.getPanel and the tab views'
+initialize-time components) after asc_LoadDocument is issued or on first activation of their tab, whichever comes
+first, with placeholder panels in controller/Toolbar.js onAppShowed. Measure with perf/toolbar-ab.sh (medium-10p and
+large-100p, 5x3 runs per side, idle VM) and add the table to baseline.md; ctlCode.LoadDoc.Toolbar must drop by more
+than its p25-p75 spread.
 
 ## Essential context
-PKT-0125 deferred only the DOM injection of the non-Home panels' components (rendererComponents): Toolbar self
-time before LoadDoc fell ~40-55 ms of ~200 ms (baseline.md, PKT-0125 section). The rest is `initialize`
-(75 `new Common.UI.Button` plus pickers for every tab), the template parse and the Home panel. Blocker: the
-controllers (controller/Toolbar.js onLaunch/attachUIEvents, controller/Main.js applyModeEditorElements) bind
-handlers to these button objects at launch, so their construction cannot be deferred without moving those bindings
-(e.g. into a per-tab hook, or binding through the toolbar's events). HeaderFooterTab/ViewTab inject buttons into
-Insert/View slots (see PKT-0111); the slots exist in the template before their panel renders.
+PKT-0125 (attempt 3) now constructs the Toolbar view's Insert/Layout components lazily (view/Toolbar.js
+deferControls / buildDeferredControls, run by a 0 ms timer after render, i.e. after asc_LoadDocument, on tab
+activation, app:ready or createDelayedElements) and HeaderFooterTab's buttons in the Insert slots with them
+(Toolbar event `controls:deferred`). What is still built before LoadDoc under the Toolbar controller: the Home panel,
+the template, and the HF/View tab views' own panels (created in onAppShowed via createToolbarPanel). PKT-0111's
+addDeferredTab/buildDeferredTab is not in this base. Constraints: onAppShowed pushes getButtons() of both views into
+toolbar.lockControls right after createToolbarPanel (push them again when built, and replay locks as
+buildDeferredControls does); the tab views' onAppReady walk controls built in getPanel, so builds must finish before
+app:ready (the Toolbar view's onAppReady runs first). ViewTab injects nothing into Toolbar slots in this base.
 
 ## Suggested plan
 
