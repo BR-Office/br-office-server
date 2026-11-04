@@ -45,6 +45,12 @@ roles:
 - attempt 1: the spawn request PKT-0155-add-stage-layout-finish-webapps-to-covers-not-co.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 - attempt 2: acceptance failed: `theseus validate`
 - attempt 3: acceptance failed: `theseus validate`
+- Attempt 3: spawn request placeholders were already filled in cc38836 (target/contract/acceptance verified). The only `theseus validate` error is in DIAG-web-apps-documenteditor.md, outside target.files (R2), so it cannot be fixed here; it is covered by the spawn request PKT-0155-add-stage-layout-finish-webapps-to-covers-not-co.md, which must land before validate is green.
+- Attempt (rework): filled the spawn request target/contract/acceptance (target DIAG-web-apps-documenteditor.md, acceptance `theseus validate`) per reviewer rejection (R6). Fixed my friction line to the keyed {hindered,helped,missing} format so validate accepts it.
+- Remaining validate error (layout-finish-webapps stage coverage) is outside target; handled by the spawned request.
+- Cause: the `context` value of the PKT-0143 follow-up row contained `(x2t-build.sh): `, so YAML read it as a mapping. Fix: wrapped that one scalar in single quotes (it has none inside); text unchanged. Checked with yaml.safe_load: the plan block parses.
+- Surprise: `theseus validate` still reports 1 error, outside the target: open-docx-100p.md stage `layout-finish-webapps` missing from covers/not_covered of DIAG-web-apps-documenteditor.md. Requested a follow-up packet (spawn).
+- `bash .theseus/oracle/differential/x2t.sh`: PASS (exit 0).
 
 ## Spawned packets
 
