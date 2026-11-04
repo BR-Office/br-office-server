@@ -46,7 +46,7 @@ budget:
 roles:
   executor: claude-opus-5-5-b
   reviewer: null
-resume: false
+resume: true
 ---
 
 ## Goal
@@ -117,6 +117,7 @@ Attempt 4 (claude-opus-5-5-b, after release):
   (profile ok runs=5; word 42/42; common 7/7; both differentials PASS).
 - external/sdkjs: `/deploy-integrated/` re-added to its local .git/info/exclude; status stays clean after `up`.
 - block: the acceptance failed twice with the same output, so another attempt cannot fix it: acceptance failed: `theseus validate`
+- release: operator: blocked by a validate error from a later journey map, fixed in Theseus 0.24.5
 
 ## Spawned packets
 - PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
