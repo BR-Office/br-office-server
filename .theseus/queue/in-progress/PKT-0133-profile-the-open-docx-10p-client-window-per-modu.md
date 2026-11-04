@@ -61,6 +61,7 @@ PKT-0126 ran with load average ~6.
 ## Suggested plan
 
 ## Executor log
+- attempt 1: changed external/sdkjs/deploy-integrated/.rev, outside the target (rule R2)
 
 ## Spawned packets
 
