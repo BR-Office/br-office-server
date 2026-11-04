@@ -60,6 +60,7 @@ Re-measure the save and convert-docx-pdf journeys afterwards and say whether the
 ## Suggested plan
 
 ## Executor log
+- attempt 1: the spawn request PKT-0138-factory-check-out-external-sdkjs-in-worktrees-wh.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
 
 ## Spawned packets
 
