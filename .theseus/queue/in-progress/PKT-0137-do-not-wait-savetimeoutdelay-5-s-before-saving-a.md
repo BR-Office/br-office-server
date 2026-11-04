@@ -85,6 +85,12 @@ Surprises / not done:
   measuring: serve-integrated.sh line 29 `cd .../external/sdkjs/build: No such file or directory` (missing external/ checkout:
   a factory problem, recorded in friction). The packet changes no code, so the journey number cannot move anyway.
 
+Attempt 2 (after rejection on unit.sh):
+- The rejected run failed in `tests/unit/request.tests.js` timeout tests (`timeout of 300ms exceeded`, `aborted`): timing-sensitive
+  tests against a local server, not code this packet touches (the packet changes no source file). Rerun: 178 passed, 1 skipped.
+- `save.sh` still fails at serve-integrated.sh:29 because `external/` (sdkjs fork checkout) is absent in this worktree and in the
+  main checkout; not fixable within target. Needs the factory to provide `external/sdkjs`.
+
 ## Spawned packets
 
 ## Review
