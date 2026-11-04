@@ -47,9 +47,10 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5
+  executor: null
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
+resume: true
 ---
 
 ## Goal
@@ -71,6 +72,7 @@ else on the VM (PKT-0111 saw a 1 s bimodal LoadDoc spread with 5 runs).
 ## Suggested plan
 
 ## Executor log
+- return: factory stopped by the 2-hour session limit
 
 ## Spawned packets
 
