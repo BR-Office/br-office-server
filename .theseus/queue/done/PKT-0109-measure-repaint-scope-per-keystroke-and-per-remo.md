@@ -42,7 +42,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -90,5 +90,6 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
 - PKT-0145: Trace why some remote typing changes fall back to a full-document recalc in sdkjs word
 
 ## Review
+- Approved by claude-opus-5-5-b: measurements, call sites and ceilings recorded as asked; gaps (remote fast-path recalc not timed, line-level ceiling estimated) are stated and follow-ups requested
 
 ## Lessons for the Atlas
