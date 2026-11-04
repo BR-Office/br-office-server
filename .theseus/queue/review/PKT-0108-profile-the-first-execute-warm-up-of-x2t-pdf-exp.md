@@ -76,6 +76,7 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - Not done: pptx not CPU-profiled; warmed snapshot timed for docx only; corpus.py not run for flags (none recommended; the three templates' outputs are equal modulo dates/ID).
 
 ## Spawned packets
+- PKT-0143: Size a persistent x2t converter that keeps one warmed JS context per editor
 
 ## Review
 
