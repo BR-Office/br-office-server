@@ -58,6 +58,12 @@ Round 3 of the `x2t` module. Read `.theseus/diagnosis/DIAG-x2t.md` (round 2) and
 ## Suggested plan
 
 ## Executor log
+- Measured: `bash .theseus/oracle/differential/x2t.sh` PASS (direct + browser, no unstable side); numbers in `.theseus/oracle/rounds/x2t-r3.md`. Journeys not re-run (exclusive); their round 3 maps are cited.
+- Surprise: external/core is still identical to core.base (tree 83b890f3): round 2 changed no x2t code, so its user gain is 0 ms. PKT-0147 (round 2 P3) is still pending although its own context says stop (PKT-0108 found < 0.2 s); this diagnosis records it as superseded — the factory should discard it.
+- Decision: verdict refactor toward a persistent converter keeping one warmed context; it builds on the already-queued PKT-0143 (sizing) instead of re-planning it. Plan: P1 (wave 0) split the save stage, P2 (wave 1) implement, conditional on PKT-0143 >= 0.3 s.
+- Decision: `server-open-x2t` (4 open journeys) is not_covered: no V8 in docx->bin, 3-8 % of journeys, the lever does not reach it.
+- No core prototype: nothing new to measure in-process after PKT-0108; the persistent prototype is PKT-0143's job. external/core unchanged.
+- DIAG-x2t-b.md did not exist; nothing to git rm.
 
 ## Spawned packets
 
