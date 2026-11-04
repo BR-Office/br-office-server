@@ -1,0 +1,41 @@
+
+Structure
+  ✔ AGENTS.md points to .theseus/
+  ✔ CLAUDE.md imports AGENTS.md
+  ✔ queue with all 6 states
+  ✔ specifications present in .theseus/spec/
+
+Adapter
+  ✔ adapter.yaml loaded
+  ✔ goal stated
+  ⚠ pilot mode: review.allow_same_family is on, so rule R4 only requires a different model, not a different family
+  ✔ any target language: write the interop file when a migration is decided
+
+Packets
+  ⚠ pending/PKT-0139-profile-the-open-docx-real-client-window-editor.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0162-build-the-documenteditor-headerfootertab-and-vie.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ✔ 162 of 162 packets without errors
+
+Atlas
+  ⚠ sdkjs-common.md: 879 words in the body (max 800, rule A2)
+  ✔ 9 of 9 cards without errors
+
+Diagnosis
+  ✔ 6 of 6 verdicts without errors
+
+Scoreboard
+  ✔ packets.jsonl: 167 records
+  ✔ escapes.jsonl: 0 records
+  ✔ friction.jsonl: 164 records
+
+Integration
+  ✔ files delivered by 110 merged packets checked
+
+Method version
+  ✔ 0.6.0
+
+Journeys
+  ✖ open-docx-100p.md: stage `layout-finish-webapps` of module `web-apps-documenteditor` is not in `covers` or `not_covered` of DIAG-web-apps-documenteditor.md
+  ✔ 93 stages checked
+
+16 ok · 4 warnings · 1 errors
