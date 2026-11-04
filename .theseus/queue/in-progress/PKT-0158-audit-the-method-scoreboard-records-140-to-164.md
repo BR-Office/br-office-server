@@ -51,8 +51,17 @@ Audit the method over scoreboard records 140 to 164, following `.theseus/prompts
 ## Suggested plan
 
 ## Executor log
+- Sample = scoreboard lines 140–164 (25 records, 23 packets, all method 0.6.0). Computed indicators with a script over packets.jsonl; friction matched by packet id.
+- Decision: counted first-review approval two ways (recorded 81%, true 67%) because 0109/0137/0149 carry gate rejections with `approved_first_review: true`.
+- Decision: blocked cost reported as an upper bound (≤ $5.43): PKT-0132 block-record costs look cumulative.
+- Surprise: `theseus packet new --help` lists only 7 types (no chore/measure) though `--type chore` works — same as PKT-0115 friction.
+- Surprise: PKT-0133 record says attempts 1 while block text says 3 attempts.
+- Proposals TEP-0016 (truthful scoreboard fields), TEP-0017 (differential names checks and reruns). Two spawn requests (shared journey runner; external/ mirrors in environment.md).
+- Same-family audit (claude-opus-5-5) — could not satisfy "different family" preference.
 
 ## Spawned packets
+- spawn: Shared journey runner helper
+- spawn: Document the external/ mirrors in environment.md
 
 ## Review
 
