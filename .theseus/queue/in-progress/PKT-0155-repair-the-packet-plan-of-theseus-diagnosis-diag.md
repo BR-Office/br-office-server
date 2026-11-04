@@ -53,6 +53,7 @@ roles:
 - `bash .theseus/oracle/differential/x2t.sh`: PASS (exit 0).
 
 ## Spawned packets
+- PKT-0161: Add stage layout-finish-webapps to covers/not_covered of DIAG-web-apps-documenteditor.md
 
 ## Review
 
