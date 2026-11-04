@@ -65,6 +65,7 @@ PKT-0095's cases are small and their timing lines are noise (±2-3 s); round 1's
 - Result: all four acceptance commands pass; large.docx all six checks same. Timing (native DS, 2 CPUs): original lat=124 latMax=693 long=509 | new lat=126 latMax=580 long=698 ms; between runs of the same build, `long` moved 485-698, so only differences well above ~200 ms are signal.
 - Surprise: `recv` is 2-3 ms: sdkjs's incoming-message handler only queues; the applying and repaint run later, so `long` (longtask observer) is the meaningful busy figure. Left `recv` printed, documented here.
 - No existing assertion changed. No tests/unit file needed.
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh && npm run lint:check`
 
 ## Spawned packets
 
