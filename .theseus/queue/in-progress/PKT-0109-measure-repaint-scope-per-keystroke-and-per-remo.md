@@ -78,6 +78,11 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
   remote recalc ms p50 0 means "not measured", said in baseline.md. Line-level redraw ceiling is an estimate, not prototyped.
 - Nothing prototyped in external/sdkjs (the ceiling used a runtime wrapper); per-event JSON not committed (budget), the
   script's `--json` reproduces it.
+- 2026-11-04 retry (claude-opus-5-5): rejected on `differential/sdkjs-word.sh` (1 unintended difference). The fork
+  has no change (still `theseus` 0f61ccc, same build key 02ce87d… as base comparisons), so the packet cannot cause a
+  difference. Re-ran it twice: PASS (2 cases, all checks `same`) both times; all six acceptance commands pass. Likely
+  a flaky co-editing check (timing-sensitive sentA/sentB/shown) or load from a concurrent run; the failing output was
+  not kept by the factory, so the check that differed is unknown. No code change made for the retry.
 
 ## Spawned packets
 - requested: Skip the all-pages lock redraw in Send_Changes when no lock changed (refactor, sdkjs-word)
