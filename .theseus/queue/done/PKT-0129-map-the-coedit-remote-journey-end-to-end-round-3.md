@@ -41,7 +41,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -67,5 +67,6 @@ Map the user journey `coedit-remote` (Two users in the same Word document: a cha
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: coedit-remote map meets goal, stages verified against source, contract and budget respected
 
 ## Lessons for the Atlas
