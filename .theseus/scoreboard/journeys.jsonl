@@ -1,0 +1,8 @@
+{"commit":"b2867b3","date":"2026-11-04","journey":"open-docx-real","max_ms":5066.0,"min_ms":4894.0,"packet":"PKT-0110","runs":5.0,"total_ms":4961.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"open-docx-real-internet","max_ms":8528.0,"min_ms":7501.0,"packet":"PKT-0110","runs":5.0,"total_ms":7792.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"open-docx-10p","max_ms":4894.0,"min_ms":3423.0,"packet":"PKT-0110","runs":5.0,"total_ms":3662.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"open-docx-100p","max_ms":5680.0,"min_ms":5220.0,"packet":"PKT-0110","runs":5.0,"total_ms":5522.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"typing","max_ms":100.0,"min_ms":34.0,"packet":"PKT-0110","runs":90.0,"total_ms":51.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"coedit-remote","max_ms":172.0,"min_ms":73.0,"packet":"PKT-0110","runs":60.0,"total_ms":112.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"save","max_ms":5825.0,"min_ms":5737.0,"packet":"PKT-0110","runs":5.0,"total_ms":5763.0}
+{"commit":"b2867b3","date":"2026-11-04","journey":"convert-docx-pdf","max_ms":1338.0,"min_ms":1021.0,"packet":"PKT-0110","runs":7.0,"total_ms":1118.0}
