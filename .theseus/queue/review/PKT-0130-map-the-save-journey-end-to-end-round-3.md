@@ -54,6 +54,17 @@ Map the user journey `save` (Close an edited Word document until the saved file 
 ## Suggested plan
 
 ## Executor log
+- 2026-11-04 claude-opus-5-5: `serve-integrated.sh` existed (PKT-0126); reused. Wrote `oracle/journeys/save.sh` + `save-run.cjs`
+  (pattern of typing.sh). t0 = Playwright `page.close()` of the only editor tab after 5 typed letters were acknowledged;
+  end = the example's stored file replaced (mtime/size, 10 ms poll). Stages from DocService/FileConverter DEBUG log marks
+  (contiguous, so p50s sum to 5836 of 5853; unattributed 17 ms).
+- Result: p50 5853 ms (7 runs, 5771-5978). 5006 ms = `savetimeoutdelay` sleep in `createSaveTimer`; 774 ms = x2t
+  (doctrenderer applying changes + bin->docx); everything else ~40 ms.
+- Surprise: the save is dominated by a configured sleep, not by computation. Spawned request (docservice) to skip it on
+  explicit close.
+- Not done: x2t's 774 ms is not split internally (converter deletes its temp dir; no x2t timing log). The x2t diagnosis
+  must split process start / V8+sdk-all.js load / apply changes / docx write.
+- No earlier save map to compare with; cited rounds/x2t-r2.md (x2t part of save 0.2-0.65 s on smaller docs).
 
 ## Spawned packets
 
