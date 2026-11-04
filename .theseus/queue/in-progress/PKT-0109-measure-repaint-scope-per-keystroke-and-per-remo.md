@@ -43,6 +43,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: null
+resume: false
 ---
 
 ## Goal
@@ -55,6 +56,7 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
 ## Suggested plan
 
 ## Executor log
+- return: factory restarted on Theseus 0.23.3, work kept
 
 ## Spawned packets
 

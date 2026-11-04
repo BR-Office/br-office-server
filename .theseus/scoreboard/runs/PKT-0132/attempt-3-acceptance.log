@@ -1,0 +1,39 @@
+differential: original d238e526 (/home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/out/dd7510be8ba281bc543b18b0f6b3bb63f7ca968b-da39a3ee5e6b)
+differential: new      2b0d9bae (/home/claude/euro-office-server.theseus-worktrees/.external/cache/web-apps-differential/out/dd7510be8ba281bc543b18b0f6b3bb63f7ca968b-da39a3ee5e6b)
+timing web-apps-documenteditor text.docx | original open=2642 join=3180 edit=3270 save=249 convert=225 reopen=2860 | new open=3292 join=3020 edit=3202 save=216 convert=194 reopen=2856
+same text.docx dialogs
+same text.docx model
+same text.docx sentA
+same text.docx sentB
+same text.docx shown
+same text.docx ui
+same text.docx reopened
+same text.docx converted
+timing web-apps-documenteditor styles.docx | original open=3043 join=3124 edit=3303 save=303 convert=203 reopen=2870 | new open=3248 join=2872 edit=3030 save=211 convert=233 reopen=2856
+same styles.docx dialogs
+same styles.docx model
+same styles.docx sentA
+same styles.docx sentB
+same styles.docx shown
+same styles.docx ui
+same styles.docx reopened
+same styles.docx converted
+timing web-apps-documenteditor plain.txt | original open=2853 join=2525 edit=2923 save=164 convert=129 reopen=2382 | new open=3145 join=2526 edit=3225 save=144 convert=154 reopen=2316
+same plain.txt dialogs
+same plain.txt model
+same plain.txt sentA
+same plain.txt sentB
+same plain.txt shown
+same plain.txt ui
+same plain.txt reopened
+same plain.txt converted
+timing web-apps-documenteditor simple.rtf | original open=2755 join=2622 edit=3070 save=213 convert=130 reopen=2488 | new open=2750 join=2428 edit=3019 save=214 convert=158 reopen=2478
+same simple.rtf dialogs
+same simple.rtf model
+same simple.rtf sentA
+same simple.rtf sentB
+same simple.rtf shown
+same simple.rtf ui
+same simple.rtf reopened
+same simple.rtf converted
+differential web-apps-documenteditor: PASS (4 cases)

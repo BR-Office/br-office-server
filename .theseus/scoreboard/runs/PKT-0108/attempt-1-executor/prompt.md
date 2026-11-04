@@ -25,4 +25,4 @@ Environments that are up right now (the factory just ran these checks and they p
 - `browser`: `node -e "require('playwright')"`
 Do not report one of these as missing: use it, and if a script points elsewhere (another port, a container), point it here. If you still cannot reach it, say exactly what you ran and what came back.
 
-`external/core` is a writable checkout of another repository (git-excluded here), on its branch pkt/PKT-0108. Change the files of your target under it there; commit in it with `git -C external/core commit` (the factory commits what you leave and pushes the branch to the fork after every attempt). Its changes count for the scope (rule R2) like any other file. Do not push and do not change its other branches.
+`external/core` is a writable checkout of another repository (git-excluded here), on its branch pkt/PKT-0108. This packet investigates: you may prototype there freely (it is not in the scope check); the factory pushes the branch to the fork for the record and never merges it. Record in your log what you tried and measured, and request a refactor packet for any change worth keeping.

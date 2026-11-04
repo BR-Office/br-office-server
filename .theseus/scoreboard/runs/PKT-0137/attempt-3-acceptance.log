@@ -1,0 +1,3 @@
+integrated: sdkjs 0f61ccce overlaid
+{"incomplete":0,"p50":{"disconnect":14,"save_delay":5007,"queue":3,"prepare":19,"x2t":1506,"upload":6,"result":-6388,"integrator":6408,"total":6630,"unattributed":0},"mean":{"disconnect":15.6,"save_delay":5011.4,"queue":5.4,"prepare":19.8,"x2t":1502,"upload":6.8,"result":-6323.2,"integrator":6402.8,"total":6640.6,"unattributed":0}}
+total_ms=6630 min_ms=6486 max_ms=6869 runs=5

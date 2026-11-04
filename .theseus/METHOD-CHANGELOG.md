@@ -2,6 +2,12 @@
 
 Each version lists the Theseus Enhancement Proposals (TEPs) it incorporated and each one's hypothesis. See `.theseus/spec/method-measurement.md`.
 
+## 0.6.0
+
+Rafael, 2026-11-03 (Theseus 0.24.0): optimize the whole application by user journeys, not part by part.
+
+- TEP-0013: journeys mapped end to end into stages down to functions; every module's diagnosis covers every stage it is given; every journey measured after each integrated change. Hypothesis: every stage has an owner in a diagnosis, and the open of a 10-page document falls below 2.5 s (p50, integrated build) within the next 40 records, with no differential-oracle regression.
+
 ## 0.5.0
 
 Approved by Rafael on 2026-11-03 from AUD-5 (Theseus 0.22.0).

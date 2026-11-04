@@ -1,0 +1,44 @@
+
+Structure
+  ✔ AGENTS.md points to .theseus/
+  ✔ CLAUDE.md imports AGENTS.md
+  ✔ queue with all 6 states
+  ✔ specifications present in .theseus/spec/
+
+Adapter
+  ✔ adapter.yaml loaded
+  ✔ goal stated
+  ⚠ pilot mode: review.allow_same_family is on, so rule R4 only requires a different model, not a different family
+  ✔ any target language: write the interop file when a migration is decided
+
+Packets
+  ⚠ pending/PKT-0125-defer-the-documenteditor-toolbar-view-s-own-hidd.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0129-map-the-coedit-remote-journey-end-to-end-round-3.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0130-map-the-save-journey-end-to-end-round-3.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0131-map-the-convert-docx-pdf-journey-end-to-end-roun.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0132-wire-the-toolbar-to-the-comments-add-button-lazi.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ⚠ pending/PKT-0135-map-the-open-docx-real-journey-end-to-end-round.md: it delivers an oracle, script or data file that no acceptance command runs or reads (TEP-0008)
+  ✔ 136 of 136 packets without errors
+
+Atlas
+  ⚠ sdkjs-common.md: 879 words in the body (max 800, rule A2)
+  ✔ 9 of 9 cards without errors
+
+Diagnosis
+  ✔ 6 of 6 verdicts without errors
+
+Scoreboard
+  ✔ packets.jsonl: 139 records
+  ✔ escapes.jsonl: 0 records
+  ✔ friction.jsonl: 132 records
+
+Integration
+  ✔ files delivered by 87 merged packets checked
+
+Method version
+  ✔ 0.6.0
+
+Journeys
+  ✔ 29 stages checked
+
+16 ok · 8 warnings · 0 errors

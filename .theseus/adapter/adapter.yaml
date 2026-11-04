@@ -24,6 +24,38 @@ goals:
   # Rafael (2026-11-02, explicit): agents get every privilege they need in this disposable VM;
   # without it the VM cannot run the stack to measure. Measurement packets only.
   baseline_commands: ["*"]        # every privilege for measurement packets (Theseus 0.13.4)
+  # Rafael, 2026-11-03 (TEP-0013): optimize the whole application by what users do, end to end,
+  # measured against the integrated build (main branch + the forks' theseus branches).
+  journeys:
+    # Rafael, 2026-11-03: a real document that took more than 20 s to open the first time in
+    # his own Euro-Office installation (11 pages, 2.8 MB, 11 images, 9 tables, CJK fonts).
+    - id: open-docx-real
+      description: "Select .theseus/oracle/journeys/samples/aluno-moderno.docx (a real 11-page document with images, tables and CJK fonts) and wait until it is fully rendered in the browser, first open with a cold browser cache"
+      measure: bash .theseus/oracle/journeys/open-docx-real.sh
+    # Rafael, 2026-11-03: his 20 s was with the server on another machine over the internet; the VM
+    # measures on localhost, which hides every download (fonts are 23-27 MB files). He also said
+    # 5 s on localhost is still too slow for this document. Target: under 2 s on localhost.
+    - id: open-docx-real-internet
+      description: "Same as open-docx-real (first open, cold browser cache, until fully rendered), but with the browser on an emulated home internet link (Chrome DevTools network emulation: 50 Mbps down, 10 Mbps up, 30 ms latency), so every byte the client downloads (fonts, scripts, editor bin, images) costs what it costs a real user; the map must attribute each download to the module that asks for it"
+      measure: bash .theseus/oracle/journeys/open-docx-real-internet.sh
+    - id: open-docx-10p
+      description: "Select a 10-page Word document and wait until it is fully rendered in the browser (first open)"
+      measure: bash .theseus/oracle/journeys/open-docx-10p.sh
+    - id: open-docx-100p
+      description: "Select a 100-page Word document and wait until it is fully rendered in the browser (first open)"
+      measure: bash .theseus/oracle/journeys/open-docx-100p.sh
+    - id: typing
+      description: "Type in an open Word document: key press to the character drawn on screen"
+      measure: bash .theseus/oracle/journeys/typing.sh
+    - id: coedit-remote
+      description: "Two users in the same Word document: a change by one until it is drawn on the other's screen"
+      measure: bash .theseus/oracle/journeys/coedit-remote.sh
+    - id: save
+      description: "Close an edited Word document until the saved file is available"
+      measure: bash .theseus/oracle/journeys/save.sh
+    - id: convert-docx-pdf
+      description: "Convert a Word document to PDF through the server until the PDF is returned"
+      measure: bash .theseus/oracle/journeys/convert-docx-pdf.sh
 
 modules:
   - id: common
@@ -57,6 +89,10 @@ modules:
     path: external/web-apps/apps/documenteditor
     oracle: ["bash .theseus/oracle/documenteditor-open.sh"]
     description: "The document editor application shell: what loads before the document (about 1.5 s of scripts and ~500 KB per open)."
+
+  # Rafael, 2026-11-03: finish one application first, the document editor (server, converter,
+  # sdkjs word and common, web-apps documenteditor). Spreadsheets (sdkjs-cell, where round 2 found
+  # the largest client cost left), presentations and PDF join after it.
 
 languages:
   present: [javascript, cpp]

@@ -39,7 +39,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 resume: false
 ---
 
@@ -61,9 +61,24 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - Result: no in-process option >= 0.2 s; corpus equal for the eager snapshot and --no-lazy-feedback-allocation. Verdict in .theseus/diagnosis/PKT-x2t-r2-warmup.md: P3 should not implement an in-process cut; persistent converter is the remaining lever.
 - Not done: no fork build (nothing to build: no core change); xlsx was not CPU-profiled (laps and timing only).
 - block: the reviewer found an external blocker: Goal requires a post-warm-up snapshot built on the core fork, but target.files lists no external/core files (doctrenderer.cpp, v8_base.cpp); the planner must add them or decide the profile-based upper bound is enough for P3 (also add the missing xlsx profile)
+- release: Theseus 0.23.3: an investigation may prototype in external/core (not in the scope check, never merged); prototype the post-warm-up snapshot there and add the missing xlsx profile, as the reviewer asked
+- return: factory stopped by the session's 2-hour limit; restarted on Theseus 0.24.0 (journeys), work kept
+- return: factory stopped by the 2-hour session limit
+- attempt 1: the executor's permissions refused: Bash: S=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0108/d9d7df64-e018-4a19-ac88-b611a6c705f1/scratchp…
+- Session 4 (2026-11-04): nothing from the earlier sessions was on disk (no note, no scripts, no commit), so all was redone and committed early. The ~50-60 min core rebuild per fork edit is what ran the earlier sessions out of time.
+- Decision (answer to the block "Goal requires a post-warm-up snapshot built on the core fork"): no core-fork build, because (a) a fork edit is a ~55 min full rebuild, (b) the CPU-profile split bounds the post-warm-up snapshot in advance at <= 0.25 s docx / 0.19 s xlsx, short of P3's 0.3 s, and (c) the reachable part was prototyped without a rebuild. The warm snapshot was prototyped without rebuilding: warm-up JS (`new AscWord.CStyles(true)` x5) appended to a copy of word/sdk-all.js in a side layout and the snapshot regenerated with `x2t -create-js-snapshots`: -25..-49 ms CPU, equal output. external/core is unchanged (nothing to push).
+- Decision: CPU time (wait4 rusage) decides, wall is only a cross-check: the VM is shared (load 2.6-3.7) and wall medians moved +-300 ms between identical runs.
+- Surprise: the installed x2t is the source build of core.base (md5 equals the oracle mirror), not the package binary (dpkg md5 differs).
+- Surprise: the first matrix ran while the differential oracle was running (its browser phase swaps the live x2t in place; the build was a cache hit); it was thrown away and re-run clean (same verdict). The shim's first harness version also preloaded into python itself (harmless "not found" lines): fixed by passing LD_PRELOAD through /usr/bin/env.
+- Surprise: `--max-lazy` crashes docx -> pdf (exit -4) in both runs. docbuilder with 3 documents costs ~640 ms CPU per extra document, as much as the first: a persistent process that makes a new context per document gains nothing.
+- Result: no in-process option >= 0.15 s CPU; verdict in .theseus/diagnosis/PKT-x2t-r2-warmup.md: P3 should not implement an in-process cut; the lever is a persistent converter keeping one warmed context (spawn request committed).
+- js_speed=1 laps recorded (script load from the snapshot ~10 ms; NativeOpenFileData ~0.2 s; empty pptx layout 0.58 s).
+- Not done: pptx not CPU-profiled; warmed snapshot timed for docx only; corpus.py not run for flags (none recommended; the three templates' outputs are equal modulo dates/ID).
 
 ## Spawned packets
+- PKT-0143: Size a persistent x2t converter that keeps one warmed JS context per editor
 
 ## Review
+- Approved by claude-opus-5-5-b: The measurements support the decision for P3; the pptx layout cost and the stale `x2t-warmup.sh` log entry are open but minor
 
 ## Lessons for the Atlas
