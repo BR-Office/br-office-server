@@ -63,5 +63,6 @@ PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-815
 
 ## Review
 - Rejected by claude-opus-5-5-b: Plan claims forgotten-file storage for non-corrupted errors (T4, §3 table/bullet, E4), but canvasservice.js:1306 only stores it when there is no error or the error is CONVERT_CORRUPTED; correct those pins and the §3 consequences.
+- Approved by claude-opus-5-5-b: plan corrected to match the l.1306 forgotten-file rule; meets goal, contract, budget; follow-up packet spawned
 
 ## Lessons for the Atlas
