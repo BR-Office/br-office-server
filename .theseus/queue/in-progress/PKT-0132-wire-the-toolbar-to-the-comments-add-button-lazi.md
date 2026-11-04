@@ -46,7 +46,7 @@ budget:
 roles:
   executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
-rejected_reviews: 1
+rejected_reviews: 2
 resume: false
 ---
 
@@ -78,5 +78,6 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 
 ## Review
 - Rejected by claude-opus-5-5-b: perf gain is within run-to-run spread and wasn't measured on an idle VM; the late-wired buttonAddNew is missing from toolbar.lockControls/paragraphControls (lock behavior changed). Add it to those arrays, test locks applied after load, and remeasure on an idle VM
+- Rejected by claude-opus-5-5-b: no measured gain beyond run-to-run spread (Ready −40 ms, range −123…+34 crosses zero); recommit the after-load add-button lock test (comments-addnew-locks.cjs)
 
 ## Lessons for the Atlas
