@@ -25,6 +25,19 @@ Inputs: `document-templates/new/en-US/new.{docx,xlsx,pptx}` → pdf.
 
 ## 1. Where the fixed cost goes (inside the first Execute)
 
+`js_speed=1` laps of `CDoctrenderer::Execute` (median of 5, ms, wall, snapshots on):
+
+| Lap | docx | xlsx | pptx |
+|---|---|---|---|
+| script compile+run (from `sdk-all.bin`) | 9 | 8 | 8 |
+| `NativeOpenFileData` (create API + editor init + read) | 213 | 239 | 195 |
+| `asc_nativeCalculateFile` (layout) | 35 | 0 | **582** |
+| `asc_nativeGetPDF` | 10 | 10 | 6 |
+
+With snapshots the script load is already ≈ 10 ms; the warm-up is `NativeOpenFileData` (and, for the empty pptx,
+a 0.58 s layout — not profiled here; whether it is document-independent, e.g. master/layout slides or theme fonts,
+is the open question for pptx).
+
 Profiled time (inspector on, ≈ 1.45× real for docx, ≈ 1.0× for xlsx). Inclusive subtree times:
 
 | Part | docx | xlsx | Document-independent? |
@@ -42,8 +55,9 @@ Profiled time (inspector on, ≈ 1.45× real for docx, ≈ 1.0× for xlsx). Incl
 Font matching (`GetSigPenalty`, `Base64.decodeData` of font data) is 50–70 ms self time spread across the above.
 The warm-up is mostly **executing** JS that builds editor state (default styles, table styles, API objects), not
 compiling it. The document-independent part — the ceiling of any snapshot taken after a warm-up — is
-≈ 250 ms profiled ≈ **0.17 s real for docx** and ≈ 130 ms ≈ **0.13 s for xlsx**, plus an unknown share of
-`(program)`/GC. pptx was not profiled (timing only).
+≈ 250 ms profiled ≈ 0.17 s real for docx and ≈ 130 ms ≈ 0.13 s for xlsx before `(program)`/GC; giving them
+their proportional share (≈ 32 % of 321 ms for docx) the **upper bound is ≈ 0.17–0.25 s for docx and ≈ 0.13–0.19 s
+for xlsx**. pptx was not profiled (laps and timing only).
 
 ## 2. Per-option gain (median of 5, ms; clean run 02:50–02:52 UTC)
 
@@ -59,7 +73,7 @@ compiling it. The document-independent part — the ceiling of any snapshot take
 | warmed snapshot (`new AscWord.CStyles(true)` ×5 run at snapshot creation, bytecode kept), 2 interleaved rounds | 647 / 547, 423 / 506 vs stock 521 / 572, 627 / 555 (≈ −25…−49) | — | — | yes |
 | docbuilder, 3 docx in one process vs 1 (persistent process, fresh context per document) | 1st doc 614 CPU, each next ≈ 640 CPU | — | — | sizes equal |
 
-An earlier matrix (02:39–02:41) ran while the differential oracle was building/swapping and is discarded; it
+An earlier matrix (02:39–02:41) ran while the differential oracle was running (its browser phase swaps the live x2t) and is discarded; it
 showed the same signs (snapshots ≈ −0.1 s CPU, no flag ≥ 0.15 s) and the same `--max-lazy` docx crash.
 
 Reading:
@@ -68,19 +82,21 @@ Reading:
   editors and within the run-to-run spread of the stock row (±30–50 ms CPU). `--max-lazy` is unsafe.
 - A snapshot that only pre-compiles the init path (what `kKeep` buys) gains ≤ 0.05 s: compile is not the cost.
 - A snapshot that keeps the **built** init state (default styles, table styles, API object) is bounded by the
-  document-independent part above: ≈ 0.13–0.17 s (+ share of GC), below the plan's 0.2 s stop threshold and
-  well below P3's 0.3 s target. It would also need sdkjs to reuse pre-built objects (styles are copied per
+  document-independent part above: ≈ 0.13–0.25 s. That is an upper bound a real implementation only partly
+  reaches, it is below P3's 0.3 s target on every editor, and it costs a packet of its own (next point). It would also need sdkjs to reuse pre-built objects (styles are copied per
   document, `g_oTableId` registers them) and doctrenderer to snapshot a context whose objects reference native
   embeds (fonts, graphics, `window.native`), which `createJSSnapshots` (no embeds) cannot serialize.
 - A persistent process that still makes a new JS context per document (docbuilder behaviour) gains **nothing**:
   each further document costs as much CPU as the first. Only a process that **keeps one warmed context**
   and resets the document in it removes the warm-up (≈ 0.5 s CPU of the ≈ 0.55–0.9 s).
 
-## Fork prototype
+## Fork prototype (answer to the previous block: "Goal requires a post-warm-up snapshot built on the core fork")
 
-No core-fork build was made. With the cache, any edit to `external/core` is a new tree key and a full core
-rebuild (≈ 50–60 min on this VM, `x2t-build.sh`), and the measurable ceiling of the post-warm-up snapshot
-(section 1) is already below the threshold that would justify P3. The no-rebuild prototype above (warm-up JS in
+No core-fork build was made, because (a) with the cache any edit to `external/core` is a new tree key and a full
+core rebuild (≈ 50–60 min on this VM, `x2t-build.sh`; two earlier sessions of this packet ran out of time on it),
+(b) the result of that build is bounded in advance by the measured ceiling (section 1: ≤ 0.25 s, short of
+P3's 0.3 s), and (c) the part reachable without native embeds in the snapshot creator was prototyped without a
+rebuild (below). The no-rebuild prototype above (warm-up JS in
 the snapshot via `-create-js-snapshots`) is the part of the lever that is reachable without native embeds.
 
 ## Recommendation for P3
@@ -91,5 +107,5 @@ resets the document inside it** (FileConverter contract change, memory/isolation
 own diagnosis. Keep `sdk-all.bin` generation at install time.
 
 ## Not done
-- pptx not CPU-profiled; xlsx/pptx warmed-snapshot not timed (docx showed the compile-only ceiling).
+- pptx not CPU-profiled (its 0.58 s empty-deck layout lap is the largest single item and deserves its own look); xlsx/pptx warmed-snapshot not timed (docx showed the compile-only ceiling).
 - Corpus equality (`corpus.py`) not run for the flags: none is recommended; outputs of the three templates are equal.
