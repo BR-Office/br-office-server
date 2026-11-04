@@ -43,6 +43,7 @@ roles:
 
 ## Executor log
 - attempt 1: the spawn request PKT-0155-add-stage-layout-finish-webapps-to-covers-not-co.md still has template placeholders: fill in its target, contract and acceptance (rule R6)
+- attempt 2: acceptance failed: `theseus validate`
 
 ## Spawned packets
 
