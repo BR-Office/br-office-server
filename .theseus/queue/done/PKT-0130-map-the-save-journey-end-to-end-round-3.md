@@ -41,7 +41,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -70,5 +70,6 @@ Map the user journey `save` (Close an edited Word document until the saved file 
 - PKT-0137: Do not wait savetimeoutdelay (5 s) before saving an explicitly closed document
 
 ## Review
+- Approved by claude-opus-5-5-b: save journey mapped end to end (5853 ms, 85% the configured savetimeoutdelay wait); stages add up exactly; follow-up spawned; the faulty changes-sent wait in save-run.cjs should go into a follow-up
 
 ## Lessons for the Atlas
