@@ -41,7 +41,8 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -58,5 +59,6 @@ Map the user journey `open-docx-real-internet` (Same as open-docx-real (first op
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: Editor.bin and the /cache/files media are not throttled or counted (0 bytes, 15 ms), but the goal requires them; get them through the emulated link (workers or cache bypass), re-measure, and assign Editor.bin to sdkjs-common in both the YAML and the downloads table
 
 ## Lessons for the Atlas
