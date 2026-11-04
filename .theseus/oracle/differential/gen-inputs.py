@@ -40,3 +40,9 @@ sl.shapes.add_chart(XL_CHART_TYPE.COLUMN_CLUSTERED, Inches(0.5), Inches(1.5), In
 sl.shapes.add_chart(XL_CHART_TYPE.PIE, Inches(5), Inches(1.5), Inches(4.5), Inches(4), cd)
 sl = pr.slides.add_slide(pr.slide_layouts[1]); sl.shapes.title.text = 'Notes'; sl.placeholders[1].text = para(10)
 pr.save(os.path.join(out, 'chart.pptx'))
+
+d = docx.Document()  # large (PKT-0110): ~100 pages of plain paragraphs, a heading every 20, for remote typing timing
+for i in range(880):
+    if i % 20 == 0: d.add_heading(f'Part {i // 20 + 1}', 1)
+    d.add_paragraph(para(55))
+d.save(os.path.join(out, 'large.docx'))
