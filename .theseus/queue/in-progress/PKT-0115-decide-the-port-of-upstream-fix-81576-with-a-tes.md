@@ -48,9 +48,18 @@ PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-815
 ## Suggested plan
 
 ## Executor log
+- 2026-11-04 claude-opus-5-5: wrote .theseus/diagnosis/PKT-81576-test-plan.md from the upstream patch and EO main code (canvasservice.js commandSfcCallback l.1026-1305, shutdown.js l.73, DocsCoServer.endAuth l.3226-3264).
+- Decision: static analysis only; no code run, no tests written (packet is investigate, target.files empty). Line numbers are EO main at 4434daa.
+- Surprise: on EO main an ACKed `Corrupted` callback for a non-corrupted assembly error is treated as a successful save and pending changes are deleted (plan T3). So 81576 removes a data-loss path, not only the shutdown hang. PKT-0029 did not mention this.
+- Surprise: retry is disabled during shutdown (`!getIsShutdown()`), which is why shutdown itself creates the stuck SaveVersion row.
+- Gap noted, not fixed by upstream: CONVERT_CORRUPTED + no ACK + no retry still leaves SaveVersion (T9).
+- Spawned: characterization-tests request in .theseus/spawn/ (tests/unit, cases T1-T9, E1-E5, S1-S2).
+- Not done: end-to-end check (section 5) left for the port packet.
 
 ## Spawned packets
+- .theseus/spawn/PKT-0115-characterization-tests-for-commandsfccallback-en.md
 
 ## Review
 
 ## Lessons for the Atlas
+- docservice: commandSfcCallback treats any callback ACK as save success, even on assembly error other than CONVERT_CORRUPTED; shutdown.js waits on SaveVersion row count, so any path restoring SaveVersion without retry can hang prepare4shutdown.
