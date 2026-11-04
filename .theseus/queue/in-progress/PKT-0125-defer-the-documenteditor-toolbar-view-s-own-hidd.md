@@ -47,10 +47,10 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: null
+  executor: claude-opus-5-5
   reviewer: claude-opus-5-5-b
 rejected_reviews: 1
-resume: true
+resume: false
 ---
 
 ## Goal
