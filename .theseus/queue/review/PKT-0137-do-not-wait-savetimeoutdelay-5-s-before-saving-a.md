@@ -59,6 +59,39 @@ explicit close while keeping the delay for drops. Expected: save journey ~0.85 s
 ## Executor log
 - attempt 1: acceptance failed: `.theseus/oracle/unit.sh`
 - attempt 2: acceptance failed: `bash .theseus/oracle/journeys/save.sh`
+claude-opus-5-5, 2026-11-04.
+**Result: no change to DocsCoServer.js. The server already does what the Goal asks; the client never sends an explicit close on tab close.**
+Findings:
+- Server: `closeDocument(ctx, conn, reason)` is called with no `reason` for the socket message `{type:"close"}` (DocsCoServer.js ~1958)
+  and with the socket.io reason for `disconnect` (~2028). It already computes `noDelay = !reason || getIsShutdown()` (~2191) and
+  passes it to `createSaveTimer`. So an explicit close already saves without the 5 s sleep.
+- Client (installed compiled build, /var/www/euro-office/documentserver): `{type:"close"}` is sent only by
+  `DocsCoApi.disconnect()` without a code (`asc_coAuthoringDisconnect`). web-apps `onBeforeUnload` only saves localStorage
+  (and holds saving off for 500 ms if the document is modified); `onUnload` only clears a timer. Nothing is sent to the server.
+- The bundled socket.io client has `closeOnBeforeunload:!0`: on beforeunload it closes the transport, and the server logs
+  `transport close`, the same reason it logs for a page reload (and for a killed tab or a TCP reset).
+  So a real browser close and a Playwright `page.close()` look the same, as PKT-0130 saw.
+- A reload is exactly the case the delay protects (contract preserve #1), and neither the browser nor the server can tell it
+  apart from a final close. Saving immediately on `transport close` would break that contract. Only the integrator knows a close is final.
+Decisions:
+- No server change (a heuristic on `transport close` breaks the preserve clause). Requested a follow-up
+  (.theseus/spawn/PKT-0137-save-immediately-when-the-integrator-closes-the.md) to measure an integrator-driven close
+  that reaches `asc_coAuthoringDisconnect`, which should give the ~0.85 s save.
+Surprises / not done:
+- `external/` (sdkjs, web-apps, core) is not checked out in this worktree, so I read the minified installed client instead.
+- Acceptance: `.theseus/oracle/unit.sh` passes (178 passed, 1 skipped). `bash .theseus/oracle/journeys/save.sh` FAILS before
+  measuring: serve-integrated.sh line 29 `cd .../external/sdkjs/build: No such file or directory` (missing external/ checkout:
+  a factory problem, recorded in friction). The packet changes no code, so the journey number cannot move anyway.
+Attempt 2 (after rejection on unit.sh):
+- The rejected run failed in `tests/unit/request.tests.js` timeout tests (`timeout of 300ms exceeded`, `aborted`): timing-sensitive
+  tests against a local server, not code this packet touches (the packet changes no source file). Rerun: 178 passed, 1 skipped.
+- `save.sh` still fails at serve-integrated.sh:29 because `external/` (sdkjs fork checkout) is absent in this worktree and in the
+  main checkout; not fixable within target. Needs the factory to provide `external/sdkjs`.
+Attempt 3:
+- Created `external/sdkjs` myself: `git clone --depth 1 -b theseus file://<repo>/../.external/https___github_com_BR-Office_br-office-sdkjs.git external/sdkjs`
+  (the fork with branch `theseus`; the Euro-Office mirror has only `main`). Git-excluded, not committed.
+- Both acceptance commands pass: unit.sh 178 passed, 1 skipped; save.sh total_ms=5918 p50 (save_delay 5007), unchanged as expected
+  since tab close is `transport close` and no server code changed.
 
 ## Spawned packets
 
