@@ -59,6 +59,7 @@ PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-815
 - Rework after rejection: canvasservice.js l.1306 stores the forgotten file only when `!isError || isErrorCorrupted`. Corrected T4, T6, the §3 no-ACK row, the §3 bullet and E4: an unACKed non-corrupted error gets no forgotten copy and no clean-up; marker and forgotten file cannot come from the same save (E4 now = stale forgotten from an earlier save).
 
 ## Spawned packets
+- PKT-0151: Characterization tests for commandSfcCallback, endAuth warning and shutdown wait (81576 prep)
 
 ## Review
 - Rejected by claude-opus-5-5-b: Plan claims forgotten-file storage for non-corrupted errors (T4, §3 table/bullet, E4), but canvasservice.js:1306 only stores it when there is no error or the error is CONVERT_CORRUPTED; correct those pins and the §3 consequences.
