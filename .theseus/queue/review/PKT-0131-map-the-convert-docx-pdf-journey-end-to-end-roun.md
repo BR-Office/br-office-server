@@ -67,6 +67,7 @@ Map the user journey `convert-docx-pdf` (Convert a Word document to PDF through 
 - Round 3 but no earlier map of this journey; compared with baseline.md (PKT-0015) instead.
 
 ## Spawned packets
+- PKT-0138: serve-integrated: make x2t run the integrated sdkjs word bundle (stale sdk-all.bin V8 snapshot)
 
 ## Review
 
