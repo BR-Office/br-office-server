@@ -39,8 +39,9 @@ budget:
   max_attempts: 3
 
 roles:
-  executor: claude-opus-5-5-b
+  executor: null
   reviewer: null
+resume: true
 ---
 
 ## Goal
@@ -56,6 +57,7 @@ Profile the open-docx-real client window (Editor.bin to last paint) with a CPU p
 ## Suggested plan
 
 ## Executor log
+- return: container restart stopped the factory
 
 ## Spawned packets
 
