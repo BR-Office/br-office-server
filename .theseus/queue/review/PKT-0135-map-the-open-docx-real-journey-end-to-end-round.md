@@ -62,6 +62,7 @@ Map the user journey `open-docx-real` (Select .theseus/oracle/journeys/samples/a
 - Surprise: the real 2.8 MB doc took less wall time than PKT-0126's 10p sample because of machine load; x2t and Editor.bin shares double vs 10p.
 
 ## Spawned packets
+- PKT-0139: Profile the open-docx-real client window (Editor.bin to last paint) with a CPU profile
 
 ## Review
 - Rejected by claude-opus-5-5: Editor.bin-received p50 is 3220 ms not 3339; recompute editor-bin-download (342 ms, 6.9 %), the 1283 ms client split, module totals and the comparison claim; also file the profiling follow-up in .theseus/spawn and fill in Lessons for the Atlas
