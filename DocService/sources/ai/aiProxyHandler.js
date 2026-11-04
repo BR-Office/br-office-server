@@ -297,20 +297,27 @@ async function proxyRequest(req, res) {
     await pipeline(result.stream, res);
     success = true;
   } catch (error) {
-    ctx.logger.error(`proxyRequest: AI API request error: %s`, error);
-    if (error.response) {
-      // Set the response headers to match the target response
-      res.set(error.response.headers);
-
-      // Use pipeline to pipe the response data to the client
-      await pipeline(error.response.data, res);
+    if (error.code === 'ERR_STREAM_PREMATURE_CLOSE') {
+      ctx.logger.debug('proxyRequest: client disconnected: %s', error.stack);
     } else {
-      res.status(500).json({
-        error: {
-          message: 'proxyRequest: AI API request error',
-          code: '500'
+      ctx.logger.error(`proxyRequest: AI API request error: %s`, error);
+    }
+    if (!res.headersSent) {
+      try {
+        if (error.response) {
+          res.set(error.response.headers);
+          await pipeline(error.response.data, res);
+        } else {
+          res.status(500).json({
+            error: {
+              message: 'proxyRequest: AI API request error',
+              code: '500'
+            }
+          });
         }
-      });
+      } catch (responseError) {
+        ctx.logger.debug('proxyRequest: error sending error response: %s', responseError.stack);
+      }
     }
   } finally {
     // Record the time taken for the proxyRequest in StatsD (skip cors requests and errors)
