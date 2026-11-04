@@ -64,6 +64,7 @@ Round 3 of the `web-apps-documenteditor` module. Read `.theseus/diagnosis/DIAG-w
 - Decision: verdict **keep**, following round 2's pre-registered rule (P1+P2 < 150 ms) and the critical-path reading. The plan has one investigate row that confirms the finding on a quiet VM. I recommend closing PKT-0111/0112 and discarding PKT-0125 without merging.
 - `DIAG-web-apps-documenteditor-b.md` does not exist, so there was nothing to `git rm`.
 - Not done: the critical-path test on an idle VM (no idle slot in this run). No prototype in external/web-apps.
+- integration: the integration check failed after merging: acceptance failed: `.theseus/oracle/unit.sh && npm run lint:check`
 
 ## Spawned packets
 
