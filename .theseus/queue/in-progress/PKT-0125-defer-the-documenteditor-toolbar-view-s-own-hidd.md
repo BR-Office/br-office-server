@@ -48,7 +48,8 @@ budget:
 
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
+rejected_reviews: 1
 ---
 
 ## Goal
@@ -74,5 +75,6 @@ else on the VM (PKT-0111 saw a 1 s bimodal LoadDoc spread with 5 runs).
 ## Spawned packets
 
 ## Review
+- Rejected by claude-opus-5-5-b: re-run perf/open-window.js (medium-10p, large-100p, 15 runs) when no other packet is using the machine and show the ctlCode.LoadDoc.Toolbar drop is larger than its run spread in baseline.md; the current 51–93 ms drop is within 300–900 ms of noise
 
 ## Lessons for the Atlas
