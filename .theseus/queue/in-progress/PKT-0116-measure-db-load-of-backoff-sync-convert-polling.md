@@ -50,9 +50,16 @@ PKT-0068 expects up to ~6 extra selects per sync request in the first 1.5 s; .th
 ## Suggested plan
 
 ## Executor log
+- Ran both servers (installed :80, worktree :8099 from source) with `SYNC=1 e2e-convert.js 10 4`, log_statement=all via ALTER SYSTEM + reload (reset after); results in `.theseus/oracle/rounds/docservice-r2-dbload.md`.
+- Decision: log_statement instead of pg_stat_statements (that needs shared_preload_libraries and a PostgreSQL restart, which would disturb the running stack).
+- Decision: attribute selects to requests by the `conv_k...` key in the DETAIL line, so background queries of the other server are excluded.
+- Surprise: the pg driver uses prepared statements, logged as `execute <unnamed>:` not `statement:`; first count gave 0.
+- Result: taskResult selects 2.1 -> 4.0 per request (max +5 on docx->pdf), within PKT-0068's ~6 extra; UPDATE/INSERT unchanged; p50 latency 0.65-2.5 s lower.
+- Not done: per-query duration, concurrency > 4. No code changed, no tests affected.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- DocService DB queries are prepared: grep PostgreSQL logs for `execute <unnamed>:`; per-request attribution works via the task key in `DETAIL: parameters`.
