@@ -91,6 +91,12 @@ Attempt 2 (after rejection on unit.sh):
 - `save.sh` still fails at serve-integrated.sh:29 because `external/` (sdkjs fork checkout) is absent in this worktree and in the
   main checkout; not fixable within target. Needs the factory to provide `external/sdkjs`.
 
+Attempt 3:
+- Created `external/sdkjs` myself: `git clone --depth 1 -b theseus file://<repo>/../.external/https___github_com_BR-Office_br-office-sdkjs.git external/sdkjs`
+  (the fork with branch `theseus`; the Euro-Office mirror has only `main`). Git-excluded, not committed.
+- Both acceptance commands pass: unit.sh 178 passed, 1 skipped; save.sh total_ms=5918 p50 (save_delay 5007), unchanged as expected
+  since tab close is `transport close` and no server code changed.
+
 ## Spawned packets
 
 ## Review
