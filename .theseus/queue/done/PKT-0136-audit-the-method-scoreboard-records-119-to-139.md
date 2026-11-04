@@ -36,7 +36,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -60,5 +60,6 @@ Audit the method over scoreboard records 119 to 139, following `.theseus/prompts
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: The audit is complete and backed by evidence, its proposals are well-formed, and it stays within scope.
 
 ## Lessons for the Atlas
