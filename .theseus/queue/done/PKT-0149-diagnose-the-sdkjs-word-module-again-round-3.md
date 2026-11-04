@@ -43,7 +43,7 @@ budget:
   max_attempts: 3
 roles:
   executor: claude-opus-5-5
-  reviewer: null
+  reviewer: claude-opus-5-5-b
 ---
 
 ## Goal
@@ -80,5 +80,6 @@ Round 3 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 ## Spawned packets
 
 ## Review
+- Approved by claude-opus-5-5-b: round 3 diagnosis complete and evidence-based; no code changed; differential failure shown to be flaky
 
 ## Lessons for the Atlas
