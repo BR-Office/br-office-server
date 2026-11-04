@@ -57,6 +57,7 @@ PKT-0029 checked the logic hunks apply with git apply --check -C1; static.js:141
 - Not done: no unit test for the aiProxyHandler path (the packet asked for a stream-abort test; the static path covers it). No existing test assertions changed.
 - Surprise: the cache middleware is not exported, so the test has to go through the router with storage mocked; `unit.sh <pattern>` does not narrow the run because the script already passes `unit`.
 - Acceptance: `.theseus/oracle/unit.sh` 179 passed / 1 skipped; `npm run lint:check` 0 errors (1 pre-existing warning in AdminPanel).
+- integration: the integration check failed once and passed on the rerun of the same tree (flaky oracle)
 
 ## Spawned packets
 
