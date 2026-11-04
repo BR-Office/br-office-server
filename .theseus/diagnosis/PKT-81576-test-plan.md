@@ -33,7 +33,7 @@ New file `DocService/sources/documentRecovery.js`: `markAssemblyRecovery`, `isAs
 | Assembly OK, callback ACKed | success, changes cleaned | unchanged |
 | Assembly `CONVERT_CORRUPTED`, ACKed | success, changes cleaned | unchanged |
 | Assembly other error (x2t crash/timeout), **ACKed** | treated as success; changes **deleted**; row cleaned | **not** success; changes kept; row → `Ok`/-201 marker; next open warns and replays changes |
-| Assembly other error, **no ACK**, no retry (shutdown or backoff exhausted) | `storeForgotten`; row back to `SaveVersion` → **shutdown hangs** | `storeForgotten`; row → `Ok`/-201; shutdown proceeds |
+| Assembly other error, **no ACK**, no retry (shutdown or backoff exhausted) | `storeForgotten` flag set but **no forgotten file and no clean-up** (guard l.1306 `(!isError \|\| isErrorCorrupted)` excludes it); row back to `SaveVersion` → **shutdown hangs** | still no forgotten file, no clean-up; row → `Ok`/-201; shutdown proceeds; changes kept for replay on next open |
 | Any error, no ACK, retry scheduled (`needRetry`) | row back to `SaveVersion` | unchanged (marker not applied when `needRetry`) |
 | Encrypted doc | row restored to its own status | unchanged (`!isEncrypted` guard) |
 | Force save (`isSfcm`) | restore block skipped | unchanged |
@@ -42,7 +42,7 @@ Consequences to weigh:
 - **Behaviour change visible to integrators**: an integrator that ACKs a `Corrupted` callback (status 3) for a crash-type error will now see the document re-open with pending changes and a "File not assembled" warning, instead of the changes being silently gone. It is the safer outcome (no data loss) but a different one.
 - `Ok` + negative `status_info` is a new row state. Any code that reads `status == Ok` and ignores `status_info` (open path `canvasService.getOpenedAt`, GC in `gc.js`, `checkStatusFile`) will treat the document as openable. Upstream relies on this ("no new open conversion"); EO must confirm nothing in its own changes reads `status_info` of an `Ok` row differently. Check before porting: `grep -n "status_info\|statusInfo" DocService/sources/{gc,canvasservice,DocsCoServer,taskresult}.js`.
 - The warning repeats on every open until the marker is overwritten (next save attempt, empty-cache reconvert, or successful assembly). Accepted upstream; noted as UX.
-- `storeForgotten` + marker can both apply (no ACK case): the forgotten file and the warning are sent once, not twice (`sendDataWarning` is called in one `if`). Test it.
+- Forgotten file and marker do **not** come from the same save: `canvasservice.js` l.1306 stores the forgotten file only when `!isError || isErrorCorrupted`, while the marker applies only to non-corrupted errors. For an unACKed non-corrupted error the only recovery is the marker + kept changes (no forgotten copy). Both can be present only when a forgotten file from an earlier save is still in storage and a later save sets the marker; even then `endAuth` must send the warning once (`sendDataWarning` in one `if`). Test it (E4).
 
 ## 4. Characterization tests needed BEFORE porting
 
@@ -53,9 +53,9 @@ Pin today's behaviour first on EO main (so the port shows exactly which expectat
 | T1 | statusInfo `NO_ERROR`, ACK ok | success, clean called, no updateIf restore | same |
 | T2 | `CONVERT_CORRUPTED`, ACK ok | success, clean called | same |
 | T3 | error (e.g. `CONVERT_TIMEOUT` / `CONVERT`), ACK ok | success, **clean called** | **flip**: no clean, updateIf with `Ok`/-201 |
-| T4 | error, no ACK (`sendServerRequest` throws 500), shutdown flag set (no retry) | updateIf `SaveVersion`, storeForgotten | **flip**: updateIf `Ok`/-201, storeForgotten |
+| T4 | error, no ACK (`sendServerRequest` throws 500), shutdown flag set (no retry) | updateIf `SaveVersion`; **no** storage copy to forgotten dir, **no** clean (l.1306 guard) | **flip**: updateIf `Ok`/-201; still no forgotten copy, no clean |
 | T5 | error, no ACK, retry available (attempt 0, not shutdown) | `needRetry`, row `SaveVersion` | same |
-| T6 | error, no ACK, backoff exhausted (attempt = retries) | `SaveVersion` | **flip**: `Ok`/-201 |
+| T6 | error, no ACK, backoff exhausted (attempt = retries) | `SaveVersion`, no forgotten copy | **flip**: `Ok`/-201, no forgotten copy |
 | T7 | encrypted doc, error | row restored to own status | same |
 | T8 | `isSfcm` (forcesave), error | no restore | same |
 | T9 | `CONVERT_CORRUPTED`, no ACK | `SaveVersion`, storeForgotten | same (marker excludes corrupted) — note: corrupted+no ACK still stays `SaveVersion` and can still hang shutdown; out of 81576's scope |
@@ -67,7 +67,7 @@ Pin today's behaviour first on EO main (so the port shows exactly which expectat
 | E1 | row `Ok`/`NO_ERROR`, no forgotten | no warning | same |
 | E2 | row `Ok`/-201, no forgotten | no warning | **flip**: one `FILE_NOT_ASSEMBLED` warning |
 | E3 | forgotten present | one warning | same |
-| E4 | forgotten present + row `Ok`/-201 | one warning | still exactly one |
+| E4 | stale forgotten file from an earlier save + row `Ok`/-201 (cannot come from one save, see §3) | one warning | still exactly one |
 | E5 | row `Ok` with another negative status_info (legacy) | no warning | same (exact marker only) |
 
 `documentRecovery.js` unit tests (port only): `markAssemblyRecovery` sets `Ok`/-201; `isAssemblyRecovery(null/undefined)` false; exact match only.

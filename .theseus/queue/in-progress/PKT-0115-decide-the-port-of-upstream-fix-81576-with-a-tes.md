@@ -55,6 +55,7 @@ PKT-0029 rated it medium risk; patch in .theseus/diagnosis/PKT-0029-upstream-815
 - Gap noted, not fixed by upstream: CONVERT_CORRUPTED + no ACK + no retry still leaves SaveVersion (T9).
 - Spawned: characterization-tests request in .theseus/spawn/ (tests/unit, cases T1-T9, E1-E5, S1-S2).
 - Not done: end-to-end check (section 5) left for the port packet.
+- Rework after rejection: canvasservice.js l.1306 stores the forgotten file only when `!isError || isErrorCorrupted`. Corrected T4, T6, the §3 no-ACK row, the §3 bullet and E4: an unACKed non-corrupted error gets no forgotten copy and no clean-up; marker and forgotten file cannot come from the same save (E4 now = stale forgotten from an earlier save).
 
 ## Spawned packets
 - .theseus/spawn/PKT-0115-characterization-tests-for-commandsfccallback-en.md
