@@ -55,6 +55,16 @@ Map the user journey `open-docx-real-internet` (Same as open-docx-real (first op
 ## Suggested plan
 
 ## Executor log
+- `serve-integrated.sh` existed (PKT-0131/0135); reused. Wrote `open-docx-real-internet.sh` + `-run.cjs` (copy of open-docx-real with CDP network emulation 50/10 Mbps, 30 ms, upload via page fetch so it pays the uplink, per-module download accounting by URL).
+- Result: total_ms=6601 (min 6580, max 6895, 5 runs, load 2.0→3.7). Upload is 42 % (2.8 MB over 10 Mbps).
+- Decision: the client window is split by the PKT-0043 CPU shares as in PKT-0135 (estimate, not a profile); x2t from the converter log.
+- Surprise: the example landing page's preloader downloads ~2.9 MB of web-apps/sdkjs from t=16 ms, overlapping the upload.
+- Surprise / not done: CDP reports 0 bytes for Editor.bin and `/cache/files/` media (15 ms bin transfer), likely not throttled; spawned a follow-up request.
+- Attempt 2 (rejected: Editor.bin/media not throttled). Cause found: web-apps registers `docserviceworker.js`, whose fetches of Editor.bin, `/cache/files` media and fonts leave the page's emulated link. Fix in the runner: `serviceWorkers: 'block'` + CDP `Network.setBypassServiceWorker`. HTTP cache left on (a test with it off too gave 8375 ms, about the same).
+- Decision: Editor.bin and media assigned to sdkjs-common (requested by `common/apiBase.js` / the image loader) in the runner's accounting, the downloads table and the YAML.
+- Result: total_ms=8333 (min 7438, max 8560, 5 runs). Editor.bin 25 KB / 71 ms, media 1.07 MB / 261 ms, all on the link. sdkjs-common grows to 12.9 MB (fonts), which was hidden by the worker in attempt 1.
+- Surprise: in the CDP clock the Editor.bin request comes before the page's asc_LoadDocument mark; the stages use the Node-clock marks and give the CDP transfer as the bin's network share.
+- Not done: x2t not measured again (267 ms reused from attempt 1, same build). The old spawn request (worker accounting) is now resolved, so it became a request to break down the font payload.
 
 ## Spawned packets
 
