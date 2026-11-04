@@ -86,6 +86,10 @@ Attempt 3 (claude-opus-5-5-b):
   PKT-0133-base) and `/deploy-integrated/` added to the checkout's local .git/info/exclude (not a tracked file). Re-ran all
   acceptance commands: all pass, sdkjs stays clean. Could not fix the root cause (serve-integrated.sh / sdkjs .gitignore are
   outside the target): spawned a follow-up.
+- block: 3 attempts failed; last: acceptance failed: `bash .theseus/oracle/differential/sdkjs-common.sh`. Output:
+```
+differential sdkjs-common: FAIL, 1 unintended difference(s)
+```
 
 ## Spawned packets
 - PKT-0152: Keep serve-integrated build output out of the sdkjs checkout
