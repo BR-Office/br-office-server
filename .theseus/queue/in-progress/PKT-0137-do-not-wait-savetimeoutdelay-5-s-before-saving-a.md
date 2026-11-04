@@ -57,9 +57,39 @@ explicit close while keeping the delay for drops. Expected: save journey ~0.85 s
 ## Suggested plan
 
 ## Executor log
+claude-opus-5-5, 2026-11-04.
+
+**Result: no change to DocsCoServer.js. The server already does what the Goal asks; the client never sends an explicit close on tab close.**
+
+Findings:
+- Server: `closeDocument(ctx, conn, reason)` is called with no `reason` for the socket message `{type:"close"}` (DocsCoServer.js ~1958)
+  and with the socket.io reason for `disconnect` (~2028). It already computes `noDelay = !reason || getIsShutdown()` (~2191) and
+  passes it to `createSaveTimer`. So an explicit close already saves without the 5 s sleep.
+- Client (installed compiled build, /var/www/euro-office/documentserver): `{type:"close"}` is sent only by
+  `DocsCoApi.disconnect()` without a code (`asc_coAuthoringDisconnect`). web-apps `onBeforeUnload` only saves localStorage
+  (and holds saving off for 500 ms if the document is modified); `onUnload` only clears a timer. Nothing is sent to the server.
+- The bundled socket.io client has `closeOnBeforeunload:!0`: on beforeunload it closes the transport, and the server logs
+  `transport close`, the same reason it logs for a page reload (and for a killed tab or a TCP reset).
+  So a real browser close and a Playwright `page.close()` look the same, as PKT-0130 saw.
+- A reload is exactly the case the delay protects (contract preserve #1), and neither the browser nor the server can tell it
+  apart from a final close. Saving immediately on `transport close` would break that contract. Only the integrator knows a close is final.
+
+Decisions:
+- No server change (a heuristic on `transport close` breaks the preserve clause). Requested a follow-up
+  (.theseus/spawn/PKT-0137-save-immediately-when-the-integrator-closes-the.md) to measure an integrator-driven close
+  that reaches `asc_coAuthoringDisconnect`, which should give the ~0.85 s save.
+
+Surprises / not done:
+- `external/` (sdkjs, web-apps, core) is not checked out in this worktree, so I read the minified installed client instead.
+- Acceptance: `.theseus/oracle/unit.sh` passes (178 passed, 1 skipped). `bash .theseus/oracle/journeys/save.sh` FAILS before
+  measuring: serve-integrated.sh line 29 `cd .../external/sdkjs/build: No such file or directory` (missing external/ checkout:
+  a factory problem, recorded in friction). The packet changes no code, so the journey number cannot move anyway.
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- docservice: the save delay after the last editor leaves is skipped only for the `{type:"close"}` message or shutdown;
+  every browser tab close/reload arrives as `transport close` (socket.io `closeOnBeforeunload`) and pays savetimeoutdelay.
+- web-apps sends no goodbye on unload; "explicit close" exists only through the API (`asc_coAuthoringDisconnect`).
