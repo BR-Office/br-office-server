@@ -2830,10 +2830,6 @@ exports.install = function (server, app, callbackFunction) {
 
     //TODO: Do authorization etc. check md5 or query db
     ctx.logger.debug('auth time: %d', data.time);
-    if (!data.token || !data.user) {
-      // the connection stays open and unauthenticated; record why the auth message was ignored
-      ctx.logger.warn('auth ignored: missing %s', data.token ? 'user' : 'token');
-    }
     if (data.token && data.user) {
       ctx.setUserId(data.user.id);
       const [licenseInfo] = yield tenantManager.getTenantLicense(ctx);
