@@ -57,6 +57,7 @@ explicit close while keeping the delay for drops. Expected: save journey ~0.85 s
 ## Suggested plan
 
 ## Executor log
+- attempt 1: acceptance failed: `.theseus/oracle/unit.sh`
 
 ## Spawned packets
 
