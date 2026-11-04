@@ -58,6 +58,7 @@ Audit the method over scoreboard records 140 to 164, following `.theseus/prompts
 - Surprise: PKT-0133 record says attempts 1 while block text says 3 attempts.
 - Proposals TEP-0016 (truthful scoreboard fields), TEP-0017 (differential names checks and reruns). Two spawn requests (shared journey runner; external/ mirrors in environment.md).
 - Same-family audit (claude-opus-5-5) — could not satisfy "different family" preference.
+- `theseus validate`: 1 error (open-docx-100p stage `layout-finish-webapps` not covered by DIAG-web-apps-documenteditor.md), already there before this packet and outside its target; scope-check ok.
 
 ## Spawned packets
 - spawn: Shared journey runner helper
