@@ -64,9 +64,21 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - release: Theseus 0.23.3: an investigation may prototype in external/core (not in the scope check, never merged); prototype the post-warm-up snapshot there and add the missing xlsx profile, as the reviewer asked
 - return: factory stopped by the session's 2-hour limit; restarted on Theseus 0.24.0 (journeys), work kept
 - return: factory stopped by the 2-hour session limit
+- Session 4 (2026-11-04): nothing from the earlier sessions was on disk (no note, no scripts, no commit), so all was redone and committed early. The ~50-60 min core rebuild per fork edit is what ran the earlier sessions out of time.
+- Decision: no core-fork build. The CPU-profile split puts the document-independent init (the ceiling of any post-warm-up snapshot) at ~0.17 s docx / ~0.13 s xlsx, below the plan's 0.2 s stop threshold; a fork edit means a full rebuild. The warm snapshot was prototyped without rebuilding: warm-up JS (`new AscWord.CStyles(true)` x5) appended to a copy of word/sdk-all.js in a side layout and the snapshot regenerated with `x2t -create-js-snapshots`: -25..-49 ms CPU, equal output. external/core is unchanged (nothing to push).
+- Decision: CPU time (wait4 rusage) decides, wall is only a cross-check: the VM is shared (load 2.6-3.7) and wall medians moved +-300 ms between identical runs.
+- Surprise: the installed x2t is the source build of core.base (md5 equals the oracle mirror), not the package binary (dpkg md5 differs).
+- Surprise: the first matrix ran while the differential oracle was building and swapping x2t; it was thrown away and re-run clean (same verdict). The shim's first harness version also preloaded into python itself (harmless "not found" lines): fixed by passing LD_PRELOAD through /usr/bin/env.
+- Surprise: `--max-lazy` crashes docx -> pdf (exit -4) in both runs. docbuilder with 3 documents costs ~640 ms CPU per extra document, as much as the first: a persistent process that makes a new context per document gains nothing.
+- Result: no in-process option >= 0.15 s CPU; verdict in .theseus/diagnosis/PKT-x2t-r2-warmup.md: P3 should not implement an in-process cut; the lever is a persistent converter keeping one warmed context (spawn request committed).
+- Not done: pptx not CPU-profiled; warmed snapshot timed for docx only; corpus.py not run for flags (none recommended; the three templates' outputs are equal modulo dates/ID).
 
 ## Spawned packets
 
 ## Review
 
 ## Lessons for the Atlas
+- x2t warm-up is JS *execution* building editor state (default styles, xlsx default table styles parsed from an embedded zip, API objects), not compilation: snapshots with kept bytecode or V8 flags cannot remove it.
+- V8 flags can be tried on the installed x2t without rebuilding: LD_PRELOAD `oracle/perf/x2t-v8flags-shim.c` (calls the exported v8::V8::SetFlagsFromString).
+- Snapshot variants can be tried without rebuilding: side layout + modified sdk-all.js + `x2t -create-js-snapshots`.
+- On this VM measure x2t with child CPU time (`oracle/perf/x2t-warmup.py`); wall time is dominated by other sessions. Do not time while the differential oracle runs (it swaps the live x2t).
