@@ -84,7 +84,9 @@ async function oneRun(sideDef, runIndex) {
 	if (sideDef.cmd) execSync(sideDef.cmd, { stdio: 'inherit', shell: '/bin/bash' });
 	const browser = await chromium.launch();
 	try {
-		const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, serviceWorkers: 'block' });
+		// ignoreHTTPSErrors: the bench may run against a local HTTPS server with a self-signed certificate
+		// (Chromium only accepts brotli on secure origins, so HTTPS is what a real user gets).
+		const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, serviceWorkers: 'block', ignoreHTTPSErrors: true });
 		await ctx.addInitScript(() => {
 			window.__m = {};
 			const iv = setInterval(() => {
@@ -188,8 +190,13 @@ const q = (a, p) => { a = [...a].sort((x, y) => x - y); const k = (a.length - 1)
 	const sameSides = !A.block.length && !A.serve.length && !A.cmd && !B.block.length && !B.serve.length && !B.cmd;
 	const rows = [];
 	await oneRun(A, -1); // warm the server side (first conversion, caches); not counted
+	// Order within each pair follows the Thue-Morse sequence (AB BA BA AB BA AB AB BA ...), not plain
+	// alternation. With plain ABBA, side A always ran at positions 0 and 3 of every four runs and side B
+	// at 1 and 2; a server effect with a period of four runs then showed up as a 0.5 s "gain" between
+	// identical sides (noise floor of 2026-11-04). Thue-Morse puts each side on every position equally.
+	const thueMorse = (n) => { let c = 0; while (n) { c ^= n & 1; n >>= 1; } return c; };
 	for (let p = 0; p < PAIRS; p++) {
-		const order = p % 2 ? [B, A] : [A, B];
+		const order = thueMorse(p) ? [B, A] : [A, B];
 		for (const s of order) rows.push(await oneRun(s, p));
 		fs.writeFileSync(OUT, JSON.stringify({ args, rows }, null, 1));
 	}
