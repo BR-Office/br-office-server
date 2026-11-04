@@ -70,6 +70,11 @@ Round 3 of the `sdkjs-word` module. Read `.theseus/diagnosis/DIAG-sdkjs-word.md`
 - Surprise: differential large.docx timing showed new 40 % faster on open/reopen; same code except the font fix, so it is
   run order/cache noise (PKT-0110 measured 485-698 ms spread on one build). Recorded as noise.
 - Nothing prototyped in external/sdkjs. DIAG-sdkjs-word-b.md did not exist, nothing to git rm.
+- 2026-11-04 (claude-opus-5-5), retry after rejection "differential sdkjs-word: 2 unintended difference(s)":
+  re-ran it alone with no change to external/sdkjs (still 0f61ccc, clean tree): PASS, 3 cases, all checks `same`.
+  The factory failure was not caused by this packet (it changes no code). The likely cause is a flaky check under load: this run's
+  large.docx timings for `new` were again noisy (long=1103 vs 72, save=1804 vs 351). I did not add an intended entry,
+  because there is no real difference to declare. All 9 acceptance commands pass when run in order.
 
 ## Spawned packets
 
