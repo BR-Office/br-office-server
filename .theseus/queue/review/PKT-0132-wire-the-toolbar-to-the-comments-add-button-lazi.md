@@ -65,6 +65,11 @@ actually built, e.g. on a notification Comments.js triggers after its deferred r
 
 ## Executor log
 - return: factory restarted on Theseus 0.24.2 (quiet journey measurement)
+- attempt 2 (claude-opus-5-5): the main-repo work of attempt 1 was not on this branch and `external/web-apps` was at upstream; recovered the Comments.js deferral (PKT-0112) and both Toolbar commits from `fork/pkt/PKT-0132` by cherry-pick, and `perf/open-window-build.js` from `d926db4` (pkt/PKT-0112).
+- Review fix (locks): the late-wired `buttonAddNew` was already pushed to `paragraphControls`/`lockControls` (commit bb7dd0ed). Testing it after load (new `perf/comments-addnew-locks.cjs`) showed it stayed **disabled** while the toolbar comment button was enabled. Cause: `ButtonsArray.add` calls `setDisabled` with the set's own `_disabled`, which is stale (true from start-up). Fix: after `add`, copy `keepState` and the disabled state of `btnsComment[0]`. Now its state matches build A after load, under lostConnect lock/unlock and paragraphLock.
+- Mechanism: at `isDocumentLoadComplete` the Comments view is not built (`isViewBuilt() === false`); the idle callback after `app:ready` builds it.
+- Measurement: ABBA 16 pairs × 2 docs, paired B − A in baseline.md. Pooled Ready −84 ms (20/32 negative, IQR −252…+286), LoadDoc +2 ms. **No gain beyond the spread is shown.** The VM was NOT idle (load 3.4–6.0: other factory agents, e.g. the PKT-0136 auditor, were running); I could not get an idle window in this attempt.
+- Acceptance: documenteditor-open.sh PASS; differential web-apps-documenteditor.sh PASS (4 cases).
 
 ## Spawned packets
 
