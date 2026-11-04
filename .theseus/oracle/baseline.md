@@ -792,3 +792,80 @@ Ceiling:
 
 Not measured: the remote fast-path recalc time (`RecalculateByChanges` → `private_RecalculateFastParagraph` is not wrapped:
 the 0 ms remote p50 is that gap, not zero work); several visible pages; the installed upstream bundle.
+
+## Client: documenteditor Toolbar view's hidden panels deferred past asc_LoadDocument (PKT-0125)
+
+Native 9.3.7-1 stack, 2-CPU VM. `perf/toolbar-ab.sh` swaps the built `app.js` (web-apps-build.sh: base
+`external/web-apps.base` tree dd7510be vs new fork pkt/PKT-0125 0fc7c875) into the installed server and runs
+`perf/open-window.js` in 5 blocks × 3 runs per side, sides alternating per block (15 opens per side per file, cold
+cache, profiled + unprofiled). Raw per-run data: `perf/toolbar-ab-2026-11-04/`; table: `perf/toolbar-ab-summary.py`.
+Run 06:27–06:36 UTC, started at load 1.6 with no other packet running; another packet started during it (load 3–5
+by block 2), and the alternation spreads that load over both sides.
+Toolbar = `ctlCode.LoadDoc.Toolbar` (ms of CPU before LoadDoc attributed to the Toolbar controller); LoadDoc/Ready =
+unprofiled marks (ms after goto). Spread = p25–p75 (min–max).
+
+medium-10p.docx
+| metric | base median (p25–p75, min–max) | new median (p25–p75, min–max) | Δ median | per-block Δ (median; blocks new<base) |
+|---|---|---|---|---|
+| Toolbar (n=15) | 203 (170–218, 135–266) | 152 (126–168, 116–237) | -51 | -55; 5/5 |
+| LoadDoc (n=15) | 1123 (1102–1192, 1050–1376) | 1243 (1070–1303, 967–1409) | +119 | +88; 1/5 |
+| Ready (n=15) | 3109 (3008–3150, 2859–3269) | 3094 (2998–3182, 2775–3346) | -15 | -48; 3/5 |
+
+large-100p.docx
+| metric | base median (p25–p75, min–max) | new median (p25–p75, min–max) | Δ median | per-block Δ (median; blocks new<base) |
+|---|---|---|---|---|
+| Toolbar (n=15) | 196 (176–227, 126–268) | 157 (141–197, 102–211) | -39 | -51; 3/5 |
+| LoadDoc (n=15) | 1169 (1124–1342, 1030–1443) | 1170 (1101–1263, 879–1336) | +1 | +41; 2/5 |
+| Ready (n=15) | 3378 (3313–3540, 3197–3673) | 3410 (3354–3434, 3246–3596) | +32 | +27; 2/5 |
+
+Busy CPU before LoadDoc (all non-idle categories, profiled opens): medium 964 (928–1035) → 930 (913–962);
+large 947 (899–1012) → 903 (879–954).
+
+Reading:
+- Toolbar self time drops 51 ms (medium, 5/5 blocks lower) and 39 ms (large, 3/5 blocks lower). On medium the
+  drop just exceeds the p25–p75 spread (48 ms base, 42 ms new); on large it does not (51 ms base). The packet's
+  bar (drop > run spread) is met for medium only, and not against min–max on either file.
+- The LoadDoc mark does not move (+119 medium, +1 large, within its 100–250 ms spread); Ready is flat.
+- The ~220 ms of Toolbar self time is not mostly the hidden panels' DOM injection: deferring it moves ~40–55 ms.
+  The rest is the Toolbar view's `initialize` (75 `new Common.UI.Button` and the pickers, for every tab, built
+  before render), the template parse and the Home panel. Deferring construction needs the controller's launch-time
+  bindings on those buttons moved too: follow-up requested.
+- A first run the same morning with another packet running all along (load 5–9) gave −56 / −28 ms Toolbar with
+  p25–p75 spreads of 88 / 76 ms: noise dominated.
+
+### Attempt 3: non-Home components constructed after asc_LoadDocument (PKT-0125)
+
+Same method (`perf/toolbar-ab.sh`, 5 blocks × 3 runs per side, sides alternating), base dd7510be vs new fork
+pkt/PKT-0125 (attempt 3 working tree). Raw data: `perf/toolbar-ab-2026-11-04b/`. Run 07:04–07:13 UTC, started at
+load 0.9; load was 3.4–4.8 during the run (our own chrome/node plus another executor session). `Busy` = all non-idle
+CPU before LoadDoc (profiled opens), new column in `perf/toolbar-ab-summary.py`.
+Change: view/Toolbar.js builds the Insert and Layout components (32 named components, the page-break buttons and
+the HeaderFooterTab buttons in Insert slots) from a 0 ms timer after render, which runs after asc_LoadDocument
+(checked in a probe: the build starts 10–20 ms after the LoadDoc call), or on first activation of a non-Home tab,
+app:ready or createDelayedElements, whichever comes first.
+
+medium-10p.docx
+| metric | base median (p25–p75, min–max) | new median (p25–p75, min–max) | Δ median | per-block Δ (median; blocks new<base) |
+|---|---|---|---|---|
+| Toolbar (n=15) | 181 (175–217, 123–272) | 131 (117–162, 99–211) | -50 | -47; 5/5 |
+| Busy (n=15) | 965 (921–1025, 881–1247) | 919 (845–986, 765–1147) | -46 | -52; 4/5 |
+| LoadDoc (n=15) | 1268 (1214–1334, 1121–1422) | 1236 (1151–1326, 1020–1417) | -32 | +10; 2/5 |
+| Ready (n=15) | 3181 (3127–3281, 2870–3338) | 3156 (3104–3267, 3053–3565) | -25 | -15; 3/5 |
+
+large-100p.docx
+| metric | base median (p25–p75, min–max) | new median (p25–p75, min–max) | Δ median | per-block Δ (median; blocks new<base) |
+|---|---|---|---|---|
+| Toolbar (n=15) | 233 (201–256, 155–311) | 161 (136–179, 98–203) | -72 | -60; 5/5 |
+| Busy (n=15) | 1020 (946–1063, 905–1437) | 967 (917–1002, 811–1211) | -53 | -78; 4/5 |
+| LoadDoc (n=15) | 1188 (1126–1291, 980–1414) | 1100 (1068–1195, 976–1262) | -88 | -72; 3/5 |
+| Ready (n=15) | 3574 (3337–3636, 3193–3953) | 3433 (3401–3560, 3284–3836) | -141 | -73; 3/5 |
+
+Reading:
+- Toolbar drops 50 ms on medium (p25–p75 spread 42 base / 45 new) and 72 ms on large (55 / 43): above the
+  p25–p75 spread on both files, with 5/5 blocks lower on each. It is not above the min–max range on either file.
+- Busy CPU before LoadDoc drops 46 / 53 ms (4/5 blocks), which is below its p25–p75 spread (~100 ms): the work
+  moves out of the window, but the run is too noisy to show that on total CPU by itself.
+- LoadDoc and Ready move inside their spread.
+- Measured in a probe, the deferred construction is only ~12–37 ms (it depends on JIT warm-up). Most of what moved
+  is DOM injection plus construction. The remaining ~130–160 ms of Toolbar time is the Home panel, the template and the
+  HeaderFooterTab/ViewTab panels built in onAppShowed (follow-up requested).
