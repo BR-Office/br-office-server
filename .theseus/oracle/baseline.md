@@ -731,3 +731,64 @@ Reading:
 - B busy time falls by ≈ 280 ms (≈ 7 %), consistent with the ceiling PKT-0071/PKT-0089 found (5–7 %); repaint and recalc remain
   the remote-apply cost.
 - Not measured: the style case (full-walk fallback by design), the installed upstream bundle.
+
+## Client: repaint scope per keystroke and per remote change (PKT-0109)
+
+Script: `node .theseus/oracle/perf/word-repaint.js <file.docx> [sdkjs|bundle-dir|-] [runs]` (env `N` events per side,
+`SETTLE` ms, `NOCLEAR=1` ceiling variant). Native package 9.3.7-1 server; word bundle self-built from sdkjs fork `theseus`
+0f61ccc with `.theseus/oracle/differential/build.sh` and injected by Playwright routing (`sdkjs/word/sdk-all{,-min}.js`,
+404 on `sdk-all.{bin,cache}`), as PKT-0093. `large-100p.docx` (86 pages as laid out), users A and B, viewport 1280×900
+(canvas 1167×688, 1 page visible, page 1). *local* = A types 20 single characters at Ctrl+Home, measured on A; *remote* =
+A types 20 markers, measured on B. Each event = counters reset → key → text in the model → 400 ms settle. 2 runs,
+40 events per side, 2026-11-04. Entry points are wrapped on the live instances (CDocument, DrawingDocument, CEditorPage)
+plus `CanvasRenderingContext2D.prototype.drawImage`; call-site stacks are recorded for each.
+
+| Per event | local p50 | local mean | remote p50 | remote mean | local, NOCLEAR mean | remote, NOCLEAR mean |
+|---|---|---|---|---|---|---|
+| pages recalculated (distinct `OnRecalculatePage`) | 1 | 1.5 | 2 | 10.2 | 1.5 | 10.1 |
+| recalc ms (`private_Recalculate`+`Recalculate_Page`; remote fast path not included, see below) | 13.7 | 18.5 | 0 | 35.5 | 17.4 | 27.2 |
+| `ClearCachePages` (all page caches invalidated) | 1 | 1 | 2 | 2 | 0 | 0 |
+| `OnRepaintPage` (single page invalidated) | 0 | 0 | 0 | 0 | 0 | 0 |
+| pages re-rasterised (`StartRenderingPage`) | 2 | 1.8 | 2 | 2 | **1** | 1.8 |
+| re-raster ms | 14.2 | 19.7 | 18.5 | 24.2 | **10.7** | 16.7 |
+| `OnPaint` calls / ms (blit + re-raster) | 2 / 23.6 | 1.8 / 30.1 | 2 / 31 | 2.1 / 38.5 | 1.7 / 17.8 | 1.9 / 27.4 |
+| `OnScroll` / `OnUpdateOverlay` / `UpdateTarget` calls | 3 / 3 / 3 | — | 6 / 4 / 4 | — | — | — |
+| `UpdateTarget` ms | 0.4 | 0.5 | 0.1 | 0.2 | 0.4 | 0.2 |
+| `drawImage` calls (≈ 99.8 % offscreen: glyphs into the page cache) | 3 872 | 3 470 | 3 954 | 3 951 | 1 956 | 3 556 |
+| `drawImage` ms / Mpx | 15.3 / 2.1 | 17.2 / 1.9 | 19 / 2.1 | 25.1 / 2.2 | 10.8 / 1.7 | 18.6 / 2.0 |
+| key → text in model ms | 63 | 75 | 357 | 404 | 69 | 485 |
+
+On-screen blits are ~1.8 per event (`id_viewer`, one per `OnPaint`), each a whole visible page; there are no sub-page
+rectangles: the invalidation unit is the page (`drawingPage.SetRepaint` / `cachedImage` unlock), and a dirty page is
+re-rasterised whole (`StartRenderingPage → CDocument.DrawPage`), glyph by glyph (~2 000 `drawImage` per page on this sample).
+
+Call sites that decide the redraw range:
+- **Recalculation** (`word/Editor/Document.js`): local typing goes `EnterText → FinalizeAction → private_Recalculate →
+  private_RecalculateFastParagraph` (36/40) or `private_RecalculateFastRunRange` (4/40), 1–2 pages; remote typing goes
+  `CWordCollaborativeEditing.OnEnd_Load_Objects → RecalculateByChanges → private_RecalculateFastParagraph`, 1–2 pages, but
+  **4–5 of 40 remote events fall back to `RecalculateWithParams` and recalc from page 0 to 85 (or 50) in the timer loop
+  (`ContinueRecalculationLoop → Recalculate_Page`), 260–420 ms each**: that is all of the remote recalc mean.
+- **Page invalidation**: `DrawingDocument.OnRecalculatePage` itself calls `drawingPage.SetRepaint` for each recalculated page
+  (so the fast paths invalidate exactly the changed page), and `CDocument.Redraw/private_Redraw/OnRepaintPage` are not used.
+- **All pages invalidated on every change**: `CWordCollaborativeEditing.Send_Changes` (`word/Editor/CollaborativeEditing.js`
+  ~l. 237) calls `ClearCachePages(); FirePaint()` whenever `m_nUseType !== 1`, i.e. always in co-editing, "to redraw locks"
+  — locally from `_onSaveCallback`, on B from `_autoSave → Continue_FastCollaborativeEditing` (twice per remote event).
+  The visible page is thus re-rasterised a second time per event.
+- **Paint**: `CEditorPage.OnPaint` from `PaintMessageLoop → onTimerScroll` re-rasterises each visible page whose cache was
+  unlocked (`CheckRecalculatePage`) and blits it.
+
+Ceiling:
+- **Skip the lock-redraw clear when no lock changed** (`NOCLEAR` measures it as an upper bound): local re-raster goes from
+  1.8 to 1 page per keystroke, OnPaint 30 → 18 ms, drawImage 3 470 → 1 956 (≈ −12 ms per keystroke, ≈ 40 % of paint).
+  Remote: no gain measured (re-raster stays 1.8 per event): B's second re-raster comes from its own recalc passes
+  (fast path, then the timer loop), not only from the clear. With more pages visible (zoom-out) the clear costs one
+  re-raster per visible page.
+- **Limit redraw to the changed lines** (not prototyped): a line-level dirty rect inside the page cache would replace a
+  ~9–10 ms whole-page re-raster by a few lines' worth (the page has ~50 lines, so ≲ 1 ms): up to ≈ 9 ms per local
+  keystroke after the clear fix, ≈ 15 ms per remote event; needs `StartRenderingPage`/`DrawPage` to clip to a rect.
+- **Remote full-document fallback**: 4–5 of 40 remote events recalc all 86 pages (≈ 300 ms each, ≈ 35 ms per event on
+  average): the largest remote item, and why "key → text in model" p90 is high; why the fast path is refused there was not
+  traced (follow-up requested).
+
+Not measured: the remote fast-path recalc time (`RecalculateByChanges` → `private_RecalculateFastParagraph` is not wrapped:
+the 0 ms remote p50 is that gap, not zero work); several visible pages; the installed upstream bundle.

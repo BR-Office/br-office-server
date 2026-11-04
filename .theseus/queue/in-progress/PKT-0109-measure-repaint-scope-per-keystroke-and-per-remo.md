@@ -57,9 +57,33 @@ PKT-0043 found typing and remote apply repaint-dominated (drawImage 17-27 % self
 
 ## Executor log
 - return: factory restarted on Theseus 0.23.3, work kept
+- 2026-11-04 (claude-opus-5-5): wrote `.theseus/oracle/perf/word-repaint.js`. It builds the fork with
+  `differential/build.sh` (cached, key 02ce87d…; fork `theseus` 0f61ccc, no local change), routes the word bundles as
+  PKT-0093, opens large-100p.docx as A and B, wraps on the live instances CDocument `private_Recalculate`,
+  `Recalculate_Page`, `Redraw`, `private_Redraw`, `DrawPage`; DrawingDocument `OnRecalculatePage`, `OnRepaintPage`,
+  `FirePaint`, `ClearCachePages`, `StartRenderingPage`, `UpdateTarget`; CEditorPage `OnPaint`, `OnScroll`,
+  `OnUpdateOverlay`; and `CanvasRenderingContext2D.prototype.drawImage` (count, ms, px, target canvas), with call-site
+  stacks. Results and call sites in baseline.md "repaint scope per keystroke … (PKT-0109)". 2 runs × 20 events per side.
+- Decision: "rectangles" = page rectangles. sdkjs word has no sub-page invalidation: the unit is the page cache image;
+  `drawImage` counts are split into offscreen (glyphs into the page cache, ~2 000 per page) and on-screen blits.
+- Surprise 1: `CDocument.Redraw/private_Redraw/OnRepaintPage` are never used by typing; `OnRecalculatePage` itself marks
+  the page dirty (`SetRepaint`), so the fast paths already invalidate only the changed page.
+- Surprise 2: `CWordCollaborativeEditing.Send_Changes` clears ALL page caches + FirePaint on every send while co-editing
+  (`m_nUseType !== 1`), "to redraw locks": a second whole-page re-raster per keystroke. Ceiling measured with an in-page
+  no-op of that call (env `NOCLEAR=1`, not a fix): local re-raster 1.8 → 1 page, OnPaint 30 → 18 ms per keystroke.
+  Remote: no gain (B re-rasters twice from its own recalc passes). Refactor requested (spawn: skip the lock redraw).
+- Surprise 3: 4–5 of 40 remote events leave the fast path and recalc pages 0–85 in the timer loop (260–420 ms each).
+  Not traced; investigation requested (spawn: trace the full-document fallback).
+- Gap: the remote fast path (`RecalculateByChanges → private_RecalculateFastParagraph`) is not timed (not wrapped), so
+  remote recalc ms p50 0 means "not measured", said in baseline.md. Line-level redraw ceiling is an estimate, not prototyped.
+- Nothing prototyped in external/sdkjs (the ceiling used a runtime wrapper); per-event JSON not committed (budget), the
+  script's `--json` reproduces it.
 
 ## Spawned packets
+- requested: Skip the all-pages lock redraw in Send_Changes when no lock changed (refactor, sdkjs-word)
+- requested: Trace why some remote typing changes fall back to a full-document recalc (investigate, sdkjs-word)
 
 ## Review
 
 ## Lessons for the Atlas
+- sdkjs word repaints by whole page: dirty page = cache image re-rasterised glyph by glyph (`StartRenderingPage → CDocument.DrawPage`), then blitted in `CEditorPage.OnPaint` from the paint loop. Typing invalidates via `OnRecalculatePage → SetRepaint`; co-editing adds an all-pages `ClearCachePages` in `Send_Changes` per send.
