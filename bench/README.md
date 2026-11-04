@@ -30,10 +30,12 @@ node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net
 node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net home \
   --b-block 'api/documents/preload\.html' --out preload.json
 
-# lever 1b: a rebuilt sdkjs word bundle served in place of the installed one
+# lever 1b: a rebuilt sdkjs word bundle, installed on the server for side B only (nginx compresses it as in
+# production; --serve would hand the browser the raw 18 MB file). Back the installed files up first.
+D=/var/www/euro-office/documentserver/sdkjs/word
 node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net home \
-  --b-serve 'sdkjs/word/sdk-all\.js=/path/to/deploy/sdkjs/word/sdk-all.js' \
-  --b-serve 'sdkjs/word/sdk-all-min\.js=/path/to/deploy/sdkjs/word/sdk-all-min.js' --out bundle.json
+  --a-cmd "cp -p /backup/sdk-all.js /backup/sdk-all-min.js $D/" \
+  --b-cmd "cp /path/to/deploy/sdkjs/word/sdk-all.js /path/to/deploy/sdkjs/word/sdk-all-min.js $D/" --out bundle.json
 
 # a server-side change (nginx cache headers, compression): swap config before each side
 node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net home \

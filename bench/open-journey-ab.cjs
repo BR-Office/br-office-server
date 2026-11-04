@@ -32,7 +32,6 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-const zlib = require('zlib');
 const { chromium } = require('playwright');
 
 const args = parseArgs(process.argv.slice(2));
@@ -100,12 +99,11 @@ async function oneRun(sideDef, runIndex) {
 			const url = route.request().url();
 			if (sideDef.block.some((re) => re.test(url))) return route.abort();
 			const s = sideDef.serve.find((x) => x.re.test(url));
-			if (s) {
-				// served as the server would: gzip, so a 18 MB bundle costs what its 3 MB encoded form costs
-				const raw = fs.readFileSync(s.file);
-				const gz = zlib.gzipSync(raw, { level: 5 });
-				return route.fulfill({ status: 200, body: gz, headers: { 'content-type': url.endsWith('.css') ? 'text/css' : url.endsWith('.js') ? 'application/javascript' : url.endsWith('.html') ? 'text/html' : 'application/octet-stream', 'content-encoding': 'gzip', 'cache-control': 'public, max-age=31536000, immutable' } });
-			}
+			// A served file goes to the browser uncompressed (Playwright does not let a route answer with a
+			// content-encoding), so --serve is for small files such as preload.html. A bundle must be
+			// installed on the server for its side with --a-cmd / --b-cmd, so nginx compresses it as in
+			// production (see README).
+			if (s) return route.fulfill({ status: 200, body: fs.readFileSync(s.file), contentType: url.endsWith('.css') ? 'text/css' : url.endsWith('.js') ? 'application/javascript' : url.endsWith('.html') ? 'text/html' : 'application/octet-stream' });
 			return route.continue();
 		});
 		const cdp = await ctx.newCDPSession(page);
