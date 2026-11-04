@@ -64,6 +64,7 @@ external/core is a writable fork (BR-Office/br-office-core); build with .theseus
 - release: Theseus 0.23.3: an investigation may prototype in external/core (not in the scope check, never merged); prototype the post-warm-up snapshot there and add the missing xlsx profile, as the reviewer asked
 - return: factory stopped by the session's 2-hour limit; restarted on Theseus 0.24.0 (journeys), work kept
 - return: factory stopped by the 2-hour session limit
+- attempt 1: the executor's permissions refused: Bash: S=/tmp/claude-0/-home-claude-euro-office-server-theseus-worktrees-PKT-0108/d9d7df64-e018-4a19-ac88-b611a6c705f1/scratchp…
 
 ## Spawned packets
 
