@@ -51,6 +51,7 @@ roles:
 - Cause: the `context` value of the PKT-0143 follow-up row contained `(x2t-build.sh): `, so YAML read it as a mapping. Fix: wrapped that one scalar in single quotes (it has none inside); text unchanged. Checked with yaml.safe_load: the plan block parses.
 - Surprise: `theseus validate` still reports 1 error, outside the target: open-docx-100p.md stage `layout-finish-webapps` missing from covers/not_covered of DIAG-web-apps-documenteditor.md. Requested a follow-up packet (spawn).
 - `bash .theseus/oracle/differential/x2t.sh`: PASS (exit 0).
+- block: the acceptance failed twice with the same output, so another attempt cannot fix it: acceptance failed: `theseus validate`
 
 ## Spawned packets
 - PKT-0161: Add stage layout-finish-webapps to covers/not_covered of DIAG-web-apps-documenteditor.md
