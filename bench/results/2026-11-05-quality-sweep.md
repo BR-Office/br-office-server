@@ -36,3 +36,20 @@ code. `../pdf-dialog.cjs` is the reproduction: modal present before, none after.
 
 All 200 with the right signature (PDF or ZIP container) and no editor error. The PDF re-export of a PDF opened in
 the document editor is the slow one (3.4 s for 7 pages): a candidate if that path matters.
+
+## Deep sweep on the real document (`../deep-sweep.cjs`), two users, real key events and the public API
+
+| step | result |
+|---|---|
+| A types at the start of the document | B sees it |
+| B adds a paragraph at the end and types | A sees it |
+| A comments the first line | asc_onAddComment fires in A and B; one comment in B's document |
+| A turns on track changes and types | B sees the revision; accept all works |
+| A inserts an image (data URL) | B gets the drawing (10 → 11) |
+| A prints to PDF | 200, PDF, 991 KB in 0.4 s |
+| A saves, both leave, C reopens | first line, last line, comment and image all there; no modal |
+
+No modal, no editor error, no uncaught error, no console error in any of the three users. One lesson for the
+tooling: driving the document's internal methods directly (`AddNewParagraph`, `EnterText` without a history
+point) corrupts co-editing and throws in `private_RecalculatePageBreak` when the other user's changes arrive;
+that is a harness mistake, not a product bug, and the sweep now only uses key events and `asc_*` calls.
