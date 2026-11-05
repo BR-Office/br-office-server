@@ -13,7 +13,7 @@
 //
 // Usage:
 //   node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 \
-//        [--base http://127.0.0.1] [--net home|fast|none] [--out results.json] \
+//        [--base http://127.0.0.1] [--net home|slow|fast|none] [--out results.json] \
 //        [--a-block <regex>] [--b-block <regex>]            abort requests whose URL matches (e.g. the preloader)
 //        [--a-serve <regex>=<localfile>] [--b-serve ...]    serve a local file for matching URLs (a built bundle)
 //        [--a-cmd '<shell>'] [--b-cmd '<shell>']            run before every run of that side (swap an installed file)
@@ -25,7 +25,8 @@
 // error (--cert makes Chromium accept the certificate by its public key instead, which keeps the cache working).
 //
 // Network profiles (CDP emulation on the page, all frames): home = 50 Mbps down, 10 Mbps up, 30 ms RTT;
-// fast = 200/50 Mbps, 10 ms; none = no emulation (localhost).
+// slow = 10/2 Mbps, 60 ms (a weak mobile or ADSL link, where bytes are the constraint); fast = 200/50 Mbps, 10 ms;
+// none = no emulation (localhost).
 //
 // Output: one JSON line per run on stderr; a summary table on stdout; everything in --out.
 // Per run: marks (upload, goto, loadDoc, binEnd, complete, painted) in ms after the user's action,
@@ -53,6 +54,7 @@ const SPKI = args.cert ? execSync(`openssl x509 -in "${args.cert}" -pubkey -noou
 
 const NETS = {
 	home: { latency: 30, downloadThroughput: 50e6 / 8, uploadThroughput: 10e6 / 8 },
+	slow: { latency: 60, downloadThroughput: 10e6 / 8, uploadThroughput: 2e6 / 8 },
 	fast: { latency: 10, downloadThroughput: 200e6 / 8, uploadThroughput: 50e6 / 8 },
 	none: null,
 };
