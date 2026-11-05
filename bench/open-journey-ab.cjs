@@ -167,12 +167,12 @@ async function oneRun(sideDef, runIndex) {
 		const loadDoc = await frame.evaluate(() => window.__m && window.__m.loadDoc).catch(() => null);
 		if (loadDoc) m.loadDoc = loadDoc - t0;
 		// painted: layout finished and two frames drawn. Text: the document's background layout (FullRecalc) is idle;
-		// presentation: no recalculation running; spreadsheet: the sheet draws synchronously on open, two frames after complete.
+		// presentation and spreadsheet: they draw synchronously on open, so two frames after complete.
 		const painted = await frame.evaluate(() => new Promise((res) => {
 			const e = window.editor || Asc.editor;
 			const t = () => {
 				const d = e.WordControl && e.WordControl.m_oLogicDocument;
-				const busy = d && ((d.FullRecalc && d.FullRecalc.Id != null) || (d.Is_OnRecalculate && d.Is_OnRecalculate()));
+				const busy = d && d.FullRecalc && d.FullRecalc.Id != null; // text only: a presentation lays its slides out synchronously
 				if (busy) return setTimeout(t, 5);
 				const pages = d && d.GetPagesCount ? d.GetPagesCount() : (d && d.Slides ? d.Slides.length : (e.wbModel ? e.wbModel.getWorksheetCount() : 0));
 				requestAnimationFrame(() => requestAnimationFrame(() => res({ pages, at: Date.now() })));
