@@ -13,7 +13,7 @@
 //
 // Usage:
 //   node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 \
-//        [--base http://127.0.0.1] [--net home|slow|fast|none] [--out results.json] \
+//        [--base http://127.0.0.1] [--net home|slow|fast|none] [--cpu 4] [--out results.json] \
 //        [--a-block <regex>] [--b-block <regex>]            abort requests whose URL matches (e.g. the preloader)
 //        [--a-serve <regex>=<localfile>] [--b-serve ...]    serve a local file for matching URLs (a built bundle)
 //        [--a-cmd '<shell>'] [--b-cmd '<shell>']            run before every run of that side (swap an installed file)
@@ -46,6 +46,7 @@ const BASE = args.base || 'http://127.0.0.1';
 const FILE = args.file;
 const PAIRS = +(args.pairs || 7);
 const NET = args.net || 'home';
+const CPU = +(args.cpu || 1);
 const OUT = args.out || `bench-open-${Date.now()}.json`;
 const TIMEOUT = 240000;
 if (!FILE || !fs.existsSync(FILE)) { console.error('--file <docx> is required'); process.exit(2); }
@@ -123,6 +124,8 @@ async function oneRun(sideDef, runIndex) {
 		await cdp.send('Network.enable');
 		await cdp.send('Network.setBypassServiceWorker', { bypass: true });
 		if (NETS[NET]) await cdp.send('Network.emulateNetworkConditions', { offline: false, ...NETS[NET] });
+		// --cpu N slows the page's main thread N times (CDP CPU throttling): a laptop or phone instead of the bench's server CPU
+		if (CPU > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
 		const reqs = new Map();
 		const headers = { fonts: {}, sdk: {}, app: {} };
 		cdp.on('Network.requestWillBeSent', (e) => reqs.set(e.requestId, { url: e.request.url, start: e.timestamp }));
@@ -185,7 +188,7 @@ async function oneRun(sideDef, runIndex) {
 		const biggest = [...reqs.values()].filter((q) => q.bytes).sort((a, b) => b.bytes - a.bytes).slice(0, 8).map((q) => ({ url: q.url.replace(BASE, ''), bytes: q.bytes }));
 		// every font and sdk file of the run, so the font families and styles can be named afterwards
 		const files = [...reqs.values()].filter((q) => q.bytes && ['fonts', 'sdk'].includes(category(q.url))).map((q) => ({ url: q.url.replace(BASE, ''), bytes: q.bytes, ms: Math.round((q.end - q.start) * 1000) }));
-		const row = { side: sideDef.name, run: runIndex, net: NET, marks: m, downloads: dl, headers, biggest, files, load: fs.existsSync('/proc/loadavg') ? +fs.readFileSync('/proc/loadavg', 'utf8').split(' ')[0] : null };
+		const row = { side: sideDef.name, run: runIndex, net: NET, cpu: CPU, marks: m, downloads: dl, headers, biggest, files, load: fs.existsSync('/proc/loadavg') ? +fs.readFileSync('/proc/loadavg', 'utf8').split(' ')[0] : null };
 		process.stderr.write(JSON.stringify(row) + '\n');
 		return row;
 	} finally {
@@ -214,7 +217,7 @@ const q = (a, p) => { a = [...a].sort((x, y) => x - y); const k = (a.length - 1)
 	const pairs = [];
 	for (let p = 0; p < PAIRS; p++) pairs.push({ a: rows.find((r) => r.side === 'A' && r.run === p), b: rows.find((r) => r.side === 'B' && r.run === p) });
 	const metrics = ['upload', 'goto', 'loadDoc', 'binEnd', 'complete', 'painted'];
-	console.log(`\nfile ${path.basename(FILE)}  net ${NET}  pairs ${PAIRS}${sameSides ? '  (A and B identical: this measures the noise floor)' : ''}`);
+	console.log(`\nfile ${path.basename(FILE)}  net ${NET}  cpu x${CPU}  pairs ${PAIRS}${sameSides ? '  (A and B identical: this measures the noise floor)' : ''}`);
 	console.log('| mark | A median | B median | B−A per pair median | per-pair range | pairs B<A |');
 	console.log('|---|---|---|---|---|---|');
 	for (const k of metrics) {
