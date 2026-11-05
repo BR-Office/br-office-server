@@ -43,7 +43,15 @@ node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 --net
   --b-cmd 'sudo cp nginx.new.conf  /etc/nginx/includes/ds-common.conf && sudo nginx -s reload'
 ```
 
-Network profiles: `home` (50/10 Mbps, 30 ms), `fast` (200/50 Mbps, 10 ms), `none` (localhost).
+Network profiles: `home` (50/10 Mbps, 30 ms), `slow` (10/2 Mbps, 60 ms: a weak mobile or ADSL link, where bytes
+are the constraint), `fast` (200/50 Mbps, 10 ms), `none` (localhost).
+
+**The browser cache.** A warm-up page helps a later page only through the browser cache, and two things switch
+that cache off: request interception (`--block` and `--serve` install it, for that side only) and an ignored
+certificate error. Over HTTPS with a self-signed certificate pass `--cert /etc/nginx/bench-ssl/cert.pem`, which
+makes Chromium trust the certificate by its public key instead of ignoring the error. Every run of 2026-11-04 up
+to the fonts work ran with the cache off on both sides: the paired differences hold, but the preloader's benefit
+was never measured before the run recorded in `results/2026-11-04-cache-on.md`.
 Rafael's 20 s was over a real home link with the server elsewhere; `home` is the closest we can
 emulate on one machine. Always report which profile a number comes from.
 
@@ -64,7 +72,24 @@ The summary prints, per mark, the medians of A and B, the median of the per-pair
 range and how many pairs favoured B. Claim a gain only when the median difference is outside the
 noise floor's range and most pairs agree.
 
-## Where the levers are (from the pilot's map, 2026-11-04, 8.3 s over the home profile)
+## Where the open stands (2026-11-05, home profile, cache on, 8 runs of side A in `results/2026-11-05-editor-em-partes.md`)
+
+| Stage | ms | What fills it |
+|---|---|---|
+| upload of the 2.8 MB file over the 10 Mbps uplink | 2 833 | the example's, not the editor's |
+| goto → loadDoc: shell boot and sdk download, in parallel | 767 | app.js + UI (web-apps), sdk-all-min 0.34 MB + sdk-all 2.31 MB (704 ms) |
+| loadDoc → binEnd: server | 541 | x2t about 270 ms, DocService, round trips |
+| binEnd → complete: client parse, fonts, first layout | 852 | fonts 13 files 1.94 MB, parse, layout (tables 306 ms, paragraphs 182 ms), UI `app:ready` 350 ms |
+| complete → painted: remaining layout and paint | 320 | layout slices, paint of the visible pages |
+
+Bytes per cold open: sdk 3.71 MB (sdk-all.js 2.31, fonts.wasm 0.99, sdk-all-min.js 0.34), fonts 1.94, media 1.02,
+app 0.81. Everything is brotli with a one-year cache life; a returning user downloads none of the scripts and fonts.
+Levers measured so far and their value on this profile: fonts by style and fonts the document does not need
+(−0.5 and −0.4 s, merged), the editor-only preloader (−2.1 s vs the old one, merged), brotli in the package
+(−0.5 s, merged), the open window (−0.5 s, merged), a smaller sdk-all.js (ceiling −0.04 s, not implementable, see
+`results/2026-11-05-editor-em-partes.md`).
+
+## Where the levers were (from the pilot's map, 2026-11-04, 8.3 s over the home profile)
 
 | Stage | ms | Owner |
 |---|---|---|

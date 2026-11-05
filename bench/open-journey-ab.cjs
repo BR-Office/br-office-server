@@ -13,13 +13,20 @@
 //
 // Usage:
 //   node bench/open-journey-ab.cjs --file samples/aluno-moderno.docx --pairs 7 \
-//        [--base http://127.0.0.1] [--net home|fast|none] [--out results.json] \
+//        [--base http://127.0.0.1] [--net home|slow|fast|none] [--out results.json] \
 //        [--a-block <regex>] [--b-block <regex>]            abort requests whose URL matches (e.g. the preloader)
 //        [--a-serve <regex>=<localfile>] [--b-serve ...]    serve a local file for matching URLs (a built bundle)
 //        [--a-cmd '<shell>'] [--b-cmd '<shell>']            run before every run of that side (swap an installed file)
+//        [--cert <pem>]                                     HTTPS with a self-signed certificate: trust it by its public key
+//
+// The browser cache matters: a warm-up page can only help a later page through it. Two things switch it off, so the
+// bench avoids both unless told otherwise: request interception (--block / --serve install it for that side only, and
+// that side then runs without a cache, so prefer --cmd for anything but a small file) and an ignored certificate
+// error (--cert makes Chromium accept the certificate by its public key instead, which keeps the cache working).
 //
 // Network profiles (CDP emulation on the page, all frames): home = 50 Mbps down, 10 Mbps up, 30 ms RTT;
-// fast = 200/50 Mbps, 10 ms; none = no emulation (localhost).
+// slow = 10/2 Mbps, 60 ms (a weak mobile or ADSL link, where bytes are the constraint); fast = 200/50 Mbps, 10 ms;
+// none = no emulation (localhost).
 //
 // Output: one JSON line per run on stderr; a summary table on stdout; everything in --out.
 // Per run: marks (upload, goto, loadDoc, binEnd, complete, painted) in ms after the user's action,
@@ -42,9 +49,12 @@ const NET = args.net || 'home';
 const OUT = args.out || `bench-open-${Date.now()}.json`;
 const TIMEOUT = 240000;
 if (!FILE || !fs.existsSync(FILE)) { console.error('--file <docx> is required'); process.exit(2); }
+// SPKI hash of --cert, for --ignore-certificate-errors-spki-list (the certificate is then trusted, not "ignored")
+const SPKI = args.cert ? execSync(`openssl x509 -in "${args.cert}" -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | base64`, { shell: '/bin/bash' }).toString().trim() : null;
 
 const NETS = {
 	home: { latency: 30, downloadThroughput: 50e6 / 8, uploadThroughput: 10e6 / 8 },
+	slow: { latency: 60, downloadThroughput: 10e6 / 8, uploadThroughput: 2e6 / 8 },
 	fast: { latency: 10, downloadThroughput: 200e6 / 8, uploadThroughput: 50e6 / 8 },
 	none: null,
 };
@@ -82,11 +92,10 @@ function category(url) {
 
 async function oneRun(sideDef, runIndex) {
 	if (sideDef.cmd) execSync(sideDef.cmd, { stdio: 'inherit', shell: '/bin/bash' });
-	const browser = await chromium.launch();
+	const browser = await chromium.launch({ args: SPKI ? ['--ignore-certificate-errors-spki-list=' + SPKI] : [] });
 	try {
-		// ignoreHTTPSErrors: the bench may run against a local HTTPS server with a self-signed certificate
-		// (Chromium only accepts brotli on secure origins, so HTTPS is what a real user gets).
-		const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, serviceWorkers: 'block', ignoreHTTPSErrors: true });
+		// Without --cert a self-signed certificate is ignored, which also switches the browser cache off (see the header).
+		const ctx = await browser.newContext({ viewport: { width: 1400, height: 900 }, serviceWorkers: 'block', ignoreHTTPSErrors: !SPKI && BASE.startsWith('https') });
 		await ctx.addInitScript(() => {
 			window.__m = {};
 			const iv = setInterval(() => {
@@ -97,7 +106,9 @@ async function oneRun(sideDef, runIndex) {
 			}, 2);
 		});
 		const page = await ctx.newPage();
-		await page.route('**/*', (route) => {
+		// Request interception switches the browser cache off for the page, so it is installed only for a side
+		// that blocks or serves something.
+		if (sideDef.block.length || sideDef.serve.length) await page.route('**/*', (route) => {
 			const url = route.request().url();
 			if (sideDef.block.some((re) => re.test(url))) return route.abort();
 			const s = sideDef.serve.find((x) => x.re.test(url));

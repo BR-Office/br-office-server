@@ -1,0 +1,396 @@
+files: 393; only the wrapper called at open: 195 (5309 KB); after edit too: 192 (5253 KB)
+
+   KB   fns  open  edit  file   [first functions called at open | only after edit]
+    2    17     6     9  common/api/actionOnTimer.js
+    4    11     1     1  common/api/tableStylesPreviewGenerator.js   [(anon)]
+    1     8     7     7  common/api/spellCheckSettings.js
+    1     8     1     1  common/api/addTextSettings.js   [(anon)]
+    1    10     1     1  common/api/auto-hyphenation-settings.js   [(anon)]
+    3    23    11    18  common/api/autoCorrectSettings.js
+    8    12     6     6  common/api/firstLetterExceptions.js
+    1     6     1     1  common/api/restrictionSettings.js   [(anon)]
+   12    17     2     2  common/collaboration/deleted-text-recovery.js   [(anon),DeletedTextRecovery]
+    4    12     7     7  common/custom-xml/serialize-custom-xml.js
+    0     4     4     4  common/nameMap.js
+    1     3     1     1  common/downloaderfiles.js   [(anon)]
+  373   113     9     9  common/NumFormat.js
+  258   426     1     1  common/SerializeChart.js   [(anon)]
+  135     6     6     6  common/libfont/common.js
+  137    72    40    40  common/libfont/map.js
+    5    17     1     1  common/libfont/rasterheap.js   [(anon)]
+    6    22     8     8  common/libfont/glyphstring.js
+    5    18    10    10  common/libfont/character.js
+    5    14    11    11  common/libfont/grapheme.js
+    6    23    14    14  common/libfont/textshaper.js
+    1     9     2     2  common/libfont/stringshaper.js   [(anon),StringShaper]
+   32    82    42    42  common/libfont/file.js
+    9    37    22    23  common/libfont/manager.js
+    6     9     4     5  common/stringserialize.js
+    6     7     1     1  common/digest/sha256.js   [(anon)]
+    1     7     1     1  common/random.js   [(anon)]
+    4     4     1     1  common/hash/hash.js   [(anon)]
+    3    10     1     1  common/keychainstorage.js   [(anon)]
+   12   118    24    25  common/Drawings/GraphicsBase.js
+   75   311    45    46  common/Drawings/Metafile.js
+   11    31    21    21  common/libfont/textmeasurer.js
+   16    45    11    11  common/Drawings/WorkEvents.js
+   37   101    21    45  word/Editor/History.js
+   55     6     3     3  common/Shapes/EditorSettings.js   [(anon),GetDefaultColorModsIndex,window.AscCommon.GetDefaultMods]
+   13     1     1     1  common/Shapes/ColorSchemes.js   [(anon)]
+  140   171    53    53  common/Shapes/Serialize.js
+  115   211     4     4  common/Shapes/SerializeWriter.js
+    3     4     1     1  common/Drawings/Hit.js   [(anon)]
+   13    12     1     1  common/Drawings/ArcTo.js   [(anon)]
+    1    10     2     2  common/Drawings/ColorArray.js   [(anon),dBoundColor]
+   18     8     2     2  common/SmartArts/SmartArtCache.js   [(anon),CSmartArtBinCache]
+  325   470    31    31  common/Drawings/CommonController.js
+   87   135     3     3  word/Editor/GraphicObjects/DrawingStates.js   [(anon),NullState,onMouseDown]
+   46   183    10    10  common/Drawings/DrawingsChanges.js
+  425  1382   241   250  common/Drawings/Format/Format.js
+  327     6     5     5  common/Drawings/Format/CreateGeometry.js
+   38   110    18    18  common/Drawings/Format/Geometry.js
+  105   429    46    48  common/Drawings/Format/GraphicObjectBase.js
+  182   273    58    59  common/Drawings/Format/Shape.js
+   15    17     1     1  common/Drawings/Format/CnxShape.js   [(anon)]
+   77   126    18    18  common/Drawings/Format/Path.js
+   24    80    16    16  common/Drawings/Format/Image.js
+   42   142    24    25  common/Drawings/Format/GroupShape.js
+  234   982     1     1  common/Drawings/Format/Data.js   [(anon)]
+   18    29     1     1  common/SmartArts/DefaultStructures.js   [(anon)]
+  237   597     1     1  common/SmartArts/SmartArtTree.js   [(anon)]
+  367   427    13    13  common/Drawings/Format/ChartSpace.js
+  552  1992     1     1  common/Drawings/Format/ChartFormat.js   [(anon)]
+  122   522     1     1  common/Drawings/Format/ChartEx.js   [(anon)]
+   16    66     1     1  common/Drawings/Format/TextBody.js   [(anon)]
+   35    52     4     4  common/Charts/charts.js
+  106    91     1     1  common/Charts/DrawingObjects.js   [(anon)]
+   55    74     1     1  common/Charts/3DTransformation.js   [(anon)]
+  449   511     1     1  common/Charts/ChartsDrawer.js   [(anon)]
+   13     8     1     1  common/Drawings/TrackObjects/AdjustmentTracks.js   [(anon)]
+   25    14     1     1  common/Drawings/TrackObjects/MoveTracks.js   [(anon)]
+   18     2     1     1  common/Drawings/TrackObjects/NewShapeTracks.js   [(anon)]
+    8    24     1     1  common/Drawings/TrackObjects/PolyLine.js   [(anon)]
+   55     5     1     1  common/Drawings/TrackObjects/ResizeTracks.js   [(anon)]
+   26    41     1     1  common/Drawings/TrackObjects/RotateTracks.js   [(anon)]
+   33    36     1     1  common/Drawings/TrackObjects/GeometryEditTrack.js   [(anon)]
+    6     6     1     1  common/Drawings/TrackObjects/Spline.js   [(anon)]
+    9     7     1     1  common/Drawings/TrackObjects/ConnectorTrack.js   [(anon)]
+   56    22     6     6  common/Drawings/DrawingObjectsHandlers.js
+   72   158     1     1  common/Drawings/TextDrawer.js   [(anon)]
+    1     5     1     1  common/PromiseIterators.js   [(anon)]
+    5    18     1     1  common/ExternalDataLoader.js   [(anon)]
+   26    48    22    25  common/Drawings/Externals.js
+   12    38    19    19  common/GlobalLoaders.js
+    6    14    10    10  common/Controls.js
+   61    91    12    15  common/Overlay.js
+   10     6     1     1  common/Drawings/HatchPattern.js   [(anon)]
+    0     1     1     1  common/bidi/bidi-common.js   [(anon)]
+    2     4     1     1  common/bidi/bidi-brackets.js   [(anon)]
+    1     1     1     1  common/bidi/bidi-types.js   [(anon)]
+   17     2     2     2  common/bidi/unicode-data.js   [(anon),AscBidi.getType]
+   54    61    31    31  common/scroll.js
+   40    86    29    29  vendor/iscroll.js
+    9    42     1     1  vendor/delta.js   [(anon)]
+   56   118    26    27  common/Scrolls/mobileTouchManagerBase.js
+   19    22     3     3  word/Drawing/mobileTouchManager.js   [(anon),CMobileTouchManager,CMobileTouchManager.Init]
+  308   225     3     4  common/wordcopypaste.js   [(anon),SpecialPasteShowOptions,isClean | clean]
+   23    95    10    10  common/intervalTree.js
+  263   559     3     3  cell/model/FormulaObjects/parserFormula.js   [(anon),ParseResult,CalcRecursion]
+    1     6     1     1  cell/view/HandlerList.js   [(anon)]
+    7    23     1     1  cell/model/SheetMemory.js   [(anon)]
+  480  1688     6     6  cell/model/WorkbookElems.js
+  635  1237     2     2  cell/model/Workbook.js   [(anon),(anon)]
+  501   117     2     2  cell/model/Serialize.js   [(anon),(anon)]
+   10    73     1     1  cell/model/CellInfo.js   [(anon)]
+   50    91     1     1  cell/model/HeaderFooter.js   [(anon)]
+    2     2     1     1  word/Editor/Paragraph/RunContent/Types.js   [(anon)]
+    2     0     0     0  word/Math/mathTypes.js   []
+    6    15    12    12  word/Editor/Styles/para-spacing.js
+  323   650   252   266  word/Editor/Styles.js
+    8    26     7     7  word/Math/math-settings.js
+    2    11     3     3  word/Editor/StructuredDocumentTags/sdt-settings.js   [(anon),SdtGlobalSettings,SpecialFormsGlobalSettings]
+    3    11     7     7  word/Editor/DocumentSettings.js
+    4     6     6     6  word/Editor/Paragraph/Run/FontClassification.js
+    7    21    11    20  word/Editor/Paragraph/Run/FontCalculator.js
+    4    21     2     2  word/Editor/Paragraph/Run/run-composite-input.js   [(anon),RunCompositeInput]
+   29    32     1    23  word/Editor/Paragraph/Run/RunAutoCorrect.js   [(anon) | CRunAutoCorrect,CRunAutoCorrect.Init,CRunAutoCorrect.IsValid,CRunAutoCorrect.DoAutoCorrect,CRunAutoCorrect.private_CheckFlags,CRunAutoCorrect.private_Return]
+    3     1     1     1  word/Drawing/translations.js   [(anon)]
+   26    85    45    45  word/Editor/GraphicObjects/Format/ShapePrototype.js
+    5    21    10    10  word/Editor/GraphicObjects/Format/ImagePrototype.js
+    9    28    10    10  word/Editor/GraphicObjects/Format/GroupPrototype.js
+   12    22     0     0  word/Editor/GraphicObjects/Format/ChartSpacePrototype.js   []
+   34   122     1     1  common/Drawings/Format/GraphicFrame.js   [(anon)]
+  100   428     1     1  common/Drawings/Format/Controls.js   [(anon)]
+    2    10     1     1  common/Drawings/Format/LockedCanvas.js   [(anon)]
+  112   234    34    36  word/Editor/GraphicObjects/GraphicObjects.js
+    8    29    13    14  word/Editor/GraphicObjects/GraphicPage.js
+   25    40     7     7  word/Editor/GraphicObjects/WrapManager.js
+   31   268    57    59  word/Editor/DocumentContentElementBase.js
+  107   392    91   102  word/Editor/ParagraphContentBase.js
+   25   116    14    16  word/Editor/Comments.js
+    8    32     0     0  word/Editor/CommentsChanges.js   []
+    3    12     2     3  word/Editor/annotations/perm-ranges-manager.js   [(anon),PermRangesManager | PermRangesManager.updateMarks]
+    1    11     1     1  word/Editor/annotations/annotation-mark-base.js   [(anon)]
+    8    56     1     1  word/Editor/annotations/paragraph-perm.js   [(anon)]
+   11    49     4     4  word/Editor/Bookmarks.js
+   28   115    29    29  word/Editor/StylesChanges.js
+    9    70     0     0  word/Editor/RevisionsChange.js   []
+    4    14     1     1  word/Editor/FlowObjects.js   [(anon)]
+    7    65    20    21  word/Editor/Paragraph/RunContent/Base.js
+    6    24     1     1  word/Editor/Paragraph/RunContent/FootnoteReference.js   [(anon)]
+    1     6     1     1  word/Editor/Paragraph/RunContent/FootnoteRef.js   [(anon)]
+    2     6     1     1  word/Editor/Paragraph/RunContent/EndnoteReference.js   [(anon)]
+    1     6     1     1  word/Editor/Paragraph/RunContent/EndnoteRef.js   [(anon)]
+    2    11     3     3  word/Editor/Paragraph/RunContent/Separator.js   [(anon),CRunSeparator,CRunSeparator.Get_Type]
+    2    11     3     3  word/Editor/Paragraph/RunContent/ContinuationSeparator.js   [(anon),CRunContinuationSeparator,CRunContinuationSeparator.Get_Type]
+    3    19     1     1  word/Editor/Paragraph/RunContent/PageNum.js   [(anon)]
+    0     3     1     1  word/Editor/Paragraph/RunContent/PagesCount.js   [(anon)]
+    5    23     1     1  word/Editor/Paragraph/RunContent/Break.js   [(anon)]
+   15    81    37    41  word/Editor/Paragraph/RunContent/Text.js
+    6    33    17    19  word/Editor/Paragraph/RunContent/Space.js
+    3    18     1     1  word/Editor/Paragraph/RunContent/Tab.js   [(anon)]
+    5    20    12    12  word/Editor/Paragraph/RunContent/ParagraphMark.js
+    6    29     5     9  word/Editor/ParagraphContent.js
+    3     9     6     6  word/Editor/Paragraph/bidi-flow.js
+    5    19    11    11  word/Editor/Paragraph/complex-field-stack.js
+    3    13     1    12  word/Editor/Paragraph/draw-selection.js   [(anon) | ParagraphDrawSelectionState,ParagraphDrawSelectionState.resetPage,ParagraphDrawSelectionState.resetLine,ParagraphDrawSelectionState.beginRange,ParagraphDrawSelectionState.endRange,ParagraphDrawSelectionState.getSelectionRanges]
+    7    13    10    10  word/Editor/Paragraph/position-calculator.js
+   10    30    19    19  word/Editor/Paragraph/search-position-by-coords.js
+   15    57     5    17  word/Editor/Paragraph/ParaTextPr.js
+   40   106     2     9  word/Editor/Paragraph/ParaTextPrChanges.js   [CChangesParaTextPrRStyle,CChangesParaTextPrValue | CChangesParaTextPrBold,CChangesParaTextPrLang,CChangesParaTextPrBoldCS,CChangesParaTextPrBold.private_SetValue,CChangesParaTextPrValue.private_SetValue,CChangesParaTextPrLang.private_SetValue]
+   96   275    72    74  word/Editor/Paragraph/ParaDrawing.js
+   21    65    16    16  word/Editor/Paragraph/ParaDrawingChanges.js
+    2    18    12    12  word/Editor/Paragraph/ParagraphContentPos.js
+    1     1     1     1  word/Editor/Paragraph/ComplexFields/types.js   [(anon)]
+    9    16     1     1  word/Editor/Paragraph/ComplexFields/instruction-base.js   [(anon)]
+   36   148     0     0  word/Editor/Paragraph/ComplexFieldInstruction.js   []
+    1     5     1     1  word/Editor/Paragraph/ComplexFields/Addin.js   [(anon)]
+    1    11     1     1  word/Editor/Paragraph/ComplexFields/AddinData.js   [(anon)]
+    7    31     1     1  word/Editor/Paragraph/ComplexFields/ffdata.js   [(anon)]
+    1     5     1     1  word/Editor/Paragraph/ComplexFields/formcheckbox.js   [(anon)]
+    0     3     1     1  word/Editor/Paragraph/ComplexFields/FormText.js   [(anon)]
+    1     5     1     1  word/Editor/Paragraph/ComplexFields/MergeField.js   [(anon)]
+    3    24     1     1  word/Editor/Paragraph/ComplexFields/ref.js   [(anon)]
+   48   144     0     0  word/Editor/Paragraph/ComplexField.js   []
+    3     9     6     8  word/Editor/Paragraph/DisplayStyleCalculator.js
+   64   155     1     1  word/Editor/Paragraph/FormulaParser.js   [(anon)]
+    6    33     0     0  word/Editor/Paragraph/ParaRevisionMove.js   []
+    2     9     2     2  word/Editor/Paragraph/GraphemesCounter.js   [(anon),CGraphemesCounter]
+    4    15     1     1  word/Editor/Paragraph/TextHyphenator.js   [(anon)]
+   11    27    19    19  word/Editor/Paragraph/TextShaper.js
+   10    36     0     0  word/Editor/Hyperlink.js   []
+    7    22     0     0  word/Editor/HyperlinkChanges.js   []
+   16    54     0     0  word/Editor/Field.js   []
+    7    20     1     1  word/Editor/FieldChanges.js   [CChangesParaFieldAddItem]
+    3    16     0     0  word/Editor/FormFieldChanges.js   []
+  240   463   148   180  word/Editor/Run.js
+    9    29     1     1  word/Editor/PresentationField.js   [(anon)]
+   71   192     5    12  word/Editor/RunChanges.js
+   66   272     0     0  word/Editor/Math.js   []
+   56   185     0     0  word/Editor/MathChanges.js   []
+  408   762   266   313  word/Editor/Paragraph.js
+   66   152    28    28  word/Editor/ParagraphChanges.js
+   87   178   106   110  word/Editor/Paragraph_Recalculate.js
+   14    23    20    20  word/Editor/Paragraph/draw/content-draw-state.js
+   13    30    18    18  word/Editor/Paragraph/draw/highlight-draw-state.js
+   15    26    22    22  word/Editor/Paragraph/draw/line-draw-state.js
+    2    12    12    12  word/Editor/Paragraph/draw/paragraph-draw-state.js
+   13    37     2     5  word/Editor/Numbering/NumberingApplicator.js   [(anon),CNumberingApplicator | CNumberingApplicator.ResetLast,CNumberingApplicator.SetLastBulleted,CNumberingApplicator.SetLastNumbered]
+    4    14    14    14  word/Editor/Numbering/NumberingCollection.js
+   27    10     5     5  word/Editor/Numbering/NumberingCommon.js
+   32    85    22    24  word/Editor/Numbering/NumberingLvl.js
+    9    37     9     9  word/Editor/Numbering/AbstractNum.js
+    8    29     3     3  word/Editor/Numbering/AbstractNumChanges.js   [(anon),CChangesAbstractNumLvlChange,CChangesAbstractNumNsid]
+   17    60    13    21  word/Editor/Numbering/Num.js
+    2     9     1     1  word/Editor/Numbering/NumChanges.js   [CChangesNumAbstractNum]
+    4    18     8     8  word/Editor/Numbering/NumInfo.js
+   16    33     1     1  word/Editor/Numbering/PresentationNumbering.js   [CPresentationBullet]
+    5    24    11    13  word/Editor/Numbering/Numbering.js
+   55   311    24    24  word/Editor/HeaderFooter.js
+    2    17    10    10  word/Editor/Layout/Base.js
+    2     6     5     5  word/Editor/Layout/PrintView.js
+    3    17     3     3  word/Editor/Layout/ReadView.js   [(anon),CDocumentReadView,(anon)]
+    3    10     4     4  word/Editor/document/document-background.js
+    6    28    15    16  word/Editor/document/document-page.js
+    1     6     2     2  word/Editor/document/document-page-column.js   [(anon),DocumentPageColumn]
+    4    19     9     9  word/Editor/document/document-page-section.js
+    1    11     9     9  word/Editor/document/element-section.js
+   59   123    51    53  word/Editor/DocumentContentBase.js
+  586  1160   322   396  word/Editor/Document.js
+    3    14     3     4  word/Editor/document-composite-input.js   [(anon),DocumentCompositeInput,DocumentCompositeInput.isInProgress | DocumentCompositeInput.checkState]
+   10    15     1     1  word/Editor/ChangeCase.js   [(anon)]
+   27    61     1     1  word/Editor/SelectedContent.js   [(anon)]
+   11    27     5     6  word/Editor/DocumentOutline.js
+   33    83     4     4  word/Editor/DocumentChanges.js
+  186   326    76    90  word/Editor/DocumentContent.js
+    7    16     2     2  word/Editor/DocumentContentChanges.js   [CChangesDocumentContentAddItem,CChangesDocumentContentRemoveItem]
+   11   137     6     6  word/Editor/DocumentControllerBase.js
+   14   110    23    34  word/Editor/LogicDocumentController.js
+   19   112     1     1  word/Editor/DrawingsController.js   [CDrawingsController]
+   14   110     1     1  word/Editor/HeaderFooterController.js   [CHdrFtrController]
+   11    44     5     5  word/Editor/Common.js
+  377   429    88   115  word/Editor/Table.js
+   39   102     5     5  word/Editor/Table/TableChanges.js
+   79    37    20    22  word/Editor/Table/TableRecalculate.js
+   37    10     5     5  word/Editor/Table/TableDraw.js
+   21    91    42    45  word/Editor/Table/TableRow.js
+   17    49     2     2  word/Editor/Table/TableRowChanges.js   [CChangesTableRowAddCell,CChangesTableRowPr]
+   49   165    76    80  word/Editor/Table/TableCell.js
+   21    50     1     1  word/Editor/Table/TableCellChanges.js   [CChangesTableCellPr]
+   23   100     8    16  word/Editor/StructuredDocumentTags/SdtBase.js
+   66   311    51    76  word/Editor/StructuredDocumentTags/BlockLevel.js
+    2     8     2     2  word/Editor/StructuredDocumentTags/FormKeyGenerator.js   [(anon),CFormKeyGenerator]
+   14    34     9     9  word/Editor/StructuredDocumentTags/FormsManager.js
+    5     8     1     1  word/Editor/StructuredDocumentTags/FormToJson.js   [(anon)]
+   89   178    36    52  word/Editor/StructuredDocumentTags/InlineLevel.js
+   24    52     1     4  word/Editor/StructuredDocumentTags/SdtPr.js   [CSdtPr | CContentControlPr,CContentControlPr.GetEventObject,CContentControlPr.FillFromContentControl]
+   25    94    11    12  word/Editor/StructuredDocumentTags/SdtPrChanges.js
+    4    24     1     1  word/Editor/StructuredDocumentTags/Custom/CheckBox.js   [(anon)]
+    5    26     1     1  word/Editor/StructuredDocumentTags/Custom/ComboBox.js   [(anon)]
+    1    10     1     1  word/Editor/StructuredDocumentTags/Custom/ComplexForm.js   [(anon)]
+    4    20     1     1  word/Editor/StructuredDocumentTags/Custom/DatePicker.js   [(anon)]
+    6    31     1     1  word/Editor/StructuredDocumentTags/Custom/Form.js   [(anon)]
+    3    20     1     1  word/Editor/StructuredDocumentTags/Custom/PictureForm.js   [(anon)]
+    8    41     1     1  word/Editor/StructuredDocumentTags/Custom/TextForm.js   [(anon)]
+    6    33     1     1  word/Editor/StructuredDocumentTags/Custom/TextFormFormat.js   [(anon)]
+    3    28     1     1  word/Editor/StructuredDocumentTags/Custom/TextFormMask.js   [(anon)]
+  440   560   240   240  word/Editor/Serialize2.js
+    1     8     1     1  common/api/searchSettings.js   [(anon)]
+    9    33     6     6  word/Editor/Search/DocumentSearch.js
+    1     9     1     1  word/Editor/Search/ParagraphSearch.js   [(anon)]
+   12    99     1     1  word/Editor/Search/SearchItem.js   [(anon)]
+    3     8     2     2  word/Editor/Search/Pattern.js   [(anon),CSearchPatternEngine]
+    4    26    17    17  word/Editor/SpellChecker/DocumentSpellChecker.js
+    6    34    25    25  word/Editor/SpellChecker/ParagraphCollector.js
+   10    36    27    27  word/Editor/SpellChecker/ParagraphSpellChecker.js
+    4    29    22    23  word/Editor/SpellChecker/ParagraphSpellCheckerElement.js
+    6    30     1     1  word/Editor/FootEndNote.js   [CFootEndnote]
+   79   199    30    30  word/Editor/Footnotes.js
+    6    22     3     3  word/Editor/FootnotesChanges.js   [CChangesFootnotesSetSeparator,CChangesFootnotesSetContinuationSeparator,CChangesFootnotesSetContinuationNotice]
+   77   191    17    17  word/Editor/Endnotes.js
+    2    14     0     0  word/Editor/EndnotesChanges.js   []
+   17    71    23    25  word/Editor/GlossaryDocument.js
+    5    22     4     4  word/Editor/GlossaryDocumentChanges.js
+    5    26     9     9  word/Editor/DocumentProtection.js
+  117   297     1     1  word/Editor/Comparison.js   [(anon)]
+    6    18     1     1  word/Editor/InsertDocumentFile.js   [(anon)]
+    4    30     2     2  word/Editor/revisions/review-info.js   [(anon),ReviewInfo]
+   25    52    18    18  word/Editor/revisions/track-revisions-manager.js
+   14    73    22    22  word/Editor/custom-xml/custom-xml.js
+    5    25     2     2  word/Editor/custom-xml/custom-xml-changes.js   [(anon),CChangesCustomXmlManagerAdd]
+   11    21     3     3  word/Editor/custom-xml/custom-xml-manager.js   [(anon),CustomXmlManager,CustomXmlManager.add]
+    2    15     1     1  word/Editor/custom-xml/data-binding.js   [(anon)]
+   29    58     1     1  word/Editor/Merge.js   [(anon)]
+   63     3     1     1  word/Editor/Shortcuts.js   [(anon)]
+   14    47    23    23  word/Editor/sections/document-sections.js
+    1     6     4     4  word/Editor/sections/footnote-pr.js
+    3    17     1     1  word/Editor/sections/line-numbering.js   [(anon)]
+   28   132    74    74  word/Editor/sections/sect-pr.js
+   26   102     9     9  word/Editor/sections/sect-pr-changes.js
+    2    12     6     6  word/Editor/sections/section-columns.js
+    3    16     6     6  word/Editor/sections/section-page.js
+    1     6     1     1  word/Editor/api/document-column-props.js   [(anon)]
+    3    16     5     5  word/Editor/api/document-columns-props.js
+    7    37     8     8  word/Editor/api/document-section-props.js
+   53    96    43    47  word/Drawing/Graphics.js
+   56    37    20    20  word/Drawing/ShapeDrawer.js
+   88   141    41    41  word/Drawing/buttons.js
+    2     5     5     5  word/Drawing/cachemanager.js
+   11    23    18    23  word/Drawing/stylespainter.js
+    8     1     0     0  word/Drawing/DrawingDocumentInterface.js   []
+  141   188    75    84  word/Drawing/DrawingDocument.js
+    0     0     0     0  word/Drawing/GraphicsEvents.js   []
+   69    48    18    18  word/Drawing/Rulers.js
+    4     6     1     1  word/Drawing/printpreview.js   [(anon)]
+   87   118    41    42  word/Drawing/HtmlPage.js
+   29    55     1     1  pdf/src/thumbnails.js   [(anon)]
+  111    67     1     1  pdf/src/viewer.js   [(anon)]
+   35    58     1     1  pdf/src/file.js   [(anon)]
+    3     8     1     1  pdf/src/pdfSearch.js   [(anon)]
+    2     9     1     1  pdf/src/previews.js   [(anon)]
+   17    61     1     1  pdf/src/forms/formActions.js   [(anon)]
+   72   189     1     1  pdf/src/forms/base/base.js   [(anon)]
+   21    19     1     1  pdf/src/forms/apiFunctions.js   [(anon)]
+    4    14     1     1  pdf/src/forms/apiGlogalObjects.js   [(anon)]
+   16    39     2     2  pdf/src/forms/base/basecheckbox.js   [(anon),(anon)]
+    2    10     1     1  pdf/src/forms/base/baselist.js   [(anon)]
+   27    42     1     1  pdf/src/forms/listbox.js   [(anon)]
+   49    87     1     1  pdf/src/forms/text.js   [(anon)]
+    1     3     1     1  pdf/src/forms/checkbox.js   [(anon)]
+    2     6     1     1  pdf/src/forms/radiobutton.js   [(anon)]
+    2    19     1     1  pdf/src/forms/signature.js   [(anon)]
+   48    73     1     1  pdf/src/forms/pushbutton.js   [(anon)]
+   20    30     1     1  pdf/src/forms/combobox.js   [(anon)]
+    7    24     1     1  pdf/src/forms/textBoxContent.js   [(anon)]
+   15    59     1     1  pdf/src/drawings/drawingPrototype.js   [(anon)]
+   13    27     1     1  pdf/src/drawings/shape.js   [(anon)]
+    1     3     1     1  pdf/src/drawings/cnxShape.js   [(anon)]
+    1     8     1     1  pdf/src/drawings/image.js   [(anon)]
+    4    17     1     1  pdf/src/drawings/chart.js   [(anon)]
+    9    25     1     1  pdf/src/drawings/graphicFrame.js   [(anon)]
+    8    45     1     1  pdf/src/drawings/groupShape.js   [(anon)]
+    8    47     1     1  pdf/src/drawings/smartArt.js   [(anon)]
+   43   155     1     1  pdf/src/annotations/base.js   [(anon)]
+   66    46     1     1  pdf/src/annotations/text.js   [(anon)]
+    9    21     1     1  pdf/src/annotations/ink.js   [(anon)]
+   22    58     1     1  pdf/src/annotations/highlights.js   [(anon)]
+    5     7     1     1  pdf/src/annotations/circle.js   [(anon)]
+    5    11     1     1  pdf/src/annotations/polygon.js   [(anon)]
+   19    44     1     1  pdf/src/annotations/line.js   [(anon)]
+   14    32     1     1  pdf/src/annotations/link.js   [(anon)]
+   38    64     1     1  pdf/src/annotations/freeText.js   [(anon)]
+   13    34     1     1  pdf/src/annotations/stamp.js   [(anon)]
+    9    18     1     1  pdf/src/annotations/polyLine.js   [(anon)]
+    3     6     1     1  pdf/src/annotations/square.js   [(anon)]
+    3     7     1     1  pdf/src/textSelectTrackHandler.js   [(anon)]
+    2     8     1     1  pdf/src/annotations/textPrTrackHandler.js   [(anon)]
+    3     7     1     1  pdf/src/annotations/annot-track-handler.js   [(anon)]
+   12     2     1     1  pdf/src/DrawingDocument.js   [(anon)]
+   55    58     1     1  pdf/src/GraphicObjects.js   [(anon)]
+    6    31     1     1  common/geometry/geometry.js   [(anon)]
+    8    35     1     1  pdf/src/graphics.js   [(anon)]
+    6    15     1     1  pdf/src/history/history.js   [(anon)]
+   40   131     0     0  pdf/src/history/documentChanges.js   []
+   45   159     0     0  pdf/src/history/annotsChanges.js   []
+   47   161     0     0  pdf/src/history/formsChanges.js   []
+    5    19     0     0  pdf/src/history/drawingsChanges.js   []
+   34   106     1     1  pdf/src/apiPDF.js   [(anon)]
+  231   457     1     1  pdf/src/document.js   [(anon)]
+    0     0     0     0  word/document/empty.js   []
+   27    75     0     0  word/Math/mathText.js   []
+  156   263     3     3  word/Math/mathContent.js   [CGeneralObjectGaps,CGaps,CCoeffGaps]
+  159   261    50    50  word/Math/NamesOfLiterals.js
+   30    81     1     1  word/Math/LaTeXParser.js   [(anon)]
+   44   127     1     1  word/Math/UnicodeParser.js   [(anon)]
+   68   270     0     0  word/Math/base.js   []
+   17    45     0     0  word/Math/fraction.js   []
+   25    78     0     0  word/Math/degree.js   []
+   35   112     0     0  word/Math/matrix.js   []
+    9    43     0     0  word/Math/limit.js   []
+   52   130     0     0  word/Math/nary.js   []
+   14    36     0     0  word/Math/radical.js   []
+   71   170     0     0  word/Math/operators.js   []
+   13    40     0     0  word/Math/accent.js   []
+   25   116     0     0  word/Math/borderBox.js   []
+   21    34     1     1  word/Math/math-ml.js   [(anon)]
+    4     8     6     6  word/Math/mathTrackHandler.js
+    1     7     7     7  word/Editor/Styles/style-cache.js
+    1     1     1     1  word/Editor/Styles/FixedFormDefaults.js   [(anon)]
+   21     7     4     4  word/Editor/Styles/default-styles.js
+    3    17     1     1  common/versionHistory.js   [(anon)]
+   37    93    10    12  common/clipboard_base.js
+   27    67    19    21  common/text_input2.js
+   12    18     3     3  common/workerspeech.js   [(anon),(anon),EditorActionSpeaker]
+   15    46     1     1  common/Drawings/Format/OleObject.js   [(anon)]
+   20    42     1     1  common/Drawings/Format/DrawingContent.js   [(anon)]
+   61    77    10    12  common/plugins.js
+   14   105     0     0  common/Native/native_graphics.js   []
+    5    36     2     2  word/Editor/document-visitor.js   [(anon),DocumentVisitor]
+    6    23    13    13  word/Editor/annotations/custom-text-annotator/custom-text-annotator.js
+    8    40     8     8  word/Editor/annotations/custom-text-annotator/range-marks.js
+    7    27     5     8  word/Editor/annotations/custom-text-annotator/text-annotator-manager.js
+  465  1442     3     3  word/apiBuilder.js   [(anon),(anon),AscBuilder.Word.init]
+  514   586    13    13  word/fromToJSON.js
+  128   420     3     3  pdf/apiBuilder.js   [(anon),private_WrapClassMethods,(anon)]
+   36   108     9     9  vendor/easysax.js
+   45    66     1     1  common/openxml.js   [(anon)]
