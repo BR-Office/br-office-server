@@ -86,3 +86,16 @@ off, a side effect of blocking a URL; the paired difference holds.)
 
 Verdict by the bench's rule (a gain must beat the noise of identical code): not implementable as a latency lever
 for the home profile. Implementable only for one audience: first opens on slow links by integrators that do not warm the cache, where it is worth 0.26 s now and up to about 0.65 s with the deeper split. With warm-up, or for returning users, it is worth nothing on any link.
+
+## The same document opened twice in one browser (`../warm-open.cjs`, home profile, ms after goto)
+
+| | editor object | shell hands the document over | sdk-all evaluated | complete | all pages laid out |
+|---|---|---|---|---|---|
+| cold (empty cache) | 617 | 641 | 1061 | 2437 | 2813 |
+| warm (second open) | 312 | 1116 | 1078 | 1893 | 2074 |
+| warm (third open) | 311 | 334 | 890 | 1239 | 1457 |
+
+With everything in the browser cache the shell is ready in 0.33 s, and the sdk still takes about 0.58 s from the
+api's creation to "loaded": no download, only the compile and evaluation of 18 MB of JavaScript (Chrome's code
+cache, consumed from the third load on, takes part of it). For the returning user the bundle's size is therefore a
+compile cost of roughly 0.4–0.6 s per open, in proportion to its bytes, until that cache is warm.
