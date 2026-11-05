@@ -120,3 +120,10 @@ Drawings/Externals.js, apiBase.js) say where it comes from:
 Order of experiments: (1) noise floor; (2) preloader blocked, to size fact 3; (3) the headers the bench
 prints, to size compression and caching without touching nginx; (4) a sdkjs build that loads only the
 styles the document uses (fact 1), served with `--b-serve`, which is the first product change worth a packet.
+
+## Quality sweeps
+
+`sweep.cjs` opens each file in its editor through the example, edits a little in text documents and reports what
+the user would see go wrong (modal windows, uncaught errors, console errors, failed requests); `roundtrip.cjs`
+exports the open document in each format through the server and checks the result. `pdf-dialog.cjs` lists the
+modal windows after an open. First run and the bug it found: `results/2026-11-05-quality-sweep.md`.
