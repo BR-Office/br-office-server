@@ -29,7 +29,7 @@
 // none = no emulation (localhost).
 //
 // Output: one JSON line per run on stderr; a summary table on stdout; everything in --out.
-// Per run: marks (upload, goto, loadDoc, binEnd, complete, visible, painted) in ms after the user's action,
+// Per run: marks (upload, goto, loadDoc, binEnd, complete, painted) in ms after the user's action,
 // bytes and request count by category (fonts, sdk scripts, app scripts, bin, media, other), and the
 // Cache-Control / Content-Encoding headers seen on fonts and scripts (tells whether the server lets a
 // returning user skip them).
@@ -105,14 +105,6 @@ async function oneRun(sideDef, runIndex) {
 				const f = p.asc_LoadDocument; p.__w = 1; clearInterval(iv);
 				p.asc_LoadDocument = function () { window.__m.loadDoc = Date.now(); return f.apply(this, arguments); };
 			}, 2);
-			// visible: the first moment the user can see page 1. The editor has drawn it on the canvas (the page's
-			// cached image exists), drawing is not frozen, and the shell has removed its loading skeleton
-			// (.doc-placeholder). `painted` below is later: the end of the layout of every page.
-			const iv2 = setInterval(() => {
-				const e = window.editor; const wc = e && e.WordControl; const dd = wc && wc.m_oDrawingDocument;
-				const p0 = dd && dd.m_arrPages && dd.m_arrPages[0] && dd.m_arrPages[0].drawingPage;
-				if (p0 && p0.cachedImage && !wc.DrawingFreeze && !document.querySelector('.doc-placeholder')) { window.__m.visible = Date.now(); clearInterval(iv2); }
-			}, 8);
 		});
 		const page = await ctx.newPage();
 		// Request interception switches the browser cache off for the page, so it is installed only for a side
@@ -185,8 +177,6 @@ async function oneRun(sideDef, runIndex) {
 		}));
 		m.painted = painted.at - t0;
 		m.pages = painted.pages;
-		const visible = await frame.evaluate(() => window.__m && window.__m.visible).catch(() => null);
-		if (visible) m.visible = visible - t0;
 
 		const dl = {};
 		for (const q of reqs.values()) {
@@ -226,7 +216,7 @@ const q = (a, p) => { a = [...a].sort((x, y) => x - y); const k = (a.length - 1)
 	}
 	const pairs = [];
 	for (let p = 0; p < PAIRS; p++) pairs.push({ a: rows.find((r) => r.side === 'A' && r.run === p), b: rows.find((r) => r.side === 'B' && r.run === p) });
-	const metrics = ['upload', 'goto', 'loadDoc', 'binEnd', 'complete', 'visible', 'painted'];
+	const metrics = ['upload', 'goto', 'loadDoc', 'binEnd', 'complete', 'painted'];
 	console.log(`\nfile ${path.basename(FILE)}  net ${NET}  cpu x${CPU}  pairs ${PAIRS}${sameSides ? '  (A and B identical: this measures the noise floor)' : ''}`);
 	console.log('| mark | A median | B median | B−A per pair median | per-pair range | pairs B<A |');
 	console.log('|---|---|---|---|---|---|');
