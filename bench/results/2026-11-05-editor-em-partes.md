@@ -49,7 +49,21 @@ not even requested before the paint (media 0 requests), they come later.
 
 ## Slow profile without any warm-up (preloader blocked on both sides, cache off), 6 pairs
 
-(run in progress at the time of this commit; the next commit fills it in)
+| mark | A median | B median | B−A per pair median | per-pair range | pairs B<A |
+|---|---|---|---|---|---|
+| upload | 12094 | 12081 | +22 | -47 … 51 | 3/6 |
+| goto | 12280 | 12279 | -4 | -89 … 54 | 4/6 |
+| loadDoc | 14179 | 14129 | -39 | -136 … 39 | 4/6 |
+| binEnd | 14546 | 14486 | -10 | -99 … 45 | 4/6 |
+| complete | 19604 | 19354 | -236 | -419 … -207 | 6/6 |
+| painted | 19919 | 19612 | -260 | -371 … -243 | 6/6 |
+
+Here the saving is real and exactly the bytes: 283 KB less at 10 Mbps is 0.23 s, and `complete` and `painted` move
+by that, 6 of 6 pairs, every pair outside the noise. It lands on `complete`, not on `loadDoc`: `loadDoc` is the
+shell handing the document over, which it does before the sdk has arrived; the api then waits for sdk-all.js,
+and after `binEnd` the client still has to download the fonts (1.94 MB) and fonts.wasm (0.99 MB) on the same link,
+so the open after the upload takes 7.6 s instead of 4.7 s with the warm-up. (Both sides run with the browser cache
+off, a side effect of blocking a URL; the paired difference holds.)
 
 ## Reading
 
@@ -58,7 +72,7 @@ not even requested before the paint (media 0 requests), they come later.
   cutting one alone does not move `loadDoc` much, and the later marks are bound by other work.
 - Wherever the integrator warms the cache (`DocsAPI.DocEditor.warmUp`, as the example does), the bundle's size
   is hidden behind whatever the user does before the editor opens, on any link. Without warm-up the saving is
-  the bytes over the link: (measured in the run above)
+  the bytes over the link: on a 10 Mbps link without warm-up the −11.7 % bundle is worth −0.26 s on the paint (6/6 pairs); the same bytes at 50 Mbps are about 0.05 s. A deeper split (the 30 % of the bundle the open never calls, which needs its callers refactored first) would scale the same way: about −0.65 s at 10 Mbps, −0.13 s at 50 Mbps, both only for a first open without warm-up.
 - The returning user has sdk-all.js in the browser cache for a year (`max-age=31536000, immutable`), so the split
   only ever helps the first open on a device.
 - The CPU side is small: evaluating sdk-all.js costs about 70 ms on the main thread; its compile (about 400 ms)
@@ -71,4 +85,4 @@ not even requested before the paint (media 0 requests), they come later.
   AscPDF.CPDFDoc`). Zero load-time dependencies otherwise (`../analysis/deps-check.cjs`).
 
 Verdict by the bench's rule (a gain must beat the noise of identical code): not implementable as a latency lever
-for the home profile. Not implementable at the slow profile either, as long as the integrator warms the cache.
+for the home profile. Implementable only for one audience: first opens on slow links by integrators that do not warm the cache, where it is worth 0.26 s now and up to about 0.65 s with the deeper split. With warm-up, or for returning users, it is worth nothing on any link.
