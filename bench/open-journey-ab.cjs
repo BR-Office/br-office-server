@@ -147,7 +147,7 @@ async function oneRun(sideDef, runIndex) {
 		const name = await page.evaluate(async ([b64, fname]) => {
 			const bin = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
 			const fd = new FormData();
-			fd.append('uploadedFile', new File([bin], fname, { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }));
+			fd.append('uploadedFile', new File([bin], fname));
 			return (await (await fetch('/example/upload', { method: 'POST', body: fd })).json()).filename;
 		}, [buf.toString('base64'), path.basename(FILE)]);
 		m.upload = Date.now() - t0;
@@ -159,19 +159,23 @@ async function oneRun(sideDef, runIndex) {
 		for (;;) {
 			if (Date.now() > deadline) throw new Error('editor did not complete');
 			frame = page.frames().find((x) => x.name() === 'frameEditor');
-			const ok = frame && await frame.evaluate(() => !!(window.editor && editor.isDocumentLoadComplete)).catch(() => false);
+			const ok = frame && await frame.evaluate(() => { const e = window.editor || (window.Asc && Asc.editor); return !!(e && e.isDocumentLoadComplete); }).catch(() => false);
 			if (ok) break;
 			await new Promise((r) => setTimeout(r, 5));
 		}
 		m.complete = Date.now() - t0;
 		const loadDoc = await frame.evaluate(() => window.__m && window.__m.loadDoc).catch(() => null);
 		if (loadDoc) m.loadDoc = loadDoc - t0;
+		// painted: layout finished and two frames drawn. Text: the document's background layout (FullRecalc) is idle;
+		// presentation and spreadsheet: they draw synchronously on open, so two frames after complete.
 		const painted = await frame.evaluate(() => new Promise((res) => {
+			const e = window.editor || Asc.editor;
 			const t = () => {
-				const d = editor.WordControl && editor.WordControl.m_oLogicDocument;
-				const busy = d && d.FullRecalc && d.FullRecalc.Id != null;
+				const d = e.WordControl && e.WordControl.m_oLogicDocument;
+				const busy = d && d.FullRecalc && d.FullRecalc.Id != null; // text only: a presentation lays its slides out synchronously
 				if (busy) return setTimeout(t, 5);
-				requestAnimationFrame(() => requestAnimationFrame(() => res({ pages: d ? d.GetPagesCount() : editor.getCountPages(), at: Date.now() })));
+				const pages = d && d.GetPagesCount ? d.GetPagesCount() : (d && d.Slides ? d.Slides.length : (e.wbModel ? e.wbModel.getWorksheetCount() : 0));
+				requestAnimationFrame(() => requestAnimationFrame(() => res({ pages, at: Date.now() })));
 			};
 			t();
 		}));
