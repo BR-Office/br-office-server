@@ -53,3 +53,24 @@ No modal, no editor error, no uncaught error, no console error in any of the thr
 tooling: driving the document's internal methods directly (`AddNewParagraph`, `EnterText` without a history
 point) corrupts co-editing and throws in `private_RecalculatePageBreak` when the other user's changes arrive;
 that is a harness mistake, not a product bug, and the sweep now only uses key events and `asc_*` calls.
+
+## Deep sweep, spreadsheet editor (`../deep-sweep-cell.cjs`, sample.xlsx, two users)
+
+| step | result |
+|---|---|
+| A types `=1+2` in Z1 | A shows 3; B shows 3 |
+| B types text in Z2 | A sees it |
+| A adds a sheet | B sees the new sheet |
+| A exports PDF and XLSX | 200, right signatures (the PDF is of the new, empty active sheet) |
+| A saves, both leave, C reopens | Z1 = 3, Z2 = B's text, 2 sheets; no modal |
+
+## Deep sweep, presentation editor (`../deep-sweep-slide.cjs`, sample.pptx, two users)
+
+| step | result |
+|---|---|
+| A adds a slide and types a title | B sees the eighth slide and the title |
+| B types on the first slide | A sees it on slide 1 |
+| A exports PDF and PPTX | 200, right signatures |
+| A saves, both leave, C reopens | 8 slides, B's text on slide 1, A's title on the new slide; no modal |
+
+No modal, editor error, uncaught or console error in any user of either editor.
